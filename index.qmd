@@ -1,11 +1,9 @@
 ---
-title: "BayesSpring25"
+title: "Bayes Spring 2025"
 ---
 
-This is a Quarto website.
+Welcome to Bayes! 
 
-To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
+Github includes all of the slides, code, and data. https://github.com/josh-jackson/bayes25
 
-```{r}
-1 + 1
-```
+Please check the homepage regularly for class updates and announcements.

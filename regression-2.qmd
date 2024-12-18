@@ -1,7 +1,7 @@
 ---
-title: Intro to Regression
+title: Regression 1
 format: revealjs
-editor: visual
+editor: source
 execute:
   echo: true
 html:
@@ -11,8 +11,7 @@ html:
 
 ## Goals for the slide deck
 
-Example using `brms` to help with nomenclature and procedure.
-Begin to think about how we can "feed" our model for insight and profit
+Example using `brms` to help with nomenclature and procedure. Begin to think about how we can "feed" our model for insight and profit
 
 ## Specify the model
 
@@ -33,12 +32,12 @@ $$\beta_1 \sim Normal(0, 5)\ $$ $$\sigma \sim HalfCauchy(0,10) $$
 
 ## priors
 
-In general we want to: 
+In general we want to:
 
-1. Center our priors around a null effect
-2. Have dispersion (our accuracy metric) be a balance between not too large and not too little. This choice requires though, whereas centering a prior around zero requires none. 
+1.  Center our priors around a null effect
+2.  Have dispersion (our accuracy metric) be a balance between not too large and not too little. This choice requires though, whereas centering a prior around zero requires none.
 
-This also get around the "subjectivty in objective science" arguments against bayes. 
+This also get around the "subjectivty in objective science" arguments against bayes.
 
 ## Example
 
@@ -218,7 +217,7 @@ fit.1 <-
 ## brms
 
 -   What if you don't know what priors should be in your model?
-- Default priors are usually bad (i.e flat and non-centered)
+-   Default priors are usually bad (i.e flat and non-centered)
 
 ```{r}
 #| code-fold: true
@@ -383,17 +382,15 @@ fit.1 %>%
   stat_function(data = data.frame(x = c(-10, 10)), aes(x), fun = dnorm, n = 100, args = list(0, 5)) 
 ```
 
-
 # Understanding our model
 
-Most often we look at coefficients to interpret our models. This is fine, but it sub-optimal for a number of reasons, especially when we get to more complex models. 
-We need to define the specific empirical quantity that would shed light on our research question. The *estimand* is the object of inquiry—it is the precise quantity about which we marshal data to draw an inference.
+Most often we look at coefficients to interpret our models. This is fine, but it sub-optimal for a number of reasons, especially when we get to more complex models. We need to define the specific empirical quantity that would shed light on our research question. The *estimand* is the object of inquiry---it is the precise quantity about which we marshal data to draw an inference.
 
-Raw parameters may be very difficult to interpret substantively. E.g., logistic. Even odd ratios are hard because odds are un-intuitive. 
+Raw parameters may be very difficult to interpret substantively. E.g., logistic. Even odd ratios are hard because odds are un-intuitive.
 
 ## Predicted/fitted values
 
-Much like in regular regression, we will use the fitted/predicted/Y-hats values to interpret our models. 
+Much like in regular regression, we will use the fitted/predicted/Y-hats values to interpret our models.
 
 ```{r}
 #| code-fold: true
@@ -631,27 +628,25 @@ By feeding our model numbers we can accomplish a number of handy things:
 -   Plot/visualize predictions across X\
 -   Distribution/Standard errors at certain levels of X\
 -   Coefficients/parameters at different levels of X\
--   Post hoc comparisons 
+-   Post hoc comparisons
 
 ## A conceptual framework (from M2M)
 
-One needs to ask: 
+One needs to ask:
 
-1. Quantity: What is the quantity of interest? (predictions, counterfactuals, slopes)
-2. Predictors: What predictor values are we interested in? (By defining a grid, you define what units estimates apply to)
-3. Aggregation: Unit-level, aggregated,subgroup averages, or weighted estimates? (When we compute over a grid of predictor values, we obtain a point estimates for each row of the grid. Do we want each or do we want some summary?)
-
+1.  Quantity: What is the quantity of interest? (predictions, counterfactuals, slopes)
+2.  Predictors: What predictor values are we interested in? (By defining a grid, you define what units estimates apply to)
+3.  Aggregation: Unit-level, aggregated,subgroup averages, or weighted estimates? (When we compute over a grid of predictor values, we obtain a point estimates for each row of the grid. Do we want each or do we want some summary?)
 
 ## Terminology issues
 
-In brms/tidybayes there is a simplification of the above. 
+In brms/tidybayes there is a simplification of the above.
 
-1.  fitted/epred (expected prediction) style, Expected value of Y given Xs.  Propagates uncertainty in $b_o$ & $b_1$. 
+1.  fitted/epred (expected prediction) style, Expected value of Y given Xs. Propagates uncertainty in $b_o$ & $b_1$.
 
-2.  prediction style, where we are propagating uncertainty in $b_o$, $b_1$ & $\hat{\sigma}$. What is plausible when we collect a new subject? Predictions, various grids, unit level.  
+2.  prediction style, where we are propagating uncertainty in $b_o$, $b_1$ & $\hat{\sigma}$. What is plausible when we collect a new subject? Predictions, various grids, unit level.
 
-3.  Link transformed. Only useful for generalized linear models (ie do you want predictions in logits or in probabilities?). Changes the type of DV youre interested in. 
-
+3.  Link transformed. Only useful for generalized linear models (ie do you want predictions in logits or in probabilities?). Changes the type of DV youre interested in.
 
 ## predicted values at unit level
 
@@ -680,7 +675,9 @@ data_grid(parent.c = seq_range(parent.c, n = 10)) %>%
 ```
 
 ## predicted values
-marginaleffects does it a little bit, as the resulting df is more compact. This is helpful when working with complex datasets, though it does result in less opportunity to sanity check. 
+
+marginaleffects does it a little bit, as the resulting df is more compact. This is helpful when working with complex datasets, though it does result in less opportunity to sanity check.
+
 ```{r}
 #| code-fold: true
 predictions(model = fit.1,
@@ -689,10 +686,9 @@ predictions(model = fit.1,
 
 ```
 
-
 ## predicted values
 
-Though if you want to see that, then just use the posterior draws function. 
+Though if you want to see that, then just use the posterior draws function.
 
 ```{r}
 #| code-fold: true
@@ -703,11 +699,10 @@ predictions(model = fit.1,
 
 ```
 
-
-
 ## predicted values
 
 Which allows you to use tidybayes functions
+
 ```{r}
 #| code-fold: true
 predictions(model = fit.1,
@@ -722,19 +717,17 @@ predictions(model = fit.1,
   geom_point(data = galton.data, size = 2,alpha = .5)
 ```
 
-------------
+------------------------------------------------------------------------
 
 predictions function defaults to returning "fitted" values based on full original data as the grid. Note the size of the df is the sample size
+
 ```{r}
 predictions(fit.1)
 ```
 
+------------------------------------------------------------------------
 
-
-
---------
-
-Representative, mean grid. Which is the same as just averaging all predictions. 
+Representative, mean grid. Which is the same as just averaging all predictions.
 
 ```{r}
 predictions(fit.1,  newdata = "mean")
@@ -744,26 +737,24 @@ predictions(fit.1,  newdata = "mean")
 avg_predictions(fit.1)
 ```
 
-----------
+------------------------------------------------------------------------
 
-Adding new data to make an "interesting" grid. With more complex models you can have more interesting combinations. Right now we have just a single variable 
+Adding new data to make an "interesting" grid. With more complex models you can have more interesting combinations. Right now we have just a single variable
+
 ```{r}
 predictions(fit.1,  newdata = datagrid(parent.c = c(30, -2)))
 ```
 
---------
+------------------------------------------------------------------------
 
-Often we have categories and would like a grid across all of these categories. This is described as "crossing" our categorical variables. 
+Often we have categories and would like a grid across all of these categories. This is described as "crossing" our categorical variables.
 
 ```{r, eval = FALSE}
 
 predictions(fit.1,  newdata = datagrid(fac1 = unique, fac2 = unique, covariate = mean)
 ```
 
-
---------------
-
-
+------------------------------------------------------------------------
 
 ## predicted values
 
@@ -788,9 +779,6 @@ pp_check(fit.1)
 :::
 :::
 
-
-
-
 ```{r}
 #| code-fold: true
 galton.data %>% 
@@ -802,4 +790,3 @@ galton.data %>%
   theme_classic()
 
 ```
-

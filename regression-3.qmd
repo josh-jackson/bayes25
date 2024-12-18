@@ -1,7 +1,7 @@
 ---
-title: Regression
+title: Regression 2
 format: revealjs
-editor: visual
+editor: source
 execute: 
   echo: true
 html:
@@ -51,16 +51,16 @@ $\beta_0$ \~ Normal(0, 5)\
 $\beta_1$ \~ Normal(0, 5)\
 $\sigma$ \~ HalfCauchy(0,10)
 
-What do these priors mean? How did we come up with them? 
+What do these priors mean? How did we come up with them?
 
 ## priors
 
-In general we want to: 
+In general we want to:
 
-1. Center our priors around a null effect
-2. Have dispersion (our accuracy metric) be a balance between not too large and not too little. This choice requires though, whereas centering a prior around zero requires none. 
+1.  Center our priors around a null effect
+2.  Have dispersion (our accuracy metric) be a balance between not too large and not too little. This choice requires though, whereas centering a prior around zero requires none.
 
-This also get around the "subjectivty in objective science" arguments against bayes. 
+This also get around the "subjectivty in objective science" arguments against bayes.
 
 ------------------------------------------------------------------------
 
@@ -446,7 +446,7 @@ h.2 %>%
 
 ```
 
--------------
+------------------------------------------------------------------------
 
 ```{r}
 library(marginaleffects)
@@ -458,14 +458,11 @@ predictions(h.2,
   
 ```
 
-
----------
+------------------------------------------------------------------------
 
 ```{r}
-avg_predictions(h.3, by = "mood.group.d")
+avg_predictions(h.2, by = "mood.group.d")
 ```
-
-
 
 ## standardized difference in means
 
@@ -610,7 +607,6 @@ h.3 %>%
   stat_summary(aes(group = NA), fun.y = mean, geom = "line")
 ```
 
-
 ## marginaleffects
 
 ```{r}
@@ -619,7 +615,7 @@ avg_predictions(h.3, by = "mood.group.d", hypothesis = "pairwise")
 
 ```
 
-------
+------------------------------------------------------------------------
 
 ```{r}
 avg_predictions(h.3, by = "mood.group.d", hypothesis = "b2 - b1 = 0")
@@ -629,8 +625,7 @@ avg_predictions(h.3, by = "mood.group.d", hypothesis = "b2 - b1 = 0")
 avg_predictions(h.3, by = "mood.group.d", hypothesis = "b2 - b1 = .5")
 ```
 
-
----------
+------------------------------------------------------------------------
 
 ```{r}
 predictions(h.3, 
@@ -639,8 +634,6 @@ predictions(h.3,
    ggplot(aes( x = draw, fill = mood.group.d)) +
   stat_halfeye(alpha = .74) 
 ```
-
-
 
 ## multiple comparison corrections
 
@@ -669,8 +662,7 @@ pp_check(h.3,"violin_grouped", group = "mood.group.d")
 
 ```
 
-
--------
+------------------------------------------------------------------------
 
 ```{r}
 #| code-fold: true
@@ -682,7 +674,6 @@ week3 %>%
   geom_violin(aes(health), fill="grey0", alpha = .4) 
 
 ```
-
 
 ## Extending the basic model
 
@@ -696,7 +687,7 @@ What if we tweak the likelihood and model?
 
 ## Robust regression
 
--   How do you treat "outliers"?  Why not incorporate our model to expect outliers, especially when working with low N situations?
+-   How do you treat "outliers"? Why not incorporate our model to expect outliers, especially when working with low N situations?
 
 -   Enter the t-distribution, with its heavy tailed distributions. Alternatively, a "robust" estimation could use medians instead of means
 
@@ -783,7 +774,7 @@ summary(h.5R)
 
 ------------------------------------------------------------------------
 
-::: columns
+::::: columns
 ::: {.column width="50%"}
 Robust
 
@@ -814,7 +805,7 @@ h.3 %>%
   stat_summary(aes(group = NA), fun.y = mean, geom = "line") + geom_point(aes(y = health), data = week3)
 ```
 :::
-:::
+:::::
 
 ## relaxing equal variance assumption
 
@@ -824,7 +815,7 @@ We could run a model that is both robust and has no equal variance assumption.
 
 ------------------------------------------------------------------------
 
-::: columns
+::::: columns
 ::: {.column width="50%"}
 Robust and unequal variances
 
@@ -853,7 +844,7 @@ $\beta_1$ \~ Normal(0, 10)\
 $\gamma_0$ \~ Normal(0, 3)\
 $\gamma_1$ \~ Normal(0, 3)
 :::
-:::
+:::::
 
 ------------------------------------------------------------------------
 

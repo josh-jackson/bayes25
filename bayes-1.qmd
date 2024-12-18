@@ -1,7 +1,13 @@
 ---
-title: "Untitled"
+title: Intro
+format: revealjs
+editor: source
+execute:
+  echo: true
+html:
+  code-fold: true
+  code-summary: Show the code
 ---
-
 
 ## Goals for the semester
 
@@ -9,11 +15,9 @@ title: "Untitled"
 2.  Know the advantages of Bayesian data analysis
 3.  Rethink your approach to statistical modeling and inference
 
-
 ## GLM
 
-$$\Large Y_i = b_{0} + b_{1}X_i ... +e_i$$ 
-$$\epsilon \sim Normal( 0 , \sigma )$$ 
+$$\Large Y_i = b_{0} + b_{1}X_i ... +e_i$$ $$\epsilon \sim Normal( 0 , \sigma )$$
 
 ## GLM
 
@@ -41,14 +45,13 @@ What are Bayesian models?
 
 3.  Priors that incorporate existing knowledge.
 
-
 ## Step 1 is easy
 
 ::: incremental
 -   OLS i.e. $min\sum(Y_{i}-\hat{Y})^{2}$
 -   R uses QR decomposition, Newton Raphson, Fisher Scoring, SVR, etc -- not this equation.
 -   More advanced stats use an even different algorithm (e.g., maximum likelihood)
-- So why use it? Always works. Fewer assumptions. Lots o' tricks: Regularization in model, imputation in model, etc. 
+-   So why use it? Always works. Fewer assumptions. Lots o' tricks: Regularization in model, imputation in model, etc.
 :::
 
 ## 2. Think of results in terms of distributions
@@ -81,6 +84,7 @@ galton.data %>%
 ```{r}
 #| code-fold: true
 library(brms)
+library("rstan")
 fit.1.bayesian <- brm(child ~ parent, data = galton.data,
                       backend = "cmdstanr",
                       file = "fit.1.b")
@@ -133,14 +137,13 @@ spread_draws(b_Intercept, b_parent)
 
 ## How does the algorithm work?
 
--   Bayes formula is analytically intractable (due to complex differential equations) so one needs to use an algorithm  
+-   Bayes formula is analytically intractable (due to complex differential equations) so one needs to use an algorithm
 
 -   Played a role in developing the thermonuclear bomb with one of the earliest computers. Published in 1953 but ignored within stats b/c it was published within a physics/chemistry journal. Took about until 1990 for desktop computers to run fast enough to do at home.
 
-
 ## What do you mean by likely?
 
-::: columns
+::::: columns
 ::: {.column width="35%"}
 -   Three parameters in a binomial distribution (# successes, \# of trials, probability of success).
 -   Often you would fix #trials and probability of success to see what \# successes are most/least likely.
@@ -163,11 +166,11 @@ data.frame(heads = 0:10, prob = dbinom(x = 0:10, size = 10, prob = .2)) %>%
   theme_classic(base_size = 16)
 ```
 :::
-:::
+:::::
 
 ## But we often don't know what p is
 
-::: columns
+::::: columns
 ::: {.column width="30%"}
 -   That is the parameter we want to estimate.
 
@@ -186,13 +189,13 @@ ggplot(aes(y = value, x=p)) +
 
 ```
 :::
-:::
+:::::
 
-------
+------------------------------------------------------------------------
 
-Probabilities are about a fixed distribution. p( data | distribution ) or p(heads | p = .2). 
+Probabilities are about a fixed distribution. p( data \| distribution ) or p(heads \| p = .2).
 
-Likelihood is about hypotheses. p(distribution | data ) with fixed data. We entertained many hypotheses (distribution about theta), which is why we looped it. But we could have easily just did two distributions/hypotheses.    
+Likelihood is about hypotheses. p(distribution \| data ) with fixed data. We entertained many hypotheses (distribution about theta), which is why we looped it. But we could have easily just did two distributions/hypotheses.
 
 ```{r}
 #| code-fold: true
@@ -203,11 +206,11 @@ loglike
 
 ## Maximum Likelihood
 
-ML results that we often use for MLM and SEMs are similar. But instead of focusing on the entire distribution, they give us a distribution that is centered on the most likely ie "maximum". 
+ML results that we often use for MLM and SEMs are similar. But instead of focusing on the entire distribution, they give us a distribution that is centered on the most likely ie "maximum".
 
-We can fix the distribution around the mean estimate, and then try out different versions of SD to for the typically assumed normal distribution, maximizing or finding the most likely value. 
+We can fix the distribution around the mean estimate, and then try out different versions of SD to for the typically assumed normal distribution, maximizing or finding the most likely value.
 
-Ultimately, what we end up with is very closely related to this ML estimate (often identical). Conceptually, though, the process is different. 
+Ultimately, what we end up with is very closely related to this ML estimate (often identical). Conceptually, though, the process is different.
 
 ------------------------------------------------------------------------
 
@@ -224,15 +227,14 @@ ggplot(aes(x = b_parent)) +
   stat_dotsinterval()
 ```
 
------------
+------------------------------------------------------------------------
 
-Our posterior is literally made up of educated parameter guesses by the algorithm. Which estimates are more likely given the data?  
+Our posterior is literally made up of educated parameter guesses by the algorithm. Which estimates are more likely given the data?
 
 ```{r}
 
 tidy_draws(fit.1.bayesian)
 ```
-
 
 ## Bayesian analysis is just counting
 
@@ -573,4 +575,3 @@ data_grid(parent = seq_range(parent, n = 101)) %>%
 
 -   Bayes Factors. Mostly garbage (imho) as they can be easily manipulated. But they have their place. BFs =/= Bayesian.
 :::
-
