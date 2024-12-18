@@ -461,6 +461,11 @@
 </div>
 
 <img data-src="bayes-1_files/figure-revealjs/unnamed-chunk-2-1.png" width="960" class="r-stretch"></section>
+<section id="model-we-want-to-fit" class="slide level2">
+<h2>model we want to fit</h2>
+<p><span class="math display">\[ child_i \sim Normal( \mu_i , \sigma )\ \]</span></p>
+<p><span class="math display">\[\mu_i = \beta_0 + \beta_1  parent_i \]</span></p>
+</section>
 <section id="regression-with-brms" class="slide level2">
 <h2>regression with brms</h2>
 <div class="cell">
@@ -714,8 +719,9 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 </section>
 <section class="slide level2">
 
+<p><span class="math display">\[ child_i \sim Normal( \mu_i , \sigma )\ \]</span></p>
+<p><span class="math display">\[\mu_i = \beta_0 + \beta_1  parent_i \]</span></p>
 <ul>
-<li><p>Take our height example where we are fitting <span class="math inline">\(\Large Child = b_{0} + b_{1}Parent +e\)</span></p></li>
 <li><p>We need to put priors on each parameter we want to estimate, here <span class="math inline">\(b_{0}\)</span> &amp; <span class="math inline">\(b_{1}\)</span> (and e).</p></li>
 <li><p><span class="math inline">\(b_{0}\)</span> is the intercept and reflect average child height when parent height is centered.</p></li>
 <li><p>We know, roughly, what average height of adults are so we can create a distribution, say ~N(66 (5.5 ft), 5). That means we are pretty sure (95%) the average height is between ~4’8 and 6`4</p></li>
@@ -807,6 +813,11 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <li><p>We entertain impossible values with standard “frequentist” methods. They have implicit priors such that all values, from negative infinity to positive infinity are equally likely.</p></li>
 <li><p>If we use priors from a uniform distribution we will get the EXACT same results as a frequentist method.</p></li>
 </ul>
+</section>
+<section id="model" class="slide level2">
+<h2>model</h2>
+<p><span class="math display">\[ child_i \sim Normal( \mu_i , \sigma )\ \]</span></p>
+<p><span class="math display">\[\mu_i = \beta_0 + \beta_1  (parent_i - \bar{parent_i} \]</span> <span class="math display">\[\beta_0 \sim Normal(66, 5)\ \]</span> <span class="math display">\[\beta_1 \sim Normal(0, 5)\ \]</span> <span class="math display">\[\sigma \sim HalfCauchy(0,10) \]</span></p>
 </section>
 <section id="tying-it-together" class="slide level2">
 <h2>Tying it together</h2>

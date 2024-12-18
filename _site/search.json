@@ -936,5 +936,19 @@
     "title": "Lectures",
     "section": "",
     "text": "Background and introduction\nRegression part 1\nRegression part 2"
+  },
+  {
+    "objectID": "bayes-1.html#model-we-want-to-fit",
+    "href": "bayes-1.html#model-we-want-to-fit",
+    "title": "Intro",
+    "section": "model we want to fit",
+    "text": "model we want to fit\n\\[ child_i \\sim Normal( \\mu_i , \\sigma )\\ \\]\n\\[\\mu_i = \\beta_0 + \\beta_1  parent_i \\]"
+  },
+  {
+    "objectID": "bayes-1.html#model",
+    "href": "bayes-1.html#model",
+    "title": "Intro",
+    "section": "model",
+    "text": "model\n\\[ child_i \\sim Normal( \\mu_i , \\sigma )\\ \\]\n\\[\\mu_i = \\beta_0 + \\beta_1  (parent_i - \\bar{parent_i} \\] \\[\\beta_0 \\sim Normal(66, 5)\\ \\] \\[\\beta_1 \\sim Normal(0, 5)\\ \\] \\[\\sigma \\sim HalfCauchy(0,10) \\]"
   }
 ]

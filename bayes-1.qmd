@@ -79,6 +79,13 @@ galton.data %>%
 
 ```
 
+## model we want to fit
+
+$$ child_i \sim Normal( \mu_i , \sigma )\ $$
+
+$$\mu_i = \beta_0 + \beta_1  parent_i $$
+
+
 ## regression with brms
 
 ```{r}
@@ -258,7 +265,10 @@ tidy_draws(fit.1.bayesian)
 
 ------------------------------------------------------------------------
 
--   Take our height example where we are fitting $\Large Child = b_{0} + b_{1}Parent +e$
+
+$$ child_i \sim Normal( \mu_i , \sigma )\ $$
+
+$$\mu_i = \beta_0 + \beta_1  parent_i $$
 
 -   We need to put priors on each parameter we want to estimate, here $b_{0}$ & $b_{1}$ (and e).
 
@@ -348,6 +358,15 @@ g.pp
 -   We entertain impossible values with standard "frequentist" methods. They have implicit priors such that all values, from negative infinity to positive infinity are equally likely.
 
 -   If we use priors from a uniform distribution we will get the EXACT same results as a frequentist method.
+
+## model
+
+$$ child_i \sim Normal( \mu_i , \sigma )\ $$
+
+$$\mu_i = \beta_0 + \beta_1  (parent_i - \bar{parent_i} $$
+$$\beta_0 \sim Normal(66, 5)\ $$ 
+$$\beta_1 \sim Normal(0, 5)\ $$ 
+$$\sigma \sim HalfCauchy(0,10) $$
 
 ## Tying it together
 

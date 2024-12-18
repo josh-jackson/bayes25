@@ -675,6 +675,7 @@ week3 %>%
 
 ```
 
+
 ## Extending the basic model
 
 Now we have the basics down we can extend the model, tweaking different components of it. We have already seen what happens if we tweak the priors a little. Thus far they have been mostly inconsequential.
@@ -684,6 +685,7 @@ What if we tweak the likelihood and model?
 1.  Robust regression
 
 2.  Heterogeneous variances
+
 
 ## Robust regression
 
