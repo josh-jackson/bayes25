@@ -94,20 +94,20 @@ Note that dates and readings are tentative. Topics will likely shift; all change
 | 2    | Linear model basics |SR 3  M2M 3 - 3.3 & 3.6|
 | 3    | Linear Models continued |  SR 4      |
 | 4    | Multiple regression and interactions  |  SR 5 & 9                |
-Exam 1
+| | Exam 1 |  | 
 | 5    | Markov Chain Monte Carlo Estimation (MCMC)  |          |
 | 6    | Information, NHST and model fit              |  SR 7 & 10                     |
 | 7    | Generalized Linear Models    | SR 11  M2M 5 AH1 |
 | 8    | Generalized Linear Models    | SR 12    AH2|
-Exam 2
+|| Exam 2 | | 
 | 9    | Multilevel Models   |  SR 13   M2M 19           |
-| 10   | Multilevel Models         |  SR 14  AH3                              |
+| 10   | Multilevel Models         |  SR 14  AH3                        |
 | 11   | Multilevel Models, meta-analysis and missing data        |  SR 15|
-Exam 3
+|| Exam 3 | | 
 | 12   | Multivariate and Distributional Models       | Williams et al 2021 psych methods        |
 | 13   | Cognitive and IRT models (e.g., DDM)         |      F&L 14, Burkner, 2019            |
 | 14   | GAMs |              |
-Exam 4
+|| Exam 4 | | 
 
 ## Chat-GPT and other AI overlord helpers
 
