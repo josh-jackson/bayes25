@@ -23,16 +23,16 @@ Note that McElreath also has lectures from his book posted on his youtube. They 
 Please check them out, especially if you are lost: 
 https://tinyurl.com/yckrrzjy
 
-Solomon Kurz has also created a book that does all of the examples in brms. https://bookdown.org/content/4857/ It is extremely helpful. He focuses on brms helper functions, some of which are depreciated, and we will mainly focus on tidybayes, and marginaleffects, but to get an idea of how to apply the content this book is extremely useful.  
+Solomon Kurz has also created a book that does all of the examples in brms. https://bookdown.org/content/4857/ It is extremely helpful. He focuses on brms helper functions, some of which are depreciated, and we will mainly focus on tidybayes, and marginaleffects, but to get an idea of how to apply the content this book is extremely useful. *I highly recommend you read this along with the corresponding chapter from SR.*  
 
 We will also read some chapters from Model to Meaning (M2M) by Vincent Arel-Bundock, who created the marginaleffects package:
 https://marginaleffects.com
 
 Andrew Heiss has some nice blog posts that cover marginal effects package and walk through in great detail some difficult topics. 
 
-AH #1: https://www.andrewheiss.com/blog/2022/09/26/guide-visualizing-types-posteriors/
-AH #2: https://www.andrewheiss.com/blog/2022/05/20/marginalia/
-AH #3: https://www.andrewheiss.com/blog/2022/11/29/conditional-marginal-marginaleffects/
+AH #1: https://www.andrewheiss.com/blog/2022/09/26/guide-visualizing-types-posteriors/  
+AH #2: https://www.andrewheiss.com/blog/2022/05/20/marginalia/  
+AH #3: https://www.andrewheiss.com/blog/2022/11/29/conditional-marginal-marginaleffects/  
 
 
 *Recommended text (not required)*
