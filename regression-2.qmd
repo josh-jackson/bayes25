@@ -1,6 +1,7 @@
 ---
 title: Regression 1
 format: revealjs
+slide-number: true
 editor: source
 execute:
   echo: true
@@ -9,9 +10,10 @@ html:
   code-summary: Show the code
 ---
 
-## Goals for the slide deck
+## Goals for this slide deck
 
-Example using `brms` to help with nomenclature and procedure. Begin to think about how we can "feed" our model for insight and profit
+- Example using `brms` to help with nomenclature and procedure. 
+- Begin to think about how we can "feed" our model for insight and profit
 
 ## Specify the model
 
@@ -35,9 +37,9 @@ $$\beta_1 \sim Normal(0, 5)\ $$ $$\sigma \sim HalfCauchy(0,10) $$
 In general we want to:
 
 1.  Center our priors around a null effect
-2.  Have dispersion (our accuracy metric) be a balance between not too large and not too little. This choice requires though, whereas centering a prior around zero requires none.
+2.  Have dispersion (our accuracy metric) be a balance between not too large and not too little. This choice requires thought, whereas centering a prior around zero requires none.
 
-This also get around the "subjectivty in objective science" arguments against bayes.
+This also get around the "subjectivity in objective science" arguments against bayes.
 
 ## Example
 
@@ -136,7 +138,7 @@ p.s
 
 ## Prior predictive
 
--   What do our priors say about what our model expects? This is a way to check if our priors our too liberal or conservative.
+-   What do our priors say about what our model expects? This is a way to check if our priors are too liberal or conservative.
 
 -   We can take our prior and simulate what they say about our potential results.
 
@@ -497,7 +499,7 @@ data_grid(parent.c = seq_range(parent.c, n = 10))
 
 ## {marginaleffects}
 
-Like modelr, it can be used for many types of models beyond Bayes. Especially helpful for generalized linear models (logistic etc) https://vincentarelbundock.github.io/marginaleffects/
+Like modelr, it can be used for many types of models beyond Bayes. Especially helpful for generalized linear models (logistic etc)
 
 ```{r}
 #| code-fold: true
@@ -582,6 +584,13 @@ data_grid(parent.c = seq_range(parent.c, n = 10)) %>%
   geom_line(aes(y = .epred, group = .draw), alpha = .1)
 ```
 
+## Predicted/fitted values
+
+- The predictions are conditional quantities, which means that their values depend on all the predictors in a model. 
+
+- In a multiple regression there may be many different predictions we want to make e.g., health for a 50 year old, male, who has no heart history. 
+- We must choose at which value we want to make these predictions from, and to do so we specify it through the data grid. 
+
 ## average/marginal effects
 
 We often want to get predicted values for specific combinations of model variables. Like x = 64 inches.
@@ -597,7 +606,7 @@ data_grid(parent.c = -4.3) %>%
 
 ## average/marginal effects
 
-When we are dealing with multiple regression, we sometimes want to get a slope or estimate at different levels of other variables. From {marginalmeans} we can use the slopes function. Note that our slope should be the same at all levels of X.
+We sometimes want to get a slope or estimate at different levels of variables. From {marginalmeans} we can use the slopes function. Note that our slope should be the same at all levels of X.
 
 ```{r}
 #| code-fold: true
@@ -790,3 +799,20 @@ galton.data %>%
   theme_classic()
 
 ```
+
+
+## posterior predictive distribution
+
+- PPD includes both uncertainty in parameter values and uncertainty in a sampling process.  
+
+- The posterior distribution is a ranking of the relative plausibilities of every possible combination of parameter values. 
+
+- The distribution of predicted (simulated) outcomes is a distribution that also includes sampling variation
+
+## posterior predictive distribution
+
+- PPD uses original data to evaluate whether the model +  posterior distribution over the model parameters can (approximately) reproduce the data set. 
+
+- If not, then you should question both your model and the posterior. Aka a method for doing
+
+- Will can use the model+posterior to generate (new) predictions about novel scenarios, e.g., those that don't exist in the dataset

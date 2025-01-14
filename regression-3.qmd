@@ -1,6 +1,7 @@
 ---
 title: Regression 2
 format: revealjs
+slide-number: true
 editor: source
 execute: 
   echo: true
@@ -12,12 +13,10 @@ html:
 ## Goals for this section
 
 -   Prior choice
--   Get more comfortable with posterior
 -   Fit indices
--   Categorical predictors
 -   Robust regression
 -   Multiple regression
--   Post-hoc tests
+-   ANOVA and Post-hoc tests
 
 ## Example data
 

@@ -1,6 +1,7 @@
 ---
 title: Intro
 format: revealjs
+slide-number: true
 editor: source
 execute:
   echo: true
@@ -14,6 +15,7 @@ html:
 1.  Take what you know (regression) and do it Bayesian (and more!)
 2.  Know the advantages of Bayesian data analysis
 3.  Rethink your approach to statistical modeling and inference
+4.  Be very comfortable with model equations
 
 ## GLM
 
@@ -39,7 +41,7 @@ $$\text{logit}(p_i) = \beta_0 + \beta_1  X_i $$
 
 What are Bayesian models?
 
-1.  "Normal" regression with a different estimation algorithm.
+1.  "Standard" regression with a different estimation algorithm.
 
 2.  Results that represent a distribution rather than a point estimate and some uncertainty.
 
@@ -51,7 +53,7 @@ What are Bayesian models?
 -   OLS i.e. $min\sum(Y_{i}-\hat{Y})^{2}$
 -   R uses QR decomposition, Newton Raphson, Fisher Scoring, SVR, etc -- not this equation.
 -   More advanced stats use an even different algorithm (e.g., maximum likelihood)
--   So why use it? Always works. Fewer assumptions. Lots o' tricks: Regularization in model, imputation in model, etc.
+-   So why use bayesian algo? Always works. Fewer assumptions. Lots o' tricks: Regularization in model, imputation in model, etc.
 :::
 
 ## 2. Think of results in terms of distributions
@@ -84,6 +86,7 @@ galton.data %>%
 $$ child_i \sim Normal( \mu_i , \sigma )\ $$
 
 $$\mu_i = \beta_0 + \beta_1  parent_i $$
+
 
 
 ## regression with brms
@@ -175,13 +178,29 @@ data.frame(heads = 0:10, prob = dbinom(x = 0:10, size = 10, prob = .2)) %>%
 :::
 :::::
 
+----------------
+
+- Note how this is in the form of: 
+(data | hypothesis)
+
+- "What is the probability of having x successes given a fixed probability of success?"
+
+- Good at rejecting some preconceived state of the world (is this coin fair), but not good at estimating p (what is the probability of heads for this coin?)
+
 ## But we often don't know what p is
 
+- p is like the parameters we are trying to estimate in our science. 
+
+- We do not know p, that is why we are running the experiment. 
+
+- What we want is p(hypothesis | data). 
+
+## But we often don't know what p is
 ::::: columns
 ::: {.column width="30%"}
--   That is the parameter we want to estimate.
 
 -   We can look at what p is consistent with (or not) based on our data (2 successes in 10 trials).
+
 :::
 
 ::: {.column width="70%"}
@@ -200,16 +219,37 @@ ggplot(aes(y = value, x=p)) +
 
 ------------------------------------------------------------------------
 
-Probabilities are about a fixed distribution. p( data \| distribution ) or p(heads \| p = .2).
+- "Probability attaches to possible results; likelihood attaches to hypotheses"
 
-Likelihood is about hypotheses. p(distribution \| data ) with fixed data. We entertained many hypotheses (distribution about theta), which is why we looped it. But we could have easily just did two distributions/hypotheses.
+- Probabilities are about a fixed distribution. 
+p( data \| distribution ) or p(heads \| p = .2).
 
+- Likelihood is about hypotheses with fixed data. L($\theta$|data) = P(data|$\theta$). We entertained many hypotheses (p), which is why we looped it. 
+
+
+## Bayes is just counting
+
+::::: columns
+::: {.column width="30%"}
+
+-   What p is consistent with our data? The most consistent are more likely, but the less consistent are possible
+
+:::
+
+::: {.column width="70%"}
 ```{r}
 #| code-fold: true
-p <- c(.2, .5)
+p <- seq(0.01, 0.99, by = 0.01)
 loglike <- dbinom(2, size = 10, prob = p)
-loglike
+as.tibble(loglike) %>% 
+  mutate(p = row_number()/100) %>% 
+ggplot(aes(y = value, x=p)) + 
+     geom_line() + ylab("likelihood")
+
 ```
+
+:::
+:::::
 
 ## Maximum Likelihood
 
@@ -217,7 +257,7 @@ ML results that we often use for MLM and SEMs are similar. But instead of focusi
 
 We can fix the distribution around the mean estimate, and then try out different versions of SD to for the typically assumed normal distribution, maximizing or finding the most likely value.
 
-Ultimately, what we end up with is very closely related to this ML estimate (often identical). Conceptually, though, the process is different.
+Ultimately, what we end up with (in Bayes land) is very closely related to this ML estimate (often identical). Conceptually, though, the process is different.
 
 ------------------------------------------------------------------------
 
@@ -272,7 +312,7 @@ $$\mu_i = \beta_0 + \beta_1  parent_i $$
 
 -   We need to put priors on each parameter we want to estimate, here $b_{0}$ & $b_{1}$ (and e).
 
--   $b_{0}$ is the intercept and reflect average child height when parent height is centered.
+-   $b_{0}$ is the intercept and reflects average child height when parent height is centered.
 
 -   We know, roughly, what average height of adults are so we can create a distribution, say \~N(66 (5.5 ft), 5). That means we are pretty sure (95%) the average height is between \~4'8 and 6\`4
 
@@ -363,7 +403,7 @@ g.pp
 
 $$ child_i \sim Normal( \mu_i , \sigma )\ $$
 
-$$\mu_i = \beta_0 + \beta_1  (parent_i - \bar{parent_i} $$
+$$\mu_i = \beta_0 + \beta_1  (parent_i - \bar{parent_i} ) $$
 $$\beta_0 \sim Normal(66, 5)\ $$ 
 $$\beta_1 \sim Normal(0, 5)\ $$ 
 $$\sigma \sim HalfCauchy(0,10) $$
@@ -386,9 +426,9 @@ p(data) can be ignored, it is just a normalized coefficient
 
 ## Tying it together
 
--   p(data \| \theta) is what we typically work with. What is the definition of a p-value?
+-   p(data \| $\theta$) is what we typically work with. What is the definition of a p-value?
 
--   We (scientists and those wanting to make decisions based on the science) don't want that, but rather they want p($\theta$ \| data)
+-   We (scientists and those wanting to make decisions based on the science) don't want that, but rather they want p($\theta$ \| data). Inverse probability - working backwards from the data to determine the most likely underlying condition
 
 -   Bayes gives us this.
 
@@ -580,7 +620,7 @@ data_grid(parent = seq_range(parent, n = 101)) %>%
 ## What is confusing:
 
 ::: incremental
--   Is it a philosophically different framework? p(H0\|d) vs p(d\|H0) but it doesn't really matter. Bayesian just means using the algorithm, and again, most of us don't have strong algo preferences. Assuming a flat prior basically makes p(H0\|d) = p(d\|H0) so if you want (don't tell Bayesians) you can interpret frequentist stats as Bayesian. And that means CIs too! (don't tell frequentists)
+-   Is it a philosophically different framework? p( ${H_0}$ \| D) vs p(D \| ${H_0}$ ) but it doesn't really matter. Bayesian just means using the algorithm, and again, most of us don't have strong algo preferences. Assuming a flat prior basically makes p( ${H_0}$ \|d) = p( D \| ${H_0}$ ) so if you want (don't tell Bayesians) you can interpret frequentist stats as Bayesian. And that means CIs too! (don't tell frequentists)
 
 -   Why don't we do this already? Isn't frequentist better? History doesn't progress due to fair and even fights (i.e. the correct doesn't always prevail). Computation limitations and Fisher held progress back.
 :::

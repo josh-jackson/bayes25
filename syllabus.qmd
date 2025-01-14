@@ -14,6 +14,15 @@ Bayesian parameter estimation and hypothesis testing offer a useful alternative 
 
 <br>  
 
+### Course learing objectives
+
+1.  Take what you know (regression) and do it Bayesian (and more!)
+
+2.  Know the advantages of Bayesian data analysis
+
+3.  Rethink your approach to statistical modeling and inference
+
+
 #### Class textbook
 
 -McElreath, R. (2020). Statistical Rethinking: A Bayesian Course with Examples in R. SECOND EDITION CRC Press. 

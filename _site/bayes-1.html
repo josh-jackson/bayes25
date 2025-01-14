@@ -401,6 +401,7 @@
 <li>Take what you know (regression) and do it Bayesian (and more!)</li>
 <li>Know the advantages of Bayesian data analysis</li>
 <li>Rethink your approach to statistical modeling and inference</li>
+<li>Be very comfortable with model equations</li>
 </ol>
 </section>
 <section id="glm" class="slide level2">
@@ -423,7 +424,7 @@
 <h2>A working mental model</h2>
 <p>What are Bayesian models?</p>
 <ol type="1">
-<li><p>“Normal” regression with a different estimation algorithm.</p></li>
+<li><p>“Standard” regression with a different estimation algorithm.</p></li>
 <li><p>Results that represent a distribution rather than a point estimate and some uncertainty.</p></li>
 <li><p>Priors that incorporate existing knowledge.</p></li>
 </ol>
@@ -435,7 +436,7 @@
 <li class="fragment">OLS i.e.&nbsp;<span class="math inline">\(min\sum(Y_{i}-\hat{Y})^{2}\)</span></li>
 <li class="fragment">R uses QR decomposition, Newton Raphson, Fisher Scoring, SVR, etc – not this equation.</li>
 <li class="fragment">More advanced stats use an even different algorithm (e.g., maximum likelihood)</li>
-<li class="fragment">So why use it? Always works. Fewer assumptions. Lots o’ tricks: Regularization in model, imputation in model, etc.</li>
+<li class="fragment">So why use bayesian algo? Always works. Fewer assumptions. Lots o’ tricks: Regularization in model, imputation in model, etc.</li>
 </ul>
 </div>
 </section>
@@ -605,13 +606,28 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 </div>
 </div>
 </section>
+<section class="slide level2">
+
+<ul>
+<li><p>Note how this is in the form of: (data | hypothesis)</p></li>
+<li><p>“What is the probability of having x successes given a fixed probability of success?”</p></li>
+<li><p>Good at rejecting some preconceived state of the world (is this coin fair), but not good at estimating p (what is the probability of heads for this coin?)</p></li>
+</ul>
+</section>
 <section id="but-we-often-dont-know-what-p-is" class="slide level2">
+<h2>But we often don’t know what p is</h2>
+<ul>
+<li><p>p is like the parameters we are trying to estimate in our science.</p></li>
+<li><p>We do not know p, that is why we are running the experiment.</p></li>
+<li><p>What we want is p(hypothesis | data).</p></li>
+</ul>
+</section>
+<section id="but-we-often-dont-know-what-p-is-1" class="slide level2">
 <h2>But we often don’t know what p is</h2>
 <div class="columns">
 <div class="column" style="width:30%;">
 <ul>
-<li><p>That is the parameter we want to estimate.</p></li>
-<li><p>We can look at what p is consistent with (or not) based on our data (2 successes in 10 trials).</p></li>
+<li>We can look at what p is consistent with (or not) based on our data (2 successes in 10 trials).</li>
 </ul>
 </div><div class="column" style="width:70%;">
 <div class="cell">
@@ -633,17 +649,34 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 </section>
 <section class="slide level2">
 
-<p>Probabilities are about a fixed distribution. p( data | distribution ) or p(heads | p = .2).</p>
-<p>Likelihood is about hypotheses. p(distribution | data ) with fixed data. We entertained many hypotheses (distribution about theta), which is why we looped it. But we could have easily just did two distributions/hypotheses.</p>
+<ul>
+<li><p>“Probability attaches to possible results; likelihood attaches to hypotheses”</p></li>
+<li><p>Probabilities are about a fixed distribution. p( data | distribution ) or p(heads | p = .2).</p></li>
+<li><p>Likelihood is about hypotheses with fixed data. L(<span class="math inline">\(\theta\)</span>|data) = P(data|<span class="math inline">\(\theta\)</span>). We entertained many hypotheses (p), which is why we looped it.</p></li>
+</ul>
+</section>
+<section id="bayes-is-just-counting" class="slide level2">
+<h2>Bayes is just counting</h2>
+<div class="columns">
+<div class="column" style="width:30%;">
+<ul>
+<li>What p is consistent with our data? The most consistent are more likely, but the less consistent are possible</li>
+</ul>
+</div><div class="column" style="width:70%;">
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>p <span class="ot">&lt;-</span> <span class="fu">c</span>(.<span class="dv">2</span>, .<span class="dv">5</span>)</span>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>p <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fl">0.01</span>, <span class="fl">0.99</span>, <span class="at">by =</span> <span class="fl">0.01</span>)</span>
 <span id="cb11-2"><a href="#cb11-2"></a>loglike <span class="ot">&lt;-</span> <span class="fu">dbinom</span>(<span class="dv">2</span>, <span class="at">size =</span> <span class="dv">10</span>, <span class="at">prob =</span> p)</span>
-<span id="cb11-3"><a href="#cb11-3"></a>loglike</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb11-3"><a href="#cb11-3"></a><span class="fu">as.tibble</span>(loglike) <span class="sc">%&gt;%</span> </span>
+<span id="cb11-4"><a href="#cb11-4"></a>  <span class="fu">mutate</span>(<span class="at">p =</span> <span class="fu">row_number</span>()<span class="sc">/</span><span class="dv">100</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb11-5"><a href="#cb11-5"></a><span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y =</span> value, <span class="at">x=</span>p)) <span class="sc">+</span> </span>
+<span id="cb11-6"><a href="#cb11-6"></a>     <span class="fu">geom_line</span>() <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">"likelihood"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.30198989 0.04394531</code></pre>
+<div class="cell-output-display">
+<p><img data-src="bayes-1_files/figure-revealjs/unnamed-chunk-10-1.png" width="960"></p>
+</div>
+</div>
 </div>
 </div>
 </section>
@@ -651,7 +684,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <h2>Maximum Likelihood</h2>
 <p>ML results that we often use for MLM and SEMs are similar. But instead of focusing on the entire distribution, they give us a distribution that is centered on the most likely ie “maximum”.</p>
 <p>We can fix the distribution around the mean estimate, and then try out different versions of SD to for the typically assumed normal distribution, maximizing or finding the most likely value.</p>
-<p>Ultimately, what we end up with is very closely related to this ML estimate (often identical). Conceptually, though, the process is different.</p>
+<p>Ultimately, what we end up with (in Bayes land) is very closely related to this ML estimate (often identical). Conceptually, though, the process is different.</p>
 </section>
 <section class="slide level2">
 
@@ -662,10 +695,10 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>fit.<span class="fl">1.</span>bayesian <span class="sc">%&gt;%</span> </span>
-<span id="cb13-2"><a href="#cb13-2"></a><span class="fu">spread_draws</span>(b_Intercept, b_parent) <span class="sc">%&gt;%</span> </span>
-<span id="cb13-3"><a href="#cb13-3"></a><span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> b_parent)) <span class="sc">+</span></span>
-<span id="cb13-4"><a href="#cb13-4"></a>  <span class="fu">stat_dotsinterval</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>fit.<span class="fl">1.</span>bayesian <span class="sc">%&gt;%</span> </span>
+<span id="cb12-2"><a href="#cb12-2"></a><span class="fu">spread_draws</span>(b_Intercept, b_parent) <span class="sc">%&gt;%</span> </span>
+<span id="cb12-3"><a href="#cb12-3"></a><span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> b_parent)) <span class="sc">+</span></span>
+<span id="cb12-4"><a href="#cb12-4"></a>  <span class="fu">stat_dotsinterval</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 
 </div>
@@ -674,7 +707,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 
 <p>Our posterior is literally made up of educated parameter guesses by the algorithm. Which estimates are more likely given the data?</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="fu">tidy_draws</span>(fit.<span class="fl">1.</span>bayesian)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="fu">tidy_draws</span>(fit.<span class="fl">1.</span>bayesian)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4,000 × 15
    .chain .iteration .draw b_Intercept b_parent sigma Intercept lprior   lp__
@@ -723,7 +756,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <p><span class="math display">\[\mu_i = \beta_0 + \beta_1  parent_i \]</span></p>
 <ul>
 <li><p>We need to put priors on each parameter we want to estimate, here <span class="math inline">\(b_{0}\)</span> &amp; <span class="math inline">\(b_{1}\)</span> (and e).</p></li>
-<li><p><span class="math inline">\(b_{0}\)</span> is the intercept and reflect average child height when parent height is centered.</p></li>
+<li><p><span class="math inline">\(b_{0}\)</span> is the intercept and reflects average child height when parent height is centered.</p></li>
 <li><p>We know, roughly, what average height of adults are so we can create a distribution, say ~N(66 (5.5 ft), 5). That means we are pretty sure (95%) the average height is between ~4’8 and 6`4</p></li>
 </ul>
 </section>
@@ -732,16 +765,16 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>p<span class="fl">.0</span> <span class="ot">&lt;-</span></span>
-<span id="cb16-2"><a href="#cb16-2"></a>  <span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">40</span>, <span class="at">to =</span> <span class="dv">100</span>, <span class="at">by =</span> .<span class="dv">1</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb16-3"><a href="#cb16-3"></a>  </span>
-<span id="cb16-4"><a href="#cb16-4"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> <span class="fu">dnorm</span>(x, <span class="at">mean =</span> <span class="dv">66</span>, <span class="at">sd =</span> <span class="dv">5</span>))) <span class="sc">+</span></span>
-<span id="cb16-5"><a href="#cb16-5"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb16-6"><a href="#cb16-6"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">40</span>, <span class="at">to =</span> <span class="dv">100</span>, <span class="at">by =</span> <span class="dv">10</span>)) <span class="sc">+</span></span>
-<span id="cb16-7"><a href="#cb16-7"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"mu ~ dnorm(66, 5)"</span>,</span>
-<span id="cb16-8"><a href="#cb16-8"></a>       <span class="at">y =</span> <span class="st">"density"</span>)</span>
-<span id="cb16-9"><a href="#cb16-9"></a></span>
-<span id="cb16-10"><a href="#cb16-10"></a>p<span class="fl">.0</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a>p<span class="fl">.0</span> <span class="ot">&lt;-</span></span>
+<span id="cb15-2"><a href="#cb15-2"></a>  <span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">40</span>, <span class="at">to =</span> <span class="dv">100</span>, <span class="at">by =</span> .<span class="dv">1</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb15-3"><a href="#cb15-3"></a>  </span>
+<span id="cb15-4"><a href="#cb15-4"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> <span class="fu">dnorm</span>(x, <span class="at">mean =</span> <span class="dv">66</span>, <span class="at">sd =</span> <span class="dv">5</span>))) <span class="sc">+</span></span>
+<span id="cb15-5"><a href="#cb15-5"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb15-6"><a href="#cb15-6"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">40</span>, <span class="at">to =</span> <span class="dv">100</span>, <span class="at">by =</span> <span class="dv">10</span>)) <span class="sc">+</span></span>
+<span id="cb15-7"><a href="#cb15-7"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"mu ~ dnorm(66, 5)"</span>,</span>
+<span id="cb15-8"><a href="#cb15-8"></a>       <span class="at">y =</span> <span class="st">"density"</span>)</span>
+<span id="cb15-9"><a href="#cb15-9"></a></span>
+<span id="cb15-10"><a href="#cb15-10"></a>p<span class="fl">.0</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 
 </div>
@@ -759,26 +792,26 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>N10 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">data.frame</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">35</span>, <span class="dv">35</span>)), <span class="fu">aes</span>(x)) <span class="sc">+</span></span>
-<span id="cb17-2"><a href="#cb17-2"></a>  <span class="fu">stat_function</span>(<span class="at">fun =</span> dnorm, <span class="at">n =</span> <span class="dv">100</span>, <span class="at">args =</span> <span class="fu">list</span>(<span class="dv">0</span>, <span class="dv">10</span>))<span class="sc">+</span></span>
-<span id="cb17-3"><a href="#cb17-3"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"B ~ Normal(0, 10)"</span>)</span>
-<span id="cb17-4"><a href="#cb17-4"></a></span>
-<span id="cb17-5"><a href="#cb17-5"></a>N5 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">data.frame</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">35</span>, <span class="dv">35</span>)), <span class="fu">aes</span>(x)) <span class="sc">+</span></span>
-<span id="cb17-6"><a href="#cb17-6"></a>  <span class="fu">stat_function</span>(<span class="at">fun =</span> dnorm, <span class="at">n =</span> <span class="dv">100</span>, <span class="at">args =</span> <span class="fu">list</span>(<span class="dv">0</span>, <span class="dv">5</span>)) <span class="sc">+</span></span>
-<span id="cb17-7"><a href="#cb17-7"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"B ~ Normal(0, 5)"</span>)</span>
-<span id="cb17-8"><a href="#cb17-8"></a></span>
-<span id="cb17-9"><a href="#cb17-9"></a>N1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">data.frame</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">35</span>, <span class="dv">35</span>)), <span class="fu">aes</span>(x)) <span class="sc">+</span></span>
-<span id="cb17-10"><a href="#cb17-10"></a>  <span class="fu">stat_function</span>(<span class="at">fun =</span> dnorm, <span class="at">n =</span> <span class="dv">100</span>, <span class="at">args =</span> <span class="fu">list</span>(<span class="dv">0</span>, <span class="dv">1</span>)) <span class="sc">+</span></span>
-<span id="cb17-11"><a href="#cb17-11"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">" B ~ Normal(0, 1)"</span>)</span>
-<span id="cb17-12"><a href="#cb17-12"></a></span>
-<span id="cb17-13"><a href="#cb17-13"></a>N2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">data.frame</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">35</span>, <span class="dv">35</span>)), <span class="fu">aes</span>(x)) <span class="sc">+</span></span>
-<span id="cb17-14"><a href="#cb17-14"></a>  <span class="fu">stat_function</span>(<span class="at">fun =</span> dnorm, <span class="at">n =</span> <span class="dv">100</span>, <span class="at">args =</span> <span class="fu">list</span>(<span class="dv">0</span>, <span class="dv">2</span>)) <span class="sc">+</span></span>
-<span id="cb17-15"><a href="#cb17-15"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"B ~ Normal(0, 2)"</span>)</span>
-<span id="cb17-16"><a href="#cb17-16"></a></span>
-<span id="cb17-17"><a href="#cb17-17"></a><span class="fu">library</span>(patchwork)</span>
-<span id="cb17-18"><a href="#cb17-18"></a></span>
-<span id="cb17-19"><a href="#cb17-19"></a>(N10 <span class="sc">|</span> N5 )<span class="sc">/</span></span>
-<span id="cb17-20"><a href="#cb17-20"></a>  (N1 <span class="sc">|</span> N2 )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>N10 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">data.frame</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">35</span>, <span class="dv">35</span>)), <span class="fu">aes</span>(x)) <span class="sc">+</span></span>
+<span id="cb16-2"><a href="#cb16-2"></a>  <span class="fu">stat_function</span>(<span class="at">fun =</span> dnorm, <span class="at">n =</span> <span class="dv">100</span>, <span class="at">args =</span> <span class="fu">list</span>(<span class="dv">0</span>, <span class="dv">10</span>))<span class="sc">+</span></span>
+<span id="cb16-3"><a href="#cb16-3"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"B ~ Normal(0, 10)"</span>)</span>
+<span id="cb16-4"><a href="#cb16-4"></a></span>
+<span id="cb16-5"><a href="#cb16-5"></a>N5 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">data.frame</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">35</span>, <span class="dv">35</span>)), <span class="fu">aes</span>(x)) <span class="sc">+</span></span>
+<span id="cb16-6"><a href="#cb16-6"></a>  <span class="fu">stat_function</span>(<span class="at">fun =</span> dnorm, <span class="at">n =</span> <span class="dv">100</span>, <span class="at">args =</span> <span class="fu">list</span>(<span class="dv">0</span>, <span class="dv">5</span>)) <span class="sc">+</span></span>
+<span id="cb16-7"><a href="#cb16-7"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"B ~ Normal(0, 5)"</span>)</span>
+<span id="cb16-8"><a href="#cb16-8"></a></span>
+<span id="cb16-9"><a href="#cb16-9"></a>N1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">data.frame</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">35</span>, <span class="dv">35</span>)), <span class="fu">aes</span>(x)) <span class="sc">+</span></span>
+<span id="cb16-10"><a href="#cb16-10"></a>  <span class="fu">stat_function</span>(<span class="at">fun =</span> dnorm, <span class="at">n =</span> <span class="dv">100</span>, <span class="at">args =</span> <span class="fu">list</span>(<span class="dv">0</span>, <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb16-11"><a href="#cb16-11"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">" B ~ Normal(0, 1)"</span>)</span>
+<span id="cb16-12"><a href="#cb16-12"></a></span>
+<span id="cb16-13"><a href="#cb16-13"></a>N2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">data.frame</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">35</span>, <span class="dv">35</span>)), <span class="fu">aes</span>(x)) <span class="sc">+</span></span>
+<span id="cb16-14"><a href="#cb16-14"></a>  <span class="fu">stat_function</span>(<span class="at">fun =</span> dnorm, <span class="at">n =</span> <span class="dv">100</span>, <span class="at">args =</span> <span class="fu">list</span>(<span class="dv">0</span>, <span class="dv">2</span>)) <span class="sc">+</span></span>
+<span id="cb16-15"><a href="#cb16-15"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"B ~ Normal(0, 2)"</span>)</span>
+<span id="cb16-16"><a href="#cb16-16"></a></span>
+<span id="cb16-17"><a href="#cb16-17"></a><span class="fu">library</span>(patchwork)</span>
+<span id="cb16-18"><a href="#cb16-18"></a></span>
+<span id="cb16-19"><a href="#cb16-19"></a>(N10 <span class="sc">|</span> N5 )<span class="sc">/</span></span>
+<span id="cb16-20"><a href="#cb16-20"></a>  (N1 <span class="sc">|</span> N2 )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 
 </div>
@@ -789,19 +822,19 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>pp <span class="ot">&lt;-</span></span>
-<span id="cb18-2"><a href="#cb18-2"></a>  <span class="fu">tibble</span>(<span class="at">n =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>,</span>
-<span id="cb18-3"><a href="#cb18-3"></a>         <span class="at">a =</span> <span class="fu">rnorm</span>(<span class="dv">100</span>, <span class="at">mean =</span> <span class="dv">68</span>, <span class="at">sd =</span> <span class="dv">5</span>),</span>
-<span id="cb18-4"><a href="#cb18-4"></a>         <span class="at">b =</span> <span class="fu">rnorm</span>(<span class="dv">100</span>, <span class="at">mean =</span> <span class="dv">0</span>,   <span class="at">sd =</span> <span class="dv">5</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb18-5"><a href="#cb18-5"></a>  <span class="fu">expand</span>(<span class="fu">nesting</span>(n, a, b), <span class="at">height =</span> <span class="fu">range</span>(galton.data<span class="sc">$</span>parent)) <span class="sc">%&gt;%</span>   </span>
-<span id="cb18-6"><a href="#cb18-6"></a>  <span class="fu">mutate</span>(<span class="at">c.height =</span> a <span class="sc">+</span> b <span class="sc">*</span> (height <span class="sc">-</span> <span class="fu">mean</span>(galton.data<span class="sc">$</span>parent))) </span>
-<span id="cb18-7"><a href="#cb18-7"></a></span>
-<span id="cb18-8"><a href="#cb18-8"></a>g.pp <span class="ot">&lt;-</span> pp <span class="sc">%&gt;%</span> </span>
-<span id="cb18-9"><a href="#cb18-9"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> height, <span class="at">y =</span> c.height, <span class="at">group =</span> n)) <span class="sc">+</span></span>
-<span id="cb18-10"><a href="#cb18-10"></a>  <span class="fu">geom_line</span>(<span class="at">alpha =</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">10</span>) <span class="sc">+</span></span>
-<span id="cb18-11"><a href="#cb18-11"></a>  <span class="fu">coord_cartesian</span>(<span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">36</span>, <span class="dv">96</span>)) </span>
-<span id="cb18-12"><a href="#cb18-12"></a></span>
-<span id="cb18-13"><a href="#cb18-13"></a>g.pp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>pp <span class="ot">&lt;-</span></span>
+<span id="cb17-2"><a href="#cb17-2"></a>  <span class="fu">tibble</span>(<span class="at">n =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>,</span>
+<span id="cb17-3"><a href="#cb17-3"></a>         <span class="at">a =</span> <span class="fu">rnorm</span>(<span class="dv">100</span>, <span class="at">mean =</span> <span class="dv">68</span>, <span class="at">sd =</span> <span class="dv">5</span>),</span>
+<span id="cb17-4"><a href="#cb17-4"></a>         <span class="at">b =</span> <span class="fu">rnorm</span>(<span class="dv">100</span>, <span class="at">mean =</span> <span class="dv">0</span>,   <span class="at">sd =</span> <span class="dv">5</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb17-5"><a href="#cb17-5"></a>  <span class="fu">expand</span>(<span class="fu">nesting</span>(n, a, b), <span class="at">height =</span> <span class="fu">range</span>(galton.data<span class="sc">$</span>parent)) <span class="sc">%&gt;%</span>   </span>
+<span id="cb17-6"><a href="#cb17-6"></a>  <span class="fu">mutate</span>(<span class="at">c.height =</span> a <span class="sc">+</span> b <span class="sc">*</span> (height <span class="sc">-</span> <span class="fu">mean</span>(galton.data<span class="sc">$</span>parent))) </span>
+<span id="cb17-7"><a href="#cb17-7"></a></span>
+<span id="cb17-8"><a href="#cb17-8"></a>g.pp <span class="ot">&lt;-</span> pp <span class="sc">%&gt;%</span> </span>
+<span id="cb17-9"><a href="#cb17-9"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> height, <span class="at">y =</span> c.height, <span class="at">group =</span> n)) <span class="sc">+</span></span>
+<span id="cb17-10"><a href="#cb17-10"></a>  <span class="fu">geom_line</span>(<span class="at">alpha =</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">10</span>) <span class="sc">+</span></span>
+<span id="cb17-11"><a href="#cb17-11"></a>  <span class="fu">coord_cartesian</span>(<span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">36</span>, <span class="dv">96</span>)) </span>
+<span id="cb17-12"><a href="#cb17-12"></a></span>
+<span id="cb17-13"><a href="#cb17-13"></a>g.pp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 
 </div>
@@ -817,7 +850,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <section id="model" class="slide level2">
 <h2>model</h2>
 <p><span class="math display">\[ child_i \sim Normal( \mu_i , \sigma )\ \]</span></p>
-<p><span class="math display">\[\mu_i = \beta_0 + \beta_1  (parent_i - \bar{parent_i} \]</span> <span class="math display">\[\beta_0 \sim Normal(66, 5)\ \]</span> <span class="math display">\[\beta_1 \sim Normal(0, 5)\ \]</span> <span class="math display">\[\sigma \sim HalfCauchy(0,10) \]</span></p>
+<p><span class="math display">\[\mu_i = \beta_0 + \beta_1  (parent_i - \bar{parent_i} ) \]</span> <span class="math display">\[\beta_0 \sim Normal(66, 5)\ \]</span> <span class="math display">\[\beta_1 \sim Normal(0, 5)\ \]</span> <span class="math display">\[\sigma \sim HalfCauchy(0,10) \]</span></p>
 </section>
 <section id="tying-it-together" class="slide level2">
 <h2>Tying it together</h2>
@@ -837,8 +870,8 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <section id="tying-it-together-2" class="slide level2">
 <h2>Tying it together</h2>
 <ul>
-<li><p>p(data | ) is what we typically work with. What is the definition of a p-value?</p></li>
-<li><p>We (scientists and those wanting to make decisions based on the science) don’t want that, but rather they want p(<span class="math inline">\(\theta\)</span> | data)</p></li>
+<li><p>p(data | <span class="math inline">\(\theta\)</span>) is what we typically work with. What is the definition of a p-value?</p></li>
+<li><p>We (scientists and those wanting to make decisions based on the science) don’t want that, but rather they want p(<span class="math inline">\(\theta\)</span> | data). Inverse probability - working backwards from the data to determine the most likely underlying condition</p></li>
 <li><p>Bayes gives us this.</p></li>
 </ul>
 </section>
@@ -857,10 +890,10 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a>fit.<span class="fl">1.</span>bayesian <span class="sc">%&gt;%</span> </span>
-<span id="cb19-2"><a href="#cb19-2"></a><span class="fu">spread_draws</span>(b_Intercept, b_parent) <span class="sc">%&gt;%</span> </span>
-<span id="cb19-3"><a href="#cb19-3"></a><span class="fu">select</span>(b_parent) <span class="sc">%&gt;%</span> </span>
-<span id="cb19-4"><a href="#cb19-4"></a>  <span class="fu">mode_hdi</span>(<span class="at">.width =</span> <span class="fu">c</span>(.<span class="dv">95</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>fit.<span class="fl">1.</span>bayesian <span class="sc">%&gt;%</span> </span>
+<span id="cb18-2"><a href="#cb18-2"></a><span class="fu">spread_draws</span>(b_Intercept, b_parent) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-3"><a href="#cb18-3"></a><span class="fu">select</span>(b_parent) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-4"><a href="#cb18-4"></a>  <span class="fu">mode_hdi</span>(<span class="at">.width =</span> <span class="fu">c</span>(.<span class="dv">95</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 6
@@ -876,11 +909,11 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>fit.<span class="fl">1.</span>bayesian <span class="sc">%&gt;%</span> </span>
-<span id="cb21-2"><a href="#cb21-2"></a><span class="fu">spread_draws</span>(b_Intercept, b_parent) <span class="sc">%&gt;%</span> </span>
-<span id="cb21-3"><a href="#cb21-3"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> b_parent)) <span class="sc">+</span></span>
-<span id="cb21-4"><a href="#cb21-4"></a>  <span class="fu">stat_slab</span>() <span class="sc">+</span></span>
-<span id="cb21-5"><a href="#cb21-5"></a>  <span class="fu">stat_function</span>(<span class="at">data =</span> <span class="fu">data.frame</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="dv">2</span>)), <span class="fu">aes</span>(x), <span class="at">fun =</span> dnorm, <span class="at">n =</span> <span class="dv">100</span>, <span class="at">args =</span> <span class="fu">list</span>(<span class="dv">0</span>, .<span class="dv">5</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a>fit.<span class="fl">1.</span>bayesian <span class="sc">%&gt;%</span> </span>
+<span id="cb20-2"><a href="#cb20-2"></a><span class="fu">spread_draws</span>(b_Intercept, b_parent) <span class="sc">%&gt;%</span> </span>
+<span id="cb20-3"><a href="#cb20-3"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> b_parent)) <span class="sc">+</span></span>
+<span id="cb20-4"><a href="#cb20-4"></a>  <span class="fu">stat_slab</span>() <span class="sc">+</span></span>
+<span id="cb20-5"><a href="#cb20-5"></a>  <span class="fu">stat_function</span>(<span class="at">data =</span> <span class="fu">data.frame</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="dv">2</span>)), <span class="fu">aes</span>(x), <span class="at">fun =</span> dnorm, <span class="at">n =</span> <span class="dv">100</span>, <span class="at">args =</span> <span class="fu">list</span>(<span class="dv">0</span>, .<span class="dv">5</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 
 </div>
@@ -896,7 +929,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <h2>What is confusing:</h2>
 <div>
 <ul>
-<li class="fragment"><p>Is it a philosophically different framework? p(H0|d) vs p(d|H0) but it doesn’t really matter. Bayesian just means using the algorithm, and again, most of us don’t have strong algo preferences. Assuming a flat prior basically makes p(H0|d) = p(d|H0) so if you want (don’t tell Bayesians) you can interpret frequentist stats as Bayesian. And that means CIs too! (don’t tell frequentists)</p></li>
+<li class="fragment"><p>Is it a philosophically different framework? p( <span class="math inline">\({H_0}\)</span> | D) vs p(D | <span class="math inline">\({H_0}\)</span> ) but it doesn’t really matter. Bayesian just means using the algorithm, and again, most of us don’t have strong algo preferences. Assuming a flat prior basically makes p( <span class="math inline">\({H_0}\)</span> |d) = p( D | <span class="math inline">\({H_0}\)</span> ) so if you want (don’t tell Bayesians) you can interpret frequentist stats as Bayesian. And that means CIs too! (don’t tell frequentists)</p></li>
 <li class="fragment"><p>Why don’t we do this already? Isn’t frequentist better? History doesn’t progress due to fair and even fights (i.e.&nbsp;the correct doesn’t always prevail). Computation limitations and Fisher held progress back.</p></li>
 </ul>
 </div>
@@ -967,7 +1000,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
         progress: true,
 
         // Display the page number of the current slide
-        slideNumber: false,
+        slideNumber: 'c/t',
 
         // 'all', 'print', or 'speaker'
         showSlideNumber: 'all',
