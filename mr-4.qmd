@@ -11,11 +11,11 @@ html:
 
 ## Goals for this section
 
-- Add many predictors
-- Be able to interpret and visualize MR
-- Create predictions at different values
-- Know how to do ANOVA models
-- Be able to model, interpret, and visualize interactions
+-   Add many predictors
+-   Be able to interpret and visualize MR
+-   Create predictions at different values
+-   Know how to do ANOVA models
+-   Be able to model, interpret, and visualize interactions
 
 ## Moving to many predictors
 

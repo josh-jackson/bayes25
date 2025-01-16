@@ -181,13 +181,13 @@ data.frame(heads = 0:10, prob = dbinom(x = 0:10, size = 10, prob = .2)) %>%
 ----------------
 
 - Note how this is in the form of: 
-(data | hypothesis)
+p(data | hypothesis)
 
 - "What is the probability of having x successes given a fixed probability of success?"
 
 - Good at rejecting some preconceived state of the world (is this coin fair), but not good at estimating p (what is the probability of heads for this coin?)
 
-## But we often don't know what p is
+## Most often we don't know what p is
 
 - p is like the parameters we are trying to estimate in our science. 
 
@@ -195,11 +195,12 @@ data.frame(heads = 0:10, prob = dbinom(x = 0:10, size = 10, prob = .2)) %>%
 
 - What we want is p(hypothesis | data). 
 
-## But we often don't know what p is
+## Most often we don't know what p is
+
 ::::: columns
 ::: {.column width="30%"}
 
--   We can look at what p is consistent with (or not) based on our data (2 successes in 10 trials).
+-   We can look at what p is consistent with (or not) based on our data (2 successes in 10 trials) (Rather than assume some specific p).
 
 :::
 
@@ -219,12 +220,11 @@ ggplot(aes(y = value, x=p)) +
 
 ------------------------------------------------------------------------
 
-- "Probability attaches to possible results; likelihood attaches to hypotheses"
+- "Probability attaches to possible results; likelihood attaches to hypotheses" 
 
-- Probabilities are about a fixed distribution. 
-p( data \| distribution ) or p(heads \| p = .2).
+- The first graph assumed p = .2. Probabilities are about a fixed distribution. p( data \| distribution ) or p(heads \| p = .2).
 
-- Likelihood is about hypotheses with fixed data. L($\theta$|data) = P(data|$\theta$). We entertained many hypotheses (p), which is why we looped it. 
+- Likelihood is about hypotheses with fixed data. L($\theta$|data) = P(data|$\theta$) across many theta/hypotheses. We entertained many hypotheses (p), which is why we looped it. 
 
 
 ## Bayes is just counting

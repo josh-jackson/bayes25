@@ -52,14 +52,7 @@ $\sigma$ \~ HalfCauchy(0,10)
 
 What do these priors mean? How did we come up with them?
 
-## priors
 
-In general we want to:
-
-1.  Center our priors around a null effect
-2.  Have dispersion (our accuracy metric) be a balance between not too large and not too little. This choice requires though, whereas centering a prior around zero requires none.
-
-This also get around the "subjectivty in objective science" arguments against bayes.
 
 ------------------------------------------------------------------------
 
@@ -136,7 +129,7 @@ data_grid(happy_c = seq_range(happy_c, n = 101)) %>%
 
 ------------------------------------------------------------------------
 
-What happens if we try stranger priors?
+What happens if we try strange priors?
 
 ```{r}
 #| code-fold: true

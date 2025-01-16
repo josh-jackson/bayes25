@@ -992,5 +992,19 @@
     "title": "Intro",
     "section": "Bayes is just counting",
     "text": "Bayes is just counting\n\n\n\nWhat p is consistent with our data? The most consistent are more likely, but the less consistent are possible\n\n\n\n\nCode\np &lt;- seq(0.01, 0.99, by = 0.01)\nloglike &lt;- dbinom(2, size = 10, prob = p)\nas.tibble(loglike) %&gt;% \n  mutate(p = row_number()/100) %&gt;% \nggplot(aes(y = value, x=p)) + \n     geom_line() + ylab(\"likelihood\")"
+  },
+  {
+    "objectID": "bayes-1.html#most-often-we-dont-know-what-p-is",
+    "href": "bayes-1.html#most-often-we-dont-know-what-p-is",
+    "title": "Intro",
+    "section": "Most often we don’t know what p is",
+    "text": "Most often we don’t know what p is\n\np is like the parameters we are trying to estimate in our science.\nWe do not know p, that is why we are running the experiment.\nWhat we want is p(hypothesis | data)."
+  },
+  {
+    "objectID": "bayes-1.html#most-often-we-dont-know-what-p-is-1",
+    "href": "bayes-1.html#most-often-we-dont-know-what-p-is-1",
+    "title": "Intro",
+    "section": "Most often we don’t know what p is",
+    "text": "Most often we don’t know what p is\n\n\n\nWe can look at what p is consistent with (or not) based on our data (2 successes in 10 trials) (Rather than assume some specific p).\n\n\n\n\nCode\np &lt;- seq(0.01, 0.99, by = 0.01)\nloglike &lt;- dbinom(2, size = 10, prob = p)\nas.tibble(loglike) %&gt;% \n  mutate(p = row_number()/100) %&gt;% \nggplot(aes(y = value, x=p)) + \n     geom_line() + ylab(\"likelihood\")"
   }
 ]

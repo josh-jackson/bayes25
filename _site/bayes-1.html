@@ -609,25 +609,25 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <section class="slide level2">
 
 <ul>
-<li><p>Note how this is in the form of: (data | hypothesis)</p></li>
+<li><p>Note how this is in the form of: p(data | hypothesis)</p></li>
 <li><p>“What is the probability of having x successes given a fixed probability of success?”</p></li>
 <li><p>Good at rejecting some preconceived state of the world (is this coin fair), but not good at estimating p (what is the probability of heads for this coin?)</p></li>
 </ul>
 </section>
-<section id="but-we-often-dont-know-what-p-is" class="slide level2">
-<h2>But we often don’t know what p is</h2>
+<section id="most-often-we-dont-know-what-p-is" class="slide level2">
+<h2>Most often we don’t know what p is</h2>
 <ul>
 <li><p>p is like the parameters we are trying to estimate in our science.</p></li>
 <li><p>We do not know p, that is why we are running the experiment.</p></li>
 <li><p>What we want is p(hypothesis | data).</p></li>
 </ul>
 </section>
-<section id="but-we-often-dont-know-what-p-is-1" class="slide level2">
-<h2>But we often don’t know what p is</h2>
+<section id="most-often-we-dont-know-what-p-is-1" class="slide level2">
+<h2>Most often we don’t know what p is</h2>
 <div class="columns">
 <div class="column" style="width:30%;">
 <ul>
-<li>We can look at what p is consistent with (or not) based on our data (2 successes in 10 trials).</li>
+<li>We can look at what p is consistent with (or not) based on our data (2 successes in 10 trials) (Rather than assume some specific p).</li>
 </ul>
 </div><div class="column" style="width:70%;">
 <div class="cell">
@@ -651,8 +651,8 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 
 <ul>
 <li><p>“Probability attaches to possible results; likelihood attaches to hypotheses”</p></li>
-<li><p>Probabilities are about a fixed distribution. p( data | distribution ) or p(heads | p = .2).</p></li>
-<li><p>Likelihood is about hypotheses with fixed data. L(<span class="math inline">\(\theta\)</span>|data) = P(data|<span class="math inline">\(\theta\)</span>). We entertained many hypotheses (p), which is why we looped it.</p></li>
+<li><p>The first graph assumed p = .2. Probabilities are about a fixed distribution. p( data | distribution ) or p(heads | p = .2).</p></li>
+<li><p>Likelihood is about hypotheses with fixed data. L(<span class="math inline">\(\theta\)</span>|data) = P(data|<span class="math inline">\(\theta\)</span>) across many theta/hypotheses. We entertained many hypotheses (p), which is why we looped it.</p></li>
 </ul>
 </section>
 <section id="bayes-is-just-counting" class="slide level2">
