@@ -2,6 +2,11 @@
 title: "Bayes Spring 2025"
 ---
 
+
+
+1/28: Homework #1 is posted
+
+
 Welcome to Bayes! 
 
 Github includes all of the slides, code, and data. https://github.com/josh-jackson/bayes25
