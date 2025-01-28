@@ -98,7 +98,7 @@ h.1p <-
 
 ```
 
-## Prior predictive gives impossible values
+## Prior Predictive gives impossible values
 
 ```{r}
 pp_check(h.1p) + xlim(-35,35)
@@ -224,7 +224,7 @@ summary(h.1b, prob = .99)
 
 ```{r}
 #| code-fold: true
-library(tidybayes)
+
 h.1 %>% 
 spread_draws(b_Intercept, b_happy_c, sigma)
 ```
@@ -232,6 +232,7 @@ spread_draws(b_Intercept, b_happy_c, sigma)
 ------------------------------------------------------------------------
 
 ```{r}
+library(tidybayes)
 h.1 %>% 
 gather_draws(b_Intercept, b_happy_c, sigma)
 ```
@@ -1112,6 +1113,14 @@ a.4 <-
 summary(a.4)
 ```
 
+-------
+
+```{r}
+conditional_effects(a.4)
+```
+
+
+
 ------------------------------------------------------------------------
 
 ```{r}
@@ -1123,5 +1132,5 @@ avg_slopes(a.4)
 ```{r}
 slopes(a.4,
   newdata = datagrid(
-    iv = 3))
+    SES = 3))
 ```

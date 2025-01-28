@@ -1109,8 +1109,13 @@ mr.4 <-
 
 ```{r}
 mr.4 %>% 
- gather_draws(b_iv1, b_iv2,b_iv3) %>% 
-  ggplot(aes(y = .variable, x = .value)) +
+ spread_draws(b_Intercept, b_iv2,b_iv3) %>%
+  mutate(group1 = b_Intercept) %>% 
+  mutate(group2 = b_Intercept + b_iv2) %>% 
+  mutate(group3 = b_Intercept + b_iv3) %>% 
+  select(group1:group3) %>% 
+  pivot_longer(cols = group1:group3, names_to = "group") %>% 
+  ggplot(aes(y = group, x = value)) +
   stat_dotsinterval()
 ```
 
