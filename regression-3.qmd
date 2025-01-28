@@ -15,7 +15,7 @@ html:
 -   Prior choice
 -   Fit indices
 -   Robust regression
--   Multiple regression
+-   Handle categorical variables 
 -   ANOVA and Post-hoc tests
 
 ## Example data
@@ -419,7 +419,7 @@ h.2 %>%
   select(control, tx) %>% 
   gather() %>% 
   ggplot(aes(y = key, x = value)) +
-  stat_halfeye() 
+  stat_halfeye()+xlab("health")
 
 ```
 
@@ -434,28 +434,55 @@ h.2 %>%
   select(control, tx) %>% 
   gather() %>% 
   ggplot(aes( x = value, group = key, fill = key)) +
-  stat_halfeye(alpha = .74)
+  stat_halfeye(alpha = .74)+xlab("health")
 
 
 ```
 
 ------------------------------------------------------------------------
 
+Predictions are equal to manipulating posterior
 ```{r}
+#| code-fold: true
 library(marginaleffects)
 predictions(h.2, 
   newdata = datagrid(mood.group.d  = unique)
 ) %>%  posterior_draws() %>% 
    ggplot(aes( x = draw, fill = mood.group.d)) +
-  stat_halfeye(alpha = .74) 
+  stat_halfeye(alpha = .74) +xlab("health")
   
 ```
 
 ------------------------------------------------------------------------
 
+
+
 ```{r}
 avg_predictions(h.2, by = "mood.group.d")
 ```
+
+-------------
+
+
+```{r}
+avg_predictions(h.2, by = "mood.group.d") %>%  posterior_draws() %>% 
+   ggplot(aes( y = draw, x =mood.group.d)) +
+  stat_gradientinterval() +ylab("health")
+  
+```
+
+
+-----------
+
+
+```{r}
+avg_predictions(h.2, by = "mood.group.d") %>%  posterior_draws() %>% 
+   ggplot(aes( y = draw, x =mood.group.d)) +
+  stat_eye() +ylab("health")
+  
+```
+
+
 
 ## standardized difference in means
 
@@ -618,15 +645,7 @@ avg_predictions(h.3, by = "mood.group.d", hypothesis = "b2 - b1 = 0")
 avg_predictions(h.3, by = "mood.group.d", hypothesis = "b2 - b1 = .5")
 ```
 
-------------------------------------------------------------------------
 
-```{r}
-predictions(h.3, 
-  newdata = datagrid(mood.group.d  = unique)
-) %>%  posterior_draws() %>% 
-   ggplot(aes( x = draw, fill = mood.group.d)) +
-  stat_halfeye(alpha = .74) 
-```
 
 ## multiple comparison corrections
 
@@ -1116,12 +1135,33 @@ summary(a.4)
 -------
 
 ```{r}
-conditional_effects(a.4)
+conditional_effects(a.4, effects = "iv")
+```
+
+
+---------
+
+```{r}
+conditional_effects(a.4, effects = "iv:SES")
 ```
 
 
 
+--------------
+
+```{r}
+conditional_effects(a.4, effects = "SES:iv")
+```
+
+
 ------------------------------------------------------------------------
+
+```{r}
+slopes(a.4, datagrid(iv = unique))
+```
+
+
+---------
 
 ```{r}
 avg_slopes(a.4)
@@ -1134,3 +1174,14 @@ slopes(a.4,
   newdata = datagrid(
     SES = 3))
 ```
+
+
+```{r}
+slopes(a.4,
+  newdata = datagrid(
+    SES = 0))
+```
+
+-------
+
+

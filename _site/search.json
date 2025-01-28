@@ -634,7 +634,7 @@
     "href": "regression-3.html#goals-for-this-section",
     "title": "Regression 2",
     "section": "Goals for this section",
-    "text": "Goals for this section\n\nPrior choice\nFit indices\nRobust regression\nMultiple regression\nANOVA and Post-hoc tests"
+    "text": "Goals for this section\n\nPrior choice\nFit indices\nRobust regression\nHandle categorical variables\nANOVA and Post-hoc tests"
   },
   {
     "objectID": "regression-3.html#example-data",
