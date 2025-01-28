@@ -3,8 +3,7 @@ title: "hw-2"
 ---
 
 
-Homework #2 can be turned in via email to: homewor.ze3fn14975p1zkr3@u.box.com
-Due date is 9/29
+Homework #2 can be turned in via email to: 
 
 
 We will be working with factorial model for this homework set. Below is some code to simulate some data that have two variables: "a" and "b". "a" has two levels, while "b" has 3 for a total of 6 cells in a 2x3 model. 
