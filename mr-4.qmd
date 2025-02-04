@@ -1,6 +1,7 @@
 ---
 title: Multiple Regression
 format: revealjs
+slide-number: true
 editor: visual
 execute:
   echo: true
@@ -13,8 +14,7 @@ html:
 
 -   Add many predictors
 -   Be able to interpret and visualize MR
--   Create predictions at different values
--   Know how to do ANOVA models
+-   Know how to do factorial ANOVA models
 -   Be able to model, interpret, and visualize interactions
 
 ## Moving to many predictors
@@ -253,7 +253,6 @@ $\sigma$ \~ HalfCauchy(0,10)
 ------------------------------------------------------------------------
 
 ```{r}
-#| code-fold: true
 mr.1 <- 
   brm(family = gaussian,
       happiness ~ 1 + SS_c + FQ_c,
@@ -320,7 +319,7 @@ prior.mr1 %>%
 ## tighter priors?
 
 ```{r}
-#| code-fold: true
+
 mr.2 <- 
   brm(family = gaussian,
       happiness ~ 1 + SS_c + FQ_c,
@@ -467,6 +466,23 @@ MR %>%
   
 ```
 
+
+
+--------
+
+```{r}
+#| code-fold: true
+library(marginaleffects)
+predictions(mr.1,
+             datagrid(FQ_c = 0,SS_c = seq(from = min(MR$SS_c), to = max(MR$SS_c))))  %>% 
+  posterior_draws() %>% 
+   ggplot(aes(x = SS_c, y = happiness)) +
+  stat_lineribbon(aes(y = draw), .width = c(.95), color = "grey") + geom_point(data = MR, size = 2)  
+
+```
+
+
+
 ------------------------------------------------------------------------
 
 FQ_c
@@ -492,6 +508,22 @@ MR %>%
   stat_lineribbon(aes(y = .prediction), alpha = .5, .width = c(.95)) + 
   geom_point(data = MR, size = 2) 
 ```
+
+
+---------------
+
+```{r}
+#| code-fold: true
+predictions(mr.1,
+            type = "prediction",
+             datagrid(SS_c = 0,FQ_c = seq(from = min(MR$FQ_c), to = max(MR$FQ_c))))  %>% 
+  posterior_draws() %>% 
+   ggplot(aes(x = FQ_c, y = happiness)) +
+  stat_lineribbon(aes(y = draw), .width = c(.95), alpha = .5, color = "grey") + geom_point(data = MR, size = 2)  
+
+```
+
+
 
 ## Fitted values at different levels of the other variable
 
@@ -548,6 +580,25 @@ MR %>%
 ```
 
 ------------------------------------------------------------------------
+
+
+```{r}
+#| code-fold: true
+
+predictions(mr.1,
+            type = "prediction")  %>% 
+  posterior_draws() %>% 
+    sample_draws(50, draw = "drawid") %>% 
+    ggplot(aes(draw, group = drawid)) +
+   geom_line(stat = "density", alpha = .1) +
+  geom_density(aes(happiness))+
+  theme_classic()
+```
+
+
+
+
+----------------
 
 The model's epred/fitted against the observed data
 
@@ -895,8 +946,8 @@ mr.8 %>%
   emmeans( ~ SupportLevel) %>%
   contrast(method = "pairwise") %>%
   gather_emmeans_draws() %>%
-   ggplot(aes(x = .value, y = contrast)) +
-  stat_halfeye()
+   ggplot(aes(y = .value, x = contrast)) +
+  stat_eye()
 ```
 
 ------------------------------------------------------------------------
