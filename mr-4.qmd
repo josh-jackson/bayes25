@@ -466,9 +466,7 @@ MR %>%
   
 ```
 
-
-
---------
+------------------------------------------------------------------------
 
 ```{r}
 #| code-fold: true
@@ -480,8 +478,6 @@ predictions(mr.1,
   stat_lineribbon(aes(y = draw), .width = c(.95), color = "grey") + geom_point(data = MR, size = 2)  
 
 ```
-
-
 
 ------------------------------------------------------------------------
 
@@ -509,8 +505,7 @@ MR %>%
   geom_point(data = MR, size = 2) 
 ```
 
-
----------------
+------------------------------------------------------------------------
 
 ```{r}
 #| code-fold: true
@@ -522,8 +517,6 @@ predictions(mr.1,
   stat_lineribbon(aes(y = draw), .width = c(.95), alpha = .5, color = "grey") + geom_point(data = MR, size = 2)  
 
 ```
-
-
 
 ## Fitted values at different levels of the other variable
 
@@ -581,7 +574,6 @@ MR %>%
 
 ------------------------------------------------------------------------
 
-
 ```{r}
 #| code-fold: true
 
@@ -595,10 +587,7 @@ predictions(mr.1,
   theme_classic()
 ```
 
-
-
-
-----------------
+------------------------------------------------------------------------
 
 The model's epred/fitted against the observed data
 
