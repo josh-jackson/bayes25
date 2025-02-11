@@ -5,4 +5,5 @@ title: "Lectures"
 1.  [Background and introduction](bayes-1.qmd)
 2.  [Regression part 1](regression-2.qmd)
 3.  [Regression part 2](regression-3.qmd)
-5.  [Multiple Regression](mr-4.qmd)
+4.  [Multiple Regression](mr-4.qmd)
+5.  [MCMC](mcmc-5.qmd)

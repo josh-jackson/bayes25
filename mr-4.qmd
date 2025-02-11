@@ -853,6 +853,15 @@ mr.8 <-
 summary(mr.8)
 ```
 
+
+-----------
+
+```{r}
+#| code-fold: true
+get_variables(mr.8)
+```
+
+
 ------------------------------------------------------------------------
 
 How could we get posterior means for each group?
@@ -899,7 +908,7 @@ How could we get posterior means for each group?
 
 2.  Feed similar info into the hypothesis function. This will be especially handy when we have LOTS of parameters from MLM models
 
-3.  Use a package that does this for you, like {emmeans}
+3.  Use a package that does this for you, like {emmeans}, {tidybayes} or {marginaleffects}
 
 ------------------------------------------------------------------------
 
@@ -914,11 +923,54 @@ em.1
 emmip(mr.8, group ~ SupportLevel)
 ```
 
+
 ------------------------------------------------------------------------
 
 ```{r}
 emmeans(mr.8, pairwise ~ SupportLevel)
 ```
+
+
+---------
+
+```{r}
+#| code-fold: true
+#compare with marginal effects
+avg_predictions(mr.8,  by = "SupportLevel")
+
+```
+
+
+------
+
+```{r}
+#| code-fold: true
+
+avg_predictions(mr.8, newdata = "balanced", by = "SupportLevel")
+
+```
+
+
+
+--------
+
+```{r}
+predictions(mr.8, newdata = datagrid(SupportLevel = unique, group = unique))
+```
+
+
+
+---------
+
+```{r, eval = FALSE}
+comparisons(mr.8, newdata = datagrid(SupportLevel = unique, group = unique))
+```
+
+Error: These variable names are forbidden to avoid conflicts with the outputs
+  of `marginaleffects`:
+  "group"
+  Please rename your variables before fitting the model.
+
 
 ------------------------------------------------------------------------
 
@@ -953,55 +1005,7 @@ mr.8 %>%
   geom_jitter(data = anova, aes(y = Anxiety), alpha = .6, width = 0.2)
 ```
 
-## metric plus categorical
 
-```{r}
-mr.9 <- 
-  brm(family = gaussian,
-      bf(happy_c ~  a + b, 
-         a ~ 0 + iv + SS_c, 
-         b ~ 0 + iv2 + SS_c,
-         nl = TRUE), # use non-linear syntax
-      prior = c(prior(normal(0, 2), nlpar = a),
-                prior(normal(0, 2), nlpar = b),
-                prior(exponential(1), class = sigma)),
-      iter = 2000, warmup = 1000, chains = 4, cores = 4,
-      data = MR,
-      backend = "cmdstanr",
-      file = "mr.9")
-```
-
-------------------------------------------------------------------------
-
-```{r}
-summary(mr.9)
-```
-
-------------------------------------------------------------------------
-
-```{r}
-mr.10 <- 
-  brm(family = gaussian,
-      bf(happy_c ~  a + b + c, 
-         a ~ 0 + iv , 
-         b ~ 0 + iv2,
-         c ~ 1 +  SS_c,
-         nl = TRUE), # use non-linear syntax
-      prior = c(prior(normal(0, 2), nlpar = a),
-                prior(normal(0, 2), nlpar = b),
-                prior(normal(0, 2), nlpar = c),
-                prior(exponential(1), class = sigma)),
-      iter = 2000, warmup = 1000, chains = 4, cores = 4,
-      data = MR,
-      backend = "cmdstanr",
-      file = "mr.10")
-```
-
-------------------------------------------------------------------------
-
-```{r}
-summary(mr.10)
-```
 
 ## ANOVA and MLMs
 
