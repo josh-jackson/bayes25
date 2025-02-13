@@ -246,17 +246,15 @@ detach(package:MASS, unload=TRUE)
 
 -   Cannot just focus on the mode, we need to focus on the volume. The volume is an important part of the integral we are trying to solve with MCMC. Most of the volume is away from the mode.
 
-----------------------------
-
+------------------------------------------------------------------------
 
 ![](met6.png)
 
 ------------------------------------------------------------------------
 
-
 ![](met7.png)
 
----------------------------
+------------------------------------------------------------------------
 
 ![](met8.png)
 
@@ -270,16 +268,13 @@ detach(package:MASS, unload=TRUE)
 
 ## gradient descent
 
-- Maximum likelihood is $L(\theta|X) = f(X|\theta)$ , the probability of obtaining data 𝑋 given some value of theta 𝜃, with some likelihood function that allows this calculation
+-   Maximum likelihood is $L(\theta|X) = f(X|\theta)$ , the probability of obtaining data 𝑋 given some value of theta 𝜃, with some likelihood function that allows this calculation
 
-- Gradient descent is one such algorithm that could see what theta most likely. EM algorithm (expectation -maximum) is typically standard.
+-   Gradient descent is one such algorithm that could see what theta most likely.
 
+-   EM algorithm (Expectation-Maximum) is typically standard. More of an iterative hike (E-step to M-step) rather than skateboarding
 
-
------------
-
-- Hill climbing or hill descending exercise. 
-
+## gradient descent
 
 ![](met9.png)
 
@@ -289,11 +284,13 @@ https://chi-feng.github.io/mcmc-demo/app.html
 
 ------------------------------------------------------------------------
 
--   If proposals depend on the curvature or gradient in the posterior how do we calculate that? Derivatives. Lots of them. But those are relatively simple. (auto-diff)
+-   If proposals depend on the curvature or gradient in the posterior how do we calculate that? Derivatives. Lots of them. 
 
--   And isn't that calculation a calculation of the posterior in and of itself?
+- Automatic-differentiation (auto-diff) is a way to do gradient decent computationally efficient. 
 
--   Nope. Its just local estimation of the curvature (not full integral). This makes it tractable. The samples give us a full picture of the posterior.
+-   We are not calculating the posterior directly, but instead just local estimation of the curvature (not full integral). 
+
+- The samples give us a full picture of the posterior.
 
 ## Can we ensure accurate posteriors?
 

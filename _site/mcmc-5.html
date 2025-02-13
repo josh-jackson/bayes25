@@ -637,14 +637,12 @@
 <h2>gradient descent</h2>
 <ul>
 <li><p>Maximum likelihood is <span class="math inline">\(L(\theta|X) = f(X|\theta)\)</span> , the probability of obtaining data 𝑋 given some value of theta 𝜃, with some likelihood function that allows this calculation</p></li>
-<li><p>Gradient descent is one such algorithm that could see what theta most likely. EM algorithm (expectation -maximum) is typically standard.</p></li>
+<li><p>Gradient descent is one such algorithm that could see what theta most likely.</p></li>
+<li><p>EM algorithm (Expectation-Maximum) is typically standard. More of an iterative hike (E-step to M-step) rather than skateboarding</p></li>
 </ul>
 </section>
-<section class="slide level2">
-
-<ul>
-<li>Hill climbing or hill descending exercise.</li>
-</ul>
+<section id="gradient-descent-1" class="slide level2">
+<h2>gradient descent</h2>
 
 <img data-src="met9.png" class="r-stretch"></section>
 <section id="visualize-h-mcmc" class="slide level2">
@@ -654,9 +652,10 @@
 <section class="slide level2">
 
 <ul>
-<li><p>If proposals depend on the curvature or gradient in the posterior how do we calculate that? Derivatives. Lots of them. But those are relatively simple. (auto-diff)</p></li>
-<li><p>And isn’t that calculation a calculation of the posterior in and of itself?</p></li>
-<li><p>Nope. Its just local estimation of the curvature (not full integral). This makes it tractable. The samples give us a full picture of the posterior.</p></li>
+<li><p>If proposals depend on the curvature or gradient in the posterior how do we calculate that? Derivatives. Lots of them.</p></li>
+<li><p>Automatic-differentiation (auto-diff) is a way to do gradient decent computationally efficient.</p></li>
+<li><p>We are not calculating the posterior directly, but instead just local estimation of the curvature (not full integral).</p></li>
+<li><p>The samples give us a full picture of the posterior.</p></li>
 </ul>
 </section>
 <section id="can-we-ensure-accurate-posteriors" class="slide level2">

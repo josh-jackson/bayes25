@@ -935,7 +935,7 @@
     "href": "lectures.html",
     "title": "Lectures",
     "section": "",
-    "text": "Background and introduction\nRegression part 1\nRegression part 2\nMultiple Regression\nMCMC"
+    "text": "Background and introduction\nRegression part 1\nRegression part 2\nMultiple Regression\nMCMC\ninformation"
   },
   {
     "objectID": "bayes-1.html#model-we-want-to-fit",
@@ -1061,14 +1061,14 @@
     "href": "mr-4.html#moving-to-many-predictors",
     "title": "Multiple Regression",
     "section": "Moving to many predictors",
-    "text": "Moving to many predictors\n\n\nCode\nlibrary(brms)\nlibrary(patchwork)\nlibrary(tidyverse)\nlibrary(tidybayes)\nlibrary(emmeans)\n\n# normal density\np1 &lt;-\n  tibble(x = seq(from = -3, to = 3, by = .1)) %&gt;% \n  ggplot(aes(x = x, ymin = 0, ymax = (dnorm(x)) / max(dnorm(x)))) +\n  geom_ribbon(fill = \"steelblue4\", color = \"steelblue4\", alpha = .6) +\n  annotate(geom = \"text\",\n           x = 0, y = .2,\n           label = \"normal\",\n           size = 7) +\n  annotate(geom = \"text\",\n           x = c(0, 1.5), y = .6,\n           label = c(\"italic(M)[0]\", \"italic(S)[0]\"), \n           size = 7, family = \"Times\", parse = T) +\n  scale_x_continuous(expand = c(0, 0)) +\n  theme_void() +\n  theme(axis.line.x = element_line(size = 0.5))\n\n# a second normal density\np2 &lt;-\n  tibble(x = seq(from = -3, to = 3, by = .1)) %&gt;% \n  ggplot(aes(x = x, ymin = 0, ymax = (dnorm(x)) / max(dnorm(x)))) +\n  geom_ribbon(fill = \"steelblue4\", color = \"steelblue4\", alpha = .6) +\n  annotate(geom = \"text\",\n           x = 0, y = .2,\n           label = \"normal\",\n           size = 7) +\n  annotate(geom = \"text\",\n           x = c(0, 1.5), y = .6,\n           label = c(\"italic(M)[italic(j)]\", \"italic(S)[italic(j)]\"), \n           size = 7, family = \"Times\", parse = T) +\n  scale_x_continuous(expand = c(0, 0)) +\n  theme_void() +\n  theme(axis.line.x = element_line(size = 0.5))\n\n## two annotated arrows\n# save our custom arrow settings\nmy_arrow &lt;- arrow(angle = 20, length = unit(0.35, \"cm\"), type = \"closed\")\np3 &lt;-\n  tibble(x    = c(.33, 1.67),\n         y    = c(1, 1),\n         xend = c(.67, 1.2),\n         yend = c(0, 0)) %&gt;%\n  \n  ggplot(aes(x = x, xend = xend,\n             y = y, yend = yend)) +\n  geom_segment(arrow = my_arrow) +\n  annotate(geom = \"text\",\n  x = c(.35, 1.3), y = .5,\n  label = \"'~'\",\n  size = 10, family = \"Times\", parse = T) +\n  xlim(0, 2) +\n  theme_void()\n\n# exponential density\np4 &lt;-\n  tibble(x = seq(from = 0, to = 1, by = .01)) %&gt;% \n  ggplot(aes(x = x, ymin = 0, ymax = (dexp(x, 2) / max(dexp(x, 2))))) +\n  geom_ribbon(fill = \"steelblue4\", color = \"steelblue4\", alpha = .6) +\n  annotate(geom = \"text\",\n           x = .5, y = .2,\n           label = \"exp\",\n           size = 7) +\n  annotate(geom = \"text\",\n           x = .5, y = .6,\n           label = \"italic(K)\",\n           size = 7, family = \"Times\", parse = T) +\n  scale_x_continuous(expand = c(0, 0)) +\n  theme_void() +\n  theme(axis.line.x = element_line(size = 0.5))\n\n# likelihood formula\np5 &lt;-\n  tibble(x = .5,\n         y = .25,\n         label = \"beta[0]+sum()[italic(j)]*beta[italic(j)]*italic(x)[italic(ji)]\") %&gt;% \n  \n  ggplot(aes(x = x, y = y, label = label)) +\n  geom_text(size = 7, parse = T, family = \"Times\") +\n  scale_x_continuous(expand = c(0, 0), limits = c(0, 1)) +\n  ylim(0, 1) +\n  theme_void()\n  \n  # half-normal density\np6 &lt;-\n  tibble(x = seq(from = 0, to = 3, by = .01)) %&gt;% \n  ggplot(aes(x = x, ymin = 0, ymax = (dnorm(x)) / max(dnorm(x)))) +\n  geom_ribbon(fill = \"steelblue4\", color = \"steelblue4\", alpha = .6) +\n  annotate(geom = \"text\",\n           x = 1.5, y = .2,\n           label = \"half-normal\",\n           size = 7) +\n  annotate(geom = \"text\",\n           x = 1.5, y = .6,\n           label = \"0*','*~italic(S)[sigma]\", \n           size = 7, family = \"Times\", parse = T) +\n  scale_x_continuous(expand = c(0, 0)) +\n  theme_void() +\n  theme(axis.line.x = element_line(size = 0.5))\n\n# three annotated arrows\np7 &lt;-\n  tibble(x    = c( .43, 1.5, 2.5),\n         y    = c( 1, 1, 1),\n         xend = c( 1.225, 1.5, 1.75),\n         yend = c( .15, .2, .2)) %&gt;%\n  \n  ggplot(aes(x = x, xend = xend,\n             y = y, yend = yend)) +\n  geom_segment(arrow = my_arrow) +\n  annotate(geom = \"text\",\n           x = c( .7, 1.38, 2), y = c( .22, .65, .6),\n           label = c( \"'~'\", \"'='\", \"'~'\"),\n           size = 10, family = \"Times\", parse = T) +\n  #annotate(geom = \"text\",\n          # x = .43, y = .7,\n           #label = \"nu*minute+1\",\n           #size = 7, family = \"Times\", parse = T) +\n  xlim(0, 3) +\n  theme_void()\n\n# student-t density\np8 &lt;-\n  tibble(x = seq(from = -3, to = 3, by = .1)) %&gt;% \n  ggplot(aes(x = x, ymin = 0, ymax = (dt(x, 3) / max(dt(x, 3))))) +\n  geom_ribbon(fill = \"steelblue4\", color = \"steelblue4\", alpha = .6) +\n  annotate(geom = \"text\",\n           x = 0, y = .2,\n           label = \"student t\",\n           size = 7) +\n  annotate(geom = \"text\",\n           x = 0, y = .6,\n           label = \"nu~~~mu[italic(i)]~~~sigma\",\n           size = 7, family = \"Times\", parse = T) +\n  scale_x_continuous(expand = c(0, 0)) +\n  theme_void() +\n  theme(axis.line.x = element_line(size = 0.5))\n\n# the final annotated arrow\np9 &lt;-\n  tibble(x     = c(.375, .625),\n         y     = c(1/3, 1/3),\n         label = c(\"'~'\", \"italic(i)\")) %&gt;%\n\n  ggplot(aes(x = x, y = y, label = label)) +\n  geom_text(size = c(10, 7), parse = T, family = \"Times\") +\n  geom_segment(x = .5, xend = .5,\n               y = 1, yend = 0,\n               arrow = my_arrow) +\n  xlim(0, 1) +\n  theme_void()\n\n# some text\np10 &lt;-\n  tibble(x     = .5,\n         y     = .5,\n         label = \"italic(y[i])\") %&gt;% \n  \n  ggplot(aes(x = x, y = y, label = label)) +\n  geom_text(size = 7, parse = T, family = \"Times\") +\n  xlim(0, 1) +\n  theme_void()\n\n# define the layout\nlayout &lt;- c(\n  area(t = 1, b = 2, l = 3, r = 5),\n  area(t = 1, b = 2, l = 7, r = 9),\n  area(t = 4, b = 5, l = 1, r = 3),\n  area(t = 4, b = 5, l = 5, r = 7),\n  area(t = 4, b = 5, l = 9, r = 11),\n  area(t = 3, b = 4, l = 3, r = 9),\n  area(t = 7, b = 8, l = 5, r = 7),\n  area(t = 6, b = 7, l = 1, r = 11),\n  area(t = 9, b = 9, l = 5, r = 7),\n  area(t = 10, b = 10, l = 5, r = 7)\n)\n\n# combine and plot!\n(p1 + p2 + p4 + p5 + p6 + p3 + p8 + p7 + p9 + p10) + \n  plot_layout(design = layout) &\n  ylim(0, 1) &\n  theme(plot.margin = margin(0, 5.5, 0, 5.5))"
+    "text": "Moving to many predictors\n\n\nCode\nlibrary(brms)\nlibrary(modelr)\nlibrary(patchwork)\nlibrary(tidyverse)\nlibrary(tidybayes)\nlibrary(emmeans)\n\n# normal density\np1 &lt;-\n  tibble(x = seq(from = -3, to = 3, by = .1)) %&gt;% \n  ggplot(aes(x = x, ymin = 0, ymax = (dnorm(x)) / max(dnorm(x)))) +\n  geom_ribbon(fill = \"steelblue4\", color = \"steelblue4\", alpha = .6) +\n  annotate(geom = \"text\",\n           x = 0, y = .2,\n           label = \"normal\",\n           size = 7) +\n  annotate(geom = \"text\",\n           x = c(0, 1.5), y = .6,\n           label = c(\"italic(M)[0]\", \"italic(S)[0]\"), \n           size = 7, family = \"Times\", parse = T) +\n  scale_x_continuous(expand = c(0, 0)) +\n  theme_void() +\n  theme(axis.line.x = element_line(size = 0.5))\n\n# a second normal density\np2 &lt;-\n  tibble(x = seq(from = -3, to = 3, by = .1)) %&gt;% \n  ggplot(aes(x = x, ymin = 0, ymax = (dnorm(x)) / max(dnorm(x)))) +\n  geom_ribbon(fill = \"steelblue4\", color = \"steelblue4\", alpha = .6) +\n  annotate(geom = \"text\",\n           x = 0, y = .2,\n           label = \"normal\",\n           size = 7) +\n  annotate(geom = \"text\",\n           x = c(0, 1.5), y = .6,\n           label = c(\"italic(M)[italic(j)]\", \"italic(S)[italic(j)]\"), \n           size = 7, family = \"Times\", parse = T) +\n  scale_x_continuous(expand = c(0, 0)) +\n  theme_void() +\n  theme(axis.line.x = element_line(size = 0.5))\n\n## two annotated arrows\n# save our custom arrow settings\nmy_arrow &lt;- arrow(angle = 20, length = unit(0.35, \"cm\"), type = \"closed\")\np3 &lt;-\n  tibble(x    = c(.33, 1.67),\n         y    = c(1, 1),\n         xend = c(.67, 1.2),\n         yend = c(0, 0)) %&gt;%\n  \n  ggplot(aes(x = x, xend = xend,\n             y = y, yend = yend)) +\n  geom_segment(arrow = my_arrow) +\n  annotate(geom = \"text\",\n  x = c(.35, 1.3), y = .5,\n  label = \"'~'\",\n  size = 10, family = \"Times\", parse = T) +\n  xlim(0, 2) +\n  theme_void()\n\n# exponential density\np4 &lt;-\n  tibble(x = seq(from = 0, to = 1, by = .01)) %&gt;% \n  ggplot(aes(x = x, ymin = 0, ymax = (dexp(x, 2) / max(dexp(x, 2))))) +\n  geom_ribbon(fill = \"steelblue4\", color = \"steelblue4\", alpha = .6) +\n  annotate(geom = \"text\",\n           x = .5, y = .2,\n           label = \"exp\",\n           size = 7) +\n  annotate(geom = \"text\",\n           x = .5, y = .6,\n           label = \"italic(K)\",\n           size = 7, family = \"Times\", parse = T) +\n  scale_x_continuous(expand = c(0, 0)) +\n  theme_void() +\n  theme(axis.line.x = element_line(size = 0.5))\n\n# likelihood formula\np5 &lt;-\n  tibble(x = .5,\n         y = .25,\n         label = \"beta[0]+sum()[italic(j)]*beta[italic(j)]*italic(x)[italic(ji)]\") %&gt;% \n  \n  ggplot(aes(x = x, y = y, label = label)) +\n  geom_text(size = 7, parse = T, family = \"Times\") +\n  scale_x_continuous(expand = c(0, 0), limits = c(0, 1)) +\n  ylim(0, 1) +\n  theme_void()\n  \n  # half-normal density\np6 &lt;-\n  tibble(x = seq(from = 0, to = 3, by = .01)) %&gt;% \n  ggplot(aes(x = x, ymin = 0, ymax = (dnorm(x)) / max(dnorm(x)))) +\n  geom_ribbon(fill = \"steelblue4\", color = \"steelblue4\", alpha = .6) +\n  annotate(geom = \"text\",\n           x = 1.5, y = .2,\n           label = \"half-normal\",\n           size = 7) +\n  annotate(geom = \"text\",\n           x = 1.5, y = .6,\n           label = \"0*','*~italic(S)[sigma]\", \n           size = 7, family = \"Times\", parse = T) +\n  scale_x_continuous(expand = c(0, 0)) +\n  theme_void() +\n  theme(axis.line.x = element_line(size = 0.5))\n\n# three annotated arrows\np7 &lt;-\n  tibble(x    = c( .43, 1.5, 2.5),\n         y    = c( 1, 1, 1),\n         xend = c( 1.225, 1.5, 1.75),\n         yend = c( .15, .2, .2)) %&gt;%\n  \n  ggplot(aes(x = x, xend = xend,\n             y = y, yend = yend)) +\n  geom_segment(arrow = my_arrow) +\n  annotate(geom = \"text\",\n           x = c( .7, 1.38, 2), y = c( .22, .65, .6),\n           label = c( \"'~'\", \"'='\", \"'~'\"),\n           size = 10, family = \"Times\", parse = T) +\n  #annotate(geom = \"text\",\n          # x = .43, y = .7,\n           #label = \"nu*minute+1\",\n           #size = 7, family = \"Times\", parse = T) +\n  xlim(0, 3) +\n  theme_void()\n\n# student-t density\np8 &lt;-\n  tibble(x = seq(from = -3, to = 3, by = .1)) %&gt;% \n  ggplot(aes(x = x, ymin = 0, ymax = (dt(x, 3) / max(dt(x, 3))))) +\n  geom_ribbon(fill = \"steelblue4\", color = \"steelblue4\", alpha = .6) +\n  annotate(geom = \"text\",\n           x = 0, y = .2,\n           label = \"student t\",\n           size = 7) +\n  annotate(geom = \"text\",\n           x = 0, y = .6,\n           label = \"nu~~~mu[italic(i)]~~~sigma\",\n           size = 7, family = \"Times\", parse = T) +\n  scale_x_continuous(expand = c(0, 0)) +\n  theme_void() +\n  theme(axis.line.x = element_line(size = 0.5))\n\n# the final annotated arrow\np9 &lt;-\n  tibble(x     = c(.375, .625),\n         y     = c(1/3, 1/3),\n         label = c(\"'~'\", \"italic(i)\")) %&gt;%\n\n  ggplot(aes(x = x, y = y, label = label)) +\n  geom_text(size = c(10, 7), parse = T, family = \"Times\") +\n  geom_segment(x = .5, xend = .5,\n               y = 1, yend = 0,\n               arrow = my_arrow) +\n  xlim(0, 1) +\n  theme_void()\n\n# some text\np10 &lt;-\n  tibble(x     = .5,\n         y     = .5,\n         label = \"italic(y[i])\") %&gt;% \n  \n  ggplot(aes(x = x, y = y, label = label)) +\n  geom_text(size = 7, parse = T, family = \"Times\") +\n  xlim(0, 1) +\n  theme_void()\n\n# define the layout\nlayout &lt;- c(\n  area(t = 1, b = 2, l = 3, r = 5),\n  area(t = 1, b = 2, l = 7, r = 9),\n  area(t = 4, b = 5, l = 1, r = 3),\n  area(t = 4, b = 5, l = 5, r = 7),\n  area(t = 4, b = 5, l = 9, r = 11),\n  area(t = 3, b = 4, l = 3, r = 9),\n  area(t = 7, b = 8, l = 5, r = 7),\n  area(t = 6, b = 7, l = 1, r = 11),\n  area(t = 9, b = 9, l = 5, r = 7),\n  area(t = 10, b = 10, l = 5, r = 7)\n)\n\n# combine and plot!\n(p1 + p2 + p4 + p5 + p6 + p3 + p8 + p7 + p9 + p10) + \n  plot_layout(design = layout) &\n  ylim(0, 1) &\n  theme(plot.margin = margin(0, 5.5, 0, 5.5))"
   },
   {
     "objectID": "mr-4.html#data",
     "href": "mr-4.html#data",
     "title": "Multiple Regression",
     "section": "data",
-    "text": "data\n\n\nCode\nMR &lt;-read.csv(\"https://raw.githubusercontent.com/josh-jackson/bayes/master/hw3.csv\")\nMR &lt;- MR %&gt;% \n  mutate(SS_c = `schoool.success` - mean(`schoool.success`),\n         FQ_c = `friendship.quality` - mean(`friendship.quality`),\n         iv = `intervention.group`) %&gt;% \n        mutate(iv = as.factor(iv))\n\nMR &lt;- MR %&gt;%mutate(iv.d = recode(iv, \"1\" = \"control\", \"2\" = \"tx\", \"3\" = \"tx\"),  iv.d = factor(iv.d))\n\nMR\n\n\n     ID friendship.quality happiness schoool.success       SES\n1     1           10.18520   3.19813         6.16020 2.2297202\n2     2            5.58873   7.00840         8.90690 3.1559922\n3     3            6.58500   6.17400        10.54330 0.9499213\n4     4            8.95430   8.69884        11.46050 1.7262769\n5     5            7.59910   5.26707         5.55160 2.2941256\n6     6            8.15600   5.12485         7.51170 3.4400956\n7     7            9.08020   6.85380         8.55650 2.4411810\n8     8            3.41339   1.77080         4.10000 2.1096449\n9     9            8.65810   3.75282         5.39130 2.1942685\n10   10            4.84619   5.44990        13.91480 1.2392663\n11   11            5.74215   5.62860        14.63820 2.3003796\n12   12            6.30689   0.87730         1.73650 2.3784407\n13   13           10.62630   6.73299         5.14480 3.7712163\n14   14            6.74786   4.43970         7.39790 2.1461606\n15   15           11.20270   5.92424         8.90600 3.6393906\n16   16            4.22281   6.19710        11.39730 2.9825384\n17   17            4.02796   7.32090        13.18650 2.2529328\n18   18           11.52380   6.02653         5.61578 2.4615760\n19   19            3.06053  10.32460        15.15890 2.5412922\n20   20            6.74862   3.77070        11.31940 2.9706074\n21   21            3.48494   5.73500        14.02120 2.7549117\n22   22           11.69430   5.49516         8.03512 1.2110266\n23   23            7.51840   3.69930         5.27740 2.0610097\n24   24            8.22450   4.58931        10.34840 1.7295276\n25   25            7.23860   4.85550        10.40380 1.9079206\n26   26            7.34928   1.98710         5.26000 1.9344306\n27   27            5.75941   5.07930         9.26970 4.2792521\n28   28            7.00715   6.37110        10.40040 1.4524559\n29   29           12.38370   6.06967         7.49543 1.9361103\n30   30            8.35940   4.85614         8.25140 3.5057699\n31   31            8.96980   4.22895        11.61550 1.6123230\n32   32            1.42272   6.21800        17.33930 3.1596970\n33   33            5.92340   2.73780         8.54340 2.0788635\n34   34            8.93240   5.91872        10.54250 1.7201355\n35   35            3.30110   4.61770         8.85020 1.8174400\n36   36            6.56458   2.36060         5.91400 2.1253376\n37   37            6.94696   6.28690        10.75070 2.4406249\n38   38            9.50410   7.63132         5.66570 2.2785334\n39   39            3.72717   4.07220         9.82310 1.8581353\n40   40           10.42930   5.18795         7.94440 3.3516138\n41   41            8.92290   4.84015        13.14550 1.6948937\n42   42            9.76150   6.09571         7.77030 3.1129652\n43   43            8.40130   3.79769         7.90460 2.8426397\n44   44            8.87070   6.40170         8.45050 1.9066363\n45   45           12.46200   6.93395         3.63877 3.9222989\n46   46            5.91552   3.76590         4.61360 2.8790509\n47   47            1.43546  10.26690        16.60940 0.9107138\n48   48            9.91500   5.86156         7.43090 2.9368983\n49   49            7.55243   7.85160         9.66300 4.1063495\n50   50           10.98990   2.41348         5.16550 2.7477813\n51   51            8.00460   4.77413         9.07900 2.0002309\n52   52            8.70800   4.72610         7.02930 2.0990660\n53   53            6.64578   4.71560        10.27930 2.7886870\n54   54            8.26250   5.94780         9.20860 2.6887028\n55   55            6.83593   4.24490        10.72970 2.0344268\n56   56            7.85910   7.06578         8.92920 2.0798895\n57   57           10.05930   5.73959         6.34750 2.4804914\n58   58            7.96930   5.22234         7.81230 3.4741332\n59   59            7.71770   4.45613         8.55310 2.4369172\n60   60           10.79840   4.93474         2.70750 2.4451015\n61   61            6.30535   1.19090         3.58470 3.1023028\n62   62            3.03299   5.74880        14.36580 3.1215977\n63   63            9.37370   5.39401         4.88630 0.5525430\n64   64            9.82540   6.77647         8.91400 2.3793412\n65   65            5.96415   7.64280        10.36230 3.6164720\n66   66            9.77050   6.34933         7.46140 2.3928975\n67   67            5.91696   5.80840        11.96570 1.1654197\n68   68            8.64300   2.51234         8.06630 2.1244901\n69   69            7.83910   4.92870         9.07260 1.5599388\n70   70            6.96872   4.90600        10.72250 2.7537034\n71   71            6.14228   4.75350         9.68680 4.6018300\n72   72            9.96160   2.33024         1.07120 2.6374151\n73   73            6.07524   6.26700        11.17090 2.0426705\n74   74            5.81347   2.38410         8.40880 3.3897161\n75   75            5.86049   4.85550        12.15140 0.1279123\n76   76            3.69099   6.31990        15.94050 2.8853672\n77   77           10.23080   2.06760         7.05930 1.7291374\n78   78           14.64280   5.92291         3.52381 2.1059695\n79   79            5.38190   2.94320         5.33060 2.2729735\n80   80            8.03270   3.87622         7.16960 3.2319834\n81   81            5.55689   5.98730        13.47700 0.4180067\n82   82            6.15461   6.28450         8.79930 2.9350570\n83   83            6.32920   2.92210         6.80350 1.9049145\n84   84            3.58692   8.14990         6.42590 1.6197320\n85   85            6.96691   9.27720        10.94490 2.4923625\n86   86           10.48390   6.65055         5.85890 1.5564194\n87   87            8.52930   9.39876        12.02580 3.7037781\n88   88            6.56244   5.83090         7.95940 2.4382985\n89   89            9.04010   5.27865         8.41500 3.4392896\n90   90            7.93810   2.18252        11.47610 1.2834717\n91   91            8.60400   4.66802         8.51140 2.8579477\n92   92            7.14036   3.79440        11.11620 1.5636068\n93   93            8.70630   7.09303        11.92600 2.0955307\n94   94            4.36330   3.38110         6.78640 2.4685092\n95   95            9.99220   5.59351         6.90790 2.2414874\n96   96            7.97650   5.58365         8.04140 1.8225818\n97   97            9.54210   2.99499         8.05650 3.0128018\n98   98           11.48600   6.69221         6.93560 3.0442241\n99   99            8.98960   7.23388         8.00870 1.6885679\n100 100            7.50061   3.35810         3.65300 1.2129504\n101 101            5.48820   5.16900         8.52750 2.9551864\n102 102            7.61550   4.06621         6.60070 3.0472032\n103 103            6.81157   7.22480        11.33220 3.1229320\n104 104            7.88520   3.78065         9.77510 3.0333184\n105 105            8.23370   6.18172        12.80950 2.2549856\n106 106           10.11080   5.49338         8.31330 1.6391043\n107 107            9.63430   5.04774         5.86400 2.7555216\n108 108            8.92570   5.66546         8.38080 1.1585210\n109 109            8.48850   2.29235         6.32420 3.3698694\n110 110            7.04304   6.91290        11.39600 2.6215790\n111 111            7.16339   0.61620         0.02270 2.2323300\n112 112            0.69848   9.16670        16.98160 4.0973537\n113 113            7.78460   3.69495         8.97420 1.7808693\n114 114           11.12100   3.65619         4.53210 2.2112966\n115 115            6.95909   5.39230         9.99930 2.3153455\n116 116            5.08169   6.79640        11.18620 1.8511253\n117 117           13.12260   7.08190         6.48325 3.0280394\n118 118            6.29789   3.07360        12.17660 1.4312453\n    intervention.group        SS_c         FQ_c iv    iv.d\n1                    1 -2.56979966  2.570868729  1 control\n2                    1  0.17690034 -2.025601271  1 control\n3                    1  1.81330034 -1.029331271  1 control\n4                    1  2.73050034  1.339968729  1 control\n5                    1 -3.17839966 -0.015231271  1 control\n6                    1 -1.21829966  0.541668729  1 control\n7                    1 -0.17349966  1.465868729  1 control\n8                    1 -4.62999966 -4.200941271  1 control\n9                    1 -3.33869966  1.043768729  1 control\n10                   1  5.18480034 -2.768141271  1 control\n11                   1  5.90820034 -1.872181271  1 control\n12                   1 -6.99349966 -1.307441271  1 control\n13                   3 -3.58519966  3.011968729  3      tx\n14                   1 -1.33209966 -0.866471271  1 control\n15                   1  0.17600034  3.588368729  1 control\n16                   1  2.66730034 -3.391521271  1 control\n17                   1  4.45650034 -3.586371271  1 control\n18                   1 -3.11421966  3.909468729  1 control\n19                   1  6.42890034 -4.553801271  1 control\n20                   1  2.58940034 -0.865711271  1 control\n21                   1  5.29120034 -4.129391271  1 control\n22                   1 -0.69487966  4.079968729  1 control\n23                   1 -3.45259966 -0.095931271  1 control\n24                   1  1.61840034  0.610168729  1 control\n25                   1  1.67380034 -0.375731271  1 control\n26                   1 -3.46999966 -0.265051271  1 control\n27                   1  0.53970034 -1.854921271  1 control\n28                   1  1.67040034 -0.607181271  1 control\n29                   3 -1.23456966  4.769368729  3      tx\n30                   1 -0.47859966  0.745068729  1 control\n31                   1  2.88550034  1.355468729  1 control\n32                   1  8.60930034 -6.191611271  1 control\n33                   1 -0.18659966 -1.690931271  1 control\n34                   1  1.81250034  1.318068729  1 control\n35                   3  0.12020034 -4.313231271  3      tx\n36                   1 -2.81599966 -1.049751271  1 control\n37                   2  2.02070034 -0.667371271  2      tx\n38                   2 -3.06429966  1.889768729  2      tx\n39                   2  1.09310034 -3.887161271  2      tx\n40                   2 -0.78559966  2.814968729  2      tx\n41                   2  4.41550034  1.308568729  2      tx\n42                   2 -0.95969966  2.147168729  2      tx\n43                   2 -0.82539966  0.786968729  2      tx\n44                   2 -0.27949966  1.256368729  2      tx\n45                   2 -5.09122966  4.847668729  2      tx\n46                   2 -4.11639966 -1.698811271  2      tx\n47                   1  7.87940034 -6.178871271  1 control\n48                   2 -1.29909966  2.300668729  2      tx\n49                   2  0.93300034 -0.061901271  2      tx\n50                   1 -3.56449966  3.375568729  1 control\n51                   2  0.34900034  0.390268729  2      tx\n52                   2 -1.70069966  1.093668729  2      tx\n53                   2  1.54930034 -0.968551271  2      tx\n54                   2  0.47860034  0.648168729  2      tx\n55                   2  1.99970034 -0.778401271  2      tx\n56                   2  0.19920034  0.244768729  2      tx\n57                   2 -2.38249966  2.444968729  2      tx\n58                   2 -0.91769966  0.354968729  2      tx\n59                   2 -0.17689966  0.103368729  2      tx\n60                   1 -6.02249966  3.184068729  1 control\n61                   2 -5.14529966 -1.308981271  2      tx\n62                   2  5.63580034 -4.581341271  2      tx\n63                   2 -3.84369966  1.759368729  2      tx\n64                   2  0.18400034  2.211068729  2      tx\n65                   2  1.63230034 -1.650181271  2      tx\n66                   2 -1.26859966  2.156168729  2      tx\n67                   2  3.23570034 -1.697371271  2      tx\n68                   2 -0.66369966  1.028668729  2      tx\n69                   2  0.34260034  0.224768729  2      tx\n70                   2  1.99250034 -0.645611271  2      tx\n71                   2  0.95680034 -1.472051271  2      tx\n72                   1 -7.65879966  2.347268729  1 control\n73                   3  2.44090034 -1.539091271  3      tx\n74                   3 -0.32119966 -1.800861271  3      tx\n75                   3  3.42140034 -1.753841271  3      tx\n76                   3  7.21050034 -3.923341271  3      tx\n77                   1 -1.67069966  2.616468729  1 control\n78                   3 -5.20618966  7.028468729  3      tx\n79                   3 -3.39939966 -2.232431271  3      tx\n80                   3 -1.56039966  0.418368729  3      tx\n81                   3  4.74700034 -2.057441271  3      tx\n82                   3  0.06930034 -1.459721271  3      tx\n83                   3 -1.92649966 -1.285131271  3      tx\n84                   1 -2.30409966 -4.027411271  1 control\n85                   3  2.21490034 -0.647421271  3      tx\n86                   3 -2.87109966  2.869568729  3      tx\n87                   3  3.29580034  0.914968729  3      tx\n88                   3 -0.77059966 -1.051891271  3      tx\n89                   3 -0.31499966  1.425768729  3      tx\n90                   3  2.74610034  0.323768729  3      tx\n91                   3 -0.21859966  0.989668729  3      tx\n92                   3  2.38620034 -0.473971271  3      tx\n93                   3  3.19600034  1.091968729  3      tx\n94                   3 -1.94359966 -3.251031271  3      tx\n95                   3 -1.82209966  2.377868729  3      tx\n96                   3 -0.68859966  0.362168729  3      tx\n97                   1 -0.67349966  1.927768729  1 control\n98                   3 -1.79439966  3.871668729  3      tx\n99                   3 -0.72129966  1.375268729  3      tx\n100                  3 -5.07699966 -0.113721271  3      tx\n101                  3 -0.20249966 -2.126131271  3      tx\n102                  3 -2.12929966  0.001168729  3      tx\n103                  3  2.60220034 -0.802761271  3      tx\n104                  3  1.04510034  0.270868729  3      tx\n105                  3  4.07950034  0.619368729  3      tx\n106                  3 -0.41669966  2.496468729  3      tx\n107                  3 -2.86599966  2.019968729  3      tx\n108                  3 -0.34919966  1.311368729  3      tx\n109                  1 -2.40579966  0.874168729  1 control\n110                  2  2.66600034 -0.571291271  2      tx\n111                  1 -8.70729966 -0.450941271  1 control\n112                  1  8.25160034 -6.915851271  1 control\n113                  2  0.24420034  0.170268729  2      tx\n114                  3 -4.19789966  3.506668729  3      tx\n115                  3  1.26930034 -0.655241271  3      tx\n116                  1  2.45620034 -2.532641271  1 control\n117                  3 -2.24674966  5.508268729  3      tx\n118                  2  3.44660034 -1.316441271  2      tx"
+    "text": "data\n\n\nCode\nMR &lt;-read.csv(\"https://raw.githubusercontent.com/josh-jackson/bayes/master/hw3.csv\")\nMR &lt;- MR %&gt;% \n  mutate(SS_c = `schoool.success` - mean(`schoool.success`),\n         FQ_c = `friendship.quality` - mean(`friendship.quality`),\n         iv = `intervention.group`) %&gt;% \n        mutate(iv = as.factor(iv))\n\nMR &lt;- MR %&gt;%\n  mutate(iv.d = case_match(iv, \"1\" ~ \"control\", \"2\" ~ \"tx\", \"3\" ~ \"tx\"),  iv.d = factor(iv.d))\n\nMR\n\n\n     ID friendship.quality happiness schoool.success       SES\n1     1           10.18520   3.19813         6.16020 2.2297202\n2     2            5.58873   7.00840         8.90690 3.1559922\n3     3            6.58500   6.17400        10.54330 0.9499213\n4     4            8.95430   8.69884        11.46050 1.7262769\n5     5            7.59910   5.26707         5.55160 2.2941256\n6     6            8.15600   5.12485         7.51170 3.4400956\n7     7            9.08020   6.85380         8.55650 2.4411810\n8     8            3.41339   1.77080         4.10000 2.1096449\n9     9            8.65810   3.75282         5.39130 2.1942685\n10   10            4.84619   5.44990        13.91480 1.2392663\n11   11            5.74215   5.62860        14.63820 2.3003796\n12   12            6.30689   0.87730         1.73650 2.3784407\n13   13           10.62630   6.73299         5.14480 3.7712163\n14   14            6.74786   4.43970         7.39790 2.1461606\n15   15           11.20270   5.92424         8.90600 3.6393906\n16   16            4.22281   6.19710        11.39730 2.9825384\n17   17            4.02796   7.32090        13.18650 2.2529328\n18   18           11.52380   6.02653         5.61578 2.4615760\n19   19            3.06053  10.32460        15.15890 2.5412922\n20   20            6.74862   3.77070        11.31940 2.9706074\n21   21            3.48494   5.73500        14.02120 2.7549117\n22   22           11.69430   5.49516         8.03512 1.2110266\n23   23            7.51840   3.69930         5.27740 2.0610097\n24   24            8.22450   4.58931        10.34840 1.7295276\n25   25            7.23860   4.85550        10.40380 1.9079206\n26   26            7.34928   1.98710         5.26000 1.9344306\n27   27            5.75941   5.07930         9.26970 4.2792521\n28   28            7.00715   6.37110        10.40040 1.4524559\n29   29           12.38370   6.06967         7.49543 1.9361103\n30   30            8.35940   4.85614         8.25140 3.5057699\n31   31            8.96980   4.22895        11.61550 1.6123230\n32   32            1.42272   6.21800        17.33930 3.1596970\n33   33            5.92340   2.73780         8.54340 2.0788635\n34   34            8.93240   5.91872        10.54250 1.7201355\n35   35            3.30110   4.61770         8.85020 1.8174400\n36   36            6.56458   2.36060         5.91400 2.1253376\n37   37            6.94696   6.28690        10.75070 2.4406249\n38   38            9.50410   7.63132         5.66570 2.2785334\n39   39            3.72717   4.07220         9.82310 1.8581353\n40   40           10.42930   5.18795         7.94440 3.3516138\n41   41            8.92290   4.84015        13.14550 1.6948937\n42   42            9.76150   6.09571         7.77030 3.1129652\n43   43            8.40130   3.79769         7.90460 2.8426397\n44   44            8.87070   6.40170         8.45050 1.9066363\n45   45           12.46200   6.93395         3.63877 3.9222989\n46   46            5.91552   3.76590         4.61360 2.8790509\n47   47            1.43546  10.26690        16.60940 0.9107138\n48   48            9.91500   5.86156         7.43090 2.9368983\n49   49            7.55243   7.85160         9.66300 4.1063495\n50   50           10.98990   2.41348         5.16550 2.7477813\n51   51            8.00460   4.77413         9.07900 2.0002309\n52   52            8.70800   4.72610         7.02930 2.0990660\n53   53            6.64578   4.71560        10.27930 2.7886870\n54   54            8.26250   5.94780         9.20860 2.6887028\n55   55            6.83593   4.24490        10.72970 2.0344268\n56   56            7.85910   7.06578         8.92920 2.0798895\n57   57           10.05930   5.73959         6.34750 2.4804914\n58   58            7.96930   5.22234         7.81230 3.4741332\n59   59            7.71770   4.45613         8.55310 2.4369172\n60   60           10.79840   4.93474         2.70750 2.4451015\n61   61            6.30535   1.19090         3.58470 3.1023028\n62   62            3.03299   5.74880        14.36580 3.1215977\n63   63            9.37370   5.39401         4.88630 0.5525430\n64   64            9.82540   6.77647         8.91400 2.3793412\n65   65            5.96415   7.64280        10.36230 3.6164720\n66   66            9.77050   6.34933         7.46140 2.3928975\n67   67            5.91696   5.80840        11.96570 1.1654197\n68   68            8.64300   2.51234         8.06630 2.1244901\n69   69            7.83910   4.92870         9.07260 1.5599388\n70   70            6.96872   4.90600        10.72250 2.7537034\n71   71            6.14228   4.75350         9.68680 4.6018300\n72   72            9.96160   2.33024         1.07120 2.6374151\n73   73            6.07524   6.26700        11.17090 2.0426705\n74   74            5.81347   2.38410         8.40880 3.3897161\n75   75            5.86049   4.85550        12.15140 0.1279123\n76   76            3.69099   6.31990        15.94050 2.8853672\n77   77           10.23080   2.06760         7.05930 1.7291374\n78   78           14.64280   5.92291         3.52381 2.1059695\n79   79            5.38190   2.94320         5.33060 2.2729735\n80   80            8.03270   3.87622         7.16960 3.2319834\n81   81            5.55689   5.98730        13.47700 0.4180067\n82   82            6.15461   6.28450         8.79930 2.9350570\n83   83            6.32920   2.92210         6.80350 1.9049145\n84   84            3.58692   8.14990         6.42590 1.6197320\n85   85            6.96691   9.27720        10.94490 2.4923625\n86   86           10.48390   6.65055         5.85890 1.5564194\n87   87            8.52930   9.39876        12.02580 3.7037781\n88   88            6.56244   5.83090         7.95940 2.4382985\n89   89            9.04010   5.27865         8.41500 3.4392896\n90   90            7.93810   2.18252        11.47610 1.2834717\n91   91            8.60400   4.66802         8.51140 2.8579477\n92   92            7.14036   3.79440        11.11620 1.5636068\n93   93            8.70630   7.09303        11.92600 2.0955307\n94   94            4.36330   3.38110         6.78640 2.4685092\n95   95            9.99220   5.59351         6.90790 2.2414874\n96   96            7.97650   5.58365         8.04140 1.8225818\n97   97            9.54210   2.99499         8.05650 3.0128018\n98   98           11.48600   6.69221         6.93560 3.0442241\n99   99            8.98960   7.23388         8.00870 1.6885679\n100 100            7.50061   3.35810         3.65300 1.2129504\n101 101            5.48820   5.16900         8.52750 2.9551864\n102 102            7.61550   4.06621         6.60070 3.0472032\n103 103            6.81157   7.22480        11.33220 3.1229320\n104 104            7.88520   3.78065         9.77510 3.0333184\n105 105            8.23370   6.18172        12.80950 2.2549856\n106 106           10.11080   5.49338         8.31330 1.6391043\n107 107            9.63430   5.04774         5.86400 2.7555216\n108 108            8.92570   5.66546         8.38080 1.1585210\n109 109            8.48850   2.29235         6.32420 3.3698694\n110 110            7.04304   6.91290        11.39600 2.6215790\n111 111            7.16339   0.61620         0.02270 2.2323300\n112 112            0.69848   9.16670        16.98160 4.0973537\n113 113            7.78460   3.69495         8.97420 1.7808693\n114 114           11.12100   3.65619         4.53210 2.2112966\n115 115            6.95909   5.39230         9.99930 2.3153455\n116 116            5.08169   6.79640        11.18620 1.8511253\n117 117           13.12260   7.08190         6.48325 3.0280394\n118 118            6.29789   3.07360        12.17660 1.4312453\n    intervention.group        SS_c         FQ_c iv    iv.d\n1                    1 -2.56979966  2.570868729  1 control\n2                    1  0.17690034 -2.025601271  1 control\n3                    1  1.81330034 -1.029331271  1 control\n4                    1  2.73050034  1.339968729  1 control\n5                    1 -3.17839966 -0.015231271  1 control\n6                    1 -1.21829966  0.541668729  1 control\n7                    1 -0.17349966  1.465868729  1 control\n8                    1 -4.62999966 -4.200941271  1 control\n9                    1 -3.33869966  1.043768729  1 control\n10                   1  5.18480034 -2.768141271  1 control\n11                   1  5.90820034 -1.872181271  1 control\n12                   1 -6.99349966 -1.307441271  1 control\n13                   3 -3.58519966  3.011968729  3      tx\n14                   1 -1.33209966 -0.866471271  1 control\n15                   1  0.17600034  3.588368729  1 control\n16                   1  2.66730034 -3.391521271  1 control\n17                   1  4.45650034 -3.586371271  1 control\n18                   1 -3.11421966  3.909468729  1 control\n19                   1  6.42890034 -4.553801271  1 control\n20                   1  2.58940034 -0.865711271  1 control\n21                   1  5.29120034 -4.129391271  1 control\n22                   1 -0.69487966  4.079968729  1 control\n23                   1 -3.45259966 -0.095931271  1 control\n24                   1  1.61840034  0.610168729  1 control\n25                   1  1.67380034 -0.375731271  1 control\n26                   1 -3.46999966 -0.265051271  1 control\n27                   1  0.53970034 -1.854921271  1 control\n28                   1  1.67040034 -0.607181271  1 control\n29                   3 -1.23456966  4.769368729  3      tx\n30                   1 -0.47859966  0.745068729  1 control\n31                   1  2.88550034  1.355468729  1 control\n32                   1  8.60930034 -6.191611271  1 control\n33                   1 -0.18659966 -1.690931271  1 control\n34                   1  1.81250034  1.318068729  1 control\n35                   3  0.12020034 -4.313231271  3      tx\n36                   1 -2.81599966 -1.049751271  1 control\n37                   2  2.02070034 -0.667371271  2      tx\n38                   2 -3.06429966  1.889768729  2      tx\n39                   2  1.09310034 -3.887161271  2      tx\n40                   2 -0.78559966  2.814968729  2      tx\n41                   2  4.41550034  1.308568729  2      tx\n42                   2 -0.95969966  2.147168729  2      tx\n43                   2 -0.82539966  0.786968729  2      tx\n44                   2 -0.27949966  1.256368729  2      tx\n45                   2 -5.09122966  4.847668729  2      tx\n46                   2 -4.11639966 -1.698811271  2      tx\n47                   1  7.87940034 -6.178871271  1 control\n48                   2 -1.29909966  2.300668729  2      tx\n49                   2  0.93300034 -0.061901271  2      tx\n50                   1 -3.56449966  3.375568729  1 control\n51                   2  0.34900034  0.390268729  2      tx\n52                   2 -1.70069966  1.093668729  2      tx\n53                   2  1.54930034 -0.968551271  2      tx\n54                   2  0.47860034  0.648168729  2      tx\n55                   2  1.99970034 -0.778401271  2      tx\n56                   2  0.19920034  0.244768729  2      tx\n57                   2 -2.38249966  2.444968729  2      tx\n58                   2 -0.91769966  0.354968729  2      tx\n59                   2 -0.17689966  0.103368729  2      tx\n60                   1 -6.02249966  3.184068729  1 control\n61                   2 -5.14529966 -1.308981271  2      tx\n62                   2  5.63580034 -4.581341271  2      tx\n63                   2 -3.84369966  1.759368729  2      tx\n64                   2  0.18400034  2.211068729  2      tx\n65                   2  1.63230034 -1.650181271  2      tx\n66                   2 -1.26859966  2.156168729  2      tx\n67                   2  3.23570034 -1.697371271  2      tx\n68                   2 -0.66369966  1.028668729  2      tx\n69                   2  0.34260034  0.224768729  2      tx\n70                   2  1.99250034 -0.645611271  2      tx\n71                   2  0.95680034 -1.472051271  2      tx\n72                   1 -7.65879966  2.347268729  1 control\n73                   3  2.44090034 -1.539091271  3      tx\n74                   3 -0.32119966 -1.800861271  3      tx\n75                   3  3.42140034 -1.753841271  3      tx\n76                   3  7.21050034 -3.923341271  3      tx\n77                   1 -1.67069966  2.616468729  1 control\n78                   3 -5.20618966  7.028468729  3      tx\n79                   3 -3.39939966 -2.232431271  3      tx\n80                   3 -1.56039966  0.418368729  3      tx\n81                   3  4.74700034 -2.057441271  3      tx\n82                   3  0.06930034 -1.459721271  3      tx\n83                   3 -1.92649966 -1.285131271  3      tx\n84                   1 -2.30409966 -4.027411271  1 control\n85                   3  2.21490034 -0.647421271  3      tx\n86                   3 -2.87109966  2.869568729  3      tx\n87                   3  3.29580034  0.914968729  3      tx\n88                   3 -0.77059966 -1.051891271  3      tx\n89                   3 -0.31499966  1.425768729  3      tx\n90                   3  2.74610034  0.323768729  3      tx\n91                   3 -0.21859966  0.989668729  3      tx\n92                   3  2.38620034 -0.473971271  3      tx\n93                   3  3.19600034  1.091968729  3      tx\n94                   3 -1.94359966 -3.251031271  3      tx\n95                   3 -1.82209966  2.377868729  3      tx\n96                   3 -0.68859966  0.362168729  3      tx\n97                   1 -0.67349966  1.927768729  1 control\n98                   3 -1.79439966  3.871668729  3      tx\n99                   3 -0.72129966  1.375268729  3      tx\n100                  3 -5.07699966 -0.113721271  3      tx\n101                  3 -0.20249966 -2.126131271  3      tx\n102                  3 -2.12929966  0.001168729  3      tx\n103                  3  2.60220034 -0.802761271  3      tx\n104                  3  1.04510034  0.270868729  3      tx\n105                  3  4.07950034  0.619368729  3      tx\n106                  3 -0.41669966  2.496468729  3      tx\n107                  3 -2.86599966  2.019968729  3      tx\n108                  3 -0.34919966  1.311368729  3      tx\n109                  1 -2.40579966  0.874168729  1 control\n110                  2  2.66600034 -0.571291271  2      tx\n111                  1 -8.70729966 -0.450941271  1 control\n112                  1  8.25160034 -6.915851271  1 control\n113                  2  0.24420034  0.170268729  2      tx\n114                  3 -4.19789966  3.506668729  3      tx\n115                  3  1.26930034 -0.655241271  3      tx\n116                  1  2.45620034 -2.532641271  1 control\n117                  3 -2.24674966  5.508268729  3      tx\n118                  2  3.44660034 -1.316441271  2      tx"
   },
   {
     "objectID": "mr-4.html#model",
@@ -1460,6 +1460,335 @@
     "href": "mcmc-5.html#gradient-descent",
     "title": "MCMC",
     "section": "gradient descent",
-    "text": "gradient descent\n\nMaximum likelihood is \\(L(\\theta|X) = f(X|\\theta)\\) , the probability of obtaining data 𝑋 given some value of theta 𝜃, with some likelihood function that allows this calculation\nGradient descent is one such algorithm that could see what theta most likely. EM algorithm (expectation -maximum) is typically standard."
+    "text": "gradient descent\n\nMaximum likelihood is \\(L(\\theta|X) = f(X|\\theta)\\) , the probability of obtaining data 𝑋 given some value of theta 𝜃, with some likelihood function that allows this calculation\nGradient descent is one such algorithm that could see what theta most likely.\nEM algorithm (Expectation-Maximum) is typically standard. More of an iterative hike (E-step to M-step) rather than skateboarding"
+  },
+  {
+    "objectID": "mcmc-5.html#gradient-descent-1",
+    "href": "mcmc-5.html#gradient-descent-1",
+    "title": "MCMC",
+    "section": "gradient descent",
+    "text": "gradient descent"
+  },
+  {
+    "objectID": "info-6.html#this-time",
+    "href": "info-6.html#this-time",
+    "title": "information",
+    "section": "This time:",
+    "text": "This time:\n\nModel and parameter evaluation.\n\nHow do we test our coefficients?\n\nHow do we choose the best model?\n\nWhat sort of indexes can we use to evaluate fit?"
+  },
+  {
+    "objectID": "info-6.html#nhst",
+    "href": "info-6.html#nhst",
+    "title": "information",
+    "section": "NHST",
+    "text": "NHST\nBayesian typically do not use “standard” NHST. Why?\n\nThere is no null and thus no p-values\nNHST is associated with tons of problems eg dichotomous thinking\nBecause we are interested in the posterior distribution, not a single point estimate\nModel comparison is more elegant"
+  },
+  {
+    "objectID": "info-6.html#standard-fit-indicies-and-tests",
+    "href": "info-6.html#standard-fit-indicies-and-tests",
+    "title": "information",
+    "section": "Standard fit indicies and tests",
+    "text": "Standard fit indicies and tests\n\\(R^2\\) AIC BIC Likelihood ratio test (LRT)"
+  },
+  {
+    "objectID": "info-6.html#what-is-likelihood",
+    "href": "info-6.html#what-is-likelihood",
+    "title": "information",
+    "section": "What is likelihood?",
+    "text": "What is likelihood?\nModel fit indexes like likelihood ratio test, AIC, BIC rely on likelihoods.\nThe distribution of the likelihood of various hypothesis. p(data | \\(\\theta\\) ). For likelihood, the data are treated as a given, and value of theta varies. Probability of the data that you got, assuming a particular theta is true.\nbinomial ~ \\(p(3|10,p)\\)"
+  },
+  {
+    "objectID": "info-6.html#log-likelihood",
+    "href": "info-6.html#log-likelihood",
+    "title": "information",
+    "section": "Log likelihood",
+    "text": "Log likelihood\n\nThe log of the likelihood is easier to work with (adding rather than multiplying small values). It will always be negative, with higher values (closer to zero) indicating a better fitting model.\nIn frequentist estimation, the log likelihood is a single number, one that indicates the maximum, thus maximum likelihood estimation.\n\n\n\nCode\ndata &lt;- read_csv(\"https://raw.githubusercontent.com/josh-jackson/bayes/master/week3.csv\")\n\nlogLik(lm(health ~ 1 + happy, data = data))\n\n\n'log Lik.' -488.2327 (df=3)"
+  },
+  {
+    "objectID": "info-6.html#lrt",
+    "href": "info-6.html#lrt",
+    "title": "information",
+    "section": "LRT",
+    "text": "LRT\nThe likelihood ratio test compares the likelihood ratios of two models (usually likelihood evaluated at the MLE/MAP and at the null).\n\nanova(model1, model2)\n\nIf we multiply the difference in log-likelihood by -2, it follows a \\(\\chi^2\\) distribution with 1 degrees of freedom.\n\\(LR = -2 ln\\left(\\frac{L(m_1)}{L(m_2)}\\right) = 2(loglik(m_2)-loglik(m_1))\\)"
+  },
+  {
+    "objectID": "info-6.html#information-theory",
+    "href": "info-6.html#information-theory",
+    "title": "information",
+    "section": "Information theory",
+    "text": "Information theory\n\nIdeally we want to learn something new, gain some additional information about the world. But how do you quantify learning or information? p-value?\nFirst step is to define what it means to be accurate in our predictions–cannot learn if we don’t have some criterion. We above defined accuracy as the log probability of the data.\nSecond step is to define what a perfect prediction would look like, and thus how much uncertainty we are dealing with. While the log probability of the data defines what parameter is most “accurate”, it does not tell us how much we are learning."
+  },
+  {
+    "objectID": "info-6.html#information-theory-1",
+    "href": "info-6.html#information-theory-1",
+    "title": "information",
+    "section": "Information theory",
+    "text": "Information theory\n\nThe reduction in uncertainty by learning the outcome is how much information we have learned. If we know how much uncertainty we have we can know how much improvement is possible in our prediction.\nClaude Shannon (1916-2001) developed the field of information theory by making an analogy to bits of information, just like within computers. Prior to this, information, and thus learning was poorly defined."
+  },
+  {
+    "objectID": "info-6.html#what-is-information",
+    "href": "info-6.html#what-is-information",
+    "title": "information",
+    "section": "What is information?",
+    "text": "What is information?\nThe basic intuition behind information theory is that learning that an unlikely event has occurred is more informative than learning that a likely event has occurred. Unlikely = informative.\ninformation(x) = -log2( p(x) ), where log() is the base-2 logarithm and p(x) is the probability of the event x. Units are bits, where 1 bit halves the possibilities.\n\n## coin flip\n -log2(.5)\n\n[1] 1\n\n\n\n# dice roll\n -log2(1/6)\n\n[1] 2.584963"
+  },
+  {
+    "objectID": "info-6.html#bits",
+    "href": "info-6.html#bits",
+    "title": "information",
+    "section": "bits",
+    "text": "bits\n\nBits of information are the minimum number of questions required to determine an unknown. Bits effectively chop down the possible outcomes by a factor of 2^bit.\n\nA dice roll is 2.585 bits. Best to think about this is each bit like a yes/no question that halves the possibilities. 1. even? 2. greater than 3?\n\n~Half the time you can logically deduce with 2 questions (2 bits), but sometimes you need 3 questions, hence ~2.5 bits of info."
+  },
+  {
+    "objectID": "info-6.html#bits-1",
+    "href": "info-6.html#bits-1",
+    "title": "information",
+    "section": "bits",
+    "text": "bits\n1/2^bit = probability of some event 2^bit = 1/p bit = log2(1/p) bit = -1log2(p)\nWe use bits rather than direct probabilities because it is easier to add bits than very small probabilities multiplied by other very small probabilities."
+  },
+  {
+    "objectID": "info-6.html#entropy",
+    "href": "info-6.html#entropy",
+    "title": "information",
+    "section": "Entropy",
+    "text": "Entropy\n\nCalculating the information for a random variable is the same as calculating the information for the probability distribution of the events for the random variable. This is called entropy.\nFlatter distributions will have higher entropy. Because all values are equally likely any one value is “surprising” and gives you more information compared to a peaked distribution.\nA peaked distribution is less surprising as it already contains a lot of information."
+  },
+  {
+    "objectID": "info-6.html#entropy-1",
+    "href": "info-6.html#entropy-1",
+    "title": "information",
+    "section": "Entropy",
+    "text": "Entropy\n\nDistributions with more possibilities will be higher in entropy than those with fewer possibilities.\nSimilarly, flat distributions have high entropy as they provide little information\nThis is similar to how we set up priors where if we had more background “information” we would create a more narrow distribution."
+  },
+  {
+    "objectID": "info-6.html#maximum-information-entropy",
+    "href": "info-6.html#maximum-information-entropy",
+    "title": "information",
+    "section": "Maximum information entropy",
+    "text": "Maximum information entropy\n\nWe can use information theory to help us pick our likelihood distributions! Given what you know, what is the distribution that can arise the most ways with our data?\nMaximizing information entropy yields the flattest distribution given your data constraints. Gaussian is a maximum entropy distribution (as are uniform, binomial, exponential) when we know the meand and sd of a variable.\nIf nothing is known about a distribution (except measurement), then the distribution with the largest entropy should be chosen as the least-informative default."
+  },
+  {
+    "objectID": "info-6.html#entropy-2",
+    "href": "info-6.html#entropy-2",
+    "title": "information",
+    "section": "Entropy",
+    "text": "Entropy\n\nEntropy, H(p), tells us how hard it is to make an accurate prediction. For non uniform distributions we must sum up all the log probabilities\nH(p) = \\(-\\sum p_ilog(p_i)\\)\nThink of tossing rocks into 10 buckets. Each bucket can have a probability associated with getting a rock. H(p) is maximized when ps are equal. This gives us the least surprising distribution ie that can arise the most ways with our data"
+  },
+  {
+    "objectID": "info-6.html#how-is-this-different-from-lrt",
+    "href": "info-6.html#how-is-this-different-from-lrt",
+    "title": "information",
+    "section": "How is this different from LRT?",
+    "text": "How is this different from LRT?\n\nDeviance is a model of relative fit, but with a constant specific to the model. Log likelihoods thus only differ by a constant.\nComparing two models with LRT should yield similar scores as comparing two deviances.\n\nBut Bayesians don’t like NHST, so they sometimes leave off the -2, which simplifies the deviance equation but then does not allow a chi-square difference test to be completed."
+  },
+  {
+    "objectID": "info-6.html#log-pointwise-predictive-density",
+    "href": "info-6.html#log-pointwise-predictive-density",
+    "title": "information",
+    "section": "Log Pointwise Predictive Density",
+    "text": "Log Pointwise Predictive Density\nD(q) = \\(\\sum_i\\) \\(\\log\\) (q_i) = lppd\n\nFurther, with Bayes we need to use the entire posterior to define deviance! If not, we are throwing away information.\nOften referred to Log Pointwise Predictive Density (lpd or lppd)"
+  },
+  {
+    "objectID": "info-6.html#two-options-for-model-comparison",
+    "href": "info-6.html#two-options-for-model-comparison",
+    "title": "information",
+    "section": "Two options for model comparison",
+    "text": "Two options for model comparison\n\nCross validation\nInformation model fit indexes\n\n\nThese are theoretically the same, but in practice seen as very different. That is, cross validation is equivalent to model fit like aic/bic"
+  },
+  {
+    "objectID": "info-6.html#cross-validation",
+    "href": "info-6.html#cross-validation",
+    "title": "information",
+    "section": "Cross validation",
+    "text": "Cross validation\n\nCompare different models in their prediction in and out of sample (train and a test sample)\nPredictions to NEW DATA are key, as this separates the sample specific influence (irregular features) from population influence (regular features)\nIdentify the model with the lowest test set error (deviance). In frequentist we typically use MSE.\nBut leaving out data is not necessary ideal, so we split them into folds."
+  },
+  {
+    "objectID": "info-6.html#loo-psis-loo",
+    "href": "info-6.html#loo-psis-loo",
+    "title": "information",
+    "section": "LOO & PSIS-LOO",
+    "text": "LOO & PSIS-LOO\n\nLeaving out 1 observation per fold is calledLeave One Out (LOO) cross validation. Great in theory, but computationally difficult.\nPareto Smoothed Importance Sampling (PSIS). Importance is similar to “deleted residuals” where on a case by case basis we asked whether this data point impacts the posterior. Instead of rerunning your model N data points times, importance scores are used to weight each datapoint, resulting in an equivalent to LOO without actually doing LOO. Cross validation for free!"
+  },
+  {
+    "objectID": "info-6.html#psis-loo-example",
+    "href": "info-6.html#psis-loo-example",
+    "title": "information",
+    "section": "PSIS-LOO example",
+    "text": "PSIS-LOO example\n\n\nCode\nmr.12 &lt;- readRDS(\"mr.12.rds\")\nsummary(mr.12)\n\n\n Family: gaussian \n  Links: mu = identity; sigma = identity \nFormula: happiness ~ 0 + iv.d + SS_c \n   Data: MR (Number of observations: 118) \n  Draws: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;\n         total post-warmup draws = 4000\n\nRegression Coefficients:\n            Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS\niv.dcontrol     4.96      0.25     4.46     5.46 1.00     4892     3081\niv.dtx          5.36      0.19     4.99     5.73 1.00     4328     2930\nSS_c            0.29      0.05     0.20     0.38 1.00     4780     2934\n\nFurther Distributional Parameters:\n      Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS\nsigma     1.64      0.11     1.44     1.87 1.00     4369     3196\n\nDraws were sampled using sample(hmc). For each parameter, Bulk_ESS\nand Tail_ESS are effective sample size measures, and Rhat is the potential\nscale reduction factor on split chains (at convergence, Rhat = 1)."
+  },
+  {
+    "objectID": "info-6.html#information-criteria",
+    "href": "info-6.html#information-criteria",
+    "title": "information",
+    "section": "Information Criteria",
+    "text": "Information Criteria\n\nAIC, BIC, WAIC, DIC, etc.\nInformation criteria are a theoretical fit for the out of sample cross validation, not unlike psis-loo\nAIC = deviance(training) + 2p (p = number of parameters). Low scores better.\nDIC (Deviance information criteria) is more flexible for Bayesian models, but assumes a multivariate Gaussian posterior"
+  },
+  {
+    "objectID": "info-6.html#waic",
+    "href": "info-6.html#waic",
+    "title": "information",
+    "section": "WAIC",
+    "text": "WAIC\n\\[\\text{WAIC}(y, \\theta) = -2 \\big (\\text{lppd} - \\underbrace{\\sum_i \\operatorname{var}_\\theta \\log p(y_i | \\theta)}_\\text{penalty term} \\big)\\]\nlppd = log pointwise predictive density = deviance over the entire posterior =\n\\[\\text{lppd}(y, \\theta) = \\sum_i \\log \\frac{1}{S} \\sum_sp(y_i|\\theta_S)\\]\n\\[\\text{AIC}(y, \\theta) = -2(\\text{llpd}) + 2p\\]"
+  },
+  {
+    "objectID": "info-6.html#example",
+    "href": "info-6.html#example",
+    "title": "information",
+    "section": "example",
+    "text": "example\n\nwaic(mr.12)\n\n\nComputed from 4000 by 118 log-likelihood matrix.\n\n          Estimate   SE\nelpd_waic   -228.1  6.9\np_waic         4.0  0.6\nwaic         456.2 13.7\n\n\npwaic = penality term (similar to the penality term in AIC) elpd_waic = lppd - pwaic"
+  },
+  {
+    "objectID": "info-6.html#using-information-critera",
+    "href": "info-6.html#using-information-critera",
+    "title": "information",
+    "section": "Using information critera",
+    "text": "Using information critera\n\nEach of these criteria do not have scales that are bounded by numbers (eg 0-1), nor can they be evaluated by some other number (eg SDs)\nProvide relative fit, so you need to compare different models, choosing the model with the lowest IC or the highest expected IC\nThe criteria are also dependent on sample size, so you cannot compare across models that differ in sample size\nYou can compare non-nested models eg ones with different sets of predictors"
+  },
+  {
+    "objectID": "info-6.html#overfitting",
+    "href": "info-6.html#overfitting",
+    "title": "information",
+    "section": "Overfitting",
+    "text": "Overfitting\n\nFit is relative to our sample, not the population\nNeed to balance between parsimony and completeness\nIronically, the best fitting model may not be the best model. The model will be tuned to our particular random sample\nWe are “fitting the noise” or overfitting the specifics of our sample"
+  },
+  {
+    "objectID": "info-6.html#regularization",
+    "href": "info-6.html#regularization",
+    "title": "information",
+    "section": "Regularization",
+    "text": "Regularization\n\n“penalizing” our model estimates to prevent overfitting\nFind coefficients that compromise between (a) minimizing the residuals and (b) minimizing sum of abs value of coefficients\nTends to “shrink”” coefficients to zero, much like we discussed with centering prior distributions around zero"
+  },
+  {
+    "objectID": "info-6.html#update-prior",
+    "href": "info-6.html#update-prior",
+    "title": "information",
+    "section": "update prior",
+    "text": "update prior\n\n\nCode\nmr.2p &lt;- update(mr.2, prior =  \n                c(prior(normal(5, 2), class = Intercept),\n                 prior(normal(0, .2), class = b, coef = SS_c),\n                prior(normal(0, .05), class = b, coef = FQ_c),\n                prior(exponential(.5), class = sigma)),\n                  file = \"mr.2p\")"
+  },
+  {
+    "objectID": "info-6.html#mimicking-nhst",
+    "href": "info-6.html#mimicking-nhst",
+    "title": "information",
+    "section": "Mimicking NHST",
+    "text": "Mimicking NHST\nIf you wanted to appease an editor/reviewer/adviser what do you do (other than teach them Bayes)?\nCIs! HDPIs! Predictions! ROPE! Probability of direction!\n\n\nCode\nmr.14 &lt;- readRDS(\"mr.14.rds\")\nsummary(mr.14)\n\n\n Family: gaussian \n  Links: mu = identity; sigma = identity \nFormula: happiness ~ 1 + iv.d * SS_c \n   Data: MR (Number of observations: 118) \n  Draws: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;\n         total post-warmup draws = 4000\n\nRegression Coefficients:\n            Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS\nIntercept       4.96      0.24     4.49     5.43 1.00     4484     2783\niv.dtx          0.38      0.29    -0.21     0.97 1.00     4355     2987\nSS_c            0.41      0.06     0.29     0.52 1.00     3498     3294\niv.dtx:SS_c    -0.28      0.09    -0.46    -0.10 1.00     3809     3007\n\nFurther Distributional Parameters:\n      Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS\nsigma     1.58      0.11     1.40     1.80 1.00     4406     2579\n\nDraws were sampled using sample(hmc). For each parameter, Bulk_ESS\nand Tail_ESS are effective sample size measures, and Rhat is the potential\nscale reduction factor on split chains (at convergence, Rhat = 1)."
+  },
+  {
+    "objectID": "info-6.html#probability-of-direction",
+    "href": "info-6.html#probability-of-direction",
+    "title": "information",
+    "section": "Probability of direction",
+    "text": "Probability of direction\nThe Probability of Direction (pd) is an index of effect existence representing the certainty with which an effect goes in a particular direction.\nSimple: only depends on the posterior distributions (unlike say Bayes Factors) Scale independent: interpretation doesn’t change with scale change Similar to p - value: interpretation has parallels, so it helps convince pesky reviewers"
+  },
+  {
+    "objectID": "info-6.html#how-to-calculate",
+    "href": "info-6.html#how-to-calculate",
+    "title": "information",
+    "section": "How to calculate?",
+    "text": "How to calculate?\nCompute the area under the curve (AUC) of the density curve on the other side of 0.\n\n\nCode\nlibrary(bayestestR)\np_direction(mr.14)\n\n\nProbability of Direction\n\nParameter   |     pd\n--------------------\n(Intercept) |   100%\niv.dtx      | 90.58%\nSS_c        |   100%\niv.dtx:SS_c | 99.88%"
+  },
+  {
+    "objectID": "info-6.html#downsides-of-pd",
+    "href": "info-6.html#downsides-of-pd",
+    "title": "information",
+    "section": "Downsides of PD",
+    "text": "Downsides of PD\n\nYou can find a high PD for an effect that is quite small. Similar to a p &lt; .05 with a large sample size. Is it still meaningful?\nLead to other NHST foibles like dichotomous thinking\nMore similar to a 1-tailed p-value"
+  },
+  {
+    "objectID": "info-6.html#nil-hypothesis",
+    "href": "info-6.html#nil-hypothesis",
+    "title": "information",
+    "section": "nil hypothesis",
+    "text": "nil hypothesis\n\nWith NHST you typically attempt to reject a H0 of zero. This is a point estimate. However, we know the probability of any point is zero, so conceptually a typical NHST is illogical.\nWhat we really mean when we set up a standard NHST nil hypothesis is to reject zero – OR VALUES THAT ARE EQUIVALENT TO ZERO.\nWhat are those values? In frequentist it depends on your se which is a function of your sample SD and N. We just don’t talk about it."
+  },
+  {
+    "objectID": "info-6.html#rope",
+    "href": "info-6.html#rope",
+    "title": "information",
+    "section": "ROPE",
+    "text": "ROPE\n\nBayesian inference is not based on NHST. Rather than concluding that an effect is present when it simply differs from zero, we would conclude that the probability of being outside a specific range that can be considered as “practically no effect”.\nRegion of Practical Equivalence - a small range of parameter values that are considered to be practically equivalent to the null. E.g,. std b = [-.07, .07]\nLet the user define an area around the null value enclosing values that are equivalent to the null"
+  },
+  {
+    "objectID": "info-6.html#rope-1",
+    "href": "info-6.html#rope-1",
+    "title": "information",
+    "section": "ROPE",
+    "text": "ROPE\n\nWhy not just use the CI like you normally would? Because what if CI and ROPE overlap?\nThis allows you to\n\n\nhave a middle ground between accept vs reject. A range of equivalence.\nAllows one to affirm a predicted value, which is logically impossible in a standard NHST framework. Ie rather than fail to reject null, we can state given the observed data, the effect has XX% probability of being practically zero."
+  },
+  {
+    "objectID": "info-6.html#rope-2",
+    "href": "info-6.html#rope-2",
+    "title": "information",
+    "section": "ROPE",
+    "text": "ROPE\n\nHow to come up with ROPE values?\nDifficult. Balance practicality with expertise judgment. DBDA: -0.1 to 0.1 of a standardized parameter (ie negligible effect size, Cohen, 1988). Or [-1se, +1se]\n\n\nrope_range(mr.14)\n\n[1] -0.1893523  0.1893523\n\n\n\nUsually implemented when a decision needs to be made. More common in medicine than psych."
+  },
+  {
+    "objectID": "info-6.html#bayes-factors",
+    "href": "info-6.html#bayes-factors",
+    "title": "information",
+    "section": "Bayes Factors",
+    "text": "Bayes Factors\nQuantifies the support in the data for two competing statistical models. Ratio of the two marginal likelihoods of an observed outcome for these two models. E.g., how likely is a b = .2 vs b = 0, given our data. Gives relative evidence for different positions by comparing two marginal likelihoods\n\\[BF_{12} = \\frac{p(D | m = 1)}{p(D | m = 2)}\\]"
+  },
+  {
+    "objectID": "info-6.html#proposed-cutoffs",
+    "href": "info-6.html#proposed-cutoffs",
+    "title": "information",
+    "section": "Proposed cutoffs",
+    "text": "Proposed cutoffs\n\n\n\nBF10\nInterpretation\n\n\n\n\n&gt; 100\nExtreme evidence for H1\n\n\n30 - 100\nVery strong evidence for H1\n\n\n10 - 30\nStrong evidence for H1\n\n\n3 - 10\nModerate evidence for H1\n\n\n1 - 3\nAnecdotal evidence for H1\n\n\n1\nEqual evidence for H1 and H0\n\n\n1/3 - 1\nAnecdotal evidence for H0\n\n\n1/10 - 1/3\nModerate evidence for H0\n\n\n1/30 - 1/10\nStrong evidence for H0\n\n\n1/100 - 1/30\nVery strong evidence for H0\n\n\n&lt; 1/100\nExtreme evidence for H0"
+  },
+  {
+    "objectID": "info-6.html#bf-interpretation",
+    "href": "info-6.html#bf-interpretation",
+    "title": "information",
+    "section": "BF interpretation",
+    "text": "BF interpretation\n\nExtent to which the data sway our relative belief from one hypothesis to the other\nStrength of evidence from data about the hypotheses\nRelative predictive accuracy of one hypothesis over another\nHas the null hypothesis of an absence of an effect become more or less credible?"
+  },
+  {
+    "objectID": "info-6.html#association-with-p-values",
+    "href": "info-6.html#association-with-p-values",
+    "title": "information",
+    "section": "Association with p values",
+    "text": "Association with p values\n\nSimilar in that they both provide a continuous metric to compare two hypotheses\nFor a fixed sample size, p-values can be directly transformed into Bayes-Factors and vice versa, and of course into any effect size metric.\nRemember that p values are a composite of an effect size and sample size. Same is true with BF."
+  },
+  {
+    "objectID": "info-6.html#alternative-to-p-values",
+    "href": "info-6.html#alternative-to-p-values",
+    "title": "information",
+    "section": "Alternative to p-values",
+    "text": "Alternative to p-values\n\nEasier interpretation. (ratio of two likelihoods). P values are misunderstood.\nDoesn’t involve imaginary sampling distributions\nCan provide evidence in favor of a null\nWorks better as an effect size substitute than a p-value\nLess dichotomous thinking as there isn’t a BF one needs to surpass"
+  },
+  {
+    "objectID": "info-6.html#major-downside",
+    "href": "info-6.html#major-downside",
+    "title": "information",
+    "section": "1 major downside",
+    "text": "1 major downside\nFor every parameter or model test there is an infinite number of bayes factors. That is, there is no single Bayes factor for your analysis!\nWhen someone says the Bayes factor for this test was XX you have to ask yourself what exactly they are testing."
+  },
+  {
+    "objectID": "info-6.html#we-can-also-do-this-with-rope",
+    "href": "info-6.html#we-can-also-do-this-with-rope",
+    "title": "information",
+    "section": "we can also do this with ROPE!",
+    "text": "we can also do this with ROPE!\n\nbf.result2 &lt;- bayesfactor_parameters(mr.2, null = rope_range(mr.2))\nbf.result2 \n\nBayes Factor (Null-Interval)\n\nParameter   |       BF\n----------------------\n(Intercept) | 2.57e+33\nSS_c        |   409.62\nFQ_c        |     1.44\n\n* Evidence Against The Null: [-0.189, 0.189]"
+  },
+  {
+    "objectID": "info-6.html#shortcomings-of-bayes-factors",
+    "href": "info-6.html#shortcomings-of-bayes-factors",
+    "title": "information",
+    "section": "Shortcomings of Bayes Factors",
+    "text": "Shortcomings of Bayes Factors\n\nHeavy reliance on priors. The marginal likelihood is an average taken with respect to the prior, so bayes factors can be seen as relatively subjective\nBF provide differences between models without quantifying whether the chosen model is any good (similar issues with waic, loo, p-values)\nFavors more parsimonious models and thus is more conservative (could also be a pro)"
+  },
+  {
+    "objectID": "info-6.html#shortcomings-of-bayes-factors-1",
+    "href": "info-6.html#shortcomings-of-bayes-factors-1",
+    "title": "information",
+    "section": "Shortcomings of Bayes Factors",
+    "text": "Shortcomings of Bayes Factors\n\nPotentially reinforces dichotomous thinking (better than p values but not by much)\nMay be used as a measure of effect size (similar shortfalls to using p as such)\nCan be completely disconnected from our typical estimation stats"
+  },
+  {
+    "objectID": "info-6.html#multiple-comparisons",
+    "href": "info-6.html#multiple-comparisons",
+    "title": "information",
+    "section": "multiple comparisons",
+    "text": "multiple comparisons\nKrushke:\nWhen comparing multiple conditions, a key goal in NHST is to keep the overall false alarm rate down to a desired maximum such as 5%. Abiding by this constraint depends on the number of comparisons that are to be made, which in turn depends on the intentions of the experimenter. In a Bayesian analysis, however, there is just one posterior distribution over the parameters that describe the conditions. That posterior distribution is unaffected by the intentions of the experimenter, and the posterior distribution can be examined from multiple perspectives however is suggested by insight and curiosity"
   }
 ]

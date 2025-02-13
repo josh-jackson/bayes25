@@ -22,6 +22,7 @@ html:
 ```{r}
 #| code-fold: true
 library(brms)
+library(modelr)
 library(patchwork)
 library(tidyverse)
 library(tidybayes)
@@ -226,7 +227,8 @@ MR <- MR %>%
          iv = `intervention.group`) %>% 
         mutate(iv = as.factor(iv))
 
-MR <- MR %>%mutate(iv.d = recode(iv, "1" = "control", "2" = "tx", "3" = "tx"),  iv.d = factor(iv.d))
+MR <- MR %>%
+  mutate(iv.d = case_match(iv, "1" ~ "control", "2" ~ "tx", "3" ~ "tx"),  iv.d = factor(iv.d))
 
 MR
 ```
@@ -853,14 +855,12 @@ mr.8 <-
 summary(mr.8)
 ```
 
-
------------
+------------------------------------------------------------------------
 
 ```{r}
 #| code-fold: true
 get_variables(mr.8)
 ```
-
 
 ------------------------------------------------------------------------
 
@@ -923,15 +923,13 @@ em.1
 emmip(mr.8, group ~ SupportLevel)
 ```
 
-
 ------------------------------------------------------------------------
 
 ```{r}
 emmeans(mr.8, pairwise ~ SupportLevel)
 ```
 
-
----------
+------------------------------------------------------------------------
 
 ```{r}
 #| code-fold: true
@@ -940,8 +938,7 @@ avg_predictions(mr.8,  by = "SupportLevel")
 
 ```
 
-
-------
+------------------------------------------------------------------------
 
 ```{r}
 #| code-fold: true
@@ -950,27 +947,19 @@ avg_predictions(mr.8, newdata = "balanced", by = "SupportLevel")
 
 ```
 
-
-
---------
+------------------------------------------------------------------------
 
 ```{r}
 predictions(mr.8, newdata = datagrid(SupportLevel = unique, group = unique))
 ```
 
-
-
----------
+------------------------------------------------------------------------
 
 ```{r, eval = FALSE}
 comparisons(mr.8, newdata = datagrid(SupportLevel = unique, group = unique))
 ```
 
-Error: These variable names are forbidden to avoid conflicts with the outputs
-  of `marginaleffects`:
-  "group"
-  Please rename your variables before fitting the model.
-
+Error: These variable names are forbidden to avoid conflicts with the outputs of `marginaleffects`: "group" Please rename your variables before fitting the model.
 
 ------------------------------------------------------------------------
 
@@ -1006,186 +995,6 @@ mr.8 %>%
 ```
 
 
-
-## ANOVA and MLMs
-
-We can think of ANOVA models as MLM models with category as a random factor. Group-based deviations are reflected in the random effect of group $U_{0j}$. Our other two parameters are $\varepsilon_{ij}$ and $\gamma_{00}$ reflecting sigma and the mean of the group means, respectfully.
-
-Same for Bayes as for frequentest, nothing new
-
-Level 1 $${Happy}_{ij} = \beta_{0j}  + \varepsilon_{ij}$$
-
-Level 2 $${\beta}_{0j} = \gamma_{00} + U_{0j}$$
-
-------------------------------------------------------------------------
-
--   The unique part for Bayes is the introduction of a prior on the sd/random effect. The prior describes the distribution from which our groups arise and are centered around zero, meaning we need to think about the SD of the random effect.
-
--   Random effects are not often thought of during normal experimental design considerations. At this juncture we won't go into choosing values for the SD of the random effects. We have a few options such as creating "hyper" priors which learn from your data.
-
--   If the SD is low, then deviations are thought to be zero, which will lead to large shrinkage. If high, deviations are not uncommon, and thus this more closely resembles ANOVA (with no shrinkage/learning from other groups)
-
-------------------------------------------------------------------------
-
-```{r}
-#| code-fold: true
-mr.11 <- 
-  brm(family = gaussian,
-      bf(happiness ~  1 + (1|iv)),
-          prior = c(prior(normal(5, 2), class = Intercept),
-                prior(normal(0, 2), class = sd),
-               prior(exponential(1), class = sigma)),
-      iter = 2000, warmup = 1000, chains = 4, cores = 4,
-      data = MR,
-      backend = "cmdstanr",
-      file = "mr.11")
-
-```
-
-## MLM priors
-
-SD represents the range of deviations of group means from the average
-
-```{r}
-#| code-fold: true
-prior.mr11 <- c(prior(normal(5, 2), class = Intercept),
-                prior(normal(0, 2), class = sd),
-                prior(exponential(1), class = sigma))
-prior.mr11 %>% 
-  parse_dist(prior) %>% 
-  ggplot(aes(y=class, dist =.dist, args=.args)) +
-  stat_dist_halfeye()+
-  scale_x_continuous( limits = c(-50, 50)) +
-  labs(title="Priors")+ xlim(-10, 10)
-```
-
-------------------------------------------------------------------------
-
-```{r}
-summary(mr.11)
-```
-
-## ANOVA
-
-```{r}
-summary(lm(happiness ~ iv, data = MR))
-```
-
-------------------------------------------------------------------------
-
-```{r}
-summary(aov(happiness ~ iv, data = MR))
-```
-
-## Population intercept
-
-```{r}
-#| code-fold: true
-library(ggridges)
-MR %>% 
-  group_by(iv) %>% 
-  mutate(group_mean = mean(happiness)) %>% 
-  ungroup() %>% 
-  mutate(iv = fct_reorder(iv, group_mean)) %>% 
-  ggplot(aes(x = happiness, y = iv, fill = factor(group_mean))) +
-  geom_density_ridges(scale = 3/2, size = .2) +
-  theme(legend.position="none")
-```
-
-## SD
-
-```{r}
-get_variables(mr.11)
-```
-
-```{r}
-#| code-fold: true
-mr.11 %>%
-  spread_draws(sd_iv__Intercept) %>% 
-    mean_qi()
-```
-
-------------------------------------------------------------------------
-
-```{r}
-#| code-fold: true
-mr.11 %>%
-  spread_draws(r_iv[group,])
-```
-
-4000 samples \* 3 groups
-
-------------------------------------------------------------------------
-
-```{r}
-#| code-fold: true
-mr.11 %>%
-  spread_draws(r_iv[group,], b_Intercept) %>% 
-  mutate(r_iv = r_iv + b_Intercept) %>% 
-    mean_qi()
-```
-
-```{r}
-#| code-fold: true
-  MR %>%
-  group_by(iv) %>%
-  summarise(mean = mean(happiness), n = n())
-```
-
-Why are they different?!?
-
-------------------------------------------------------------------------
-
-```{r}
-#| code-fold: true
-mr.4 <- 
-  brm(family = gaussian,
-      happiness ~  iv ,
-      prior = c(prior(normal(5, 2), class = b),
-                prior(exponential(1), class = sigma)),
-      iter = 2000, warmup = 1000, chains = 2, cores = 2,
-      data = MR,
-      backend = "cmdstanr",
-      file = "mr.4")
-```
-
-------------------------------------------------------------------------
-
-```{r}
-mr.4 %>% 
- spread_draws(b_Intercept, b_iv2,b_iv3) %>%
-  mutate(group1 = b_Intercept) %>% 
-  mutate(group2 = b_Intercept + b_iv2) %>% 
-  mutate(group3 = b_Intercept + b_iv3) %>% 
-  select(group1:group3) %>% 
-  pivot_longer(cols = group1:group3, names_to = "group") %>% 
-  ggplot(aes(y = group, x = value)) +
-  stat_dotsinterval()
-```
-
-------------------------------------------------------------------------
-
-```{r}
-#| code-fold: true
-mr.11 %>%
-  spread_draws(r_iv[group,], b_Intercept) %>% 
-  mutate(r_iv = r_iv + b_Intercept) %>% 
-  mutate(group = as.factor(group)) %>% 
-    ggplot(aes(y = group, x = r_iv)) +
-  stat_dotsinterval() 
-```
-
-## shrinkage and partial pooling
-
--   We get a greater push towards similar values across the groups.
-
--   We are partially pooling values across groups, shrinking the mean to the group mean. This is because we are learning from other data. Groups learn from other levels/groups if they do not have a lot of data to suggest otherwise.
-
-## Incorporating uncertainty in the random effects
-
--   The SD parameter describes how large the differences between the groups is expected. Could groups differ by a 20, 30? Normally we expressed that through a prior around the regression coefficient. Here it is through a SD parameter.
-
--   The model is taking the potential that they differ and placing that into the model as uncertainty. We said these differences "could happen".
 
 ## Interactions
 
@@ -1231,6 +1040,17 @@ MR %>%
   geom_point(data = MR) 
 ```
 
+
+---------------
+
+
+```{r}
+#| code-fold: true
+MR %>%
+  group_by(iv.d) %>%
+  data_grid(SS_c = seq_range(SS_c, n = 50), .model = MR)
+```
+
 ------------------------------------------------------------------------
 
 ```{r}
@@ -1266,6 +1086,17 @@ MR %>%
   geom_line(aes(y = .epred, group = paste(iv.d, .draw)),alpha = .1) +
   geom_point(data = MR) 
 ```
+
+
+-------
+
+```{r}
+#| code-fold: true
+MR %>%
+  group_by(iv.d) %>%
+  data_grid(SS_c = seq_range(SS_c, n = 50), .model = MR) 
+```
+
 
 ------------------------------------------------------------------------
 
@@ -1307,6 +1138,18 @@ MR %>%
 
 ------------------------------------------------------------------------
 
+
+```{r}
+#| code-fold: true
+MR %>%
+  group_by(iv.d) %>%
+  data_grid(SS_c = seq_range(SS_c, n = 50), .model = MR) %>% 
+  add_epred_draws(mr.14, ndraws = 100)
+```
+
+
+--------------
+
 ```{r}
 mr.14 %>%
   spread_draws(`b_SS_c`, `b_iv.dtx:SS_c`) %>% 
@@ -1316,6 +1159,15 @@ mr.14 %>%
   mean_qi() 
 ```
 
+-------------
+
+```{r}
+library(marginaleffects)
+avg_slopes(mr.14, variables = "SS_c", by = "iv.d")
+```
+
+
+
 ------------------------------------------------------------------------
 
 ```{r}
@@ -1324,6 +1176,17 @@ mr.13 %>%
   mean_qi() 
 
 ```
+
+---------------
+
+```{r}
+predictions(mr.14, newdata = datagrid(iv.d = c("control", "tx"), SS_c = mean))
+```
+
+```{r}
+predictions(mr.14, newdata = datagrid(iv.d = c("control", "tx"), SS_c = 3))
+```
+
 
 ## Continuous interaction example
 
@@ -1430,3 +1293,10 @@ data_grid(SS_c = seq_range(SS_c, n = 20), FQ_c = c(-2.5,0,2.5), .model = MR) %>%
   geom_line(aes(y = .epred, group = paste(FQ_c, .draw), alpha = .5),show.legend = FALSE) +  
 facet_grid(cols = vars(FQ_c))
 ```
+
+------------
+
+```{r}
+slopes(mr.15, variables = "SS_c", newdata = datagrid(FQ_c = fivenum))
+```
+
