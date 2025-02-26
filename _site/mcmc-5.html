@@ -653,7 +653,7 @@
 
 <ul>
 <li><p>If proposals depend on the curvature or gradient in the posterior how do we calculate that? Derivatives. Lots of them.</p></li>
-<li><p>Automatic-differentiation (auto-diff) is a way to do gradient decent computationally efficient.</p></li>
+<li><p>Automatic-differentiation (auto-diff) is a way to do gradient descent computationally efficient.</p></li>
 <li><p>We are not calculating the posterior directly, but instead just local estimation of the curvature (not full integral).</p></li>
 <li><p>The samples give us a full picture of the posterior.</p></li>
 </ul>
@@ -742,7 +742,12 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <ul>
 <li><p>You need enough chains to chains to check convergence.</p></li>
 <li><p>The number of chains depends on 1) how many cores your computer has and 2) how much time you have. Conceivably you could run 100 chains. The problem though is this is wasteful computationally, as you will discard more warmup iterations.</p></li>
-<li><p>The Stan team suggests that 4 chains are adequate for checking convergence. <code>brms</code> defaults are iter = 2000 and warmup = 1000 which yields 4000 usable posterior samples ((iter - warmup) * chains).</p></li>
+</ul>
+</section>
+<section class="slide level2">
+
+<ul>
+<li>The Stan team suggests that 4 chains are adequate for checking convergence. <code>brms</code> defaults are iter = 2000 and warmup = 1000 which yields 4000 usable posterior samples ((iter - warmup) * chains).</li>
 </ul>
 <p>When setting up models: <code>one short chain to debug, four chains for verification and inference</code></p>
 </section>

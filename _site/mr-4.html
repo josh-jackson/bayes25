@@ -618,7 +618,7 @@
 <span id="cb2-6"><a href="#cb2-6"></a>        <span class="fu">mutate</span>(<span class="at">iv =</span> <span class="fu">as.factor</span>(iv))</span>
 <span id="cb2-7"><a href="#cb2-7"></a></span>
 <span id="cb2-8"><a href="#cb2-8"></a>MR <span class="ot">&lt;-</span> MR <span class="sc">%&gt;%</span></span>
-<span id="cb2-9"><a href="#cb2-9"></a>  <span class="fu">mutate</span>(<span class="at">iv.d =</span> <span class="fu">case_match</span>(iv, <span class="st">"1"</span> <span class="sc">~</span> <span class="st">"control"</span>, <span class="st">"2"</span> <span class="sc">~</span> <span class="st">"tx"</span>, <span class="st">"3"</span> <span class="sc">~</span> <span class="st">"tx"</span>),  <span class="at">iv.d =</span> <span class="fu">factor</span>(iv.d))</span>
+<span id="cb2-9"><a href="#cb2-9"></a>  <span class="fu">mutate</span>(<span class="at">iv.d =</span> <span class="fu">case_match</span>(iv, <span class="st">"1"</span> <span class="sc">~</span> <span class="st">"control"</span>, <span class="st">"2"</span> <span class="sc">~</span> <span class="st">"tx"</span>, <span class="st">"3"</span> <span class="sc">~</span> <span class="st">"tx"</span>))</span>
 <span id="cb2-10"><a href="#cb2-10"></a></span>
 <span id="cb2-11"><a href="#cb2-11"></a>MR</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -3349,7 +3349,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 # Groups:   ID, friendship.quality, happiness, schoool.success, SS_c, FQ_c, iv,
 #   iv.d, .row [118]
       ID friendship.quality happiness schoool.success   SS_c    FQ_c iv    iv.d 
-   &lt;int&gt;              &lt;dbl&gt;     &lt;dbl&gt;           &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt; &lt;fct&gt; &lt;fct&gt;
+   &lt;int&gt;              &lt;dbl&gt;     &lt;dbl&gt;           &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt; &lt;fct&gt; &lt;chr&gt;
  1     1              10.2       3.20            6.16 -2.57   2.57   1     cont…
  2     2               5.59      7.01            8.91  0.177 -2.03   1     cont…
  3     3               6.58      6.17           10.5   1.81  -1.03   1     cont…
@@ -3382,7 +3382,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 # Groups:   ID, friendship.quality, happiness, schoool.success, SS_c, FQ_c, iv,
 #   iv.d, .row [118]
       ID friendship.quality happiness schoool.success  SS_c  FQ_c iv    iv.d   
-   &lt;int&gt;              &lt;dbl&gt;     &lt;dbl&gt;           &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;fct&gt; &lt;fct&gt;  
+   &lt;int&gt;              &lt;dbl&gt;     &lt;dbl&gt;           &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;fct&gt; &lt;chr&gt;  
  1     1               10.2      3.20            6.16 -2.57  2.57 1     control
  2     1               10.2      3.20            6.16 -2.57  2.57 1     control
  3     1               10.2      3.20            6.16 -2.57  2.57 1     control
@@ -3464,7 +3464,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <span id="cb47-7"><a href="#cb47-7"></a>  <span class="fu">mutate</span>(<span class="at">happy_c =</span> <span class="st">`</span><span class="at">happiness</span><span class="st">`</span> <span class="sc">-</span> <span class="fu">mean</span>(<span class="st">`</span><span class="at">happiness</span><span class="st">`</span>))</span>
 <span id="cb47-8"><a href="#cb47-8"></a></span>
 <span id="cb47-9"><a href="#cb47-9"></a>MR <span class="ot">&lt;-</span> MR <span class="sc">%&gt;%</span> </span>
-<span id="cb47-10"><a href="#cb47-10"></a>  <span class="fu">mutate</span>(<span class="at">iv2 =</span> <span class="fu">sample</span>(<span class="fu">rep</span>(iv2,  <span class="at">each =</span> <span class="dv">59</span>, <span class="at">size =</span> <span class="fu">n</span>())))</span>
+<span id="cb47-10"><a href="#cb47-10"></a>  <span class="fu">mutate</span>(<span class="at">iv2 =</span> <span class="fu">rep</span>(iv2,  <span class="at">each =</span> <span class="dv">59</span>, <span class="at">size =</span> <span class="dv">2</span>))</span>
 <span id="cb47-11"><a href="#cb47-11"></a>         </span>
 <span id="cb47-12"><a href="#cb47-12"></a> MR <span class="ot">&lt;-</span> MR <span class="sc">%&gt;%</span>         </span>
 <span id="cb47-13"><a href="#cb47-13"></a>         <span class="fu">mutate</span>(<span class="at">iv2 =</span> <span class="fu">factor</span>(iv2))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -4217,12 +4217,12 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb106"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb106-1"><a href="#cb106-1"></a>MR <span class="sc">%&gt;%</span></span>
 <span id="cb106-2"><a href="#cb106-2"></a>  <span class="fu">group_by</span>(iv.d) <span class="sc">%&gt;%</span></span>
-<span id="cb106-3"><a href="#cb106-3"></a>  <span class="fu">data_grid</span>(<span class="at">SS_c =</span> <span class="fu">seq_range</span>(SS_c, <span class="at">n =</span> <span class="dv">50</span>), <span class="at">.model =</span> MR)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb106-3"><a href="#cb106-3"></a>  <span class="fu">data_grid</span>(<span class="at">SS_c =</span> <span class="fu">seq_range</span>(SS_c, <span class="at">n =</span> <span class="dv">50</span>), <span class="at">.model =</span> MR) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 200 × 11
    iv.d     SS_c friendship.quality happiness schoool.success   SES
-   &lt;fct&gt;   &lt;dbl&gt;              &lt;dbl&gt;     &lt;dbl&gt;           &lt;dbl&gt; &lt;dbl&gt;
+   &lt;chr&gt;   &lt;dbl&gt;              &lt;dbl&gt;     &lt;dbl&gt;           &lt;dbl&gt; &lt;dbl&gt;
  1 control -8.71               7.75      5.34            8.52  2.31
  2 control -8.71               7.75      5.34            8.52  2.31
  3 control -8.35               7.75      5.34            8.52  2.31
@@ -4308,14 +4308,15 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb112"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb112-1"><a href="#cb112-1"></a>MR <span class="sc">%&gt;%</span></span>
+<div class="sourceCode cell-code" id="cb112"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb112-1"><a href="#cb112-1"></a>df <span class="ot">&lt;-</span> MR <span class="sc">%&gt;%</span></span>
 <span id="cb112-2"><a href="#cb112-2"></a>  <span class="fu">group_by</span>(iv.d) <span class="sc">%&gt;%</span></span>
-<span id="cb112-3"><a href="#cb112-3"></a>  <span class="fu">data_grid</span>(<span class="at">SS_c =</span> <span class="fu">seq_range</span>(SS_c, <span class="at">n =</span> <span class="dv">50</span>), <span class="at">.model =</span> MR) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb112-3"><a href="#cb112-3"></a>  <span class="fu">data_grid</span>(<span class="at">SS_c =</span> <span class="fu">seq_range</span>(SS_c, <span class="at">n =</span> <span class="dv">50</span>), <span class="at">.model =</span> MR)</span>
+<span id="cb112-4"><a href="#cb112-4"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 200 × 11
    iv.d     SS_c friendship.quality happiness schoool.success   SES
-   &lt;fct&gt;   &lt;dbl&gt;              &lt;dbl&gt;     &lt;dbl&gt;           &lt;dbl&gt; &lt;dbl&gt;
+   &lt;chr&gt;   &lt;dbl&gt;              &lt;dbl&gt;     &lt;dbl&gt;           &lt;dbl&gt; &lt;dbl&gt;
  1 control -8.71               7.75      5.34            8.52  2.31
  2 control -8.71               7.75      5.34            8.52  2.31
  3 control -8.35               7.75      5.34            8.52  2.31
@@ -4405,14 +4406,14 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <div class="sourceCode cell-code" id="cb118"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb118-1"><a href="#cb118-1"></a>MR <span class="sc">%&gt;%</span></span>
 <span id="cb118-2"><a href="#cb118-2"></a>  <span class="fu">group_by</span>(iv.d) <span class="sc">%&gt;%</span></span>
 <span id="cb118-3"><a href="#cb118-3"></a>  <span class="fu">data_grid</span>(<span class="at">SS_c =</span> <span class="fu">seq_range</span>(SS_c, <span class="at">n =</span> <span class="dv">50</span>), <span class="at">.model =</span> MR) <span class="sc">%&gt;%</span> </span>
-<span id="cb118-4"><a href="#cb118-4"></a>  <span class="fu">add_epred_draws</span>(mr<span class="fl">.14</span>, <span class="at">ndraws =</span> <span class="dv">100</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb118-4"><a href="#cb118-4"></a>  <span class="fu">add_epred_draws</span>(mr<span class="fl">.14</span>, <span class="at">ndraws =</span> <span class="dv">100</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 20,000 × 16
 # Groups:   iv.d, SS_c, friendship.quality, happiness, schoool.success, SES,
 #   intervention.group, FQ_c, iv, happy_c, iv2, .row [200]
    iv.d     SS_c friendship.quality happiness schoool.success   SES
-   &lt;fct&gt;   &lt;dbl&gt;              &lt;dbl&gt;     &lt;dbl&gt;           &lt;dbl&gt; &lt;dbl&gt;
+   &lt;chr&gt;   &lt;dbl&gt;              &lt;dbl&gt;     &lt;dbl&gt;           &lt;dbl&gt; &lt;dbl&gt;
  1 control -8.71               7.75      5.34            8.52  2.31
  2 control -8.71               7.75      5.34            8.52  2.31
  3 control -8.71               7.75      5.34            8.52  2.31

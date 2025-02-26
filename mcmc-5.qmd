@@ -284,13 +284,13 @@ https://chi-feng.github.io/mcmc-demo/app.html
 
 ------------------------------------------------------------------------
 
--   If proposals depend on the curvature or gradient in the posterior how do we calculate that? Derivatives. Lots of them. 
+-   If proposals depend on the curvature or gradient in the posterior how do we calculate that? Derivatives. Lots of them.
 
-- Automatic-differentiation (auto-diff) is a way to do gradient decent computationally efficient. 
+-   Automatic-differentiation (auto-diff) is a way to do gradient descent computationally efficient.
 
--   We are not calculating the posterior directly, but instead just local estimation of the curvature (not full integral). 
+-   We are not calculating the posterior directly, but instead just local estimation of the curvature (not full integral).
 
-- The samples give us a full picture of the posterior.
+-   The samples give us a full picture of the posterior.
 
 ## Can we ensure accurate posteriors?
 
@@ -352,6 +352,8 @@ mcmc_acf()
 -   You need enough chains to chains to check convergence.
 
 -   The number of chains depends on 1) how many cores your computer has and 2) how much time you have. Conceivably you could run 100 chains. The problem though is this is wasteful computationally, as you will discard more warmup iterations.
+
+---------------------
 
 -   The Stan team suggests that 4 chains are adequate for checking convergence. `brms` defaults are iter = 2000 and warmup = 1000 which yields 4000 usable posterior samples ((iter - warmup) \* chains).
 

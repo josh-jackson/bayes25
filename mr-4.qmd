@@ -228,7 +228,7 @@ MR <- MR %>%
         mutate(iv = as.factor(iv))
 
 MR <- MR %>%
-  mutate(iv.d = case_match(iv, "1" ~ "control", "2" ~ "tx", "3" ~ "tx"),  iv.d = factor(iv.d))
+  mutate(iv.d = case_match(iv, "1" ~ "control", "2" ~ "tx", "3" ~ "tx"))
 
 MR
 ```
@@ -616,8 +616,11 @@ iv2 <- c("drug.a", "drug.b")
 MR <- MR %>% 
   mutate(happy_c = `happiness` - mean(`happiness`))
 
+## fix this
+
+
 MR <- MR %>% 
-  mutate(iv2 = sample(rep(iv2,  each = 59, size = n())))
+  mutate(iv2 = rep(iv2,  each = 59, size = 2))
          
  MR <- MR %>%         
          mutate(iv2 = factor(iv2))
@@ -1048,7 +1051,7 @@ MR %>%
 #| code-fold: true
 MR %>%
   group_by(iv.d) %>%
-  data_grid(SS_c = seq_range(SS_c, n = 50), .model = MR)
+  data_grid(SS_c = seq_range(SS_c, n = 50), .model = MR) 
 ```
 
 ------------------------------------------------------------------------
@@ -1092,9 +1095,10 @@ MR %>%
 
 ```{r}
 #| code-fold: true
-MR %>%
+df <- MR %>%
   group_by(iv.d) %>%
-  data_grid(SS_c = seq_range(SS_c, n = 50), .model = MR) 
+  data_grid(SS_c = seq_range(SS_c, n = 50), .model = MR)
+df
 ```
 
 
@@ -1144,7 +1148,7 @@ MR %>%
 MR %>%
   group_by(iv.d) %>%
   data_grid(SS_c = seq_range(SS_c, n = 50), .model = MR) %>% 
-  add_epred_draws(mr.14, ndraws = 100)
+  add_epred_draws(mr.14, ndraws = 100) 
 ```
 
 

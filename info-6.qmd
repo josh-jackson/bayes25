@@ -27,7 +27,7 @@ library(brms)
 
 Bayesian typically do not use "standard" NHST. Why?
 
-1.  There is no null and thus no p-values
+1.  There is no sampling distribution and thus no p-values
 
 2.  NHST is associated with tons of problems eg dichotomous thinking
 
@@ -52,9 +52,11 @@ bayes_R2(mr.10, summary = F) %>%
 
 Model fit indexes like likelihood ratio test, AIC, BIC rely on likelihoods.
 
-The distribution of the likelihood of various hypothesis. p(data \| $\theta$ ). For likelihood, the data are treated as a given, and value of theta varies. Probability of the data that you got, assuming a particular theta is true.
+The distribution of the likelihood of various hypothesis. p(data \| $\theta$ ). For likelihood, the data are treated as a given, and value of theta varies. L($\theta$ \| data )
 
-binomial \~ $p(3|10,p)$
+------------------------------------------------------------------------
+
+\~ binomial L( $\theta$ \| S = 3, N = 10)
 
 ```{r, echo = FALSE, message = FALSE}
 library(tidyverse)
@@ -67,7 +69,7 @@ ggplot(tibble(x = c(0, 1)),
 
 ## Log likelihood
 
--   The log of the likelihood is easier to work with (adding rather than multiplying small values). It will always be negative, with higher values (closer to zero) indicating a better fitting model.
+-   The log of the likelihood is easier to work with (adding rather than multiplying small values). It will typically be negative, with higher values (closer to zero) indicating a better fitting model.
 
 -   In frequentist estimation, the log likelihood is a single number, one that indicates the maximum, thus maximum likelihood estimation.
 
@@ -81,7 +83,65 @@ logLik(lm(health ~ 1 + happy, data = data))
 
 ------------------------------------------------------------------------
 
-Revisiting grid approximation, we hand calculated a regression likelihood.
+```{r}
+#| code-fold: true
+logLik(lm(health ~ 1, data = data))
+```
+
+```{r}
+#| code-fold: true
+mod.a<- glm(health ~ 1 + happy, data = data)
+mod.b <- glm(health ~ 1, data = data)
+anova(mod.b,mod.a, test = "LRT")
+# what is deviance?!
+```
+
+------------------------------------------------------------------------
+
+If we multiply the difference in log-likelihood by -2, it follows a $\chi^2$ distribution with 1 degrees of freedom.
+
+$LR = -2 ln\left(\frac{L(m_1)}{L(m_2)}\right) = 2(loglik(m_2)-loglik(m_1))$
+
+------------------------------------------------------------------------
+
+```{r}
+#| code-fold: true
+library(lmtest)
+lrtest(mod.b,mod.a)
+```
+
+```{r}
+#| code-fold: true
+chisqu <- (-2*logLik(mod.b))-(-2*logLik(mod.a))
+chisqu
+```
+
+```{r}
+#| code-fold: true
+pchisq(chisqu, df = 1, lower.tail=FALSE)
+```
+
+## Where is deviance coming in?
+
+Deviance = -2LL (but (almost) only for logistic regression).
+
+For all else, like our example, $ResidualDeviance=2\times(LL(SaturatedModel)-LL(Proposed Model))$ the saturated model cannot be assumed to be 0 (i.e. it cannot perfectly capture all of the data even if number of parameters is equal to data points).
+
+------------------------------------------------------------------------
+
+```{r}
+#| code-fold: true
+-2*logLik(mod.a)
+```
+
+```{r}
+#| code-fold: true
+summary(mod.a)
+```
+
+------------------------------------------------------------------------
+
+Lets use likelihood to estimate a model. We will use grid approximation to calculate plausible parameter values.
 
 ```{r}
 #| code-fold: true
@@ -94,13 +154,15 @@ grid
 
 ------------------------------------------------------------------------
 
-1.  After defining the grid space we need to calculate the likelihood (are these numbers likely or not, given some distribution)
+-   After defining the grid space we need to calculate the likelihood.
 
-2.  Likelihood of our data (each child's height) assuming each part of our grid is true. So if we take the first line of our grid (mu = 66, sigma = 2) we can see how likely each child (all 928) by dnorm(height, 66, 2)
+-   Likelihood of our data (each child's height) assuming each part of our grid is true. So if we take the first line of our grid (mu = 66, sigma = 2) we can see how likely each child (all 928) by dnorm(height, 66, 2)
+
+-   We sum the LLs across all 928 participants for each spot in the grid to get the average log-likelihood for each grid spot
 
 ------------------------------------------------------------------------
 
-We averaged across all 928 participants for each spot in the grid to get the average log-likelihood for each grid spot
+40,000 grids \* 928 participants = 37,120,000 calculations
 
 ```{r}
 #| code-fold: true
@@ -138,21 +200,15 @@ p_grid %>%
 # can compute CI bc we are varying sigma (not plotted)
 p_grid %>% 
   ggplot(aes(x = mu, y = log_likelihood )) + 
-    stat_lineribbon(.width = c(.95), alpha = .4) 
+    stat_lineribbon(.width = c(.0), alpha = .4) 
 
 ```
 
-## LRT
+## curse of dimensionality
 
-The likelihood ratio test compares the likelihood ratios of two models (usually likelihood evaluated at the MLE/MAP and at the null).
+We don't use grid approximation to calculate our posterior, but the LLs are super helpful to evaluate our model.
 
-```{r, eval = FALSE}
-anova(model1, model2)
-```
-
-If we multiply the difference in log-likelihood by -2, it follows a $\chi^2$ distribution with 1 degrees of freedom.
-
-$LR = -2 ln\left(\frac{L(m_1)}{L(m_2)}\right) = 2(loglik(m_2)-loglik(m_1))$
+However, this being bayes, we are going to work with something slightly different from what LLs we are used to.
 
 ## Information theory
 
@@ -900,19 +956,15 @@ plot(bf.result2)
 
 ------------------------------------------------------------------------
 
-
 ```{r, echo = FALSE}
-MR <-read.csv("https://raw.githubusercontent.com/josh-jackson/bayes/master/hw3.csv")
-MR <- MR %>% 
+MR2 <-read.csv("https://raw.githubusercontent.com/josh-jackson/bayes/master/hw3.csv")
+MR2 <- MR2 %>% 
   mutate(SS_c = `schoool.success` - mean(`schoool.success`),
          FQ_c = `friendship.quality` - mean(`friendship.quality`),
          iv = `intervention.group`) %>% 
         mutate(iv = as.factor(iv))
 
 ```
-
-
-
 
 ```{r}
 #| code-fold: true
@@ -924,7 +976,7 @@ info.1 <-
                 prior(normal(0, 2), class = b, coef = FQ_c),
                 prior(exponential(1), class = sigma)),
       iter = 2000, warmup = 1000, chains = 2, cores = 2,
-      data = MR,
+      data = MR2,
       sample_prior = T,
       save_pars = save_pars(all = TRUE),
       backend = "cmdstanr",
@@ -941,7 +993,7 @@ info.2 <-
                 prior(normal(0, .2), class = b, coef = FQ_c),
                 prior(exponential(.5), class = sigma)),
       iter = 2000, warmup = 1000, chains = 2, cores = 2,
-      data = MR,
+      data = MR2,
       sample_prior = T,
       save_pars = save_pars(all = TRUE),
       backend = "cmdstanr",
