@@ -677,10 +677,11 @@ Number of Fisher Scoring iterations: 2</code></pre>
 
 </div>
 <img data-src="info-6_files/figure-revealjs/unnamed-chunk-15-1.png" width="960" class="r-stretch"></section>
-<section id="curse-of-dimensionality" class="slide level2">
-<h2>curse of dimensionality</h2>
+<section id="leveraging-likelihoods" class="slide level2">
+<h2>Leveraging likelihoods</h2>
 <p>We don’t use grid approximation to calculate our posterior, but the LLs are super helpful to evaluate our model.</p>
 <p>However, this being bayes, we are going to work with something slightly different from what LLs we are used to.</p>
+<p>In doing so we accomplish: 1. a principled way to choose likelihood function and 2. a way to evaluate models</p>
 </section>
 <section id="information-theory" class="slide level2">
 <h2>Information theory</h2>
@@ -694,7 +695,7 @@ Number of Fisher Scoring iterations: 2</code></pre>
 <h2>Information theory</h2>
 <ul>
 <li><p>The reduction in uncertainty by learning the outcome is how much <em>information</em> we have learned. If we know how much uncertainty we have we can know how much improvement is possible in our prediction.</p></li>
-<li><p>Claude Shannon (1916-2001) developed the field of information theory by making an analogy to bits of information, just like within computers. Prior to this, information, and thus learning was poorly defined.</p></li>
+<li><p>Claude Shannon (1916-2001) developed the field of information theory by making an analogy to bits of information (yes, the computer bit). Prior to this, information, and thus learning was poorly defined.</p></li>
 </ul>
 </section>
 <section id="what-is-information" class="slide level2">
@@ -728,7 +729,10 @@ Number of Fisher Scoring iterations: 2</code></pre>
 </section>
 <section id="bits-1" class="slide level2">
 <h2>bits</h2>
-<p>1/2^bit = probability of some event 2^bit = 1/p bit = log2(1/p) bit = -1log2(p)</p>
+<p>1/2^bit = probability of some event</p>
+<p>2^bit = 1/p</p>
+<p>bit = log2(1/p)</p>
+<p>bit = -1log2(p)</p>
 <p>We use bits rather than direct probabilities because it is easier to add bits than very small probabilities multiplied by other very small probabilities.</p>
 </section>
 <section id="entropy" class="slide level2">
@@ -817,32 +821,35 @@ Number of Fisher Scoring iterations: 2</code></pre>
 <section class="slide level2">
 
 <ul>
-<li>But how far away is our model from an accurate prediction? Divergence (KL) is the uncertainty created by using probabilities from one distribution to describe another distribution.</li>
+<li>But how far away is our model from an accurate prediction? Divergence (not deviance) (often called Kullback–Leibler (KL) divergence) is the uncertainty created by using probabilities from one distribution to describe another target distribution.</li>
 </ul>
 <p><span class="math inline">\(D(m1, m2) = -\sum p_i(log(p_i) - log(q_i))\)</span></p>
 <p>The difference between two entropies… or average difference in log probability between model 1 (target) and model 2 (actual)</p>
+<p>KL divergence is foundational in many statistical and computational areas. If you take any machine learning class you will use KL divergence</p>
 </section>
 <section class="slide level2">
 
 <ul>
-<li>We never know the target but that is okay. We can still compute divergences and compare with other divergences because the target is a constant. This means we cannot look at a divergence and know if it is good or bad, but we can use them to compare. The result is called a deviance.</li>
+<li>Often we do not know the target. This means we cannot look at a divergence and know if it is good or bad, but we can use them to compare different models. Throw a -2 infront of it and call it a deviance (remember this?).</li>
 </ul>
 <p>D(q) = -2 <span class="math inline">\(\sum_i\)</span> <span class="math inline">\(\log\)</span> (q_i)</p>
 </section>
 <section id="how-is-this-different-from-lrt" class="slide level2">
 <h2>How is this different from LRT?</h2>
 <ul>
-<li><p>Deviance is a model of relative fit, but with a constant specific to the model. Log likelihoods thus only differ by a constant.</p></li>
+<li><p>Divergence/Deviance is a model of relative fit, but with a constant specific to the model. Log likelihoods thus only differ by a constant.</p></li>
 <li><p>Comparing two models with LRT should yield similar scores as comparing two deviances.</p></li>
 </ul>
-<p>But Bayesians don’t like NHST, so they sometimes leave off the -2, which simplifies the deviance equation but then does not allow a chi-square difference test to be completed.</p>
+<p>But Bayesians don’t like NHST, so they sometimes leave off the -2, which only serves to allow a chi-square difference</p>
 </section>
 <section id="log-pointwise-predictive-density" class="slide level2">
 <h2>Log Pointwise Predictive Density</h2>
-<p>D(q) = <span class="math inline">\(\sum_i\)</span> <span class="math inline">\(\log\)</span> (q_i) = lppd</p>
+<p>lppd = <span class="math inline">\(\sum_i\)</span> <span class="math inline">\(\log\)</span> (q_i)</p>
+<p><span class="math display">\[lppd = \sum_i^n \log \int( p(y_i| \theta) (\theta|y) d\theta\]</span></p>
 <ul>
 <li><p>Further, with Bayes we need to use the entire posterior to define deviance! If not, we are throwing away information.</p></li>
 <li><p>Often referred to Log Pointwise Predictive Density (lpd or lppd)</p></li>
+<li><p>We just went full circle to get a bayesian equivalent to log likelihood. And will thus use lppd for our model fit questions.</p></li>
 </ul>
 </section>
 <section id="two-options-for-model-comparison" class="slide level2">
@@ -931,9 +938,9 @@ See help('pareto-k-diagnostic') for details.</code></pre>
 <section class="slide level2">
 
 <ul>
-<li><p>elpd theoretical expected log pointwise predictive density for a new dataset (an lppd equivalent). Larger the better.</p></li>
+<li><p>elpd theoretical expected log pointwise predictive density for a new dataset (an lppd equivalent). Larger the better. Probabilities are always equal or less than 1, and thus log predictive probabilities are 0 or negative</p></li>
 <li><p>p_loo is effective number of parameters</p></li>
-<li><p>looic is -2(elpd). Low scores better.</p></li>
+<li><p>looic is -2(elpd). Low scores better. Why -2? Because of chi-square history and/or for Gaussian model with known variance -2 log score is equal to squared error.</p></li>
 </ul>
 </section>
 <section class="slide level2">
@@ -1036,9 +1043,8 @@ mr.11 -17.0       6.3  </code></pre>
 <section id="waic" class="slide level2">
 <h2>WAIC</h2>
 <p><span class="math display">\[\text{WAIC}(y, \theta) = -2 \big (\text{lppd} - \underbrace{\sum_i \operatorname{var}_\theta \log p(y_i | \theta)}_\text{penalty term} \big)\]</span></p>
-<p>lppd = log pointwise predictive density = deviance over the entire posterior =</p>
-<p><span class="math display">\[\text{lppd}(y, \theta) = \sum_i \log \frac{1}{S} \sum_sp(y_i|\theta_S)\]</span></p>
-<p><span class="math display">\[\text{AIC}(y, \theta) = -2(\text{llpd}) + 2p\]</span></p>
+<p>lppd = log pointwise predictive density = deviance over the entire posterior</p>
+<p>Similar in form to old friend: <span class="math display">\[\text{AIC}(y, \theta) = -2(\text{llpd}) + 2p\]</span></p>
 </section>
 <section id="example" class="slide level2">
 <h2>example</h2>
@@ -1091,153 +1097,21 @@ mr.11 -17.0       6.3  </code></pre>
 <section id="using-information-critera" class="slide level2">
 <h2>Using information critera</h2>
 <ul>
-<li><p>Each of these criteria do not have scales that are bounded by numbers (eg 0-1), nor can they be evaluated by some other number (eg SDs)</p></li>
-<li><p>Provide relative fit, so you need to compare different models, choosing the model with the lowest IC or the highest expected IC</p></li>
+<li><p>Each of these criteria do <em>not</em> have scales that are bounded by numbers (eg 0-1), <em>nor</em> can they be evaluated by some other number (eg SDs)</p></li>
+<li><p>Provide relative fit, so you need to compare different models, choosing the model with best fit</p></li>
 <li><p>The criteria are also dependent on sample size, so you cannot compare across models that differ in sample size</p></li>
-<li><p>You can compare non-nested models eg ones with different sets of predictors</p></li>
+<li><p>You can compare non-nested models e.g.&nbsp;ones with non-overlapping sets of predictors</p></li>
 </ul>
 </section>
-<section id="overfitting" class="slide level2">
-<h2>Overfitting</h2>
-<ul>
-<li><p>Fit is relative to our sample, not the population</p></li>
-<li><p>Need to balance between parsimony and completeness</p></li>
-<li><p>Ironically, the best fitting model may not be the <em>best</em> model. The model will be tuned to our particular random sample</p></li>
-<li><p>We are “fitting the noise” or overfitting the specifics of our sample</p></li>
-</ul>
-</section>
-<section id="regularization" class="slide level2">
-<h2>Regularization</h2>
-<ul>
-<li><p>“penalizing” our model estimates to prevent overfitting</p></li>
-<li><p>Find coefficients that compromise between (a) minimizing the residuals and (b) minimizing sum of abs value of coefficients</p></li>
-<li><p>Tends to “shrink”” coefficients to zero, much like we discussed with centering prior distributions around zero</p></li>
-</ul>
-</section>
-<section class="slide level2">
-
-<div class="cell">
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1"></a>mr<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"mr.2.rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1"></a>mr<span class="fl">.2</span> <span class="ot">&lt;-</span> </span>
-<span id="cb46-2"><a href="#cb46-2"></a>  <span class="fu">brm</span>(<span class="at">family =</span> gaussian,</span>
-<span id="cb46-3"><a href="#cb46-3"></a>      happiness <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> SS_c <span class="sc">+</span> FQ_c,</span>
-<span id="cb46-4"><a href="#cb46-4"></a>      <span class="at">prior =</span> <span class="fu">c</span>(<span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">5</span>, <span class="dv">2</span>), <span class="at">class =</span> Intercept),</span>
-<span id="cb46-5"><a href="#cb46-5"></a>                <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, .<span class="dv">2</span>), <span class="at">class =</span> b, <span class="at">coef =</span> SS_c),</span>
-<span id="cb46-6"><a href="#cb46-6"></a>                <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, .<span class="dv">2</span>), <span class="at">class =</span> b, <span class="at">coef =</span> FQ_c),</span>
-<span id="cb46-7"><a href="#cb46-7"></a>                <span class="fu">prior</span>(<span class="fu">exponential</span>(.<span class="dv">5</span>), <span class="at">class =</span> sigma)),</span>
-<span id="cb46-8"><a href="#cb46-8"></a>      <span class="at">iter =</span> <span class="dv">2000</span>, <span class="at">warmup =</span> <span class="dv">1000</span>, <span class="at">chains =</span> <span class="dv">2</span>, <span class="at">cores =</span> <span class="dv">2</span>,</span>
-<span id="cb46-9"><a href="#cb46-9"></a>      <span class="at">data =</span> MR,</span>
-<span id="cb46-10"><a href="#cb46-10"></a>      <span class="at">sample_prior =</span> T,</span>
-<span id="cb46-11"><a href="#cb46-11"></a>      <span class="at">file =</span> <span class="st">"mr.2"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-</section>
-<section class="slide level2">
-
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1"></a><span class="fu">summary</span>(mr<span class="fl">.2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code> Family: gaussian 
-  Links: mu = identity; sigma = identity 
-Formula: happiness ~ 1 + SS_c + FQ_c 
-   Data: MR (Number of observations: 118) 
-  Draws: 2 chains, each with iter = 2000; warmup = 1000; thin = 1;
-         total post-warmup draws = 2000
-
-Regression Coefficients:
-          Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-Intercept     5.21      0.15     4.92     5.51 1.00     1970     1272
-SS_c          0.35      0.05     0.24     0.45 1.00     1933     1127
-FQ_c          0.18      0.07     0.04     0.31 1.00     1861     1530
-
-Further Distributional Parameters:
-      Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-sigma     1.60      0.11     1.40     1.81 1.00     2119     1474
-
-Draws were sampled using sample(hmc). For each parameter, Bulk_ESS
-and Tail_ESS are effective sample size measures, and Rhat is the potential
-scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
-</div>
-</div>
-</section>
-<section id="update-prior" class="slide level2">
-<h2>update prior</h2>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1"></a>mr<span class="fl">.2</span>p <span class="ot">&lt;-</span> <span class="fu">update</span>(mr<span class="fl">.2</span>, <span class="at">prior =</span>  </span>
-<span id="cb49-2"><a href="#cb49-2"></a>                <span class="fu">c</span>(<span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">5</span>, <span class="dv">2</span>), <span class="at">class =</span> Intercept),</span>
-<span id="cb49-3"><a href="#cb49-3"></a>                 <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, .<span class="dv">2</span>), <span class="at">class =</span> b, <span class="at">coef =</span> SS_c),</span>
-<span id="cb49-4"><a href="#cb49-4"></a>                <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, .<span class="dv">05</span>), <span class="at">class =</span> b, <span class="at">coef =</span> FQ_c),</span>
-<span id="cb49-5"><a href="#cb49-5"></a>                <span class="fu">prior</span>(<span class="fu">exponential</span>(.<span class="dv">5</span>), <span class="at">class =</span> sigma)),</span>
-<span id="cb49-6"><a href="#cb49-6"></a>                  <span class="at">file =</span> <span class="st">"mr.2p"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-</section>
-<section class="slide level2">
-
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1"></a><span class="fu">summary</span>(mr<span class="fl">.2</span>p)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code> Family: gaussian 
-  Links: mu = identity; sigma = identity 
-Formula: happiness ~ 1 + SS_c + FQ_c 
-   Data: MR (Number of observations: 118) 
-  Draws: 2 chains, each with iter = 2000; warmup = 1000; thin = 1;
-         total post-warmup draws = 2000
-
-Regression Coefficients:
-          Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-Intercept     5.21      0.15     4.93     5.49 1.00     1947     1504
-SS_c          0.30      0.05     0.20     0.40 1.00     1688     1568
-FQ_c          0.07      0.04    -0.02     0.15 1.00     1705     1522
-
-Further Distributional Parameters:
-      Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-sigma     1.62      0.11     1.43     1.85 1.00     1839     1506
-
-Draws were sampled using sample(hmc). For each parameter, Bulk_ESS
-and Tail_ESS are effective sample size measures, and Rhat is the potential
-scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
-</div>
-</div>
-</section>
-<section class="slide level2">
-
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1"></a>priors <span class="ot">&lt;-</span></span>
-<span id="cb52-2"><a href="#cb52-2"></a>  <span class="fu">c</span>(<span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, .<span class="dv">2</span>), <span class="at">class =</span> b, <span class="at">coef =</span> FQ_c),</span>
-<span id="cb52-3"><a href="#cb52-3"></a>    <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, .<span class="dv">05</span>), <span class="at">class =</span> b, <span class="at">coef =</span> FQ_c))</span>
-<span id="cb52-4"><a href="#cb52-4"></a></span>
-<span id="cb52-5"><a href="#cb52-5"></a>priors <span class="sc">%&gt;%</span> </span>
-<span id="cb52-6"><a href="#cb52-6"></a>  <span class="fu">parse_dist</span>(prior) <span class="sc">%&gt;%</span> </span>
-<span id="cb52-7"><a href="#cb52-7"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y=</span>class, <span class="at">dist =</span>.dist, <span class="at">args=</span>.args,  <span class="at">fill =</span> prior)) <span class="sc">+</span></span>
-<span id="cb52-8"><a href="#cb52-8"></a>  <span class="fu">stat_dist_halfeye</span>(<span class="at">alpha =</span> .<span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-
-</div>
-<img data-src="info-6_files/figure-revealjs/unnamed-chunk-32-1.png" width="960" class="r-stretch"></section>
 <section id="mimicking-nhst" class="slide level2">
 <h2>Mimicking NHST</h2>
 <p>If you wanted to appease an editor/reviewer/adviser what do you do (other than teach them Bayes)?</p>
-<p>CIs! HDPIs! Predictions! ROPE! Probability of direction!</p>
+<p>CIs! Predictions! Model comparisons with waic or loo! ROPE! Probability of direction! Bayes Factors!</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1"></a>mr<span class="fl">.14</span> <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"mr.14.rds"</span>)</span>
-<span id="cb53-2"><a href="#cb53-2"></a><span class="fu">summary</span>(mr<span class="fl">.14</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1"></a>mr<span class="fl">.14</span> <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"mr.14.rds"</span>)</span>
+<span id="cb45-2"><a href="#cb45-2"></a><span class="fu">summary</span>(mr<span class="fl">.14</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code> Family: gaussian 
@@ -1274,22 +1148,22 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1"></a>mr<span class="fl">.14</span> <span class="sc">%&gt;%</span></span>
-<span id="cb55-2"><a href="#cb55-2"></a>  <span class="fu">gather_draws</span>(b_SS_c, b_iv.dtx, <span class="st">`</span><span class="at">b_iv.dtx:SS_c</span><span class="st">`</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb55-3"><a href="#cb55-3"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y =</span> <span class="fu">fct_rev</span>(.variable), <span class="at">x =</span> .value)) <span class="sc">+</span></span>
-<span id="cb55-4"><a href="#cb55-4"></a>  <span class="fu">stat_halfeye</span>(<span class="at">.width =</span> <span class="fu">c</span>(.<span class="dv">90</span>, .<span class="dv">5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1"></a>mr<span class="fl">.14</span> <span class="sc">%&gt;%</span></span>
+<span id="cb47-2"><a href="#cb47-2"></a>  <span class="fu">gather_draws</span>(b_SS_c, b_iv.dtx, <span class="st">`</span><span class="at">b_iv.dtx:SS_c</span><span class="st">`</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb47-3"><a href="#cb47-3"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y =</span> <span class="fu">fct_rev</span>(.variable), <span class="at">x =</span> .value)) <span class="sc">+</span></span>
+<span id="cb47-4"><a href="#cb47-4"></a>  <span class="fu">stat_halfeye</span>(<span class="at">.width =</span> <span class="fu">c</span>(.<span class="dv">90</span>, .<span class="dv">5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 
 </div>
-<img data-src="info-6_files/figure-revealjs/unnamed-chunk-34-1.png" width="960" class="r-stretch"></section>
+<img data-src="info-6_files/figure-revealjs/unnamed-chunk-28-1.png" width="960" class="r-stretch"></section>
 <section id="how-to-calculate" class="slide level2">
 <h2>How to calculate?</h2>
 <p>Compute the area under the curve (AUC) of the density curve on the other side of 0.</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1"></a><span class="fu">library</span>(bayestestR)</span>
-<span id="cb56-2"><a href="#cb56-2"></a><span class="fu">p_direction</span>(mr<span class="fl">.14</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a><span class="fu">library</span>(bayestestR)</span>
+<span id="cb48-2"><a href="#cb48-2"></a><span class="fu">p_direction</span>(mr<span class="fl">.14</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Probability of Direction
@@ -1306,7 +1180,7 @@ iv.dtx:SS_c | 99.88%</code></pre>
 <section class="slide level2">
 
 <div class="cell">
-<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1"></a><span class="fu">describe_posterior</span>(mr<span class="fl">.14</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1"></a><span class="fu">describe_posterior</span>(mr<span class="fl">.14</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Summary of Posterior Distribution
 
@@ -1331,7 +1205,7 @@ iv.dtx:SS_c | 1.001 | 3779.00</code></pre>
 <ul>
 <li><p>You can find a high PD for an effect that is quite small. Similar to a p &lt; .05 with a large sample size. Is it still meaningful?</p></li>
 <li><p>Lead to other NHST foibles like dichotomous thinking</p></li>
-<li><p>More similar to a 1-tailed p-value</p></li>
+<li><p>More similar to a 1-tailed p-value if you keep alpha = .05. So maybe look at 97.5 PDs?</p></li>
 </ul>
 </section>
 <section id="nil-hypothesis" class="slide level2">
@@ -1339,7 +1213,7 @@ iv.dtx:SS_c | 1.001 | 3779.00</code></pre>
 <ul>
 <li><p>With NHST you typically attempt to reject a H0 of zero. This is a point estimate. However, we know the probability of any point is zero, so conceptually a typical NHST is illogical.</p></li>
 <li><p>What we really mean when we set up a standard NHST nil hypothesis is to reject zero – OR VALUES THAT ARE EQUIVALENT TO ZERO.</p></li>
-<li><p>What are those values? In frequentist it depends on your se which is a function of your sample SD and N. We just don’t talk about it.</p></li>
+<li><p>What are those values? In frequentist it depends on your se which is a function of your sample SD and N. We just don’t talk/think about it.</p></li>
 </ul>
 </section>
 <section id="rope" class="slide level2">
@@ -1353,7 +1227,7 @@ iv.dtx:SS_c | 1.001 | 3779.00</code></pre>
 <section class="slide level2">
 
 <ul>
-<li><p>Compare our 95% (or whatever value you want) CI/HDI to see if it overlaps with the ROPE. Some suggest using full posterior rather than a CI.</p></li>
+<li><p>Compare our 95% (or whatever value you want) CI/HDPI to see if it overlaps with the ROPE. Some suggest using full posterior rather than a CI.</p></li>
 <li><p>If this percentage is sufficiently low, the null hypothesis is rejected. If this percentage is sufficiently high, the null hypothesis is accepted.</p></li>
 <li><p>Note: not all values within the ROPE are rejected, just the null.</p></li>
 </ul>
@@ -1361,8 +1235,8 @@ iv.dtx:SS_c | 1.001 | 3779.00</code></pre>
 <section class="slide level2">
 
 <div class="cell">
-<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1"></a>rope<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">rope</span>(mr<span class="fl">.14</span>, <span class="at">range =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.05</span>, <span class="fl">0.05</span>))</span>
-<span id="cb60-2"><a href="#cb60-2"></a>rope<span class="fl">.1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1"></a>rope<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">rope</span>(mr<span class="fl">.14</span>, <span class="at">range =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.05</span>, <span class="fl">0.05</span>))</span>
+<span id="cb52-2"><a href="#cb52-2"></a>rope<span class="fl">.1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Proportion of samples inside the ROPE [-0.05, 0.05]:
 
@@ -1381,50 +1255,50 @@ iv.dtx:SS_c |      0.00 %</code></pre>
 <section class="slide level2">
 
 <div class="cell">
-<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1"></a><span class="fu">plot</span>(rope<span class="fl">.1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1"></a><span class="fu">plot</span>(rope<span class="fl">.1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="info-6_files/figure-revealjs/unnamed-chunk-38-1.png" width="960" class="r-stretch"></section>
+<img data-src="info-6_files/figure-revealjs/unnamed-chunk-32-1.png" width="960" class="r-stretch"></section>
 <section class="slide level2">
 
 <div class="cell">
-<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1"></a><span class="fu">rope</span>(mr<span class="fl">.14</span>, <span class="at">range =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.15</span>, <span class="fl">0.15</span>), <span class="at">ci =</span> <span class="fu">c</span>(<span class="fl">0.99</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1"></a><span class="fu">rope</span>(mr<span class="fl">.14</span>, <span class="at">range =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.3</span>, <span class="fl">0.3</span>), <span class="at">ci =</span> <span class="fu">c</span>(<span class="fl">0.99</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># Proportion of samples inside the ROPE [-0.15, 0.15]:
+<pre><code># Proportion of samples inside the ROPE [-0.30, 0.30]:
 
 Parameter   | inside ROPE
 -------------------------
 Intercept   |      0.00 %
-iv.dtx      |     16.99 %
-SS_c        |      0.00 %
-iv.dtx:SS_c |      7.55 %</code></pre>
+iv.dtx      |     38.43 %
+SS_c        |      2.53 %
+iv.dtx:SS_c |     59.55 %</code></pre>
 </div>
 </div>
 </section>
 <section class="slide level2">
 
 <div class="cell">
-<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1"></a>rope<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">rope</span>(mr<span class="fl">.14</span>, <span class="at">range =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.15</span>, <span class="fl">0.15</span>), <span class="at">ci =</span> <span class="fu">c</span>(<span class="fl">0.99</span>))</span>
-<span id="cb65-2"><a href="#cb65-2"></a><span class="fu">plot</span>(rope<span class="fl">.2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1"></a>rope<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">rope</span>(mr<span class="fl">.14</span>, <span class="at">range =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.3</span>, <span class="fl">0.3</span>), <span class="at">ci =</span> <span class="fu">c</span>(<span class="fl">0.99</span>))</span>
+<span id="cb57-2"><a href="#cb57-2"></a><span class="fu">plot</span>(rope<span class="fl">.2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="info-6_files/figure-revealjs/unnamed-chunk-40-1.png" width="960" class="r-stretch"></section>
+<img data-src="info-6_files/figure-revealjs/unnamed-chunk-34-1.png" width="960" class="r-stretch"></section>
 <section class="slide level2">
 
 <div class="cell">
-<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1"></a>result <span class="ot">&lt;-</span> <span class="fu">equivalence_test</span>(mr<span class="fl">.14</span>, <span class="at">range =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.2</span>, <span class="fl">0.2</span>), <span class="at">ci =</span> <span class="fu">c</span>(<span class="fl">0.95</span>))</span>
-<span id="cb66-2"><a href="#cb66-2"></a>result</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1"></a>result <span class="ot">&lt;-</span> <span class="fu">equivalence_test</span>(mr<span class="fl">.14</span>, <span class="at">range =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.3</span>, <span class="fl">0.3</span>), <span class="at">ci =</span> <span class="fu">c</span>(<span class="fl">0.95</span>))</span>
+<span id="cb58-2"><a href="#cb58-2"></a>result</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Test for Practical Equivalence
 
-  ROPE: [-0.20 0.20]
+  ROPE: [-0.30 0.30]
 
 Parameter   |        H0 | inside ROPE |        95% HDI
 ------------------------------------------------------
 Intercept   |  Rejected |      0.00 % |   [4.49, 5.43]
-iv.dtx      | Undecided |     24.50 % |  [-0.21, 0.97]
-SS_c        |  Rejected |      0.00 % |   [0.29, 0.52]
-iv.dtx:SS_c | Undecided |     18.13 % | [-0.46, -0.10]</code></pre>
+iv.dtx      | Undecided |     38.55 % |  [-0.21, 0.97]
+SS_c        | Undecided |      0.53 % |   [0.29, 0.52]
+iv.dtx:SS_c | Undecided |     59.95 % | [-0.46, -0.10]</code></pre>
 </div>
 </div>
 </section>
@@ -1446,7 +1320,7 @@ iv.dtx:SS_c | Undecided |     18.13 % | [-0.46, -0.10]</code></pre>
 <li><p>Difficult. Balance practicality with expertise judgment. DBDA: -0.1 to 0.1 of a standardized parameter (ie negligible effect size, Cohen, 1988). Or [-1<em>se, +1</em>se]</p></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1"></a><span class="fu">rope_range</span>(mr<span class="fl">.14</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1"></a><span class="fu">rope_range</span>(mr<span class="fl">.14</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] -0.1893523  0.1893523</code></pre>
 </div>
@@ -1458,8 +1332,8 @@ iv.dtx:SS_c | Undecided |     18.13 % | [-0.46, -0.10]</code></pre>
 <section class="slide level2">
 
 <div class="cell">
-<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1"></a>rope<span class="fl">.4</span> <span class="ot">&lt;-</span> <span class="fu">rope</span>(mr<span class="fl">.14</span>)</span>
-<span id="cb70-2"><a href="#cb70-2"></a>rope<span class="fl">.4</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1"></a>rope<span class="fl">.4</span> <span class="ot">&lt;-</span> <span class="fu">rope</span>(mr<span class="fl">.14</span>)</span>
+<span id="cb62-2"><a href="#cb62-2"></a>rope<span class="fl">.4</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Proportion of samples inside the ROPE [-0.19, 0.19]:
 
@@ -1475,7 +1349,7 @@ iv.dtx:SS_c |     14.66 %</code></pre>
 <section class="slide level2">
 
 <div class="cell">
-<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1"></a><span class="fu">describe_posterior</span>(mr<span class="fl">.14</span>, <span class="at">test =</span> <span class="st">"ROPE"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1"></a><span class="fu">describe_posterior</span>(mr<span class="fl">.14</span>, <span class="at">test =</span> <span class="st">"ROPE"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Summary of Posterior Distribution
 
@@ -1496,7 +1370,6 @@ iv.dtx:SS_c |  -0.28 | [-0.46, -0.10] | [-0.19, 0.19] |    14.66% | 1.001 | 3779
 <section class="slide level2">
 
 <p>Can also think of it as the factor by which some prior odds have been updated after observing the data to posterior odds. Since they can be computed by dividing posterior odds by prior odds.</p>
-<p><span class="math display">\[\underbrace{\frac{P(M_1|D)}{P(M_2|D)}}_{\text{Posterior Odds}} = \underbrace{\frac{P(D|M_1)}{P(D|M_2)}}_{\text{Likelihood Ratio}} \times \underbrace{\frac{P(M_1)}{P(M_2)}}_{\text{Prior Odds}}\]</span></p>
 <p><span class="math display">\[BF_{12}=\frac{Posterior~Odds_{12}}{Prior~Odds_{12}}\]</span></p>
 </section>
 <section class="slide level2">
@@ -1504,12 +1377,12 @@ iv.dtx:SS_c |  -0.28 | [-0.46, -0.10] | [-0.19, 0.19] |    14.66% | 1.001 | 3779
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1"></a><span class="fu">library</span>(bayestestR)</span>
-<span id="cb74-2"><a href="#cb74-2"></a><span class="fu">library</span>(see)</span>
-<span id="cb74-3"><a href="#cb74-3"></a>prior <span class="ot">&lt;-</span> <span class="fu">distribution_normal</span>(<span class="dv">10000</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>)</span>
-<span id="cb74-4"><a href="#cb74-4"></a>posterior <span class="ot">&lt;-</span> <span class="fu">distribution_normal</span>(<span class="dv">10000</span>, <span class="at">mean =</span> <span class="dv">1</span>, <span class="at">sd =</span> <span class="fl">0.7</span>)</span>
-<span id="cb74-5"><a href="#cb74-5"></a>bf_plot<span class="ot">&lt;-</span> <span class="fu">bayesfactor_parameters</span>(posterior, prior, <span class="at">direction =</span> <span class="st">"two-sided"</span>, <span class="at">null =</span> <span class="dv">0</span>)</span>
-<span id="cb74-6"><a href="#cb74-6"></a>bf_plot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1"></a><span class="fu">library</span>(bayestestR)</span>
+<span id="cb66-2"><a href="#cb66-2"></a><span class="fu">library</span>(see)</span>
+<span id="cb66-3"><a href="#cb66-3"></a>prior <span class="ot">&lt;-</span> <span class="fu">distribution_normal</span>(<span class="dv">10000</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>)</span>
+<span id="cb66-4"><a href="#cb66-4"></a>posterior <span class="ot">&lt;-</span> <span class="fu">distribution_normal</span>(<span class="dv">10000</span>, <span class="at">mean =</span> <span class="dv">1</span>, <span class="at">sd =</span> <span class="fl">0.7</span>)</span>
+<span id="cb66-5"><a href="#cb66-5"></a>bf_plot<span class="ot">&lt;-</span> <span class="fu">bayesfactor_parameters</span>(posterior, prior, <span class="at">direction =</span> <span class="st">"two-sided"</span>, <span class="at">null =</span> <span class="dv">0</span>)</span>
+<span id="cb66-6"><a href="#cb66-6"></a>bf_plot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Bayes Factor (Savage-Dickey density ratio)
@@ -1527,15 +1400,15 @@ BF
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1"></a><span class="fu">plot</span>(bf_plot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1"></a><span class="fu">plot</span>(bf_plot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 
 </div>
-<img data-src="info-6_files/figure-revealjs/unnamed-chunk-46-1.png" width="960" class="r-stretch"></section>
+<img data-src="info-6_files/figure-revealjs/unnamed-chunk-40-1.png" width="960" class="r-stretch"></section>
 <section class="slide level2">
 
 <div class="cell">
-<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1"></a><span class="fu">bayesfactor_parameters</span>(posterior, prior, <span class="at">direction =</span> <span class="st">"two-sided"</span>, <span class="at">null =</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1"></a><span class="fu">bayesfactor_parameters</span>(posterior, prior, <span class="at">direction =</span> <span class="st">"two-sided"</span>, <span class="at">null =</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Bayes Factor (Savage-Dickey density ratio)
 
@@ -1619,8 +1492,8 @@ BF
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1"></a><span class="fu">library</span>(effectsize)</span>
-<span id="cb79-2"><a href="#cb79-2"></a><span class="fu">interpret_bf</span>(<span class="fl">1.95</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1"></a><span class="fu">library</span>(effectsize)</span>
+<span id="cb71-2"><a href="#cb71-2"></a><span class="fu">interpret_bf</span>(<span class="fl">1.95</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "anecdotal evidence in favour of"
@@ -1657,10 +1530,10 @@ BF
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1"></a>prior2 <span class="ot">&lt;-</span> <span class="fu">distribution_normal</span>(<span class="dv">10000</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">5</span>) <span class="co"># this differs</span></span>
-<span id="cb81-2"><a href="#cb81-2"></a>posterior2 <span class="ot">&lt;-</span> <span class="fu">distribution_normal</span>(<span class="dv">10000</span>, <span class="at">mean =</span> <span class="dv">1</span>, <span class="at">sd =</span> <span class="fl">0.7</span>) <span class="co"># exactly same</span></span>
-<span id="cb81-3"><a href="#cb81-3"></a>bf_2<span class="ot">&lt;-</span> <span class="fu">bayesfactor_parameters</span>(posterior2, prior2, <span class="at">direction =</span> <span class="st">"two-sided"</span>, <span class="at">null =</span> <span class="dv">0</span>)</span>
-<span id="cb81-4"><a href="#cb81-4"></a>bf_2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1"></a>prior2 <span class="ot">&lt;-</span> <span class="fu">distribution_normal</span>(<span class="dv">10000</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">5</span>) <span class="co"># this differs</span></span>
+<span id="cb73-2"><a href="#cb73-2"></a>posterior2 <span class="ot">&lt;-</span> <span class="fu">distribution_normal</span>(<span class="dv">10000</span>, <span class="at">mean =</span> <span class="dv">1</span>, <span class="at">sd =</span> <span class="fl">0.7</span>) <span class="co"># exactly same</span></span>
+<span id="cb73-3"><a href="#cb73-3"></a>bf_2<span class="ot">&lt;-</span> <span class="fu">bayesfactor_parameters</span>(posterior2, prior2, <span class="at">direction =</span> <span class="st">"two-sided"</span>, <span class="at">null =</span> <span class="dv">0</span>)</span>
+<span id="cb73-4"><a href="#cb73-4"></a>bf_2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Bayes Factor (Savage-Dickey density ratio)
@@ -1676,22 +1549,22 @@ BF
 <section class="slide level2">
 
 <div class="cell">
-<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1"></a><span class="fu">plot</span>(bf_2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1"></a><span class="fu">plot</span>(bf_2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="info-6_files/figure-revealjs/unnamed-chunk-50-1.png" width="960" class="r-stretch"></section>
+<img data-src="info-6_files/figure-revealjs/unnamed-chunk-44-1.png" width="960" class="r-stretch"></section>
 <section class="slide level2">
 
 <p>Here was the original BF</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1"></a><span class="fu">plot</span>(bf_plot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1"></a><span class="fu">plot</span>(bf_plot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="info-6_files/figure-revealjs/unnamed-chunk-51-1.png" width="960" class="r-stretch"></section>
+<img data-src="info-6_files/figure-revealjs/unnamed-chunk-45-1.png" width="960" class="r-stretch"></section>
 <section class="slide level2">
 
 <div class="cell">
-<div class="sourceCode cell-code" id="cb85"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1"></a><span class="fu">bayesfactor_parameters</span>(posterior2, prior2, <span class="at">direction =</span> <span class="st">"two-sided"</span>, <span class="at">null =</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1"></a><span class="fu">bayesfactor_parameters</span>(posterior2, prior2, <span class="at">direction =</span> <span class="st">"two-sided"</span>, <span class="at">null =</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Bayes Factor (Savage-Dickey density ratio)
 
@@ -1710,10 +1583,10 @@ BF
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb87"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1"></a>prior3 <span class="ot">&lt;-</span> <span class="fu">distribution_normal</span>(<span class="dv">10000</span>, <span class="at">mean =</span> <span class="fl">1.2</span>, <span class="at">sd =</span> <span class="dv">1</span>) <span class="co"># this differs</span></span>
-<span id="cb87-2"><a href="#cb87-2"></a>posterior3 <span class="ot">&lt;-</span> <span class="fu">distribution_normal</span>(<span class="dv">10000</span>, <span class="at">mean =</span> <span class="dv">1</span>, <span class="at">sd =</span> <span class="fl">0.7</span>) <span class="co"># exactly same</span></span>
-<span id="cb87-3"><a href="#cb87-3"></a>bf_3<span class="ot">&lt;-</span> <span class="fu">bayesfactor_parameters</span>(posterior3, prior3, <span class="at">direction =</span> <span class="st">"two-sided"</span>, <span class="at">null =</span> <span class="dv">0</span>)</span>
-<span id="cb87-4"><a href="#cb87-4"></a>bf_3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1"></a>prior3 <span class="ot">&lt;-</span> <span class="fu">distribution_normal</span>(<span class="dv">10000</span>, <span class="at">mean =</span> <span class="fl">1.2</span>, <span class="at">sd =</span> <span class="dv">1</span>) <span class="co"># this differs</span></span>
+<span id="cb79-2"><a href="#cb79-2"></a>posterior3 <span class="ot">&lt;-</span> <span class="fu">distribution_normal</span>(<span class="dv">10000</span>, <span class="at">mean =</span> <span class="dv">1</span>, <span class="at">sd =</span> <span class="fl">0.7</span>) <span class="co"># exactly same</span></span>
+<span id="cb79-3"><a href="#cb79-3"></a>bf_3<span class="ot">&lt;-</span> <span class="fu">bayesfactor_parameters</span>(posterior3, prior3, <span class="at">direction =</span> <span class="st">"two-sided"</span>, <span class="at">null =</span> <span class="dv">0</span>)</span>
+<span id="cb79-4"><a href="#cb79-4"></a>bf_3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Bayes Factor (Savage-Dickey density ratio)
@@ -1732,11 +1605,11 @@ BF
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb89"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1"></a><span class="fu">plot</span>(bf_3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1"></a><span class="fu">plot</span>(bf_3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 
 </div>
-<img data-src="info-6_files/figure-revealjs/unnamed-chunk-54-1.png" width="960" class="r-stretch"></section>
+<img data-src="info-6_files/figure-revealjs/unnamed-chunk-48-1.png" width="960" class="r-stretch"></section>
 <section class="slide level2">
 
 <ul>
@@ -1748,23 +1621,23 @@ BF
 
 <p>Easy to implement with brms models</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb90"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1"></a>mr<span class="fl">.2</span> <span class="ot">&lt;-</span> </span>
-<span id="cb90-2"><a href="#cb90-2"></a>  <span class="fu">brm</span>(<span class="at">family =</span> gaussian,</span>
-<span id="cb90-3"><a href="#cb90-3"></a>      happiness <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> SS_c <span class="sc">+</span> FQ_c,</span>
-<span id="cb90-4"><a href="#cb90-4"></a>      <span class="at">prior =</span> <span class="fu">c</span>(<span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">5</span>, <span class="dv">2</span>), <span class="at">class =</span> Intercept),</span>
-<span id="cb90-5"><a href="#cb90-5"></a>                <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, .<span class="dv">2</span>), <span class="at">class =</span> b, <span class="at">coef =</span> SS_c),</span>
-<span id="cb90-6"><a href="#cb90-6"></a>                <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, .<span class="dv">2</span>), <span class="at">class =</span> b, <span class="at">coef =</span> FQ_c),</span>
-<span id="cb90-7"><a href="#cb90-7"></a>                <span class="fu">prior</span>(<span class="fu">exponential</span>(.<span class="dv">5</span>), <span class="at">class =</span> sigma)),</span>
-<span id="cb90-8"><a href="#cb90-8"></a>      <span class="at">iter =</span> <span class="dv">2000</span>, <span class="at">warmup =</span> <span class="dv">1000</span>, <span class="at">chains =</span> <span class="dv">2</span>, <span class="at">cores =</span> <span class="dv">2</span>,</span>
-<span id="cb90-9"><a href="#cb90-9"></a>      <span class="at">data =</span> MR,</span>
-<span id="cb90-10"><a href="#cb90-10"></a>      <span class="at">sample_prior =</span> T,</span>
-<span id="cb90-11"><a href="#cb90-11"></a>      <span class="at">file =</span> <span class="st">"mr.2"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1"></a>mr<span class="fl">.2</span> <span class="ot">&lt;-</span> </span>
+<span id="cb82-2"><a href="#cb82-2"></a>  <span class="fu">brm</span>(<span class="at">family =</span> gaussian,</span>
+<span id="cb82-3"><a href="#cb82-3"></a>      happiness <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> SS_c <span class="sc">+</span> FQ_c,</span>
+<span id="cb82-4"><a href="#cb82-4"></a>      <span class="at">prior =</span> <span class="fu">c</span>(<span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">5</span>, <span class="dv">2</span>), <span class="at">class =</span> Intercept),</span>
+<span id="cb82-5"><a href="#cb82-5"></a>                <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, .<span class="dv">2</span>), <span class="at">class =</span> b, <span class="at">coef =</span> SS_c),</span>
+<span id="cb82-6"><a href="#cb82-6"></a>                <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, .<span class="dv">2</span>), <span class="at">class =</span> b, <span class="at">coef =</span> FQ_c),</span>
+<span id="cb82-7"><a href="#cb82-7"></a>                <span class="fu">prior</span>(<span class="fu">exponential</span>(.<span class="dv">5</span>), <span class="at">class =</span> sigma)),</span>
+<span id="cb82-8"><a href="#cb82-8"></a>      <span class="at">iter =</span> <span class="dv">2000</span>, <span class="at">warmup =</span> <span class="dv">1000</span>, <span class="at">chains =</span> <span class="dv">2</span>, <span class="at">cores =</span> <span class="dv">2</span>,</span>
+<span id="cb82-9"><a href="#cb82-9"></a>      <span class="at">data =</span> MR,</span>
+<span id="cb82-10"><a href="#cb82-10"></a>      <span class="at">sample_prior =</span> T,</span>
+<span id="cb82-11"><a href="#cb82-11"></a>      <span class="at">file =</span> <span class="st">"mr.2"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section class="slide level2">
 
 <div class="cell">
-<div class="sourceCode cell-code" id="cb91"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a href="#cb91-1"></a><span class="fu">summary</span>(mr<span class="fl">.2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1"></a><span class="fu">summary</span>(mr<span class="fl">.2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> Family: gaussian 
   Links: mu = identity; sigma = identity 
@@ -1792,16 +1665,16 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <section class="slide level2">
 
 <div class="cell">
-<div class="sourceCode cell-code" id="cb93"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1"></a>bf.result <span class="ot">&lt;-</span> bayestestR<span class="sc">::</span><span class="fu">bayesfactor_parameters</span>(mr<span class="fl">.2</span>)</span>
-<span id="cb93-2"><a href="#cb93-2"></a>bf.result</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb85"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1"></a>bf.result <span class="ot">&lt;-</span> bayestestR<span class="sc">::</span><span class="fu">bayesfactor_parameters</span>(mr<span class="fl">.2</span>)</span>
+<span id="cb85-2"><a href="#cb85-2"></a>bf.result</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Bayes Factor (Savage-Dickey density ratio)
 
 Parameter   |       BF
 ----------------------
-(Intercept) | 8.29e+33
-SS_c        | 6.25e+03
-FQ_c        |    10.67
+(Intercept) | 1.17e+34
+SS_c        | 6.40e+03
+FQ_c        |     9.79
 
 * Evidence Against The Null: 0</code></pre>
 </div>
@@ -1810,23 +1683,67 @@ FQ_c        |    10.67
 <section class="slide level2">
 
 <div class="cell">
-<div class="sourceCode cell-code" id="cb95"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1"></a><span class="fu">plot</span>(bf.result)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb87"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1"></a><span class="fu">plot</span>(bf.result)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="info-6_files/figure-revealjs/unnamed-chunk-58-1.png" width="960" class="r-stretch"></section>
+<img data-src="info-6_files/figure-revealjs/unnamed-chunk-52-1.png" width="960" class="r-stretch"></section>
+<section class="slide level2">
+
+</section>
+<section>
+<section id="try-with-wider-priors" class="title-slide slide level1 center">
+<h1>try with wider priors</h1>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb88"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1"></a>mr<span class="fl">.2</span>b <span class="ot">&lt;-</span> </span>
+<span id="cb88-2"><a href="#cb88-2"></a>  <span class="fu">brm</span>(<span class="at">family =</span> gaussian,</span>
+<span id="cb88-3"><a href="#cb88-3"></a>      happiness <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> SS_c <span class="sc">+</span> FQ_c,</span>
+<span id="cb88-4"><a href="#cb88-4"></a>      <span class="at">prior =</span> <span class="fu">c</span>(<span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">5</span>, <span class="dv">2</span>), <span class="at">class =</span> Intercept),</span>
+<span id="cb88-5"><a href="#cb88-5"></a>                <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, <span class="dv">10</span>), <span class="at">class =</span> b, <span class="at">coef =</span> SS_c),</span>
+<span id="cb88-6"><a href="#cb88-6"></a>                <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, <span class="dv">10</span>), <span class="at">class =</span> b, <span class="at">coef =</span> FQ_c),</span>
+<span id="cb88-7"><a href="#cb88-7"></a>                <span class="fu">prior</span>(<span class="fu">exponential</span>(.<span class="dv">5</span>), <span class="at">class =</span> sigma)),</span>
+<span id="cb88-8"><a href="#cb88-8"></a>      <span class="at">iter =</span> <span class="dv">2000</span>, <span class="at">warmup =</span> <span class="dv">1000</span>, <span class="at">chains =</span> <span class="dv">2</span>, <span class="at">cores =</span> <span class="dv">2</span>,</span>
+<span id="cb88-9"><a href="#cb88-9"></a>      <span class="at">data =</span> MR,</span>
+<span id="cb88-10"><a href="#cb88-10"></a>      <span class="at">backend =</span> <span class="st">"cmdstanr"</span>,</span>
+<span id="cb88-11"><a href="#cb88-11"></a>      <span class="at">file =</span> <span class="st">"mr.2b"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section class="slide level2">
+
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb89"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1"></a>bf.resultb <span class="ot">&lt;-</span> bayestestR<span class="sc">::</span><span class="fu">bayesfactor_parameters</span>(mr<span class="fl">.2</span>b)</span>
+<span id="cb89-2"><a href="#cb89-2"></a>bf.resultb</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Bayes Factor (Savage-Dickey density ratio)
+
+Parameter   |       BF
+----------------------
+(Intercept) | 6.79e+43
+SS_c        | 4.34e+04
+FQ_c        |    0.518
+
+* Evidence Against The Null: 0</code></pre>
+</div>
+</div>
+</section>
 <section id="we-can-also-do-this-with-rope" class="slide level2">
 <h2>we can also do this with ROPE!</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb96"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb96-1"><a href="#cb96-1"></a>bf.result2 <span class="ot">&lt;-</span> <span class="fu">bayesfactor_parameters</span>(mr<span class="fl">.2</span>, <span class="at">null =</span> <span class="fu">rope_range</span>(mr<span class="fl">.2</span>))</span>
-<span id="cb96-2"><a href="#cb96-2"></a>bf.result2 </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb91"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a href="#cb91-1"></a>bf.result2 <span class="ot">&lt;-</span> <span class="fu">bayesfactor_parameters</span>(mr<span class="fl">.2</span>, <span class="at">null =</span> <span class="fu">rope_range</span>(mr<span class="fl">.2</span>))</span>
+<span id="cb91-2"><a href="#cb91-2"></a>bf.result2 </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Bayes Factor (Null-Interval)
 
 Parameter   |       BF
 ----------------------
-(Intercept) | 2.77e+33
-SS_c        |   373.71
-FQ_c        |     1.47
+(Intercept) | 2.34e+33
+SS_c        |   327.50
+FQ_c        |     1.53
 
 * Evidence Against The Null: [-0.189, 0.189]</code></pre>
 </div>
@@ -1836,10 +1753,10 @@ FQ_c        |     1.47
 
 <p>The Bayes factor represents the degree by which the distribution mass of the posterior has shifted outside or inside the null interval relative to the prior distribution</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb98"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb98-1"><a href="#cb98-1"></a><span class="fu">plot</span>(bf.result2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb93"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1"></a><span class="fu">plot</span>(bf.result2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="info-6_files/figure-revealjs/unnamed-chunk-60-1.png" width="960" class="r-stretch"></section>
+<img data-src="info-6_files/figure-revealjs/unnamed-chunk-57-1.png" width="960" class="r-stretch"></section>
 <section id="shortcomings-of-bayes-factors" class="slide level2">
 <h2>Shortcomings of Bayes Factors</h2>
 <ol type="1">
@@ -1861,37 +1778,37 @@ FQ_c        |     1.47
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb99"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a href="#cb99-1"></a>info<span class="fl">.1</span> <span class="ot">&lt;-</span> </span>
-<span id="cb99-2"><a href="#cb99-2"></a>  <span class="fu">brm</span>(<span class="at">family =</span> gaussian,</span>
-<span id="cb99-3"><a href="#cb99-3"></a>      happiness <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> SS_c <span class="sc">+</span> FQ_c,</span>
-<span id="cb99-4"><a href="#cb99-4"></a>      <span class="at">prior =</span> <span class="fu">c</span>(<span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">5</span>, <span class="dv">2</span>), <span class="at">class =</span> Intercept),</span>
-<span id="cb99-5"><a href="#cb99-5"></a>                <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, <span class="dv">2</span>), <span class="at">class =</span> b, <span class="at">coef =</span> SS_c),</span>
-<span id="cb99-6"><a href="#cb99-6"></a>                <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, <span class="dv">2</span>), <span class="at">class =</span> b, <span class="at">coef =</span> FQ_c),</span>
-<span id="cb99-7"><a href="#cb99-7"></a>                <span class="fu">prior</span>(<span class="fu">exponential</span>(<span class="dv">1</span>), <span class="at">class =</span> sigma)),</span>
-<span id="cb99-8"><a href="#cb99-8"></a>      <span class="at">iter =</span> <span class="dv">2000</span>, <span class="at">warmup =</span> <span class="dv">1000</span>, <span class="at">chains =</span> <span class="dv">2</span>, <span class="at">cores =</span> <span class="dv">2</span>,</span>
-<span id="cb99-9"><a href="#cb99-9"></a>      <span class="at">data =</span> MR2,</span>
-<span id="cb99-10"><a href="#cb99-10"></a>      <span class="at">sample_prior =</span> T,</span>
-<span id="cb99-11"><a href="#cb99-11"></a>      <span class="at">save_pars =</span> <span class="fu">save_pars</span>(<span class="at">all =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb99-12"><a href="#cb99-12"></a>      <span class="at">backend =</span> <span class="st">"cmdstanr"</span>,</span>
-<span id="cb99-13"><a href="#cb99-13"></a>      <span class="at">file =</span> <span class="st">"info.1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb94"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb94-1"><a href="#cb94-1"></a>info<span class="fl">.1</span> <span class="ot">&lt;-</span> </span>
+<span id="cb94-2"><a href="#cb94-2"></a>  <span class="fu">brm</span>(<span class="at">family =</span> gaussian,</span>
+<span id="cb94-3"><a href="#cb94-3"></a>      happiness <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> SS_c <span class="sc">+</span> FQ_c,</span>
+<span id="cb94-4"><a href="#cb94-4"></a>      <span class="at">prior =</span> <span class="fu">c</span>(<span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">5</span>, <span class="dv">2</span>), <span class="at">class =</span> Intercept),</span>
+<span id="cb94-5"><a href="#cb94-5"></a>                <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, <span class="dv">2</span>), <span class="at">class =</span> b, <span class="at">coef =</span> SS_c),</span>
+<span id="cb94-6"><a href="#cb94-6"></a>                <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, <span class="dv">2</span>), <span class="at">class =</span> b, <span class="at">coef =</span> FQ_c),</span>
+<span id="cb94-7"><a href="#cb94-7"></a>                <span class="fu">prior</span>(<span class="fu">exponential</span>(<span class="dv">1</span>), <span class="at">class =</span> sigma)),</span>
+<span id="cb94-8"><a href="#cb94-8"></a>      <span class="at">iter =</span> <span class="dv">2000</span>, <span class="at">warmup =</span> <span class="dv">1000</span>, <span class="at">chains =</span> <span class="dv">2</span>, <span class="at">cores =</span> <span class="dv">2</span>,</span>
+<span id="cb94-9"><a href="#cb94-9"></a>      <span class="at">data =</span> MR2,</span>
+<span id="cb94-10"><a href="#cb94-10"></a>      <span class="at">sample_prior =</span> T,</span>
+<span id="cb94-11"><a href="#cb94-11"></a>      <span class="at">save_pars =</span> <span class="fu">save_pars</span>(<span class="at">all =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb94-12"><a href="#cb94-12"></a>      <span class="at">backend =</span> <span class="st">"cmdstanr"</span>,</span>
+<span id="cb94-13"><a href="#cb94-13"></a>      <span class="at">file =</span> <span class="st">"info.1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb100"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb100-1"><a href="#cb100-1"></a>info<span class="fl">.2</span> <span class="ot">&lt;-</span> </span>
-<span id="cb100-2"><a href="#cb100-2"></a>  <span class="fu">brm</span>(<span class="at">family =</span> gaussian,</span>
-<span id="cb100-3"><a href="#cb100-3"></a>      happiness <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> SS_c <span class="sc">+</span> FQ_c,</span>
-<span id="cb100-4"><a href="#cb100-4"></a>      <span class="at">prior =</span> <span class="fu">c</span>(<span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">5</span>, <span class="dv">2</span>), <span class="at">class =</span> Intercept),</span>
-<span id="cb100-5"><a href="#cb100-5"></a>                <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, .<span class="dv">2</span>), <span class="at">class =</span> b, <span class="at">coef =</span> SS_c),</span>
-<span id="cb100-6"><a href="#cb100-6"></a>                <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, .<span class="dv">2</span>), <span class="at">class =</span> b, <span class="at">coef =</span> FQ_c),</span>
-<span id="cb100-7"><a href="#cb100-7"></a>                <span class="fu">prior</span>(<span class="fu">exponential</span>(.<span class="dv">5</span>), <span class="at">class =</span> sigma)),</span>
-<span id="cb100-8"><a href="#cb100-8"></a>      <span class="at">iter =</span> <span class="dv">2000</span>, <span class="at">warmup =</span> <span class="dv">1000</span>, <span class="at">chains =</span> <span class="dv">2</span>, <span class="at">cores =</span> <span class="dv">2</span>,</span>
-<span id="cb100-9"><a href="#cb100-9"></a>      <span class="at">data =</span> MR2,</span>
-<span id="cb100-10"><a href="#cb100-10"></a>      <span class="at">sample_prior =</span> T,</span>
-<span id="cb100-11"><a href="#cb100-11"></a>      <span class="at">save_pars =</span> <span class="fu">save_pars</span>(<span class="at">all =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb100-12"><a href="#cb100-12"></a>      <span class="at">backend =</span> <span class="st">"cmdstanr"</span>,</span>
-<span id="cb100-13"><a href="#cb100-13"></a>      <span class="at">file =</span> <span class="st">"info.2"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb95"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1"></a>info<span class="fl">.2</span> <span class="ot">&lt;-</span> </span>
+<span id="cb95-2"><a href="#cb95-2"></a>  <span class="fu">brm</span>(<span class="at">family =</span> gaussian,</span>
+<span id="cb95-3"><a href="#cb95-3"></a>      happiness <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> SS_c <span class="sc">+</span> FQ_c,</span>
+<span id="cb95-4"><a href="#cb95-4"></a>      <span class="at">prior =</span> <span class="fu">c</span>(<span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">5</span>, <span class="dv">2</span>), <span class="at">class =</span> Intercept),</span>
+<span id="cb95-5"><a href="#cb95-5"></a>                <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, .<span class="dv">2</span>), <span class="at">class =</span> b, <span class="at">coef =</span> SS_c),</span>
+<span id="cb95-6"><a href="#cb95-6"></a>                <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, .<span class="dv">2</span>), <span class="at">class =</span> b, <span class="at">coef =</span> FQ_c),</span>
+<span id="cb95-7"><a href="#cb95-7"></a>                <span class="fu">prior</span>(<span class="fu">exponential</span>(.<span class="dv">5</span>), <span class="at">class =</span> sigma)),</span>
+<span id="cb95-8"><a href="#cb95-8"></a>      <span class="at">iter =</span> <span class="dv">2000</span>, <span class="at">warmup =</span> <span class="dv">1000</span>, <span class="at">chains =</span> <span class="dv">2</span>, <span class="at">cores =</span> <span class="dv">2</span>,</span>
+<span id="cb95-9"><a href="#cb95-9"></a>      <span class="at">data =</span> MR2,</span>
+<span id="cb95-10"><a href="#cb95-10"></a>      <span class="at">sample_prior =</span> T,</span>
+<span id="cb95-11"><a href="#cb95-11"></a>      <span class="at">save_pars =</span> <span class="fu">save_pars</span>(<span class="at">all =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb95-12"><a href="#cb95-12"></a>      <span class="at">backend =</span> <span class="st">"cmdstanr"</span>,</span>
+<span id="cb95-13"><a href="#cb95-13"></a>      <span class="at">file =</span> <span class="st">"info.2"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
@@ -1900,17 +1817,17 @@ FQ_c        |     1.47
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb101"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb101-1"><a href="#cb101-1"></a>bf.info<span class="fl">.1</span> <span class="ot">&lt;-</span> bayestestR<span class="sc">::</span><span class="fu">bayesfactor_parameters</span>(info<span class="fl">.1</span>)</span>
-<span id="cb101-2"><a href="#cb101-2"></a>bf.info<span class="fl">.1</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb96"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb96-1"><a href="#cb96-1"></a>bf.info<span class="fl">.1</span> <span class="ot">&lt;-</span> bayestestR<span class="sc">::</span><span class="fu">bayesfactor_parameters</span>(info<span class="fl">.1</span>)</span>
+<span id="cb96-2"><a href="#cb96-2"></a>bf.info<span class="fl">.1</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Bayes Factor (Savage-Dickey density ratio)
 
 Parameter   |       BF
 ----------------------
-(Intercept) | 1.59e+30
-SS_c        | 2.42e+04
-FQ_c        |     4.55
+(Intercept) | 1.24e+30
+SS_c        | 1.94e+04
+FQ_c        |     4.82
 
 * Evidence Against The Null: 0</code></pre>
 </div>
@@ -1918,17 +1835,17 @@ FQ_c        |     4.55
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb103"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb103-1"><a href="#cb103-1"></a>bf.info<span class="fl">.2</span> <span class="ot">&lt;-</span> bayestestR<span class="sc">::</span><span class="fu">bayesfactor_parameters</span>(info<span class="fl">.2</span>)</span>
-<span id="cb103-2"><a href="#cb103-2"></a>bf.info<span class="fl">.2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb98"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb98-1"><a href="#cb98-1"></a>bf.info<span class="fl">.2</span> <span class="ot">&lt;-</span> bayestestR<span class="sc">::</span><span class="fu">bayesfactor_parameters</span>(info<span class="fl">.2</span>)</span>
+<span id="cb98-2"><a href="#cb98-2"></a>bf.info<span class="fl">.2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Bayes Factor (Savage-Dickey density ratio)
 
 Parameter   |       BF
 ----------------------
-(Intercept) | 2.16e+27
-SS_c        | 1.63e+04
-FQ_c        |     9.83
+(Intercept) | 4.08e+27
+SS_c        | 1.69e+04
+FQ_c        |    10.31
 
 * Evidence Against The Null: 0</code></pre>
 </div>
@@ -1937,38 +1854,38 @@ FQ_c        |     9.83
 <section class="slide level2">
 
 <div class="cell">
-<div class="sourceCode cell-code" id="cb105"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb105-1"><a href="#cb105-1"></a><span class="fu">plot</span>(bf.info<span class="fl">.1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb100"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb100-1"><a href="#cb100-1"></a><span class="fu">plot</span>(bf.info<span class="fl">.1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="info-6_files/figure-revealjs/unnamed-chunk-66-1.png" width="960" class="r-stretch"></section>
+<img data-src="info-6_files/figure-revealjs/unnamed-chunk-63-1.png" width="960" class="r-stretch"></section>
 <section class="slide level2">
 
 <div class="cell">
-<div class="sourceCode cell-code" id="cb106"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb106-1"><a href="#cb106-1"></a><span class="fu">plot</span>(bf.info<span class="fl">.2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb101"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb101-1"><a href="#cb101-1"></a><span class="fu">plot</span>(bf.info<span class="fl">.2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="info-6_files/figure-revealjs/unnamed-chunk-67-1.png" width="960" class="r-stretch"></section>
+<img data-src="info-6_files/figure-revealjs/unnamed-chunk-64-1.png" width="960" class="r-stretch"></section>
 <section class="slide level2">
 
 <p>Effects are basically indistinguishable, but BFs are.</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb107"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb107-1"><a href="#cb107-1"></a><span class="fu">plot</span>(info<span class="fl">.1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb102"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb102-1"><a href="#cb102-1"></a><span class="fu">plot</span>(info<span class="fl">.1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 
 </div>
-<img data-src="info-6_files/figure-revealjs/unnamed-chunk-68-1.png" width="960" class="r-stretch"></section>
+<img data-src="info-6_files/figure-revealjs/unnamed-chunk-65-1.png" width="960" class="r-stretch"></section>
 <section class="slide level2">
 
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb108"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb108-1"><a href="#cb108-1"></a><span class="fu">plot</span>(info<span class="fl">.2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb103"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb103-1"><a href="#cb103-1"></a><span class="fu">plot</span>(info<span class="fl">.2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 
 </div>
-<img data-src="info-6_files/figure-revealjs/unnamed-chunk-69-1.png" width="960" class="r-stretch"></section>
+<img data-src="info-6_files/figure-revealjs/unnamed-chunk-66-1.png" width="960" class="r-stretch"></section>
 <section id="multiple-comparisons" class="slide level2">
 <h2>multiple comparisons</h2>
 <p>Krushke:</p>
@@ -1977,7 +1894,7 @@ FQ_c        |     9.83
 <div class="footer footer-default">
 
 </div>
-</section>
+</section></section>
     </div>
   </div>
 

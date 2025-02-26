@@ -1523,7 +1523,7 @@
     "href": "info-6.html#information-theory-1",
     "title": "information",
     "section": "Information theory",
-    "text": "Information theory\n\nThe reduction in uncertainty by learning the outcome is how much information we have learned. If we know how much uncertainty we have we can know how much improvement is possible in our prediction.\nClaude Shannon (1916-2001) developed the field of information theory by making an analogy to bits of information, just like within computers. Prior to this, information, and thus learning was poorly defined."
+    "text": "Information theory\n\nThe reduction in uncertainty by learning the outcome is how much information we have learned. If we know how much uncertainty we have we can know how much improvement is possible in our prediction.\nClaude Shannon (1916-2001) developed the field of information theory by making an analogy to bits of information (yes, the computer bit). Prior to this, information, and thus learning was poorly defined."
   },
   {
     "objectID": "info-6.html#what-is-information",
@@ -1544,7 +1544,7 @@
     "href": "info-6.html#bits-1",
     "title": "information",
     "section": "bits",
-    "text": "bits\n1/2^bit = probability of some event 2^bit = 1/p bit = log2(1/p) bit = -1log2(p)\nWe use bits rather than direct probabilities because it is easier to add bits than very small probabilities multiplied by other very small probabilities."
+    "text": "bits\n1/2^bit = probability of some event\n2^bit = 1/p\nbit = log2(1/p)\nbit = -1log2(p)\nWe use bits rather than direct probabilities because it is easier to add bits than very small probabilities multiplied by other very small probabilities."
   },
   {
     "objectID": "info-6.html#entropy",
@@ -1579,14 +1579,14 @@
     "href": "info-6.html#how-is-this-different-from-lrt",
     "title": "information",
     "section": "How is this different from LRT?",
-    "text": "How is this different from LRT?\n\nDeviance is a model of relative fit, but with a constant specific to the model. Log likelihoods thus only differ by a constant.\nComparing two models with LRT should yield similar scores as comparing two deviances.\n\nBut Bayesians don’t like NHST, so they sometimes leave off the -2, which simplifies the deviance equation but then does not allow a chi-square difference test to be completed."
+    "text": "How is this different from LRT?\n\nDivergence/Deviance is a model of relative fit, but with a constant specific to the model. Log likelihoods thus only differ by a constant.\nComparing two models with LRT should yield similar scores as comparing two deviances.\n\nBut Bayesians don’t like NHST, so they sometimes leave off the -2, which only serves to allow a chi-square difference"
   },
   {
     "objectID": "info-6.html#log-pointwise-predictive-density",
     "href": "info-6.html#log-pointwise-predictive-density",
     "title": "information",
     "section": "Log Pointwise Predictive Density",
-    "text": "Log Pointwise Predictive Density\nD(q) = \\(\\sum_i\\) \\(\\log\\) (q_i) = lppd\n\nFurther, with Bayes we need to use the entire posterior to define deviance! If not, we are throwing away information.\nOften referred to Log Pointwise Predictive Density (lpd or lppd)"
+    "text": "Log Pointwise Predictive Density\nlppd = \\(\\sum_i\\) \\(\\log\\) (q_i)\n\\[lppd = \\sum_i^n \\log \\int( p(y_i| \\theta) (\\theta|y) d\\theta\\]\n\nFurther, with Bayes we need to use the entire posterior to define deviance! If not, we are throwing away information.\nOften referred to Log Pointwise Predictive Density (lpd or lppd)\nWe just went full circle to get a bayesian equivalent to log likelihood. And will thus use lppd for our model fit questions."
   },
   {
     "objectID": "info-6.html#two-options-for-model-comparison",
@@ -1628,7 +1628,7 @@
     "href": "info-6.html#waic",
     "title": "information",
     "section": "WAIC",
-    "text": "WAIC\n\\[\\text{WAIC}(y, \\theta) = -2 \\big (\\text{lppd} - \\underbrace{\\sum_i \\operatorname{var}_\\theta \\log p(y_i | \\theta)}_\\text{penalty term} \\big)\\]\nlppd = log pointwise predictive density = deviance over the entire posterior =\n\\[\\text{lppd}(y, \\theta) = \\sum_i \\log \\frac{1}{S} \\sum_sp(y_i|\\theta_S)\\]\n\\[\\text{AIC}(y, \\theta) = -2(\\text{llpd}) + 2p\\]"
+    "text": "WAIC\n\\[\\text{WAIC}(y, \\theta) = -2 \\big (\\text{lppd} - \\underbrace{\\sum_i \\operatorname{var}_\\theta \\log p(y_i | \\theta)}_\\text{penalty term} \\big)\\]\nlppd = log pointwise predictive density = deviance over the entire posterior\nSimilar in form to old friend: \\[\\text{AIC}(y, \\theta) = -2(\\text{llpd}) + 2p\\]"
   },
   {
     "objectID": "info-6.html#example",
@@ -1642,7 +1642,7 @@
     "href": "info-6.html#using-information-critera",
     "title": "information",
     "section": "Using information critera",
-    "text": "Using information critera\n\nEach of these criteria do not have scales that are bounded by numbers (eg 0-1), nor can they be evaluated by some other number (eg SDs)\nProvide relative fit, so you need to compare different models, choosing the model with the lowest IC or the highest expected IC\nThe criteria are also dependent on sample size, so you cannot compare across models that differ in sample size\nYou can compare non-nested models eg ones with different sets of predictors"
+    "text": "Using information critera\n\nEach of these criteria do not have scales that are bounded by numbers (eg 0-1), nor can they be evaluated by some other number (eg SDs)\nProvide relative fit, so you need to compare different models, choosing the model with best fit\nThe criteria are also dependent on sample size, so you cannot compare across models that differ in sample size\nYou can compare non-nested models e.g. ones with non-overlapping sets of predictors"
   },
   {
     "objectID": "info-6.html#overfitting",
@@ -1670,7 +1670,7 @@
     "href": "info-6.html#mimicking-nhst",
     "title": "information",
     "section": "Mimicking NHST",
-    "text": "Mimicking NHST\nIf you wanted to appease an editor/reviewer/adviser what do you do (other than teach them Bayes)?\nCIs! HDPIs! Predictions! ROPE! Probability of direction!\n\n\nCode\nmr.14 &lt;- readRDS(\"mr.14.rds\")\nsummary(mr.14)\n\n\n Family: gaussian \n  Links: mu = identity; sigma = identity \nFormula: happiness ~ 1 + iv.d * SS_c \n   Data: MR (Number of observations: 118) \n  Draws: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;\n         total post-warmup draws = 4000\n\nRegression Coefficients:\n            Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS\nIntercept       4.96      0.24     4.49     5.43 1.00     4484     2783\niv.dtx          0.38      0.29    -0.21     0.97 1.00     4355     2987\nSS_c            0.41      0.06     0.29     0.52 1.00     3498     3294\niv.dtx:SS_c    -0.28      0.09    -0.46    -0.10 1.00     3809     3007\n\nFurther Distributional Parameters:\n      Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS\nsigma     1.58      0.11     1.40     1.80 1.00     4406     2579\n\nDraws were sampled using sample(hmc). For each parameter, Bulk_ESS\nand Tail_ESS are effective sample size measures, and Rhat is the potential\nscale reduction factor on split chains (at convergence, Rhat = 1)."
+    "text": "Mimicking NHST\nIf you wanted to appease an editor/reviewer/adviser what do you do (other than teach them Bayes)?\nCIs! Predictions! Model comparisons with waic or loo! ROPE! Probability of direction! Bayes Factors!\n\n\nCode\nmr.14 &lt;- readRDS(\"mr.14.rds\")\nsummary(mr.14)\n\n\n Family: gaussian \n  Links: mu = identity; sigma = identity \nFormula: happiness ~ 1 + iv.d * SS_c \n   Data: MR (Number of observations: 118) \n  Draws: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;\n         total post-warmup draws = 4000\n\nRegression Coefficients:\n            Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS\nIntercept       4.96      0.24     4.49     5.43 1.00     4484     2783\niv.dtx          0.38      0.29    -0.21     0.97 1.00     4355     2987\nSS_c            0.41      0.06     0.29     0.52 1.00     3498     3294\niv.dtx:SS_c    -0.28      0.09    -0.46    -0.10 1.00     3809     3007\n\nFurther Distributional Parameters:\n      Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS\nsigma     1.58      0.11     1.40     1.80 1.00     4406     2579\n\nDraws were sampled using sample(hmc). For each parameter, Bulk_ESS\nand Tail_ESS are effective sample size measures, and Rhat is the potential\nscale reduction factor on split chains (at convergence, Rhat = 1)."
   },
   {
     "objectID": "info-6.html#probability-of-direction",
@@ -1691,14 +1691,14 @@
     "href": "info-6.html#downsides-of-pd",
     "title": "information",
     "section": "Downsides of PD",
-    "text": "Downsides of PD\n\nYou can find a high PD for an effect that is quite small. Similar to a p &lt; .05 with a large sample size. Is it still meaningful?\nLead to other NHST foibles like dichotomous thinking\nMore similar to a 1-tailed p-value"
+    "text": "Downsides of PD\n\nYou can find a high PD for an effect that is quite small. Similar to a p &lt; .05 with a large sample size. Is it still meaningful?\nLead to other NHST foibles like dichotomous thinking\nMore similar to a 1-tailed p-value if you keep alpha = .05. So maybe look at 97.5 PDs?"
   },
   {
     "objectID": "info-6.html#nil-hypothesis",
     "href": "info-6.html#nil-hypothesis",
     "title": "information",
     "section": "nil hypothesis",
-    "text": "nil hypothesis\n\nWith NHST you typically attempt to reject a H0 of zero. This is a point estimate. However, we know the probability of any point is zero, so conceptually a typical NHST is illogical.\nWhat we really mean when we set up a standard NHST nil hypothesis is to reject zero – OR VALUES THAT ARE EQUIVALENT TO ZERO.\nWhat are those values? In frequentist it depends on your se which is a function of your sample SD and N. We just don’t talk about it."
+    "text": "nil hypothesis\n\nWith NHST you typically attempt to reject a H0 of zero. This is a point estimate. However, we know the probability of any point is zero, so conceptually a typical NHST is illogical.\nWhat we really mean when we set up a standard NHST nil hypothesis is to reject zero – OR VALUES THAT ARE EQUIVALENT TO ZERO.\nWhat are those values? In frequentist it depends on your se which is a function of your sample SD and N. We just don’t talk/think about it."
   },
   {
     "objectID": "info-6.html#rope",
@@ -1768,7 +1768,7 @@
     "href": "info-6.html#we-can-also-do-this-with-rope",
     "title": "information",
     "section": "we can also do this with ROPE!",
-    "text": "we can also do this with ROPE!\n\nbf.result2 &lt;- bayesfactor_parameters(mr.2, null = rope_range(mr.2))\nbf.result2 \n\nBayes Factor (Null-Interval)\n\nParameter   |       BF\n----------------------\n(Intercept) | 2.77e+33\nSS_c        |   373.71\nFQ_c        |     1.47\n\n* Evidence Against The Null: [-0.189, 0.189]"
+    "text": "we can also do this with ROPE!\n\nbf.result2 &lt;- bayesfactor_parameters(mr.2, null = rope_range(mr.2))\nbf.result2 \n\nBayes Factor (Null-Interval)\n\nParameter   |       BF\n----------------------\n(Intercept) | 2.34e+33\nSS_c        |   327.50\nFQ_c        |     1.53\n\n* Evidence Against The Null: [-0.189, 0.189]"
   },
   {
     "objectID": "info-6.html#shortcomings-of-bayes-factors",
@@ -1802,7 +1802,14 @@
     "objectID": "info-6.html#curse-of-dimensionality",
     "href": "info-6.html#curse-of-dimensionality",
     "title": "information",
-    "section": "curse of dimensionality",
-    "text": "curse of dimensionality\nWe don’t use grid approximation to calculate our posterior, but the LLs are super helpful to evaluate our model.\nHowever, this being bayes, we are going to work with something slightly different from what LLs we are used to."
+    "section": "Curse of dimensionality",
+    "text": "Curse of dimensionality\nWe don’t use grid approximation to calculate our posterior, but the LLs are super helpful to evaluate our model.\nHowever, this being bayes, we are going to work with something slightly different from what LLs we are used to."
+  },
+  {
+    "objectID": "info-6.html#leveraging-likelihoods",
+    "href": "info-6.html#leveraging-likelihoods",
+    "title": "information",
+    "section": "Leveraging likelihoods",
+    "text": "Leveraging likelihoods\nWe don’t use grid approximation to calculate our posterior, but the LLs are super helpful to evaluate our model.\nHowever, this being bayes, we are going to work with something slightly different from what LLs we are used to.\nIn doing so we accomplish: 1. a principled way to choose likelihood function and 2. a way to evaluate models"
   }
 ]

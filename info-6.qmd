@@ -204,11 +204,13 @@ p_grid %>%
 
 ```
 
-## curse of dimensionality
+## Leveraging likelihoods
 
 We don't use grid approximation to calculate our posterior, but the LLs are super helpful to evaluate our model.
 
 However, this being bayes, we are going to work with something slightly different from what LLs we are used to.
+
+In doing so we accomplish: 1. a principled way to choose likelihood function and 2. a way to evaluate models
 
 ## Information theory
 
@@ -222,7 +224,7 @@ However, this being bayes, we are going to work with something slightly differen
 
 -   The reduction in uncertainty by learning the outcome is how much *information* we have learned. If we know how much uncertainty we have we can know how much improvement is possible in our prediction.
 
--   Claude Shannon (1916-2001) developed the field of information theory by making an analogy to bits of information, just like within computers. Prior to this, information, and thus learning was poorly defined.
+-   Claude Shannon (1916-2001) developed the field of information theory by making an analogy to bits of information (yes, the computer bit). Prior to this, information, and thus learning was poorly defined.
 
 ## What is information?
 
@@ -250,7 +252,13 @@ A dice roll is 2.585 bits. Best to think about this is each bit like a yes/no qu
 
 ## bits
 
-1/2\^bit = probability of some event 2\^bit = 1/p bit = log2(1/p) bit = -1log2(p)
+1/2\^bit = probability of some event 
+
+2\^bit = 1/p 
+
+bit = log2(1/p) 
+
+bit = -1log2(p)
 
 We use bits rather than direct probabilities because it is easier to add bits than very small probabilities multiplied by other very small probabilities.
 
@@ -337,33 +345,39 @@ d %>%
 
 ------------------------------------------------------------------------
 
--   But how far away is our model from an accurate prediction? Divergence (KL) is the uncertainty created by using probabilities from one distribution to describe another distribution.
+-   But how far away is our model from an accurate prediction? Divergence (not deviance) (often called Kullback–Leibler (KL) divergence) is the uncertainty created by using probabilities from one distribution to describe another target distribution.
 
 $D(m1, m2) = -\sum p_i(log(p_i) - log(q_i))$
 
 The difference between two entropies... or average difference in log probability between model 1 (target) and model 2 (actual)
 
+KL divergence is foundational in many statistical and computational areas. If you take any machine learning class you will use KL divergence
+
 ------------------------------------------------------------------------
 
--   We never know the target but that is okay. We can still compute divergences and compare with other divergences because the target is a constant. This means we cannot look at a divergence and know if it is good or bad, but we can use them to compare. The result is called a deviance.
+-  Often we do not know the target. This means we cannot look at a divergence and know if it is good or bad, but we can use them to compare different models. Throw a -2 infront of it and call it a deviance (remember this?).
 
 D(q) = -2 $\sum_i$ $\log$ (q_i)
 
 ## How is this different from LRT?
 
--   Deviance is a model of relative fit, but with a constant specific to the model. Log likelihoods thus only differ by a constant.
+-   Divergence/Deviance is a model of relative fit, but with a constant specific to the model. Log likelihoods thus only differ by a constant.
 
 -   Comparing two models with LRT should yield similar scores as comparing two deviances.
 
-But Bayesians don't like NHST, so they sometimes leave off the -2, which simplifies the deviance equation but then does not allow a chi-square difference test to be completed.
+But Bayesians don't like NHST, so they sometimes leave off the -2, which only serves to allow a chi-square difference 
 
 ## Log Pointwise Predictive Density
 
-D(q) = $\sum_i$ $\log$ (q_i) = lppd
+lppd = $\sum_i$ $\log$ (q_i)
+
+$$lppd = \sum_i^n \log \int( p(y_i| \theta) (\theta|y) d\theta$$
 
 -   Further, with Bayes we need to use the entire posterior to define deviance! If not, we are throwing away information.
 
--   Often referred to Log Pointwise Predictive Density (lpd or lppd)
+- Often referred to Log Pointwise Predictive Density (lpd or lppd)
+
+- We just went full circle to get a bayesian equivalent to log likelihood. And will thus use lppd for our model fit questions. 
 
 ## Two options for model comparison
 
@@ -406,11 +420,11 @@ mr.12$criteria$loo
 
 ------------------------------------------------------------------------
 
--   elpd theoretical expected log pointwise predictive density for a new dataset (an lppd equivalent). Larger the better.
+-   elpd theoretical expected log pointwise predictive density for a new dataset (an lppd equivalent). Larger the better. Probabilities are always equal or less than 1, and thus log predictive probabilities are 0 or negative
 
 -   p_loo is effective number of parameters
 
--   looic is -2(elpd). Low scores better.
+-   looic is -2(elpd). Low scores better. Why -2? Because of chi-square history and/or for Gaussian model with known variance -2 log score is equal to squared error. 
 
 ------------------------------------------------------------------------
 
@@ -458,10 +472,9 @@ loo_compare(mr.11, mr.12, criterion = "loo")
 
 $$\text{WAIC}(y, \theta) = -2 \big (\text{lppd} - \underbrace{\sum_i \operatorname{var}_\theta \log p(y_i | \theta)}_\text{penalty term} \big)$$
 
-lppd = log pointwise predictive density = deviance over the entire posterior =
+lppd = log pointwise predictive density = deviance over the entire posterior
 
-$$\text{lppd}(y, \theta) = \sum_i \log \frac{1}{S} \sum_sp(y_i|\theta_S)$$
-
+Similar in form to old friend: 
 $$\text{AIC}(y, \theta) = -2(\text{llpd}) + 2p$$
 
 ## example
@@ -491,98 +504,19 @@ Note: looks similar to loo results, even though this is with waic. Both are comp
 
 ## Using information critera
 
--   Each of these criteria do not have scales that are bounded by numbers (eg 0-1), nor can they be evaluated by some other number (eg SDs)
+-   Each of these criteria do *not* have scales that are bounded by numbers (eg 0-1), *nor* can they be evaluated by some other number (eg SDs)
 
--   Provide relative fit, so you need to compare different models, choosing the model with the lowest IC or the highest expected IC
+-   Provide relative fit, so you need to compare different models, choosing the model with best fit
 
 -   The criteria are also dependent on sample size, so you cannot compare across models that differ in sample size
 
--   You can compare non-nested models eg ones with different sets of predictors
-
-## Overfitting
-
--   Fit is relative to our sample, not the population
-
--   Need to balance between parsimony and completeness
-
--   Ironically, the best fitting model may not be the *best* model. The model will be tuned to our particular random sample
-
--   We are "fitting the noise" or overfitting the specifics of our sample
-
-## Regularization
-
--   "penalizing" our model estimates to prevent overfitting
-
--   Find coefficients that compromise between (a) minimizing the residuals and (b) minimizing sum of abs value of coefficients
-
--   Tends to "shrink"" coefficients to zero, much like we discussed with centering prior distributions around zero
-
-------------------------------------------------------------------------
-
-```{r}
-mr.2 <- readRDS("mr.2.rds")
-```
-
-```{r, eval = FALSE}
-#| code-fold: true
-mr.2 <- 
-  brm(family = gaussian,
-      happiness ~ 1 + SS_c + FQ_c,
-      prior = c(prior(normal(5, 2), class = Intercept),
-                prior(normal(0, .2), class = b, coef = SS_c),
-                prior(normal(0, .2), class = b, coef = FQ_c),
-                prior(exponential(.5), class = sigma)),
-      iter = 2000, warmup = 1000, chains = 2, cores = 2,
-      data = MR,
-      sample_prior = T,
-      file = "mr.2")
-```
-
-------------------------------------------------------------------------
-
-```{r}
-#| code-fold: true
-summary(mr.2)
-```
-
-## update prior
-
-```{r}
-#| code-fold: true
-mr.2p <- update(mr.2, prior =  
-                c(prior(normal(5, 2), class = Intercept),
-                 prior(normal(0, .2), class = b, coef = SS_c),
-                prior(normal(0, .05), class = b, coef = FQ_c),
-                prior(exponential(.5), class = sigma)),
-                  file = "mr.2p")
-```
-
-------------------------------------------------------------------------
-
-```{r}
-#| code-fold: true
-summary(mr.2p)
-```
-
-------------------------------------------------------------------------
-
-```{r}
-#| code-fold: true
-priors <-
-  c(prior(normal(0, .2), class = b, coef = FQ_c),
-    prior(normal(0, .05), class = b, coef = FQ_c))
-
-priors %>% 
-  parse_dist(prior) %>% 
-  ggplot(aes(y=class, dist =.dist, args=.args,  fill = prior)) +
-  stat_dist_halfeye(alpha = .6)
-```
+-   You can compare non-nested models e.g. ones with non-overlapping sets of predictors
 
 ## Mimicking NHST
 
 If you wanted to appease an editor/reviewer/adviser what do you do (other than teach them Bayes)?
 
-CIs! HDPIs! Predictions! ROPE! Probability of direction!
+CIs! Predictions! Model comparisons with waic or loo! ROPE! Probability of direction! Bayes Factors! 
 
 ```{r}
 #| code-fold: true
@@ -628,7 +562,7 @@ describe_posterior(mr.14)
 
 -   Lead to other NHST foibles like dichotomous thinking
 
--   More similar to a 1-tailed p-value
+-   More similar to a 1-tailed p-value if you keep alpha = .05. So maybe look at 97.5 PDs?
 
 ## nil hypothesis
 
@@ -636,7 +570,7 @@ describe_posterior(mr.14)
 
 -   What we really mean when we set up a standard NHST nil hypothesis is to reject zero -- OR VALUES THAT ARE EQUIVALENT TO ZERO.
 
--   What are those values? In frequentist it depends on your se which is a function of your sample SD and N. We just don't talk about it.
+-   What are those values? In frequentist it depends on your se which is a function of your sample SD and N. We just don't talk/think about it.
 
 ## ROPE
 
@@ -648,7 +582,7 @@ describe_posterior(mr.14)
 
 ------------------------------------------------------------------------
 
--   Compare our 95% (or whatever value you want) CI/HDI to see if it overlaps with the ROPE. Some suggest using full posterior rather than a CI.
+-   Compare our 95% (or whatever value you want) CI/HDPI to see if it overlaps with the ROPE. Some suggest using full posterior rather than a CI.
 
 -   If this percentage is sufficiently low, the null hypothesis is rejected. If this percentage is sufficiently high, the null hypothesis is accepted.
 
@@ -672,20 +606,20 @@ plot(rope.1)
 ------------------------------------------------------------------------
 
 ```{r}
-rope(mr.14, range = c(-0.15, 0.15), ci = c(0.99))
+rope(mr.14, range = c(-0.3, 0.3), ci = c(0.99))
 ```
 
 ------------------------------------------------------------------------
 
 ```{r}
-rope.2 <- rope(mr.14, range = c(-0.15, 0.15), ci = c(0.99))
+rope.2 <- rope(mr.14, range = c(-0.3, 0.3), ci = c(0.99))
 plot(rope.2)
 ```
 
 ------------------------------------------------------------------------
 
 ```{r}
-result <- equivalence_test(mr.14, range = c(-0.2, 0.2), ci = c(0.95))
+result <- equivalence_test(mr.14, range = c(-0.3, 0.3), ci = c(0.95))
 result
 ```
 
@@ -734,7 +668,6 @@ $$BF_{12} = \frac{p(D | m = 1)}{p(D | m = 2)}$$
 
 Can also think of it as the factor by which some prior odds have been updated after observing the data to posterior odds. Since they can be computed by dividing posterior odds by prior odds.
 
-$$\underbrace{\frac{P(M_1|D)}{P(M_2|D)}}_{\text{Posterior Odds}} = \underbrace{\frac{P(D|M_1)}{P(D|M_2)}}_{\text{Likelihood Ratio}} \times \underbrace{\frac{P(M_1)}{P(M_2)}}_{\text{Prior Odds}}$$
 
 $$BF_{12}=\frac{Posterior~Odds_{12}}{Prior~Odds_{12}}$$
 
@@ -922,6 +855,45 @@ bf.result
 ```{r}
 plot(bf.result)
 ```
+
+
+----------
+
+# try with wider priors 
+
+```{r, echo = FALSE}
+MR <-read.csv("https://raw.githubusercontent.com/josh-jackson/bayes/master/hw3.csv")
+MR <- MR %>% 
+  mutate(SS_c = `schoool.success` - mean(`schoool.success`),
+         FQ_c = `friendship.quality` - mean(`friendship.quality`),
+         iv = `intervention.group`) %>% 
+        mutate(iv = as.factor(iv))
+```
+
+
+```{r}
+#| code-fold: true
+mr.2b <- 
+  brm(family = gaussian,
+      happiness ~ 1 + SS_c + FQ_c,
+      prior = c(prior(normal(5, 2), class = Intercept),
+                prior(normal(0, 10), class = b, coef = SS_c),
+                prior(normal(0, 10), class = b, coef = FQ_c),
+                prior(exponential(.5), class = sigma)),
+      iter = 2000, warmup = 1000, chains = 2, cores = 2,
+      data = MR,
+      backend = "cmdstanr",
+      file = "mr.2b")
+```
+
+-----------------------
+
+```{r}
+#| code-fold: true
+bf.resultb <- bayestestR::bayesfactor_parameters(mr.2b)
+bf.resultb
+```
+
 
 ## we can also do this with ROPE!
 
