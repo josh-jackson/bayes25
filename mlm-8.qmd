@@ -28,6 +28,9 @@ mlm <- read.csv(data)
 
 ```{r, echo = FALSE}
 library(tidyverse)
+library(tidybayes)
+library(ggdist)
+library(brms)
 sample_n_of <- function(data, size, ...) {
   dots <- quos(...)
   
@@ -39,6 +42,22 @@ sample_n_of <- function(data, size, ...) {
   data %>% 
     filter(group_ids %in% sampled_groups)
 }
+
+MR <-read.csv("https://raw.githubusercontent.com/josh-jackson/bayes/master/hw3.csv")
+
+MR <- MR %>% 
+  mutate(SS_c = `schoool.success` - mean(`schoool.success`),
+         FQ_c = `friendship.quality` - mean(`friendship.quality`),
+         iv = `intervention.group`) %>% 
+        mutate(iv = as.factor(iv))
+
+MR <- MR %>% 
+ mutate(iv.d = case_match(iv, "1" ~ "control", "2" ~ "tx", "3" ~ "tx"))
+ 
+MR <- MR %>% 
+  mutate(happy_c = `happiness` - mean(`happiness`))
+
+
 ```
 
 ------------------------------------------------------------------------
@@ -192,7 +211,6 @@ Anytime you have repeated DVs you should use MLM as opposed to doing aggregation
 4.  Variance decomposition\
 5.  Learning from other data through pooling/shrinkage
 6.  Parameters that depend on parameters
-
 
 ## ANOVA and MLMs
 
@@ -373,7 +391,6 @@ mr.11 %>%
 -   The SD parameter describes how large the differences between the groups is expected. Could groups differ by a 20, 30? Normally we expressed that through a prior around the regression coefficient. Here it is through a SD parameter.
 
 -   The model is taking the potential that they differ and placing that into the model as uncertainty. We said these differences "could happen".
-
 
 ## Handling multiple DVs?
 
