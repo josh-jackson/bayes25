@@ -628,7 +628,6 @@ exp(-2.01)
 
 mu2_Intercept coefficient is -1.57. What does that mean?
 
-
 ```{r}
 1/exp(-1.57)
 ```
@@ -731,7 +730,6 @@ predictions(glm.6,by = "family_income") %>%
 avg_predictions(glm.6,type = "response")
 ```
 
-
 ------------------------------------------------------------------------
 
 ```{r}
@@ -743,11 +741,13 @@ glm6_pred
 
 Often the DGP of our data are complex in that there could be multiple reasons someone responds the way they do. Mixture models allows us to fit more than one DGP at a time.
 
-## Negative binomial or the "Gamma Poisson"
+## Negative binomial / Gamma Poisson
 
--   Used for modeling count data where the variance exceeds the mean, known as overdispersion. Often for the number of failures before a specified number of successes in Bernoulli trials
+-   Used for count data where the variance exceeds the mean, known as overdispersion. Often for the number of failures before a specified number of successes in Bernoulli trials
 
 $$Y \sim \textrm{NB}(\mu,\phi)$$
+
+--------
 
 -   The Poisson distribution has just one parameter and presumes the mean/rate is associated with the spread. The negative binomial distribution relaxes this assumption and estimates the shape ($\phi$) of a gamma distribution (also an exponential family distribution) to describe the Poisson rates across cases.
 
@@ -776,7 +776,7 @@ ggplot(data = tibble(x = seq(from = 0, to = 60, by = .1)),
   coord_cartesian(xlim = c(0, 30)) 
 ```
 
-----------------------
+------------------------------------------------------------------------
 
 ```{r}
 #| code-fold: true
@@ -788,11 +788,312 @@ ggplot(data = tibble(x = seq(from = 0, to = 60, by = .1)),
   coord_cartesian(xlim = c(0, 30)) 
 ```
 
+
+## roach example
+
+y – number of roaches caught.
+roach1 – pretreatment number of roaches.
+treatment – dummy for treatment
+senior – dummy for elderly residents
+exposure2 – number of days 
+
+```{r}
+#| code-fold: true
+roach <- read_csv("https://github.com/TuringLang/TuringGLM.jl/raw/main/data/roaches.csv")
+roach
+```
+
+
+## Poisson 
+
+$$y_i  \sim \operatorname{Poisson} (\lambda_i)$$  
+$$\log (\lambda_i)  = \beta_0 + \beta_1*X_i $$
+
+```{r}
+
+glm.7 <-
+  brm(family = poisson,
+      y ~ 0 + Intercept + roach1 + treatment,
+      prior = c(prior(normal(2, 3), class = b, coef = "Intercept"),
+                prior(normal(0, 1), class = b)),
+      iter = 2000, warmup = 1000, cores = 4, chains = 4,
+      sample_prior = T,
+      data = roach, 
+      backend = "cmdstanr",
+      file = "glm.7")
+
+
+```
+
+
+## Why 0 + Intercept? 
+
+- The default (1 + ...) assumes centered predictors to estimate the standard intercept
+
+- 0 + Intercept prevents automatic centering, allowing the intercept to represent the expectation when all predictors are at their original (non-centered) values
+
+- For most situations, this doesn't matter, but when we get into more complex models (hello GLM, we should use this!)
+
+------
+
+```{r}
+summary(glm.7)
+```
+
+--------
+
+```{r}
+predictions(glm.7,by = "treatment")
+```
+
+-------
+
+These predictions are on the original scale
+
+```{r}
+predictions(glm.7)
+```
+
+-----
+
+These predictions are on the log link scale. 
+
+```{r}
+predictions(glm.7, type = "link")
+```
+
+-------
+
+```{r}
+predictions(glm.7, newdata = datagrid(roach1 = 10, treatment = unique))
+```
+
+```{r}
+3.04 + .01*10 + -0.54*1
+```
+
+```{r}
+exp(3.14)
+```
+
+```{r}
+predictions(glm.7, newdata = datagrid(roach1 = 10, treatment = unique), type = "link")
+```
+
+-------
+
+```{r}
+pp_check(glm.7)
+```
+
+
+-----
+
+```{r}
+#| code-fold: true
+predictions(glm.7,by = c("roach1", "treatment")) %>% 
+  posterior_draws() %>%
+  mutate(treatment = as.factor(treatment)) %>% 
+  ggplot(aes(x = roach1, y = draw, color = treatment)) +
+  stat_lineribbon(.width = .95, alpha = .4) + ylab("roaches")
+```
+
+------
+
+
+```{r}
+slopes(glm.7, variables = "treatment", newdata = "mean")
+```
+
+
+-------
+
+Negative binomial (Gamma Poisson) model
+
+```{r}
+#| code-fold: true
+
+# working with small estimates are no fun. 
+roach$roach100 <- roach$roach1 / 100
+
+glm.8 <-
+  brm(family = negbinomial,
+      y ~ 0 + Intercept + roach1 + treatment,
+      prior = c(prior(normal(2, 3), class = b, coef = "Intercept"),
+                prior(normal(0, 1), class = b)),
+      iter = 2000, warmup = 1000, cores = 4, chains = 4,
+      sample_prior = T,
+      data = roach, 
+      backend = "cmdstanr",
+      file = "glm.8")
+
+
+
+```
+
+
+--------
+
+```{r}
+summary(glm.8)
+```
+
+--------
+
+```{r}
+predictions(glm.8,
+            type = "prediction")  %>% 
+  posterior_draws() %>% 
+    sample_draws(50, draw = "drawid") %>% 
+    ggplot(aes(draw, group = drawid)) +
+   geom_line(stat = "density", alpha = .1) +
+  geom_density(aes(y))+
+  theme_classic()
+```
+
+
+-------------
+
+
+```{r}
+#| code-fold: true
+
+
+glm.8b <-
+  brm(family = negbinomial,
+      y ~ 0 + Intercept + roach100 + treatment,
+      prior = c(prior(normal(2, 1), class = b, coef = "Intercept"),
+                prior(normal(0, .5), class = b),
+                prior(exponential(1), class = shape)),
+      iter = 2000, warmup = 1000, cores = 4, chains = 4,
+      sample_prior = T,
+      data = roach, 
+      file = "glm.8b",
+      backend = "cmdstanr")
+
+
+
+```
+
+
+------------
+
+```{r}
+predictions(glm.8b,
+            type = "prediction")  %>% 
+  posterior_draws() %>% 
+    sample_draws(50, draw = "drawid") %>% 
+    ggplot(aes(draw, group = drawid)) +
+   geom_line(stat = "density", alpha = .1) +
+  geom_density(aes(y))+ xlim(0,100)
+  theme_classic()
+```
+
+--------
+
+```{r}
+summary(glm.8b)
+```
+
+---------
+
+
+```{r}
+predictions(glm.8b,by = "treatment")
+```
+
+
+```{r}
+predictions(glm.7,by = "treatment")
+```
+
+
+-------
+
+Findings across marginal are slightly different.
+
+```{r}
+slopes(glm.8b, variables = "treatment", newdata = "mean")
+```
+
+```{r}
+slopes(glm.7, variables = "treatment", newdata = "mean")
+```
+
+
+------------
+
+```{r}
+predictions(glm.8b)
+```
+
+```{r}
+predictions(glm.7)
+```
+
+--------
+
+```{r}
+predictions(glm.8b, newdata = datagrid(roach100 = c(0,.1,1,5), treatment = unique))
+```
+
+
+```{r}
+predictions(glm.7, newdata = datagrid(roach1 = c(0,10,100,500), treatment = unique))
+```
+
+
+--------
+
+```{r}
+#| code-fold: true
+predictions(glm.8b,by = c("roach100", "treatment")) %>% 
+  posterior_draws() %>%
+  mutate(treatment = as.factor(treatment)) %>% 
+  ggplot(aes(x = roach100, y = draw, color = treatment)) +
+  stat_lineribbon(.width = .95, alpha = .4) + ylab("roaches")
+```
+
+
+-----------
+
+
+```{r}
+#| code-fold: true
+predictions(glm.7,by = c("roach1", "treatment")) %>% 
+  posterior_draws() %>%
+  mutate(treatment = as.factor(treatment)) %>% 
+  ggplot(aes(x = roach1, y = draw, color = treatment)) +
+  stat_lineribbon(.width = .95, alpha = .4) + ylab("roaches")
+```
+
+---------
+
+```{r}
+#| code-fold: true
+predictions(glm.8b,by = c("roach100", "treatment")) %>% 
+  posterior_draws() %>%
+  mutate(treatment = as.factor(treatment)) %>% 
+  ggplot(aes(x = roach100, y = draw, color = treatment)) +
+  stat_lineribbon(.width = .95, alpha = .4) + ylab("roaches") +ylim(0,400)
+```
+
+
+
+
+------------
+
+```{r}
+#| code-fold: true
+predictions(glm.8b,by = c("roach1", "treatment")) %>% 
+  posterior_draws() %>%
+  mutate(treatment = as.factor(treatment)) %>% 
+  ggplot(aes(x = roach1, y = draw, color = treatment)) +
+  stat_lineribbon(.width = .95, alpha = .4) + ylab("roaches")
+```
+
+
 ------------------------------------------------------------------------
-
-
-
-
 
 ## Zero-inflated models
 
@@ -858,7 +1159,7 @@ glm.9 <-
       iter = 2000, warmup = 1000, chains = 4, cores = 4,
       data = zips,
       backend = "cmdstanr",
-      file = "glm.9")
+      file = "glm.7")
 ```
 
 ------------------------------------------------------------------------

@@ -2315,5 +2315,33 @@
     "title": "mlm",
     "section": "Multivariate distributions",
     "text": "Multivariate distributions\nr = 0. Knowing about 1 parameter doesn’t tell you anything about the other."
+  },
+  {
+    "objectID": "glm-7.html#negative-binomial-gamma-poisson",
+    "href": "glm-7.html#negative-binomial-gamma-poisson",
+    "title": "glm",
+    "section": "Negative binomial / Gamma Poisson",
+    "text": "Negative binomial / Gamma Poisson\n\nUsed for count data where the variance exceeds the mean, known as overdispersion. Often for the number of failures before a specified number of successes in Bernoulli trials\n\n\\[Y \\sim \\textrm{NB}(\\mu,\\phi)\\]"
+  },
+  {
+    "objectID": "glm-7.html#roach-example",
+    "href": "glm-7.html#roach-example",
+    "title": "glm",
+    "section": "roach example",
+    "text": "roach example\ny – number of roaches caught. roach1 – pretreatment number of roaches. treatment – dummy for treatment senior – dummy for elderly residents exposure2 – number of days\n\n\nCode\nroach &lt;- read_csv(\"https://github.com/TuringLang/TuringGLM.jl/raw/main/data/roaches.csv\")\nroach\n\n\n# A tibble: 262 × 5\n       y roach1 treatment senior exposure2\n   &lt;dbl&gt;  &lt;dbl&gt;     &lt;dbl&gt;  &lt;dbl&gt;     &lt;dbl&gt;\n 1   153 308            1      0      0.8 \n 2   127 331.           1      0      0.6 \n 3     7   1.67         1      0      1   \n 4     7   3            1      0      1   \n 5     0   2            1      0      1.14\n 6     0   0            1      0      1   \n 7    73  70            1      0      0.8 \n 8    24  64.6          1      0      1.14\n 9     2   1            0      0      1   \n10     2  14            0      0      1.14\n# ℹ 252 more rows"
+  },
+  {
+    "objectID": "glm-7.html#poisson",
+    "href": "glm-7.html#poisson",
+    "title": "glm",
+    "section": "Poisson",
+    "text": "Poisson\n\\[y_i  \\sim \\operatorname{Poisson} (\\lambda_i)\\]\n\\[\\log (\\lambda_i)  = \\beta_0 + \\beta_1*X_i \\]\n\nglm.7 &lt;-\n  brm(family = poisson,\n      y ~ 0 + Intercept + roach1 + treatment,\n      prior = c(prior(normal(2, 3), class = b, coef = \"Intercept\"),\n                prior(normal(0, 1), class = b)),\n      iter = 2000, warmup = 1000, cores = 4, chains = 4,\n      sample_prior = T,\n      data = roach, \n      backend = \"cmdstanr\",\n      file = \"glm.7\")"
+  },
+  {
+    "objectID": "glm-7.html#why-0-intercept",
+    "href": "glm-7.html#why-0-intercept",
+    "title": "glm",
+    "section": "Why 0 + Intercept?",
+    "text": "Why 0 + Intercept?\n\nThe default (1 + …) assumes centered predictors to estimate the standard intercept\n0 + Intercept prevents automatic centering, allowing the intercept to represent the expectation when all predictors are at their original (non-centered) values\nFor most situations, this doesn’t matter, but when we get into more complex models (hello GLM, we should use this!)"
   }
 ]
