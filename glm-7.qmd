@@ -913,9 +913,6 @@ Negative binomial (Gamma Poisson) model
 ```{r}
 #| code-fold: true
 
-# working with small estimates are no fun. 
-roach$roach100 <- roach$roach1 / 100
-
 glm.8 <-
   brm(family = negbinomial,
       y ~ 0 + Intercept + roach1 + treatment,
@@ -961,7 +958,7 @@ predictions(glm.8,
 
 glm.8b <-
   brm(family = negbinomial,
-      y ~ 0 + Intercept + roach100 + treatment,
+      y ~ 0 + Intercept + roach1 + treatment,
       prior = c(prior(normal(2, 1), class = b, coef = "Intercept"),
                 prior(normal(0, .5), class = b),
                 prior(exponential(1), class = shape)),
@@ -1010,7 +1007,7 @@ predictions(glm.7,by = "treatment")
 
 -------
 
-Findings across marginal are slightly different.
+Findings across marginal are less  different. Why? 
 
 ```{r}
 slopes(glm.8b, variables = "treatment", newdata = "mean")
@@ -1019,6 +1016,17 @@ slopes(glm.8b, variables = "treatment", newdata = "mean")
 ```{r}
 slopes(glm.7, variables = "treatment", newdata = "mean")
 ```
+
+
+----------
+
+*predictions(glm.8b,by = "treatment")* generates predictions by feeding the model with the original data, then collapse to averages. This is called the Average marginal effects (AME)
+
+*slopes(glm.7, variables = "treatment", newdata = "mean")* collapses data to averages, then generate predictions by feeding the model those averages. This is called Marginal effects at the mean (MEM). 
+
+Both are okay, in economics/poli sci/epi they tend to use AME whereas in psych and datascience most use MEM (this is what tidymodels and what emmeans use)
+
+
 
 
 ------------
@@ -1034,12 +1042,20 @@ predictions(glm.7)
 --------
 
 ```{r}
-predictions(glm.8b, newdata = datagrid(roach100 = c(0,.1,1,5), treatment = unique))
+describe(roach)
+```
+
+
+
+------
+
+```{r}
+predictions(glm.8b, newdata = datagrid(roach1 = c(0,10,100,450), treatment = unique))
 ```
 
 
 ```{r}
-predictions(glm.7, newdata = datagrid(roach1 = c(0,10,100,500), treatment = unique))
+predictions(glm.7, newdata = datagrid(roach1 = c(0,10,100,450), treatment = unique))
 ```
 
 
@@ -1047,10 +1063,10 @@ predictions(glm.7, newdata = datagrid(roach1 = c(0,10,100,500), treatment = uniq
 
 ```{r}
 #| code-fold: true
-predictions(glm.8b,by = c("roach100", "treatment")) %>% 
+predictions(glm.8b,by = c("roach1", "treatment")) %>% 
   posterior_draws() %>%
   mutate(treatment = as.factor(treatment)) %>% 
-  ggplot(aes(x = roach100, y = draw, color = treatment)) +
+  ggplot(aes(x = roach1, y = draw, color = treatment)) +
   stat_lineribbon(.width = .95, alpha = .4) + ylab("roaches")
 ```
 
@@ -1071,26 +1087,14 @@ predictions(glm.7,by = c("roach1", "treatment")) %>%
 
 ```{r}
 #| code-fold: true
-predictions(glm.8b,by = c("roach100", "treatment")) %>% 
-  posterior_draws() %>%
-  mutate(treatment = as.factor(treatment)) %>% 
-  ggplot(aes(x = roach100, y = draw, color = treatment)) +
-  stat_lineribbon(.width = .95, alpha = .4) + ylab("roaches") +ylim(0,400)
-```
-
-
-
-
-------------
-
-```{r}
-#| code-fold: true
 predictions(glm.8b,by = c("roach1", "treatment")) %>% 
   posterior_draws() %>%
   mutate(treatment = as.factor(treatment)) %>% 
   ggplot(aes(x = roach1, y = draw, color = treatment)) +
-  stat_lineribbon(.width = .95, alpha = .4) + ylab("roaches")
+  stat_lineribbon(.width = .95, alpha = .4) + ylab("roaches") +ylim(0,400)
 ```
+
+
 
 
 ------------------------------------------------------------------------

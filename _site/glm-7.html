@@ -59662,19 +59662,16 @@ Columns: rowid, term, contrast, estimate, conf.low, conf.high, predicted_lo, pre
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb94"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb94-1"><a href="#cb94-1"></a><span class="co"># working with small estimates are no fun. </span></span>
-<span id="cb94-2"><a href="#cb94-2"></a>roach<span class="sc">$</span>roach100 <span class="ot">&lt;-</span> roach<span class="sc">$</span>roach1 <span class="sc">/</span> <span class="dv">100</span></span>
-<span id="cb94-3"><a href="#cb94-3"></a></span>
-<span id="cb94-4"><a href="#cb94-4"></a>glm<span class="fl">.8</span> <span class="ot">&lt;-</span></span>
-<span id="cb94-5"><a href="#cb94-5"></a>  <span class="fu">brm</span>(<span class="at">family =</span> negbinomial,</span>
-<span id="cb94-6"><a href="#cb94-6"></a>      y <span class="sc">~</span> <span class="dv">0</span> <span class="sc">+</span> Intercept <span class="sc">+</span> roach1 <span class="sc">+</span> treatment,</span>
-<span id="cb94-7"><a href="#cb94-7"></a>      <span class="at">prior =</span> <span class="fu">c</span>(<span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">2</span>, <span class="dv">3</span>), <span class="at">class =</span> b, <span class="at">coef =</span> <span class="st">"Intercept"</span>),</span>
-<span id="cb94-8"><a href="#cb94-8"></a>                <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">class =</span> b)),</span>
-<span id="cb94-9"><a href="#cb94-9"></a>      <span class="at">iter =</span> <span class="dv">2000</span>, <span class="at">warmup =</span> <span class="dv">1000</span>, <span class="at">cores =</span> <span class="dv">4</span>, <span class="at">chains =</span> <span class="dv">4</span>,</span>
-<span id="cb94-10"><a href="#cb94-10"></a>      <span class="at">sample_prior =</span> T,</span>
-<span id="cb94-11"><a href="#cb94-11"></a>      <span class="at">data =</span> roach, </span>
-<span id="cb94-12"><a href="#cb94-12"></a>      <span class="at">backend =</span> <span class="st">"cmdstanr"</span>,</span>
-<span id="cb94-13"><a href="#cb94-13"></a>      <span class="at">file =</span> <span class="st">"glm.8"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb94"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb94-1"><a href="#cb94-1"></a>glm<span class="fl">.8</span> <span class="ot">&lt;-</span></span>
+<span id="cb94-2"><a href="#cb94-2"></a>  <span class="fu">brm</span>(<span class="at">family =</span> negbinomial,</span>
+<span id="cb94-3"><a href="#cb94-3"></a>      y <span class="sc">~</span> <span class="dv">0</span> <span class="sc">+</span> Intercept <span class="sc">+</span> roach1 <span class="sc">+</span> treatment,</span>
+<span id="cb94-4"><a href="#cb94-4"></a>      <span class="at">prior =</span> <span class="fu">c</span>(<span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">2</span>, <span class="dv">3</span>), <span class="at">class =</span> b, <span class="at">coef =</span> <span class="st">"Intercept"</span>),</span>
+<span id="cb94-5"><a href="#cb94-5"></a>                <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">class =</span> b)),</span>
+<span id="cb94-6"><a href="#cb94-6"></a>      <span class="at">iter =</span> <span class="dv">2000</span>, <span class="at">warmup =</span> <span class="dv">1000</span>, <span class="at">cores =</span> <span class="dv">4</span>, <span class="at">chains =</span> <span class="dv">4</span>,</span>
+<span id="cb94-7"><a href="#cb94-7"></a>      <span class="at">sample_prior =</span> T,</span>
+<span id="cb94-8"><a href="#cb94-8"></a>      <span class="at">data =</span> roach, </span>
+<span id="cb94-9"><a href="#cb94-9"></a>      <span class="at">backend =</span> <span class="st">"cmdstanr"</span>,</span>
+<span id="cb94-10"><a href="#cb94-10"></a>      <span class="at">file =</span> <span class="st">"glm.8"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
@@ -59727,7 +59724,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb98"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb98-1"><a href="#cb98-1"></a>glm<span class="fl">.8</span>b <span class="ot">&lt;-</span></span>
 <span id="cb98-2"><a href="#cb98-2"></a>  <span class="fu">brm</span>(<span class="at">family =</span> negbinomial,</span>
-<span id="cb98-3"><a href="#cb98-3"></a>      y <span class="sc">~</span> <span class="dv">0</span> <span class="sc">+</span> Intercept <span class="sc">+</span> roach100 <span class="sc">+</span> treatment,</span>
+<span id="cb98-3"><a href="#cb98-3"></a>      y <span class="sc">~</span> <span class="dv">0</span> <span class="sc">+</span> Intercept <span class="sc">+</span> roach1 <span class="sc">+</span> treatment,</span>
 <span id="cb98-4"><a href="#cb98-4"></a>      <span class="at">prior =</span> <span class="fu">c</span>(<span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">2</span>, <span class="dv">1</span>), <span class="at">class =</span> b, <span class="at">coef =</span> <span class="st">"Intercept"</span>),</span>
 <span id="cb98-5"><a href="#cb98-5"></a>                <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, .<span class="dv">5</span>), <span class="at">class =</span> b),</span>
 <span id="cb98-6"><a href="#cb98-6"></a>                <span class="fu">prior</span>(<span class="fu">exponential</span>(<span class="dv">1</span>), <span class="at">class =</span> shape)),</span>
@@ -60073,20 +60070,20 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code> Family: negbinomial 
   Links: mu = log; shape = identity 
-Formula: y ~ 0 + Intercept + roach100 + treatment 
+Formula: y ~ 0 + Intercept + roach1 + treatment 
    Data: roach (Number of observations: 262) 
   Draws: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
          total post-warmup draws = 4000
 
 Regression Coefficients:
           Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-Intercept     2.71      0.18     2.37     3.09 1.00     2458     2877
-roach100      1.10      0.20     0.72     1.48 1.00     2800     2583
-treatment    -0.55      0.21    -0.96    -0.13 1.00     2851     2841
+Intercept     2.62      0.19     2.26     3.00 1.00     2257     2405
+roach1        0.01      0.00     0.01     0.02 1.00     3829     2899
+treatment    -0.58      0.21    -1.00    -0.16 1.00     2618     2648
 
 Further Distributional Parameters:
       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-shape     0.27      0.03     0.22     0.32 1.00     3290     2899
+shape     0.27      0.03     0.22     0.32 1.00     2760     2198
 
 Draws were sampled using sample(hmc). For each parameter, Bulk_ESS
 and Tail_ESS are effective sample size measures, and Rhat is the potential
@@ -60101,8 +60098,8 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>
  treatment Estimate 2.5 % 97.5 %
-         0     55.6  28.2  167.1
-         1     26.5  16.3   57.2
+         0    101.5  36.3    646
+         1     39.1  18.8    141
 
 Type:  response 
 Columns: treatment, estimate, conf.low, conf.high </code></pre>
@@ -60123,18 +60120,18 @@ Columns: treatment, estimate, conf.low, conf.high </code></pre>
 </section>
 <section class="slide level2">
 
-<p>Findings across marginal are slightly different.</p>
+<p>Findings across marginal are less different. Why?</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb108"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb108-1"><a href="#cb108-1"></a><span class="fu">slopes</span>(glm<span class="fl">.8</span>b, <span class="at">variables =</span> <span class="st">"treatment"</span>, <span class="at">newdata =</span> <span class="st">"mean"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
  Estimate 2.5 % 97.5 %
-     -9.9 -19.9  -2.27
+    -10.7 -20.6  -2.86
 
 Term: treatment
 Type:  response 
 Comparison: 1 - 0
-Columns: rowid, term, contrast, estimate, conf.low, conf.high, predicted_lo, predicted_hi, predicted, tmp_idx, roach100, treatment, y </code></pre>
+Columns: rowid, term, contrast, estimate, conf.low, conf.high, predicted_lo, predicted_hi, predicted, tmp_idx, roach1, treatment, y </code></pre>
 </div>
 </div>
 <div class="cell">
@@ -60153,24 +60150,30 @@ Columns: rowid, term, contrast, estimate, conf.low, conf.high, predicted_lo, pre
 </section>
 <section class="slide level2">
 
+<p><em>predictions(glm.8b,by = “treatment”)</em> generates predictions by feeding the model with the original data, then collapse to averages. This is called the Average marginal effects (AME)</p>
+<p><em>slopes(glm.7, variables = “treatment”, newdata = “mean”)</em> collapses data to averages, then generate predictions by feeding the model those averages. This is called Marginal effects at the mean (MEM).</p>
+<p>Both are okay, in economics/poli sci/epi they tend to use AME whereas in psych and datascience most use MEM (this is what tidymodels and what emmeans use)</p>
+</section>
+<section class="slide level2">
+
 <div class="cell">
 <div class="sourceCode cell-code" id="cb112"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb112-1"><a href="#cb112-1"></a><span class="fu">predictions</span>(glm<span class="fl">.8</span>b)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
  Estimate  2.5 % 97.5 %
-   251.67  93.90  741.2
-   325.42 111.88 1052.8
-     8.84   6.33   13.0
-     8.96   6.45   13.1
-     8.87   6.36   13.0
+   461.96 139.73 2008.7
+   628.31 173.09 3079.5
+     7.86   5.54   11.5
+     8.00   5.66   11.7
+     7.89   5.57   11.6
 --- 252 rows omitted. See ?avg_predictions and ?print.marginaleffects --- 
-    14.98  10.67   21.9
-    14.98  10.67   21.9
-    14.98  10.67   21.9
-    14.98  10.67   21.9
-    14.98  10.67   21.9
+    13.75   9.57   20.1
+    13.75   9.57   20.1
+    13.75   9.57   20.1
+    13.75   9.57   20.1
+    13.75   9.57   20.1
 Type:  response 
-Columns: rowid, estimate, conf.low, conf.high, y, roach100, treatment </code></pre>
+Columns: rowid, estimate, conf.low, conf.high, y, roach1, treatment </code></pre>
 </div>
 </div>
 <div class="cell">
@@ -60197,25 +60200,45 @@ Columns: rowid, estimate, conf.low, conf.high, y, roach1, treatment </code></pre
 <section class="slide level2">
 
 <div class="cell">
-<div class="sourceCode cell-code" id="cb116"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb116-1"><a href="#cb116-1"></a><span class="fu">predictions</span>(glm<span class="fl">.8</span>b, <span class="at">newdata =</span> <span class="fu">datagrid</span>(<span class="at">roach100 =</span> <span class="fu">c</span>(<span class="dv">0</span>,.<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">5</span>), <span class="at">treatment =</span> unique))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb116"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb116-1"><a href="#cb116-1"></a><span class="fu">describe</span>(roach)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>          vars   n  mean    sd median trimmed   mad min    max  range  skew
+y            1 262 25.65 50.85      3   12.61  4.45 0.0 357.00 357.00  3.09
+roach1       2 262 42.19 75.26      7   23.68 10.38 0.0 450.00 450.00  2.62
+treatment    3 262  0.60  0.49      1    0.63  0.00 0.0   1.00   1.00 -0.42
+senior       4 262  0.31  0.46      0    0.26  0.00 0.0   1.00   1.00  0.84
+exposure2    5 262  1.02  0.32      1    0.98  0.00 0.2   4.29   4.09  5.09
+          kurtosis   se
+y            11.49 3.14
+roach1        7.37 4.65
+treatment    -1.83 0.03
+senior       -1.30 0.03
+exposure2    43.04 0.02</code></pre>
+</div>
+</div>
+</section>
+<section class="slide level2">
+
+<div class="cell">
+<div class="sourceCode cell-code" id="cb118"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb118-1"><a href="#cb118-1"></a><span class="fu">predictions</span>(glm<span class="fl">.8</span>b, <span class="at">newdata =</span> <span class="fu">datagrid</span>(<span class="at">roach1 =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">10</span>,<span class="dv">100</span>,<span class="dv">450</span>), <span class="at">treatment =</span> unique))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
- roach100 treatment Estimate  2.5 %  97.5 %
-      0.0         1     8.67   6.19    12.8
-      0.0         0    14.98  10.67    21.9
-      0.1         1     9.69   7.07    13.9
-      0.1         0    16.75  12.09    24.1
-      1.0         1    25.79  18.58    37.8
-      1.0         0    44.79  30.92    68.0
-      5.0         1  2060.57 385.57 12694.1
-      5.0         0  3550.77 631.40 22844.6
+ roach1 treatment Estimate  2.5 %  97.5 %
+      0         1     7.68   5.40    11.3
+      0         0    13.75   9.57    20.1
+     10         1     8.79   6.36    12.7
+     10         0    15.73  11.14    22.7
+    100         1    29.27  20.09    45.1
+    100         0    52.49  34.41    85.2
+    450         1  3078.94 498.42 27512.3
+    450         0  5460.93 855.19 51646.8
 
 Type:  response 
-Columns: rowid, estimate, conf.low, conf.high, roach100, treatment, y </code></pre>
+Columns: rowid, estimate, conf.low, conf.high, roach1, treatment, y </code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb118"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb118-1"><a href="#cb118-1"></a><span class="fu">predictions</span>(glm<span class="fl">.7</span>, <span class="at">newdata =</span> <span class="fu">datagrid</span>(<span class="at">roach1 =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">10</span>,<span class="dv">100</span>,<span class="dv">500</span>), <span class="at">treatment =</span> unique))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb120"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb120-1"><a href="#cb120-1"></a><span class="fu">predictions</span>(glm<span class="fl">.7</span>, <span class="at">newdata =</span> <span class="fu">datagrid</span>(<span class="at">roach1 =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">10</span>,<span class="dv">100</span>,<span class="dv">450</span>), <span class="at">treatment =</span> unique))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
  roach1 treatment Estimate 2.5 % 97.5 %
@@ -60225,8 +60248,8 @@ Columns: rowid, estimate, conf.low, conf.high, roach100, treatment, y </code></p
      10         0     22.4  21.5   23.3
     100         1     23.8  23.0   24.7
     100         0     41.0  39.6   42.4
-    500         1    349.4 324.7  375.8
-    500         0    602.9 561.3  644.5
+    450         1    249.8 233.6  266.6
+    450         0    430.7 404.0  457.6
 
 Type:  response 
 Columns: rowid, estimate, conf.low, conf.high, roach1, treatment, y </code></pre>
@@ -60238,25 +60261,11 @@ Columns: rowid, estimate, conf.low, conf.high, roach1, treatment, y </code></pre
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb120"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb120-1"><a href="#cb120-1"></a><span class="fu">predictions</span>(glm<span class="fl">.8</span>b,<span class="at">by =</span> <span class="fu">c</span>(<span class="st">"roach100"</span>, <span class="st">"treatment"</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb120-2"><a href="#cb120-2"></a>  <span class="fu">posterior_draws</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb120-3"><a href="#cb120-3"></a>  <span class="fu">mutate</span>(<span class="at">treatment =</span> <span class="fu">as.factor</span>(treatment)) <span class="sc">%&gt;%</span> </span>
-<span id="cb120-4"><a href="#cb120-4"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> roach100, <span class="at">y =</span> draw, <span class="at">color =</span> treatment)) <span class="sc">+</span></span>
-<span id="cb120-5"><a href="#cb120-5"></a>  <span class="fu">stat_lineribbon</span>(<span class="at">.width =</span> .<span class="dv">95</span>, <span class="at">alpha =</span> .<span class="dv">4</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">"roaches"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-
-</div>
-<img data-src="glm-7_files/figure-revealjs/unnamed-chunk-77-1.png" width="960" class="r-stretch"></section>
-<section class="slide level2">
-
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb121"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb121-1"><a href="#cb121-1"></a><span class="fu">predictions</span>(glm<span class="fl">.7</span>,<span class="at">by =</span> <span class="fu">c</span>(<span class="st">"roach1"</span>, <span class="st">"treatment"</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb121-2"><a href="#cb121-2"></a>  <span class="fu">posterior_draws</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb121-3"><a href="#cb121-3"></a>  <span class="fu">mutate</span>(<span class="at">treatment =</span> <span class="fu">as.factor</span>(treatment)) <span class="sc">%&gt;%</span> </span>
-<span id="cb121-4"><a href="#cb121-4"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> roach1, <span class="at">y =</span> draw, <span class="at">color =</span> treatment)) <span class="sc">+</span></span>
-<span id="cb121-5"><a href="#cb121-5"></a>  <span class="fu">stat_lineribbon</span>(<span class="at">.width =</span> .<span class="dv">95</span>, <span class="at">alpha =</span> .<span class="dv">4</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">"roaches"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb122"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb122-1"><a href="#cb122-1"></a><span class="fu">predictions</span>(glm<span class="fl">.8</span>b,<span class="at">by =</span> <span class="fu">c</span>(<span class="st">"roach1"</span>, <span class="st">"treatment"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb122-2"><a href="#cb122-2"></a>  <span class="fu">posterior_draws</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb122-3"><a href="#cb122-3"></a>  <span class="fu">mutate</span>(<span class="at">treatment =</span> <span class="fu">as.factor</span>(treatment)) <span class="sc">%&gt;%</span> </span>
+<span id="cb122-4"><a href="#cb122-4"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> roach1, <span class="at">y =</span> draw, <span class="at">color =</span> treatment)) <span class="sc">+</span></span>
+<span id="cb122-5"><a href="#cb122-5"></a>  <span class="fu">stat_lineribbon</span>(<span class="at">.width =</span> .<span class="dv">95</span>, <span class="at">alpha =</span> .<span class="dv">4</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">"roaches"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 
 </div>
@@ -60266,11 +60275,11 @@ Columns: rowid, estimate, conf.low, conf.high, roach1, treatment, y </code></pre
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb122"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb122-1"><a href="#cb122-1"></a><span class="fu">predictions</span>(glm<span class="fl">.8</span>b,<span class="at">by =</span> <span class="fu">c</span>(<span class="st">"roach100"</span>, <span class="st">"treatment"</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb122-2"><a href="#cb122-2"></a>  <span class="fu">posterior_draws</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb122-3"><a href="#cb122-3"></a>  <span class="fu">mutate</span>(<span class="at">treatment =</span> <span class="fu">as.factor</span>(treatment)) <span class="sc">%&gt;%</span> </span>
-<span id="cb122-4"><a href="#cb122-4"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> roach100, <span class="at">y =</span> draw, <span class="at">color =</span> treatment)) <span class="sc">+</span></span>
-<span id="cb122-5"><a href="#cb122-5"></a>  <span class="fu">stat_lineribbon</span>(<span class="at">.width =</span> .<span class="dv">95</span>, <span class="at">alpha =</span> .<span class="dv">4</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">"roaches"</span>) <span class="sc">+</span><span class="fu">ylim</span>(<span class="dv">0</span>,<span class="dv">400</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb123"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb123-1"><a href="#cb123-1"></a><span class="fu">predictions</span>(glm<span class="fl">.7</span>,<span class="at">by =</span> <span class="fu">c</span>(<span class="st">"roach1"</span>, <span class="st">"treatment"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb123-2"><a href="#cb123-2"></a>  <span class="fu">posterior_draws</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb123-3"><a href="#cb123-3"></a>  <span class="fu">mutate</span>(<span class="at">treatment =</span> <span class="fu">as.factor</span>(treatment)) <span class="sc">%&gt;%</span> </span>
+<span id="cb123-4"><a href="#cb123-4"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> roach1, <span class="at">y =</span> draw, <span class="at">color =</span> treatment)) <span class="sc">+</span></span>
+<span id="cb123-5"><a href="#cb123-5"></a>  <span class="fu">stat_lineribbon</span>(<span class="at">.width =</span> .<span class="dv">95</span>, <span class="at">alpha =</span> .<span class="dv">4</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">"roaches"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 
 </div>
@@ -60280,11 +60289,11 @@ Columns: rowid, estimate, conf.low, conf.high, roach1, treatment, y </code></pre
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb123"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb123-1"><a href="#cb123-1"></a><span class="fu">predictions</span>(glm<span class="fl">.8</span>b,<span class="at">by =</span> <span class="fu">c</span>(<span class="st">"roach1"</span>, <span class="st">"treatment"</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb123-2"><a href="#cb123-2"></a>  <span class="fu">posterior_draws</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb123-3"><a href="#cb123-3"></a>  <span class="fu">mutate</span>(<span class="at">treatment =</span> <span class="fu">as.factor</span>(treatment)) <span class="sc">%&gt;%</span> </span>
-<span id="cb123-4"><a href="#cb123-4"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> roach1, <span class="at">y =</span> draw, <span class="at">color =</span> treatment)) <span class="sc">+</span></span>
-<span id="cb123-5"><a href="#cb123-5"></a>  <span class="fu">stat_lineribbon</span>(<span class="at">.width =</span> .<span class="dv">95</span>, <span class="at">alpha =</span> .<span class="dv">4</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">"roaches"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb124"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb124-1"><a href="#cb124-1"></a><span class="fu">predictions</span>(glm<span class="fl">.8</span>b,<span class="at">by =</span> <span class="fu">c</span>(<span class="st">"roach1"</span>, <span class="st">"treatment"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb124-2"><a href="#cb124-2"></a>  <span class="fu">posterior_draws</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb124-3"><a href="#cb124-3"></a>  <span class="fu">mutate</span>(<span class="at">treatment =</span> <span class="fu">as.factor</span>(treatment)) <span class="sc">%&gt;%</span> </span>
+<span id="cb124-4"><a href="#cb124-4"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> roach1, <span class="at">y =</span> draw, <span class="at">color =</span> treatment)) <span class="sc">+</span></span>
+<span id="cb124-5"><a href="#cb124-5"></a>  <span class="fu">stat_lineribbon</span>(<span class="at">.width =</span> .<span class="dv">95</span>, <span class="at">alpha =</span> .<span class="dv">4</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">"roaches"</span>) <span class="sc">+</span><span class="fu">ylim</span>(<span class="dv">0</span>,<span class="dv">400</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 
 </div>
@@ -60296,32 +60305,32 @@ Columns: rowid, estimate, conf.low, conf.high, roach1, treatment, y </code></pre
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb124"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb124-1"><a href="#cb124-1"></a>prob_drink <span class="ot">&lt;-</span> <span class="fl">0.2</span>  <span class="co"># 20% of days</span></span>
-<span id="cb124-2"><a href="#cb124-2"></a>rate_work  <span class="ot">&lt;-</span> <span class="dv">1</span>    <span class="co"># average 1 manuscript per day</span></span>
-<span id="cb124-3"><a href="#cb124-3"></a><span class="co"># sample one year of production</span></span>
-<span id="cb124-4"><a href="#cb124-4"></a>n <span class="ot">&lt;-</span> <span class="dv">365</span></span>
-<span id="cb124-5"><a href="#cb124-5"></a><span class="co"># simulate days monks drink</span></span>
-<span id="cb124-6"><a href="#cb124-6"></a><span class="fu">set.seed</span>(<span class="dv">365</span>)</span>
-<span id="cb124-7"><a href="#cb124-7"></a>drink <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(n, <span class="dv">1</span>, prob_drink)</span>
-<span id="cb124-8"><a href="#cb124-8"></a><span class="co"># simulate manuscripts completed</span></span>
-<span id="cb124-9"><a href="#cb124-9"></a>y <span class="ot">&lt;-</span> (<span class="dv">1</span> <span class="sc">-</span> drink) <span class="sc">*</span> <span class="fu">rpois</span>(n, rate_work)</span>
-<span id="cb124-10"><a href="#cb124-10"></a></span>
-<span id="cb124-11"><a href="#cb124-11"></a>x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">365</span>, <span class="at">mean =</span> <span class="dv">3</span>, <span class="at">sd =</span> <span class="dv">1</span>)</span>
-<span id="cb124-12"><a href="#cb124-12"></a></span>
-<span id="cb124-13"><a href="#cb124-13"></a></span>
-<span id="cb124-14"><a href="#cb124-14"></a>zips <span class="ot">&lt;-</span><span class="fu">tibble</span>(<span class="at">drink =</span> <span class="fu">factor</span>(drink, <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">0</span>), <span class="at">y =</span> y, <span class="at">x =</span> x)</span>
-<span id="cb124-15"><a href="#cb124-15"></a></span>
-<span id="cb124-16"><a href="#cb124-16"></a>x2 <span class="ot">&lt;-</span> zips<span class="sc">$</span>y <span class="sc">+</span> zips<span class="sc">$</span>x</span>
-<span id="cb124-17"><a href="#cb124-17"></a></span>
-<span id="cb124-18"><a href="#cb124-18"></a>zips <span class="ot">&lt;-</span><span class="fu">tibble</span>(<span class="at">drink =</span> <span class="fu">factor</span>(drink, <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">0</span>), <span class="at">y =</span> y, <span class="at">x =</span> x2)</span>
-<span id="cb124-19"><a href="#cb124-19"></a></span>
-<span id="cb124-20"><a href="#cb124-20"></a></span>
-<span id="cb124-21"><a href="#cb124-21"></a><span class="fu">ggplot</span>(<span class="at">data =</span> zips, <span class="fu">aes</span>(<span class="at">x =</span> y)) <span class="sc">+</span></span>
-<span id="cb124-22"><a href="#cb124-22"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">fill =</span> drink),</span>
-<span id="cb124-23"><a href="#cb124-23"></a>                 <span class="at">binwidth =</span> <span class="dv">1</span>, <span class="at">size =</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">10</span>, <span class="at">color =</span> <span class="st">"grey92"</span>) <span class="sc">+</span></span>
-<span id="cb124-24"><a href="#cb124-24"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb124-25"><a href="#cb124-25"></a>  <span class="fu">xlab</span>(<span class="st">"Manuscripts completed"</span>) <span class="sc">+</span></span>
-<span id="cb124-26"><a href="#cb124-26"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb125"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb125-1"><a href="#cb125-1"></a>prob_drink <span class="ot">&lt;-</span> <span class="fl">0.2</span>  <span class="co"># 20% of days</span></span>
+<span id="cb125-2"><a href="#cb125-2"></a>rate_work  <span class="ot">&lt;-</span> <span class="dv">1</span>    <span class="co"># average 1 manuscript per day</span></span>
+<span id="cb125-3"><a href="#cb125-3"></a><span class="co"># sample one year of production</span></span>
+<span id="cb125-4"><a href="#cb125-4"></a>n <span class="ot">&lt;-</span> <span class="dv">365</span></span>
+<span id="cb125-5"><a href="#cb125-5"></a><span class="co"># simulate days monks drink</span></span>
+<span id="cb125-6"><a href="#cb125-6"></a><span class="fu">set.seed</span>(<span class="dv">365</span>)</span>
+<span id="cb125-7"><a href="#cb125-7"></a>drink <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(n, <span class="dv">1</span>, prob_drink)</span>
+<span id="cb125-8"><a href="#cb125-8"></a><span class="co"># simulate manuscripts completed</span></span>
+<span id="cb125-9"><a href="#cb125-9"></a>y <span class="ot">&lt;-</span> (<span class="dv">1</span> <span class="sc">-</span> drink) <span class="sc">*</span> <span class="fu">rpois</span>(n, rate_work)</span>
+<span id="cb125-10"><a href="#cb125-10"></a></span>
+<span id="cb125-11"><a href="#cb125-11"></a>x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">365</span>, <span class="at">mean =</span> <span class="dv">3</span>, <span class="at">sd =</span> <span class="dv">1</span>)</span>
+<span id="cb125-12"><a href="#cb125-12"></a></span>
+<span id="cb125-13"><a href="#cb125-13"></a></span>
+<span id="cb125-14"><a href="#cb125-14"></a>zips <span class="ot">&lt;-</span><span class="fu">tibble</span>(<span class="at">drink =</span> <span class="fu">factor</span>(drink, <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">0</span>), <span class="at">y =</span> y, <span class="at">x =</span> x)</span>
+<span id="cb125-15"><a href="#cb125-15"></a></span>
+<span id="cb125-16"><a href="#cb125-16"></a>x2 <span class="ot">&lt;-</span> zips<span class="sc">$</span>y <span class="sc">+</span> zips<span class="sc">$</span>x</span>
+<span id="cb125-17"><a href="#cb125-17"></a></span>
+<span id="cb125-18"><a href="#cb125-18"></a>zips <span class="ot">&lt;-</span><span class="fu">tibble</span>(<span class="at">drink =</span> <span class="fu">factor</span>(drink, <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">0</span>), <span class="at">y =</span> y, <span class="at">x =</span> x2)</span>
+<span id="cb125-19"><a href="#cb125-19"></a></span>
+<span id="cb125-20"><a href="#cb125-20"></a></span>
+<span id="cb125-21"><a href="#cb125-21"></a><span class="fu">ggplot</span>(<span class="at">data =</span> zips, <span class="fu">aes</span>(<span class="at">x =</span> y)) <span class="sc">+</span></span>
+<span id="cb125-22"><a href="#cb125-22"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">fill =</span> drink),</span>
+<span id="cb125-23"><a href="#cb125-23"></a>                 <span class="at">binwidth =</span> <span class="dv">1</span>, <span class="at">size =</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">10</span>, <span class="at">color =</span> <span class="st">"grey92"</span>) <span class="sc">+</span></span>
+<span id="cb125-24"><a href="#cb125-24"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb125-25"><a href="#cb125-25"></a>  <span class="fu">xlab</span>(<span class="st">"Manuscripts completed"</span>) <span class="sc">+</span></span>
+<span id="cb125-26"><a href="#cb125-26"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 
 </div>
@@ -60343,15 +60352,15 @@ Columns: rowid, estimate, conf.low, conf.high, roach1, treatment, y </code></pre
 <section class="slide level2">
 
 <div class="cell">
-<div class="sourceCode cell-code" id="cb125"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb125-1"><a href="#cb125-1"></a>glm<span class="fl">.9</span> <span class="ot">&lt;-</span> </span>
-<span id="cb125-2"><a href="#cb125-2"></a>  <span class="fu">brm</span>(<span class="at">family =</span> zero_inflated_poisson,</span>
-<span id="cb125-3"><a href="#cb125-3"></a>      y <span class="sc">~</span> <span class="dv">1</span>,</span>
-<span id="cb125-4"><a href="#cb125-4"></a>      <span class="at">prior =</span> <span class="fu">c</span>(<span class="fu">prior</span>(<span class="fu">normal</span>(<span class="sc">-</span><span class="fl">1.5</span>, <span class="dv">1</span>), <span class="at">class =</span> Intercept),</span>
-<span id="cb125-5"><a href="#cb125-5"></a>                <span class="fu">prior</span>(<span class="fu">beta</span>(<span class="dv">2</span>, <span class="dv">6</span>), <span class="at">class =</span> zi)), </span>
-<span id="cb125-6"><a href="#cb125-6"></a>      <span class="at">iter =</span> <span class="dv">2000</span>, <span class="at">warmup =</span> <span class="dv">1000</span>, <span class="at">chains =</span> <span class="dv">4</span>, <span class="at">cores =</span> <span class="dv">4</span>,</span>
-<span id="cb125-7"><a href="#cb125-7"></a>      <span class="at">data =</span> zips,</span>
-<span id="cb125-8"><a href="#cb125-8"></a>      <span class="at">backend =</span> <span class="st">"cmdstanr"</span>,</span>
-<span id="cb125-9"><a href="#cb125-9"></a>      <span class="at">file =</span> <span class="st">"glm.7"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb126"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb126-1"><a href="#cb126-1"></a>glm<span class="fl">.9</span> <span class="ot">&lt;-</span> </span>
+<span id="cb126-2"><a href="#cb126-2"></a>  <span class="fu">brm</span>(<span class="at">family =</span> zero_inflated_poisson,</span>
+<span id="cb126-3"><a href="#cb126-3"></a>      y <span class="sc">~</span> <span class="dv">1</span>,</span>
+<span id="cb126-4"><a href="#cb126-4"></a>      <span class="at">prior =</span> <span class="fu">c</span>(<span class="fu">prior</span>(<span class="fu">normal</span>(<span class="sc">-</span><span class="fl">1.5</span>, <span class="dv">1</span>), <span class="at">class =</span> Intercept),</span>
+<span id="cb126-5"><a href="#cb126-5"></a>                <span class="fu">prior</span>(<span class="fu">beta</span>(<span class="dv">2</span>, <span class="dv">6</span>), <span class="at">class =</span> zi)), </span>
+<span id="cb126-6"><a href="#cb126-6"></a>      <span class="at">iter =</span> <span class="dv">2000</span>, <span class="at">warmup =</span> <span class="dv">1000</span>, <span class="at">chains =</span> <span class="dv">4</span>, <span class="at">cores =</span> <span class="dv">4</span>,</span>
+<span id="cb126-7"><a href="#cb126-7"></a>      <span class="at">data =</span> zips,</span>
+<span id="cb126-8"><a href="#cb126-8"></a>      <span class="at">backend =</span> <span class="st">"cmdstanr"</span>,</span>
+<span id="cb126-9"><a href="#cb126-9"></a>      <span class="at">file =</span> <span class="st">"glm.7"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section class="slide level2">
@@ -60359,16 +60368,16 @@ Columns: rowid, estimate, conf.low, conf.high, roach1, treatment, y </code></pre
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb126"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb126-1"><a href="#cb126-1"></a>zip.priors <span class="ot">&lt;-</span></span>
-<span id="cb126-2"><a href="#cb126-2"></a>  <span class="fu">c</span>(<span class="fu">prior</span>(<span class="fu">beta</span>(<span class="dv">1</span>, <span class="dv">1</span>), <span class="at">class =</span> zi),</span>
-<span id="cb126-3"><a href="#cb126-3"></a>    <span class="fu">prior</span>(<span class="fu">beta</span>(<span class="dv">2</span>, <span class="dv">6</span>), <span class="at">class =</span> zi))</span>
-<span id="cb126-4"><a href="#cb126-4"></a>zip.priors <span class="sc">%&gt;%</span> </span>
-<span id="cb126-5"><a href="#cb126-5"></a>  <span class="fu">parse_dist</span>(prior) <span class="sc">%&gt;%</span></span>
-<span id="cb126-6"><a href="#cb126-6"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y =</span> prior, <span class="at">dist =</span> .dist, <span class="at">args =</span> .args, <span class="at">fill =</span> prior)) <span class="sc">+</span></span>
-<span id="cb126-7"><a href="#cb126-7"></a>  <span class="fu">stat_dist_halfeye</span>(<span class="at">.width =</span> .<span class="dv">95</span>) <span class="sc">+</span></span>
-<span id="cb126-8"><a href="#cb126-8"></a>  <span class="fu">scale_x_continuous</span>(<span class="st">"zi"</span>, <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, .<span class="dv">5</span>, <span class="dv">1</span>)) <span class="sc">+</span></span>
-<span id="cb126-9"><a href="#cb126-9"></a>  <span class="fu">ylab</span>(<span class="cn">NULL</span>) <span class="sc">+</span></span>
-<span id="cb126-10"><a href="#cb126-10"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb127"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb127-1"><a href="#cb127-1"></a>zip.priors <span class="ot">&lt;-</span></span>
+<span id="cb127-2"><a href="#cb127-2"></a>  <span class="fu">c</span>(<span class="fu">prior</span>(<span class="fu">beta</span>(<span class="dv">1</span>, <span class="dv">1</span>), <span class="at">class =</span> zi),</span>
+<span id="cb127-3"><a href="#cb127-3"></a>    <span class="fu">prior</span>(<span class="fu">beta</span>(<span class="dv">2</span>, <span class="dv">6</span>), <span class="at">class =</span> zi))</span>
+<span id="cb127-4"><a href="#cb127-4"></a>zip.priors <span class="sc">%&gt;%</span> </span>
+<span id="cb127-5"><a href="#cb127-5"></a>  <span class="fu">parse_dist</span>(prior) <span class="sc">%&gt;%</span></span>
+<span id="cb127-6"><a href="#cb127-6"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y =</span> prior, <span class="at">dist =</span> .dist, <span class="at">args =</span> .args, <span class="at">fill =</span> prior)) <span class="sc">+</span></span>
+<span id="cb127-7"><a href="#cb127-7"></a>  <span class="fu">stat_dist_halfeye</span>(<span class="at">.width =</span> .<span class="dv">95</span>) <span class="sc">+</span></span>
+<span id="cb127-8"><a href="#cb127-8"></a>  <span class="fu">scale_x_continuous</span>(<span class="st">"zi"</span>, <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, .<span class="dv">5</span>, <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb127-9"><a href="#cb127-9"></a>  <span class="fu">ylab</span>(<span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="cb127-10"><a href="#cb127-10"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 
 </div>
@@ -60377,7 +60386,7 @@ Columns: rowid, estimate, conf.low, conf.high, roach1, treatment, y </code></pre
 
 <p>Noe: When there are no predictors for zi, the brms default is to use the identity link. With predictors it will use logit, so you will have to use what you know about logits to correctly interpret. exp(-.2) = .82</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb127"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb127-1"><a href="#cb127-1"></a><span class="fu">summary</span>(glm<span class="fl">.9</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb128"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb128-1"><a href="#cb128-1"></a><span class="fu">summary</span>(glm<span class="fl">.9</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> Family: poisson 
   Links: mu = log 
@@ -60402,20 +60411,20 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 
 <p>Adding predictors. Do not necessarily need to have the same predictors for each process. One can predict the excess zeros, the other can predict the counts.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb129"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb129-1"><a href="#cb129-1"></a>glm<span class="fl">.10</span> <span class="ot">&lt;-</span> </span>
-<span id="cb129-2"><a href="#cb129-2"></a>  <span class="fu">brm</span>(<span class="fu">bf</span>(y <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> drink, </span>
-<span id="cb129-3"><a href="#cb129-3"></a>      zi <span class="sc">~</span> <span class="dv">1</span>),</span>
-<span id="cb129-4"><a href="#cb129-4"></a>      <span class="at">family =</span> zero_inflated_poisson,</span>
-<span id="cb129-5"><a href="#cb129-5"></a>      <span class="at">iter =</span> <span class="dv">2000</span>, <span class="at">warmup =</span> <span class="dv">1000</span>, <span class="at">chains =</span> <span class="dv">4</span>, <span class="at">cores =</span> <span class="dv">4</span>,</span>
-<span id="cb129-6"><a href="#cb129-6"></a>      <span class="at">data =</span> zips,</span>
-<span id="cb129-7"><a href="#cb129-7"></a>      <span class="at">backend =</span> <span class="st">"cmdstanr"</span>,</span>
-<span id="cb129-8"><a href="#cb129-8"></a>      <span class="at">file =</span> <span class="st">"glm.9x"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb130"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb130-1"><a href="#cb130-1"></a>glm<span class="fl">.10</span> <span class="ot">&lt;-</span> </span>
+<span id="cb130-2"><a href="#cb130-2"></a>  <span class="fu">brm</span>(<span class="fu">bf</span>(y <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> drink, </span>
+<span id="cb130-3"><a href="#cb130-3"></a>      zi <span class="sc">~</span> <span class="dv">1</span>),</span>
+<span id="cb130-4"><a href="#cb130-4"></a>      <span class="at">family =</span> zero_inflated_poisson,</span>
+<span id="cb130-5"><a href="#cb130-5"></a>      <span class="at">iter =</span> <span class="dv">2000</span>, <span class="at">warmup =</span> <span class="dv">1000</span>, <span class="at">chains =</span> <span class="dv">4</span>, <span class="at">cores =</span> <span class="dv">4</span>,</span>
+<span id="cb130-6"><a href="#cb130-6"></a>      <span class="at">data =</span> zips,</span>
+<span id="cb130-7"><a href="#cb130-7"></a>      <span class="at">backend =</span> <span class="st">"cmdstanr"</span>,</span>
+<span id="cb130-8"><a href="#cb130-8"></a>      <span class="at">file =</span> <span class="st">"glm.9x"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section class="slide level2">
 
 <div class="cell">
-<div class="sourceCode cell-code" id="cb130"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb130-1"><a href="#cb130-1"></a><span class="fu">summary</span>(glm<span class="fl">.10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb131"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb131-1"><a href="#cb131-1"></a><span class="fu">summary</span>(glm<span class="fl">.10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> Family: zero_inflated_poisson 
   Links: mu = log; zi = logit 
@@ -60441,27 +60450,27 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <section class="slide level2">
 
 <div class="cell">
-<div class="sourceCode cell-code" id="cb132"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb132-1"><a href="#cb132-1"></a><span class="fu">conditional_effects</span>(glm<span class="fl">.10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb133"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb133-1"><a href="#cb133-1"></a><span class="fu">conditional_effects</span>(glm<span class="fl">.10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
 <img data-src="glm-7_files/figure-revealjs/unnamed-chunk-87-1.png" width="960" class="r-stretch"></section>
 <section class="slide level2">
 
 <div class="cell">
-<div class="sourceCode cell-code" id="cb133"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb133-1"><a href="#cb133-1"></a>glm<span class="fl">.10</span>x <span class="ot">&lt;-</span> </span>
-<span id="cb133-2"><a href="#cb133-2"></a>  <span class="fu">brm</span>(<span class="fu">bf</span>(y <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> drink <span class="sc">+</span> x, </span>
-<span id="cb133-3"><a href="#cb133-3"></a>      zi <span class="sc">~</span> <span class="dv">1</span>),</span>
-<span id="cb133-4"><a href="#cb133-4"></a>      <span class="at">family =</span> zero_inflated_poisson,</span>
-<span id="cb133-5"><a href="#cb133-5"></a>      <span class="at">iter =</span> <span class="dv">2000</span>, <span class="at">warmup =</span> <span class="dv">1000</span>, <span class="at">chains =</span> <span class="dv">4</span>, <span class="at">cores =</span> <span class="dv">4</span>,</span>
-<span id="cb133-6"><a href="#cb133-6"></a>      <span class="at">data =</span> zips,</span>
-<span id="cb133-7"><a href="#cb133-7"></a>      <span class="at">backend =</span> <span class="st">"cmdstanr"</span>,</span>
-<span id="cb133-8"><a href="#cb133-8"></a>      <span class="at">file =</span> <span class="st">"glm.9x3"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb134"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb134-1"><a href="#cb134-1"></a>glm<span class="fl">.10</span>x <span class="ot">&lt;-</span> </span>
+<span id="cb134-2"><a href="#cb134-2"></a>  <span class="fu">brm</span>(<span class="fu">bf</span>(y <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> drink <span class="sc">+</span> x, </span>
+<span id="cb134-3"><a href="#cb134-3"></a>      zi <span class="sc">~</span> <span class="dv">1</span>),</span>
+<span id="cb134-4"><a href="#cb134-4"></a>      <span class="at">family =</span> zero_inflated_poisson,</span>
+<span id="cb134-5"><a href="#cb134-5"></a>      <span class="at">iter =</span> <span class="dv">2000</span>, <span class="at">warmup =</span> <span class="dv">1000</span>, <span class="at">chains =</span> <span class="dv">4</span>, <span class="at">cores =</span> <span class="dv">4</span>,</span>
+<span id="cb134-6"><a href="#cb134-6"></a>      <span class="at">data =</span> zips,</span>
+<span id="cb134-7"><a href="#cb134-7"></a>      <span class="at">backend =</span> <span class="st">"cmdstanr"</span>,</span>
+<span id="cb134-8"><a href="#cb134-8"></a>      <span class="at">file =</span> <span class="st">"glm.9x3"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section class="slide level2">
 
 <div class="cell">
-<div class="sourceCode cell-code" id="cb134"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb134-1"><a href="#cb134-1"></a><span class="fu">summary</span>(glm<span class="fl">.10</span>x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb135"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb135-1"><a href="#cb135-1"></a><span class="fu">summary</span>(glm<span class="fl">.10</span>x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> Family: zero_inflated_poisson 
   Links: mu = log; zi = logit 
@@ -60489,11 +60498,11 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb136"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb136-1"><a href="#cb136-1"></a>zips <span class="sc">%&gt;%</span> </span>
-<span id="cb136-2"><a href="#cb136-2"></a>  <span class="fu">data_grid</span>(<span class="at">x =</span> <span class="fu">seq_range</span>(x, <span class="at">n =</span> <span class="dv">30</span>), <span class="at">drink =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb136-3"><a href="#cb136-3"></a>  <span class="fu">add_epred_draws</span>(glm<span class="fl">.10</span>x) <span class="sc">%&gt;%</span> </span>
-<span id="cb136-4"><a href="#cb136-4"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> .epred, <span class="at">fill =</span> <span class="fu">factor</span>(drink))) <span class="sc">+</span></span>
-<span id="cb136-5"><a href="#cb136-5"></a>  <span class="fu">stat_lineribbon</span>(<span class="at">.width =</span> <span class="fl">0.95</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb137"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb137-1"><a href="#cb137-1"></a>zips <span class="sc">%&gt;%</span> </span>
+<span id="cb137-2"><a href="#cb137-2"></a>  <span class="fu">data_grid</span>(<span class="at">x =</span> <span class="fu">seq_range</span>(x, <span class="at">n =</span> <span class="dv">30</span>), <span class="at">drink =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb137-3"><a href="#cb137-3"></a>  <span class="fu">add_epred_draws</span>(glm<span class="fl">.10</span>x) <span class="sc">%&gt;%</span> </span>
+<span id="cb137-4"><a href="#cb137-4"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> .epred, <span class="at">fill =</span> <span class="fu">factor</span>(drink))) <span class="sc">+</span></span>
+<span id="cb137-5"><a href="#cb137-5"></a>  <span class="fu">stat_lineribbon</span>(<span class="at">.width =</span> <span class="fl">0.95</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 
 </div>
@@ -60501,7 +60510,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <section class="slide level2">
 
 <div class="cell">
-<div class="sourceCode cell-code" id="cb137"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb137-1"><a href="#cb137-1"></a><span class="fu">pp_check</span>(glm<span class="fl">.10</span>x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb138"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb138-1"><a href="#cb138-1"></a><span class="fu">pp_check</span>(glm<span class="fl">.10</span>x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
 <img data-src="glm-7_files/figure-revealjs/unnamed-chunk-91-1.png" width="960" class="r-stretch"></section>
@@ -60512,22 +60521,22 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <section class="slide level2">
 
 <div class="cell">
-<div class="sourceCode cell-code" id="cb138"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb138-1"><a href="#cb138-1"></a>glm<span class="fl">.11</span> <span class="ot">&lt;-</span> </span>
-<span id="cb138-2"><a href="#cb138-2"></a>  <span class="fu">brm</span>(<span class="at">family =</span> hurdle_poisson,</span>
-<span id="cb138-3"><a href="#cb138-3"></a>      y <span class="sc">~</span> <span class="dv">1</span>,</span>
-<span id="cb138-4"><a href="#cb138-4"></a>      hu <span class="sc">~</span> <span class="dv">1</span>,</span>
-<span id="cb138-5"><a href="#cb138-5"></a>      <span class="at">prior =</span> <span class="fu">c</span>(<span class="fu">prior</span>(<span class="fu">normal</span>(<span class="sc">-</span><span class="fl">1.5</span>, <span class="dv">1</span>), <span class="at">class =</span> Intercept),</span>
-<span id="cb138-6"><a href="#cb138-6"></a>               <span class="fu">prior</span>(<span class="fu">beta</span>(<span class="dv">1</span>, <span class="dv">1</span>), <span class="at">class =</span> hu)),  </span>
-<span id="cb138-7"><a href="#cb138-7"></a>      <span class="at">iter =</span> <span class="dv">2000</span>, <span class="at">warmup =</span> <span class="dv">1000</span>, <span class="at">chains =</span> <span class="dv">4</span>, <span class="at">cores =</span> <span class="dv">4</span>,</span>
-<span id="cb138-8"><a href="#cb138-8"></a>      <span class="at">data =</span> zips,</span>
-<span id="cb138-9"><a href="#cb138-9"></a>      <span class="at">backend =</span> <span class="st">"cmdstanr"</span>,</span>
-<span id="cb138-10"><a href="#cb138-10"></a>      <span class="at">file =</span> <span class="st">"glm.11"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb139"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb139-1"><a href="#cb139-1"></a>glm<span class="fl">.11</span> <span class="ot">&lt;-</span> </span>
+<span id="cb139-2"><a href="#cb139-2"></a>  <span class="fu">brm</span>(<span class="at">family =</span> hurdle_poisson,</span>
+<span id="cb139-3"><a href="#cb139-3"></a>      y <span class="sc">~</span> <span class="dv">1</span>,</span>
+<span id="cb139-4"><a href="#cb139-4"></a>      hu <span class="sc">~</span> <span class="dv">1</span>,</span>
+<span id="cb139-5"><a href="#cb139-5"></a>      <span class="at">prior =</span> <span class="fu">c</span>(<span class="fu">prior</span>(<span class="fu">normal</span>(<span class="sc">-</span><span class="fl">1.5</span>, <span class="dv">1</span>), <span class="at">class =</span> Intercept),</span>
+<span id="cb139-6"><a href="#cb139-6"></a>               <span class="fu">prior</span>(<span class="fu">beta</span>(<span class="dv">1</span>, <span class="dv">1</span>), <span class="at">class =</span> hu)),  </span>
+<span id="cb139-7"><a href="#cb139-7"></a>      <span class="at">iter =</span> <span class="dv">2000</span>, <span class="at">warmup =</span> <span class="dv">1000</span>, <span class="at">chains =</span> <span class="dv">4</span>, <span class="at">cores =</span> <span class="dv">4</span>,</span>
+<span id="cb139-8"><a href="#cb139-8"></a>      <span class="at">data =</span> zips,</span>
+<span id="cb139-9"><a href="#cb139-9"></a>      <span class="at">backend =</span> <span class="st">"cmdstanr"</span>,</span>
+<span id="cb139-10"><a href="#cb139-10"></a>      <span class="at">file =</span> <span class="st">"glm.11"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section class="slide level2">
 
 <div class="cell">
-<div class="sourceCode cell-code" id="cb139"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb139-1"><a href="#cb139-1"></a><span class="fu">summary</span>(glm<span class="fl">.11</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb140"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb140-1"><a href="#cb140-1"></a><span class="fu">summary</span>(glm<span class="fl">.11</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> Family: hurdle_poisson 
   Links: mu = log; hu = identity 
@@ -60554,23 +60563,23 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <section class="slide level2">
 
 <div class="cell">
-<div class="sourceCode cell-code" id="cb141"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb141-1"><a href="#cb141-1"></a>glm<span class="fl">.11</span>x <span class="ot">&lt;-</span> </span>
-<span id="cb141-2"><a href="#cb141-2"></a>  <span class="fu">brm</span>(<span class="at">family =</span> hurdle_poisson,</span>
-<span id="cb141-3"><a href="#cb141-3"></a>      y <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> drink <span class="sc">+</span> x,</span>
-<span id="cb141-4"><a href="#cb141-4"></a>      hu <span class="sc">~</span> <span class="dv">1</span> , </span>
-<span id="cb141-5"><a href="#cb141-5"></a>      <span class="at">prior =</span> <span class="fu">c</span>(<span class="fu">prior</span>(<span class="fu">normal</span>(<span class="sc">-</span><span class="fl">1.5</span>, <span class="dv">1</span>), <span class="at">class =</span> Intercept),</span>
-<span id="cb141-6"><a href="#cb141-6"></a>               <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="sc">-</span><span class="fl">1.5</span>, <span class="dv">3</span>), <span class="at">class =</span> b),</span>
-<span id="cb141-7"><a href="#cb141-7"></a>                <span class="fu">prior</span>(<span class="fu">beta</span>(<span class="dv">1</span>, <span class="dv">1</span>), <span class="at">class =</span> hu)),  </span>
-<span id="cb141-8"><a href="#cb141-8"></a>      <span class="at">iter =</span> <span class="dv">2000</span>, <span class="at">warmup =</span> <span class="dv">1000</span>, <span class="at">chains =</span> <span class="dv">4</span>, <span class="at">cores =</span> <span class="dv">4</span>,</span>
-<span id="cb141-9"><a href="#cb141-9"></a>      <span class="at">data =</span> zips,</span>
-<span id="cb141-10"><a href="#cb141-10"></a>      <span class="at">backend =</span> <span class="st">"cmdstanr"</span>,</span>
-<span id="cb141-11"><a href="#cb141-11"></a>      <span class="at">file =</span> <span class="st">"glm.11x2"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb142"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb142-1"><a href="#cb142-1"></a>glm<span class="fl">.11</span>x <span class="ot">&lt;-</span> </span>
+<span id="cb142-2"><a href="#cb142-2"></a>  <span class="fu">brm</span>(<span class="at">family =</span> hurdle_poisson,</span>
+<span id="cb142-3"><a href="#cb142-3"></a>      y <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> drink <span class="sc">+</span> x,</span>
+<span id="cb142-4"><a href="#cb142-4"></a>      hu <span class="sc">~</span> <span class="dv">1</span> , </span>
+<span id="cb142-5"><a href="#cb142-5"></a>      <span class="at">prior =</span> <span class="fu">c</span>(<span class="fu">prior</span>(<span class="fu">normal</span>(<span class="sc">-</span><span class="fl">1.5</span>, <span class="dv">1</span>), <span class="at">class =</span> Intercept),</span>
+<span id="cb142-6"><a href="#cb142-6"></a>               <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="sc">-</span><span class="fl">1.5</span>, <span class="dv">3</span>), <span class="at">class =</span> b),</span>
+<span id="cb142-7"><a href="#cb142-7"></a>                <span class="fu">prior</span>(<span class="fu">beta</span>(<span class="dv">1</span>, <span class="dv">1</span>), <span class="at">class =</span> hu)),  </span>
+<span id="cb142-8"><a href="#cb142-8"></a>      <span class="at">iter =</span> <span class="dv">2000</span>, <span class="at">warmup =</span> <span class="dv">1000</span>, <span class="at">chains =</span> <span class="dv">4</span>, <span class="at">cores =</span> <span class="dv">4</span>,</span>
+<span id="cb142-9"><a href="#cb142-9"></a>      <span class="at">data =</span> zips,</span>
+<span id="cb142-10"><a href="#cb142-10"></a>      <span class="at">backend =</span> <span class="st">"cmdstanr"</span>,</span>
+<span id="cb142-11"><a href="#cb142-11"></a>      <span class="at">file =</span> <span class="st">"glm.11x2"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section class="slide level2">
 
 <div class="cell">
-<div class="sourceCode cell-code" id="cb142"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb142-1"><a href="#cb142-1"></a><span class="fu">summary</span>(glm<span class="fl">.11</span>x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb143"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb143-1"><a href="#cb143-1"></a><span class="fu">summary</span>(glm<span class="fl">.11</span>x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> Family: hurdle_poisson 
   Links: mu = log; hu = identity 
@@ -60601,11 +60610,11 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb144"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb144-1"><a href="#cb144-1"></a>zips <span class="sc">%&gt;%</span> </span>
-<span id="cb144-2"><a href="#cb144-2"></a>  <span class="fu">data_grid</span>(<span class="at">x =</span> <span class="fu">seq_range</span>(x, <span class="at">n =</span> <span class="dv">30</span>), <span class="at">drink =</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb144-3"><a href="#cb144-3"></a>  <span class="fu">add_epred_draws</span>(glm<span class="fl">.11</span>x) <span class="sc">%&gt;%</span> </span>
-<span id="cb144-4"><a href="#cb144-4"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> .epred)) <span class="sc">+</span></span>
-<span id="cb144-5"><a href="#cb144-5"></a>  <span class="fu">stat_lineribbon</span>(<span class="at">.width =</span> <span class="fl">0.95</span>, <span class="at">alpha =</span> .<span class="dv">4</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb145"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb145-1"><a href="#cb145-1"></a>zips <span class="sc">%&gt;%</span> </span>
+<span id="cb145-2"><a href="#cb145-2"></a>  <span class="fu">data_grid</span>(<span class="at">x =</span> <span class="fu">seq_range</span>(x, <span class="at">n =</span> <span class="dv">30</span>), <span class="at">drink =</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb145-3"><a href="#cb145-3"></a>  <span class="fu">add_epred_draws</span>(glm<span class="fl">.11</span>x) <span class="sc">%&gt;%</span> </span>
+<span id="cb145-4"><a href="#cb145-4"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> .epred)) <span class="sc">+</span></span>
+<span id="cb145-5"><a href="#cb145-5"></a>  <span class="fu">stat_lineribbon</span>(<span class="at">.width =</span> <span class="fl">0.95</span>, <span class="at">alpha =</span> .<span class="dv">4</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 
 </div>
@@ -60616,15 +60625,15 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb145"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb145-1"><a href="#cb145-1"></a><span class="fu">plot_predictions</span>(</span>
-<span id="cb145-2"><a href="#cb145-2"></a>    glm<span class="fl">.11</span>x,</span>
-<span id="cb145-3"><a href="#cb145-3"></a>    <span class="at">condition =</span> <span class="st">"x"</span>) <span class="sc">+</span></span>
-<span id="cb145-4"><a href="#cb145-4"></a>    <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"mu"</span>) <span class="sc">+</span></span>
-<span id="cb145-5"><a href="#cb145-5"></a><span class="fu">plot_predictions</span>(</span>
-<span id="cb145-6"><a href="#cb145-6"></a>    glm<span class="fl">.11</span>x,</span>
-<span id="cb145-7"><a href="#cb145-7"></a>    <span class="at">dpar =</span> <span class="st">"hu"</span>,</span>
-<span id="cb145-8"><a href="#cb145-8"></a>    <span class="at">condition =</span> <span class="st">"x"</span>) <span class="sc">+</span></span>
-<span id="cb145-9"><a href="#cb145-9"></a>    <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"hu"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb146"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb146-1"><a href="#cb146-1"></a><span class="fu">plot_predictions</span>(</span>
+<span id="cb146-2"><a href="#cb146-2"></a>    glm<span class="fl">.11</span>x,</span>
+<span id="cb146-3"><a href="#cb146-3"></a>    <span class="at">condition =</span> <span class="st">"x"</span>) <span class="sc">+</span></span>
+<span id="cb146-4"><a href="#cb146-4"></a>    <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"mu"</span>) <span class="sc">+</span></span>
+<span id="cb146-5"><a href="#cb146-5"></a><span class="fu">plot_predictions</span>(</span>
+<span id="cb146-6"><a href="#cb146-6"></a>    glm<span class="fl">.11</span>x,</span>
+<span id="cb146-7"><a href="#cb146-7"></a>    <span class="at">dpar =</span> <span class="st">"hu"</span>,</span>
+<span id="cb146-8"><a href="#cb146-8"></a>    <span class="at">condition =</span> <span class="st">"x"</span>) <span class="sc">+</span></span>
+<span id="cb146-9"><a href="#cb146-9"></a>    <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"hu"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 
 </div>
@@ -60632,7 +60641,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <section class="slide level2">
 
 <div class="cell">
-<div class="sourceCode cell-code" id="cb146"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb146-1"><a href="#cb146-1"></a><span class="fu">pp_check</span>(glm<span class="fl">.11</span>x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb147"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb147-1"><a href="#cb147-1"></a><span class="fu">pp_check</span>(glm<span class="fl">.11</span>x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
 <img data-src="glm-7_files/figure-revealjs/unnamed-chunk-98-1.png" width="960" class="r-stretch"></section>
@@ -60647,14 +60656,14 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb147"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb147-1"><a href="#cb147-1"></a><span class="fu">library</span>(rethinking)</span>
-<span id="cb147-2"><a href="#cb147-2"></a><span class="fu">data</span>(Trolley)</span>
-<span id="cb147-3"><a href="#cb147-3"></a>trolley <span class="ot">&lt;-</span> Trolley</span>
-<span id="cb147-4"><a href="#cb147-4"></a>p2a <span class="ot">&lt;-</span></span>
-<span id="cb147-5"><a href="#cb147-5"></a>  trolley <span class="sc">%&gt;%</span></span>
-<span id="cb147-6"><a href="#cb147-6"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> response)) <span class="sc">+</span></span>
-<span id="cb147-7"><a href="#cb147-7"></a>  <span class="fu">geom_histogram</span>() </span>
-<span id="cb147-8"><a href="#cb147-8"></a>p2a</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb148"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb148-1"><a href="#cb148-1"></a><span class="fu">library</span>(rethinking)</span>
+<span id="cb148-2"><a href="#cb148-2"></a><span class="fu">data</span>(Trolley)</span>
+<span id="cb148-3"><a href="#cb148-3"></a>trolley <span class="ot">&lt;-</span> Trolley</span>
+<span id="cb148-4"><a href="#cb148-4"></a>p2a <span class="ot">&lt;-</span></span>
+<span id="cb148-5"><a href="#cb148-5"></a>  trolley <span class="sc">%&gt;%</span></span>
+<span id="cb148-6"><a href="#cb148-6"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> response)) <span class="sc">+</span></span>
+<span id="cb148-7"><a href="#cb148-7"></a>  <span class="fu">geom_histogram</span>() </span>
+<span id="cb148-8"><a href="#cb148-8"></a>p2a</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 
 </div>
@@ -60664,23 +60673,23 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb148"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb148-1"><a href="#cb148-1"></a>p2 <span class="ot">&lt;-</span></span>
-<span id="cb148-2"><a href="#cb148-2"></a>  trolley <span class="sc">%&gt;%</span></span>
-<span id="cb148-3"><a href="#cb148-3"></a>  <span class="fu">count</span>(response) <span class="sc">%&gt;%</span></span>
-<span id="cb148-4"><a href="#cb148-4"></a>  <span class="fu">mutate</span>(<span class="at">pr_k     =</span> n <span class="sc">/</span> <span class="fu">nrow</span>(trolley),</span>
-<span id="cb148-5"><a href="#cb148-5"></a>         <span class="at">cum_pr_k =</span> <span class="fu">cumsum</span>(pr_k)) <span class="sc">%&gt;%</span> </span>
-<span id="cb148-6"><a href="#cb148-6"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> response, <span class="at">y =</span> pr_k, </span>
-<span id="cb148-7"><a href="#cb148-7"></a>             <span class="at">fill =</span> response)) <span class="sc">+</span></span>
-<span id="cb148-8"><a href="#cb148-8"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb148-9"><a href="#cb148-9"></a>  <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">21</span>, <span class="at">color =</span> <span class="st">"grey92"</span>, </span>
-<span id="cb148-10"><a href="#cb148-10"></a>             <span class="at">size =</span> <span class="fl">2.5</span>, <span class="at">stroke =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb148-11"><a href="#cb148-11"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>) <span class="sc">+</span></span>
-<span id="cb148-12"><a href="#cb148-12"></a>  <span class="fu">scale_y_continuous</span>(<span class="st">" proportion"</span>, </span>
-<span id="cb148-13"><a href="#cb148-13"></a>                     <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, .<span class="dv">35</span>)) <span class="sc">+</span></span>
-<span id="cb148-14"><a href="#cb148-14"></a>  <span class="fu">theme</span>(<span class="at">axis.ticks =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb148-15"><a href="#cb148-15"></a>        <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>),</span>
-<span id="cb148-16"><a href="#cb148-16"></a>        <span class="at">legend.position =</span> <span class="st">"none"</span>)</span>
-<span id="cb148-17"><a href="#cb148-17"></a>p2 </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb149"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb149-1"><a href="#cb149-1"></a>p2 <span class="ot">&lt;-</span></span>
+<span id="cb149-2"><a href="#cb149-2"></a>  trolley <span class="sc">%&gt;%</span></span>
+<span id="cb149-3"><a href="#cb149-3"></a>  <span class="fu">count</span>(response) <span class="sc">%&gt;%</span></span>
+<span id="cb149-4"><a href="#cb149-4"></a>  <span class="fu">mutate</span>(<span class="at">pr_k     =</span> n <span class="sc">/</span> <span class="fu">nrow</span>(trolley),</span>
+<span id="cb149-5"><a href="#cb149-5"></a>         <span class="at">cum_pr_k =</span> <span class="fu">cumsum</span>(pr_k)) <span class="sc">%&gt;%</span> </span>
+<span id="cb149-6"><a href="#cb149-6"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> response, <span class="at">y =</span> pr_k, </span>
+<span id="cb149-7"><a href="#cb149-7"></a>             <span class="at">fill =</span> response)) <span class="sc">+</span></span>
+<span id="cb149-8"><a href="#cb149-8"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb149-9"><a href="#cb149-9"></a>  <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">21</span>, <span class="at">color =</span> <span class="st">"grey92"</span>, </span>
+<span id="cb149-10"><a href="#cb149-10"></a>             <span class="at">size =</span> <span class="fl">2.5</span>, <span class="at">stroke =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb149-11"><a href="#cb149-11"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>) <span class="sc">+</span></span>
+<span id="cb149-12"><a href="#cb149-12"></a>  <span class="fu">scale_y_continuous</span>(<span class="st">" proportion"</span>, </span>
+<span id="cb149-13"><a href="#cb149-13"></a>                     <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, .<span class="dv">35</span>)) <span class="sc">+</span></span>
+<span id="cb149-14"><a href="#cb149-14"></a>  <span class="fu">theme</span>(<span class="at">axis.ticks =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb149-15"><a href="#cb149-15"></a>        <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>),</span>
+<span id="cb149-16"><a href="#cb149-16"></a>        <span class="at">legend.position =</span> <span class="st">"none"</span>)</span>
+<span id="cb149-17"><a href="#cb149-17"></a>p2 </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 
 </div>
@@ -60691,24 +60700,24 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb149"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb149-1"><a href="#cb149-1"></a>p2b <span class="ot">&lt;-</span></span>
-<span id="cb149-2"><a href="#cb149-2"></a>  trolley <span class="sc">%&gt;%</span></span>
-<span id="cb149-3"><a href="#cb149-3"></a>  <span class="fu">count</span>(response) <span class="sc">%&gt;%</span></span>
-<span id="cb149-4"><a href="#cb149-4"></a>  <span class="fu">mutate</span>(<span class="at">pr_k     =</span> n <span class="sc">/</span> <span class="fu">nrow</span>(trolley),</span>
-<span id="cb149-5"><a href="#cb149-5"></a>         <span class="at">cum_pr_k =</span> <span class="fu">cumsum</span>(pr_k)) <span class="sc">%&gt;%</span> </span>
-<span id="cb149-6"><a href="#cb149-6"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> response, <span class="at">y =</span> cum_pr_k, </span>
-<span id="cb149-7"><a href="#cb149-7"></a>             <span class="at">fill =</span> response)) <span class="sc">+</span></span>
-<span id="cb149-8"><a href="#cb149-8"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb149-9"><a href="#cb149-9"></a>  <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">21</span>, <span class="at">color =</span> <span class="st">"grey92"</span>, </span>
-<span id="cb149-10"><a href="#cb149-10"></a>             <span class="at">size =</span> <span class="fl">2.5</span>, <span class="at">stroke =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb149-11"><a href="#cb149-11"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>) <span class="sc">+</span></span>
-<span id="cb149-12"><a href="#cb149-12"></a>  <span class="fu">scale_y_continuous</span>(<span class="st">"cumulative proportion"</span>, </span>
-<span id="cb149-13"><a href="#cb149-13"></a>                     <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, .<span class="dv">25</span>, .<span class="dv">5</span>, .<span class="dv">75</span>, <span class="dv">1</span>), <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">1.1</span>)) <span class="sc">+</span></span>
-<span id="cb149-14"><a href="#cb149-14"></a>  <span class="fu">theme</span>(<span class="at">axis.ticks =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb149-15"><a href="#cb149-15"></a>        <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>),</span>
-<span id="cb149-16"><a href="#cb149-16"></a>        <span class="at">legend.position =</span> <span class="st">"none"</span>)</span>
-<span id="cb149-17"><a href="#cb149-17"></a></span>
-<span id="cb149-18"><a href="#cb149-18"></a>p2b</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb150"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb150-1"><a href="#cb150-1"></a>p2b <span class="ot">&lt;-</span></span>
+<span id="cb150-2"><a href="#cb150-2"></a>  trolley <span class="sc">%&gt;%</span></span>
+<span id="cb150-3"><a href="#cb150-3"></a>  <span class="fu">count</span>(response) <span class="sc">%&gt;%</span></span>
+<span id="cb150-4"><a href="#cb150-4"></a>  <span class="fu">mutate</span>(<span class="at">pr_k     =</span> n <span class="sc">/</span> <span class="fu">nrow</span>(trolley),</span>
+<span id="cb150-5"><a href="#cb150-5"></a>         <span class="at">cum_pr_k =</span> <span class="fu">cumsum</span>(pr_k)) <span class="sc">%&gt;%</span> </span>
+<span id="cb150-6"><a href="#cb150-6"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> response, <span class="at">y =</span> cum_pr_k, </span>
+<span id="cb150-7"><a href="#cb150-7"></a>             <span class="at">fill =</span> response)) <span class="sc">+</span></span>
+<span id="cb150-8"><a href="#cb150-8"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb150-9"><a href="#cb150-9"></a>  <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">21</span>, <span class="at">color =</span> <span class="st">"grey92"</span>, </span>
+<span id="cb150-10"><a href="#cb150-10"></a>             <span class="at">size =</span> <span class="fl">2.5</span>, <span class="at">stroke =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb150-11"><a href="#cb150-11"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>) <span class="sc">+</span></span>
+<span id="cb150-12"><a href="#cb150-12"></a>  <span class="fu">scale_y_continuous</span>(<span class="st">"cumulative proportion"</span>, </span>
+<span id="cb150-13"><a href="#cb150-13"></a>                     <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, .<span class="dv">25</span>, .<span class="dv">5</span>, .<span class="dv">75</span>, <span class="dv">1</span>), <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">1.1</span>)) <span class="sc">+</span></span>
+<span id="cb150-14"><a href="#cb150-14"></a>  <span class="fu">theme</span>(<span class="at">axis.ticks =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb150-15"><a href="#cb150-15"></a>        <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>),</span>
+<span id="cb150-16"><a href="#cb150-16"></a>        <span class="at">legend.position =</span> <span class="st">"none"</span>)</span>
+<span id="cb150-17"><a href="#cb150-17"></a></span>
+<span id="cb150-18"><a href="#cb150-18"></a>p2b</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 
 </div>
@@ -60754,12 +60763,12 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb150"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb150-1"><a href="#cb150-1"></a>logit <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">log</span>(x <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">-</span> x)) </span>
-<span id="cb150-2"><a href="#cb150-2"></a>trolley <span class="sc">%&gt;%</span></span>
-<span id="cb150-3"><a href="#cb150-3"></a>  <span class="fu">count</span>(response) <span class="sc">%&gt;%</span></span>
-<span id="cb150-4"><a href="#cb150-4"></a>  <span class="fu">mutate</span>(<span class="at">pr_k     =</span> n <span class="sc">/</span> <span class="fu">nrow</span>(trolley),</span>
-<span id="cb150-5"><a href="#cb150-5"></a>         <span class="at">cum_pr_k =</span> <span class="fu">cumsum</span>(n <span class="sc">/</span> <span class="fu">nrow</span>(trolley))) <span class="sc">%&gt;%</span> </span>
-<span id="cb150-6"><a href="#cb150-6"></a>  <span class="fu">mutate</span>(<span class="at">alpha =</span> <span class="fu">logit</span>(cum_pr_k) <span class="sc">%&gt;%</span> <span class="fu">round</span>(<span class="at">digits =</span> <span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb151"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb151-1"><a href="#cb151-1"></a>logit <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">log</span>(x <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">-</span> x)) </span>
+<span id="cb151-2"><a href="#cb151-2"></a>trolley <span class="sc">%&gt;%</span></span>
+<span id="cb151-3"><a href="#cb151-3"></a>  <span class="fu">count</span>(response) <span class="sc">%&gt;%</span></span>
+<span id="cb151-4"><a href="#cb151-4"></a>  <span class="fu">mutate</span>(<span class="at">pr_k     =</span> n <span class="sc">/</span> <span class="fu">nrow</span>(trolley),</span>
+<span id="cb151-5"><a href="#cb151-5"></a>         <span class="at">cum_pr_k =</span> <span class="fu">cumsum</span>(n <span class="sc">/</span> <span class="fu">nrow</span>(trolley))) <span class="sc">%&gt;%</span> </span>
+<span id="cb151-6"><a href="#cb151-6"></a>  <span class="fu">mutate</span>(<span class="at">alpha =</span> <span class="fu">logit</span>(cum_pr_k) <span class="sc">%&gt;%</span> <span class="fu">round</span>(<span class="at">digits =</span> <span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>  response    n       pr_k  cum_pr_k alpha
@@ -60778,52 +60787,52 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb152"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb152-1"><a href="#cb152-1"></a>p1 <span class="ot">&lt;-</span></span>
-<span id="cb152-2"><a href="#cb152-2"></a>  trolley <span class="sc">%&gt;%</span> </span>
-<span id="cb152-3"><a href="#cb152-3"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> response, <span class="at">fill =</span> ..x..)) <span class="sc">+</span></span>
-<span id="cb152-4"><a href="#cb152-4"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">4</span>, <span class="at">size =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
-<span id="cb152-5"><a href="#cb152-5"></a>  <span class="fu">scale_fill_gradient</span>(<span class="at">low =</span> <span class="st">"grey"</span>,</span>
-<span id="cb152-6"><a href="#cb152-6"></a>                       <span class="at">high =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
-<span id="cb152-7"><a href="#cb152-7"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>) <span class="sc">+</span></span>
-<span id="cb152-8"><a href="#cb152-8"></a>  <span class="fu">theme</span>(<span class="at">axis.ticks =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb152-9"><a href="#cb152-9"></a>        <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>),</span>
-<span id="cb152-10"><a href="#cb152-10"></a>        <span class="at">legend.position =</span> <span class="st">"none"</span>)</span>
-<span id="cb152-11"><a href="#cb152-11"></a></span>
-<span id="cb152-12"><a href="#cb152-12"></a></span>
-<span id="cb152-13"><a href="#cb152-13"></a>p2 <span class="ot">&lt;-</span></span>
-<span id="cb152-14"><a href="#cb152-14"></a>  trolley <span class="sc">%&gt;%</span></span>
-<span id="cb152-15"><a href="#cb152-15"></a>  <span class="fu">count</span>(response) <span class="sc">%&gt;%</span></span>
-<span id="cb152-16"><a href="#cb152-16"></a>  <span class="fu">mutate</span>(<span class="at">pr_k     =</span> n <span class="sc">/</span> <span class="fu">nrow</span>(trolley),</span>
-<span id="cb152-17"><a href="#cb152-17"></a>         <span class="at">cum_pr_k =</span> <span class="fu">cumsum</span>(pr_k)) <span class="sc">%&gt;%</span> </span>
-<span id="cb152-18"><a href="#cb152-18"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> response, <span class="at">y =</span> pr_k, </span>
-<span id="cb152-19"><a href="#cb152-19"></a>             <span class="at">fill =</span> response)) <span class="sc">+</span></span>
-<span id="cb152-20"><a href="#cb152-20"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb152-21"><a href="#cb152-21"></a>  <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">21</span>, <span class="at">color =</span> <span class="st">"grey92"</span>, </span>
-<span id="cb152-22"><a href="#cb152-22"></a>             <span class="at">size =</span> <span class="fl">2.5</span>, <span class="at">stroke =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb152-23"><a href="#cb152-23"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>) <span class="sc">+</span></span>
-<span id="cb152-24"><a href="#cb152-24"></a>  <span class="fu">scale_y_continuous</span>(<span class="st">" proportion"</span>, </span>
-<span id="cb152-25"><a href="#cb152-25"></a>                     <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, .<span class="dv">35</span>)) <span class="sc">+</span></span>
-<span id="cb152-26"><a href="#cb152-26"></a>  <span class="fu">theme</span>(<span class="at">axis.ticks =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb152-27"><a href="#cb152-27"></a>        <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>),</span>
-<span id="cb152-28"><a href="#cb152-28"></a>        <span class="at">legend.position =</span> <span class="st">"none"</span>)</span>
-<span id="cb152-29"><a href="#cb152-29"></a></span>
-<span id="cb152-30"><a href="#cb152-30"></a></span>
-<span id="cb152-31"><a href="#cb152-31"></a>p3 <span class="ot">&lt;-</span></span>
-<span id="cb152-32"><a href="#cb152-32"></a>  trolley <span class="sc">%&gt;%</span></span>
-<span id="cb152-33"><a href="#cb152-33"></a>  <span class="fu">count</span>(response) <span class="sc">%&gt;%</span></span>
-<span id="cb152-34"><a href="#cb152-34"></a>  <span class="fu">mutate</span>(<span class="at">cum_pr_k =</span> <span class="fu">cumsum</span>(n <span class="sc">/</span> <span class="fu">nrow</span>(trolley))) <span class="sc">%&gt;%</span> </span>
-<span id="cb152-35"><a href="#cb152-35"></a>  <span class="fu">filter</span>(response <span class="sc">&lt;</span> <span class="dv">7</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb152-36"><a href="#cb152-36"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> response, <span class="at">y =</span> <span class="fu">logit</span>(cum_pr_k), <span class="at">fill =</span> response)) <span class="sc">+</span></span>
-<span id="cb152-37"><a href="#cb152-37"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb152-38"><a href="#cb152-38"></a>  <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">21</span>, <span class="at">colour =</span> <span class="st">"grey92"</span>, </span>
-<span id="cb152-39"><a href="#cb152-39"></a>             <span class="at">size =</span> <span class="fl">2.5</span>, <span class="at">stroke =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb152-40"><a href="#cb152-40"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>, <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">7</span>)) <span class="sc">+</span></span>
-<span id="cb152-41"><a href="#cb152-41"></a>  <span class="fu">ylab</span>(<span class="st">"log-cumulative-odds"</span>) <span class="sc">+</span></span>
-<span id="cb152-42"><a href="#cb152-42"></a>  <span class="fu">theme</span>(<span class="at">axis.ticks =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb152-43"><a href="#cb152-43"></a>        <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>), </span>
-<span id="cb152-44"><a href="#cb152-44"></a>        <span class="at">legend.position =</span> <span class="st">"none"</span>)</span>
-<span id="cb152-45"><a href="#cb152-45"></a></span>
-<span id="cb152-46"><a href="#cb152-46"></a>(p1 <span class="sc">|</span> p2 <span class="sc">|</span> p3) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb153"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb153-1"><a href="#cb153-1"></a>p1 <span class="ot">&lt;-</span></span>
+<span id="cb153-2"><a href="#cb153-2"></a>  trolley <span class="sc">%&gt;%</span> </span>
+<span id="cb153-3"><a href="#cb153-3"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> response, <span class="at">fill =</span> ..x..)) <span class="sc">+</span></span>
+<span id="cb153-4"><a href="#cb153-4"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">4</span>, <span class="at">size =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb153-5"><a href="#cb153-5"></a>  <span class="fu">scale_fill_gradient</span>(<span class="at">low =</span> <span class="st">"grey"</span>,</span>
+<span id="cb153-6"><a href="#cb153-6"></a>                       <span class="at">high =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb153-7"><a href="#cb153-7"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>) <span class="sc">+</span></span>
+<span id="cb153-8"><a href="#cb153-8"></a>  <span class="fu">theme</span>(<span class="at">axis.ticks =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb153-9"><a href="#cb153-9"></a>        <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>),</span>
+<span id="cb153-10"><a href="#cb153-10"></a>        <span class="at">legend.position =</span> <span class="st">"none"</span>)</span>
+<span id="cb153-11"><a href="#cb153-11"></a></span>
+<span id="cb153-12"><a href="#cb153-12"></a></span>
+<span id="cb153-13"><a href="#cb153-13"></a>p2 <span class="ot">&lt;-</span></span>
+<span id="cb153-14"><a href="#cb153-14"></a>  trolley <span class="sc">%&gt;%</span></span>
+<span id="cb153-15"><a href="#cb153-15"></a>  <span class="fu">count</span>(response) <span class="sc">%&gt;%</span></span>
+<span id="cb153-16"><a href="#cb153-16"></a>  <span class="fu">mutate</span>(<span class="at">pr_k     =</span> n <span class="sc">/</span> <span class="fu">nrow</span>(trolley),</span>
+<span id="cb153-17"><a href="#cb153-17"></a>         <span class="at">cum_pr_k =</span> <span class="fu">cumsum</span>(pr_k)) <span class="sc">%&gt;%</span> </span>
+<span id="cb153-18"><a href="#cb153-18"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> response, <span class="at">y =</span> pr_k, </span>
+<span id="cb153-19"><a href="#cb153-19"></a>             <span class="at">fill =</span> response)) <span class="sc">+</span></span>
+<span id="cb153-20"><a href="#cb153-20"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb153-21"><a href="#cb153-21"></a>  <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">21</span>, <span class="at">color =</span> <span class="st">"grey92"</span>, </span>
+<span id="cb153-22"><a href="#cb153-22"></a>             <span class="at">size =</span> <span class="fl">2.5</span>, <span class="at">stroke =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb153-23"><a href="#cb153-23"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>) <span class="sc">+</span></span>
+<span id="cb153-24"><a href="#cb153-24"></a>  <span class="fu">scale_y_continuous</span>(<span class="st">" proportion"</span>, </span>
+<span id="cb153-25"><a href="#cb153-25"></a>                     <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, .<span class="dv">35</span>)) <span class="sc">+</span></span>
+<span id="cb153-26"><a href="#cb153-26"></a>  <span class="fu">theme</span>(<span class="at">axis.ticks =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb153-27"><a href="#cb153-27"></a>        <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>),</span>
+<span id="cb153-28"><a href="#cb153-28"></a>        <span class="at">legend.position =</span> <span class="st">"none"</span>)</span>
+<span id="cb153-29"><a href="#cb153-29"></a></span>
+<span id="cb153-30"><a href="#cb153-30"></a></span>
+<span id="cb153-31"><a href="#cb153-31"></a>p3 <span class="ot">&lt;-</span></span>
+<span id="cb153-32"><a href="#cb153-32"></a>  trolley <span class="sc">%&gt;%</span></span>
+<span id="cb153-33"><a href="#cb153-33"></a>  <span class="fu">count</span>(response) <span class="sc">%&gt;%</span></span>
+<span id="cb153-34"><a href="#cb153-34"></a>  <span class="fu">mutate</span>(<span class="at">cum_pr_k =</span> <span class="fu">cumsum</span>(n <span class="sc">/</span> <span class="fu">nrow</span>(trolley))) <span class="sc">%&gt;%</span> </span>
+<span id="cb153-35"><a href="#cb153-35"></a>  <span class="fu">filter</span>(response <span class="sc">&lt;</span> <span class="dv">7</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb153-36"><a href="#cb153-36"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> response, <span class="at">y =</span> <span class="fu">logit</span>(cum_pr_k), <span class="at">fill =</span> response)) <span class="sc">+</span></span>
+<span id="cb153-37"><a href="#cb153-37"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb153-38"><a href="#cb153-38"></a>  <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">21</span>, <span class="at">colour =</span> <span class="st">"grey92"</span>, </span>
+<span id="cb153-39"><a href="#cb153-39"></a>             <span class="at">size =</span> <span class="fl">2.5</span>, <span class="at">stroke =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb153-40"><a href="#cb153-40"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>, <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">7</span>)) <span class="sc">+</span></span>
+<span id="cb153-41"><a href="#cb153-41"></a>  <span class="fu">ylab</span>(<span class="st">"log-cumulative-odds"</span>) <span class="sc">+</span></span>
+<span id="cb153-42"><a href="#cb153-42"></a>  <span class="fu">theme</span>(<span class="at">axis.ticks =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb153-43"><a href="#cb153-43"></a>        <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>), </span>
+<span id="cb153-44"><a href="#cb153-44"></a>        <span class="at">legend.position =</span> <span class="st">"none"</span>)</span>
+<span id="cb153-45"><a href="#cb153-45"></a></span>
+<span id="cb153-46"><a href="#cb153-46"></a>(p1 <span class="sc">|</span> p2 <span class="sc">|</span> p3) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 
 </div>
@@ -60837,14 +60846,14 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 
 <p>Note we specified a categorical one in the model statement. The brms code uses the term cumulative. And SR uses Ordered logit. All the same.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb153"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb153-1"><a href="#cb153-1"></a>glm<span class="fl">.12</span> <span class="ot">&lt;-</span> </span>
-<span id="cb153-2"><a href="#cb153-2"></a>  <span class="fu">brm</span>(<span class="at">family =</span> cumulative,</span>
-<span id="cb153-3"><a href="#cb153-3"></a>      response <span class="sc">~</span> <span class="dv">1</span>,</span>
-<span id="cb153-4"><a href="#cb153-4"></a>      <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, <span class="fl">1.5</span>), <span class="at">class =</span> Intercept),</span>
-<span id="cb153-5"><a href="#cb153-5"></a>      <span class="at">iter =</span> <span class="dv">2000</span>, <span class="at">warmup =</span> <span class="dv">1000</span>, <span class="at">cores =</span> <span class="dv">4</span>, <span class="at">chains =</span> <span class="dv">4</span>,</span>
-<span id="cb153-6"><a href="#cb153-6"></a>      <span class="at">data =</span> trolley, </span>
-<span id="cb153-7"><a href="#cb153-7"></a>      <span class="at">backend =</span> <span class="st">"cmdstanr"</span>,</span>
-<span id="cb153-8"><a href="#cb153-8"></a>      <span class="at">file =</span> <span class="st">"glm.12"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb154"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb154-1"><a href="#cb154-1"></a>glm<span class="fl">.12</span> <span class="ot">&lt;-</span> </span>
+<span id="cb154-2"><a href="#cb154-2"></a>  <span class="fu">brm</span>(<span class="at">family =</span> cumulative,</span>
+<span id="cb154-3"><a href="#cb154-3"></a>      response <span class="sc">~</span> <span class="dv">1</span>,</span>
+<span id="cb154-4"><a href="#cb154-4"></a>      <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, <span class="fl">1.5</span>), <span class="at">class =</span> Intercept),</span>
+<span id="cb154-5"><a href="#cb154-5"></a>      <span class="at">iter =</span> <span class="dv">2000</span>, <span class="at">warmup =</span> <span class="dv">1000</span>, <span class="at">cores =</span> <span class="dv">4</span>, <span class="at">chains =</span> <span class="dv">4</span>,</span>
+<span id="cb154-6"><a href="#cb154-6"></a>      <span class="at">data =</span> trolley, </span>
+<span id="cb154-7"><a href="#cb154-7"></a>      <span class="at">backend =</span> <span class="st">"cmdstanr"</span>,</span>
+<span id="cb154-8"><a href="#cb154-8"></a>      <span class="at">file =</span> <span class="st">"glm.12"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section class="slide level2">
@@ -60852,7 +60861,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb154"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb154-1"><a href="#cb154-1"></a><span class="fu">summary</span>(glm<span class="fl">.12</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb155"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb155-1"><a href="#cb155-1"></a><span class="fu">summary</span>(glm<span class="fl">.12</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code> Family: cumulative 
@@ -60887,14 +60896,14 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb156"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb156-1"><a href="#cb156-1"></a>glm<span class="fl">.12</span> <span class="sc">%&gt;%</span> </span>
-<span id="cb156-2"><a href="#cb156-2"></a><span class="fu">gather_draws</span>(b_Intercept[cut]) <span class="sc">%&gt;%</span> </span>
-<span id="cb156-3"><a href="#cb156-3"></a>  <span class="fu">mutate</span>(<span class="at">.value =</span> <span class="fu">inv_logit_scaled</span>(.value)) <span class="sc">%&gt;%</span> </span>
-<span id="cb156-4"><a href="#cb156-4"></a>  <span class="fu">group_by</span>(cut) <span class="sc">%&gt;%</span> </span>
-<span id="cb156-5"><a href="#cb156-5"></a>  <span class="fu">summarise</span>(<span class="at">mean =</span> <span class="fu">mean</span>(.value),</span>
-<span id="cb156-6"><a href="#cb156-6"></a>            <span class="at">sd   =</span> <span class="fu">sd</span>(.value),</span>
-<span id="cb156-7"><a href="#cb156-7"></a>            <span class="at">ll   =</span> <span class="fu">quantile</span>(.value, <span class="at">probs =</span> .<span class="dv">025</span>),</span>
-<span id="cb156-8"><a href="#cb156-8"></a>            <span class="at">ul   =</span> <span class="fu">quantile</span>(.value, <span class="at">probs =</span> .<span class="dv">975</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb157"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb157-1"><a href="#cb157-1"></a>glm<span class="fl">.12</span> <span class="sc">%&gt;%</span> </span>
+<span id="cb157-2"><a href="#cb157-2"></a><span class="fu">gather_draws</span>(b_Intercept[cut]) <span class="sc">%&gt;%</span> </span>
+<span id="cb157-3"><a href="#cb157-3"></a>  <span class="fu">mutate</span>(<span class="at">.value =</span> <span class="fu">inv_logit_scaled</span>(.value)) <span class="sc">%&gt;%</span> </span>
+<span id="cb157-4"><a href="#cb157-4"></a>  <span class="fu">group_by</span>(cut) <span class="sc">%&gt;%</span> </span>
+<span id="cb157-5"><a href="#cb157-5"></a>  <span class="fu">summarise</span>(<span class="at">mean =</span> <span class="fu">mean</span>(.value),</span>
+<span id="cb157-6"><a href="#cb157-6"></a>            <span class="at">sd   =</span> <span class="fu">sd</span>(.value),</span>
+<span id="cb157-7"><a href="#cb157-7"></a>            <span class="at">ll   =</span> <span class="fu">quantile</span>(.value, <span class="at">probs =</span> .<span class="dv">025</span>),</span>
+<span id="cb157-8"><a href="#cb157-8"></a>            <span class="at">ul   =</span> <span class="fu">quantile</span>(.value, <span class="at">probs =</span> .<span class="dv">975</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 5
@@ -60920,21 +60929,21 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <section class="slide level2">
 
 <div class="cell">
-<div class="sourceCode cell-code" id="cb158"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb158-1"><a href="#cb158-1"></a>glm<span class="fl">.13</span> <span class="ot">&lt;-</span> </span>
-<span id="cb158-2"><a href="#cb158-2"></a>  <span class="fu">brm</span>(<span class="at">family =</span> cumulative,</span>
-<span id="cb158-3"><a href="#cb158-3"></a>      response <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> action <span class="sc">+</span> contact <span class="sc">+</span> intention <span class="sc">+</span> intention<span class="sc">:</span>action <span class="sc">+</span> intention<span class="sc">:</span>contact,</span>
-<span id="cb158-4"><a href="#cb158-4"></a>      <span class="at">prior =</span> <span class="fu">c</span>(<span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, <span class="fl">1.5</span>), <span class="at">class =</span> Intercept),</span>
-<span id="cb158-5"><a href="#cb158-5"></a>                <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, <span class="fl">0.5</span>), <span class="at">class =</span> b)),</span>
-<span id="cb158-6"><a href="#cb158-6"></a>      <span class="at">iter =</span> <span class="dv">2000</span>, <span class="at">warmup =</span> <span class="dv">1000</span>, <span class="at">cores =</span> <span class="dv">4</span>, <span class="at">chains =</span> <span class="dv">4</span>,</span>
-<span id="cb158-7"><a href="#cb158-7"></a>      <span class="at">data =</span> trolley,</span>
-<span id="cb158-8"><a href="#cb158-8"></a>      <span class="at">backend =</span> <span class="st">"cmdstanr"</span>,</span>
-<span id="cb158-9"><a href="#cb158-9"></a>      <span class="at">file =</span> <span class="st">"glm.13"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb159"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb159-1"><a href="#cb159-1"></a>glm<span class="fl">.13</span> <span class="ot">&lt;-</span> </span>
+<span id="cb159-2"><a href="#cb159-2"></a>  <span class="fu">brm</span>(<span class="at">family =</span> cumulative,</span>
+<span id="cb159-3"><a href="#cb159-3"></a>      response <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> action <span class="sc">+</span> contact <span class="sc">+</span> intention <span class="sc">+</span> intention<span class="sc">:</span>action <span class="sc">+</span> intention<span class="sc">:</span>contact,</span>
+<span id="cb159-4"><a href="#cb159-4"></a>      <span class="at">prior =</span> <span class="fu">c</span>(<span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, <span class="fl">1.5</span>), <span class="at">class =</span> Intercept),</span>
+<span id="cb159-5"><a href="#cb159-5"></a>                <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, <span class="fl">0.5</span>), <span class="at">class =</span> b)),</span>
+<span id="cb159-6"><a href="#cb159-6"></a>      <span class="at">iter =</span> <span class="dv">2000</span>, <span class="at">warmup =</span> <span class="dv">1000</span>, <span class="at">cores =</span> <span class="dv">4</span>, <span class="at">chains =</span> <span class="dv">4</span>,</span>
+<span id="cb159-7"><a href="#cb159-7"></a>      <span class="at">data =</span> trolley,</span>
+<span id="cb159-8"><a href="#cb159-8"></a>      <span class="at">backend =</span> <span class="st">"cmdstanr"</span>,</span>
+<span id="cb159-9"><a href="#cb159-9"></a>      <span class="at">file =</span> <span class="st">"glm.13"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section class="slide level2">
 
 <div class="cell">
-<div class="sourceCode cell-code" id="cb159"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb159-1"><a href="#cb159-1"></a><span class="fu">summary</span>(glm<span class="fl">.13</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb160"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb160-1"><a href="#cb160-1"></a><span class="fu">summary</span>(glm<span class="fl">.13</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> Family: cumulative 
   Links: mu = logit; disc = identity 
@@ -60972,13 +60981,13 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb161"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb161-1"><a href="#cb161-1"></a>glm<span class="fl">.13</span> <span class="sc">%&gt;%</span> </span>
-<span id="cb161-2"><a href="#cb161-2"></a><span class="fu">gather_draws</span>(<span class="st">`</span><span class="at">b_action</span><span class="st">`</span>,<span class="st">`</span><span class="at">b_contact</span><span class="st">`</span>,<span class="st">`</span><span class="at">b_intention</span><span class="st">`</span>,<span class="st">`</span><span class="at">b_action:intention</span><span class="st">`</span>,<span class="st">`</span><span class="at">b_contact:intention</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb161-3"><a href="#cb161-3"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> .value, <span class="at">y =</span> .variable)) <span class="sc">+</span></span>
-<span id="cb161-4"><a href="#cb161-4"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>, <span class="at">alpha =</span> <span class="dv">1</span>, <span class="at">linetype =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
-<span id="cb161-5"><a href="#cb161-5"></a>  <span class="fu">stat_gradientinterval</span>(<span class="at">.width =</span> .<span class="dv">95</span>, <span class="at">point_size =</span> <span class="dv">1</span>, <span class="at">shape =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb161-6"><a href="#cb161-6"></a>  <span class="fu">scale_x_continuous</span>(<span class="st">"marginal posterior"</span>, <span class="at">breaks =</span> <span class="sc">-</span><span class="dv">5</span><span class="sc">:</span><span class="dv">0</span> <span class="sc">/</span> <span class="dv">4</span>) <span class="sc">+</span></span>
-<span id="cb161-7"><a href="#cb161-7"></a>  <span class="fu">coord_cartesian</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">1.4</span>, <span class="dv">0</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb162"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb162-1"><a href="#cb162-1"></a>glm<span class="fl">.13</span> <span class="sc">%&gt;%</span> </span>
+<span id="cb162-2"><a href="#cb162-2"></a><span class="fu">gather_draws</span>(<span class="st">`</span><span class="at">b_action</span><span class="st">`</span>,<span class="st">`</span><span class="at">b_contact</span><span class="st">`</span>,<span class="st">`</span><span class="at">b_intention</span><span class="st">`</span>,<span class="st">`</span><span class="at">b_action:intention</span><span class="st">`</span>,<span class="st">`</span><span class="at">b_contact:intention</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb162-3"><a href="#cb162-3"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> .value, <span class="at">y =</span> .variable)) <span class="sc">+</span></span>
+<span id="cb162-4"><a href="#cb162-4"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>, <span class="at">alpha =</span> <span class="dv">1</span>, <span class="at">linetype =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb162-5"><a href="#cb162-5"></a>  <span class="fu">stat_gradientinterval</span>(<span class="at">.width =</span> .<span class="dv">95</span>, <span class="at">point_size =</span> <span class="dv">1</span>, <span class="at">shape =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb162-6"><a href="#cb162-6"></a>  <span class="fu">scale_x_continuous</span>(<span class="st">"marginal posterior"</span>, <span class="at">breaks =</span> <span class="sc">-</span><span class="dv">5</span><span class="sc">:</span><span class="dv">0</span> <span class="sc">/</span> <span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb162-7"><a href="#cb162-7"></a>  <span class="fu">coord_cartesian</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">1.4</span>, <span class="dv">0</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 
 </div>
@@ -60988,7 +60997,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb162"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb162-1"><a href="#cb162-1"></a><span class="fu">conditional_effects</span>(glm<span class="fl">.13</span>, <span class="at">effects =</span> <span class="st">"action"</span>, <span class="at">categorical =</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb163"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb163-1"><a href="#cb163-1"></a><span class="fu">conditional_effects</span>(glm<span class="fl">.13</span>, <span class="at">effects =</span> <span class="st">"action"</span>, <span class="at">categorical =</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 
 </div>
@@ -60998,7 +61007,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb163"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb163-1"><a href="#cb163-1"></a><span class="fu">conditional_effects</span>(glm<span class="fl">.13</span>, <span class="at">effects =</span> <span class="st">"contact"</span>, <span class="at">categorical =</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb164"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb164-1"><a href="#cb164-1"></a><span class="fu">conditional_effects</span>(glm<span class="fl">.13</span>, <span class="at">effects =</span> <span class="st">"contact"</span>, <span class="at">categorical =</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 
 </div>
@@ -61008,7 +61017,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb164"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb164-1"><a href="#cb164-1"></a><span class="fu">conditional_effects</span>(glm<span class="fl">.13</span>, <span class="at">effects =</span> <span class="st">"intention"</span>, <span class="at">categorical =</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb165"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb165-1"><a href="#cb165-1"></a><span class="fu">conditional_effects</span>(glm<span class="fl">.13</span>, <span class="at">effects =</span> <span class="st">"intention"</span>, <span class="at">categorical =</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 
 </div>
@@ -61018,8 +61027,8 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb165"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb165-1"><a href="#cb165-1"></a><span class="fu">library</span>(marginaleffects)</span>
-<span id="cb165-2"><a href="#cb165-2"></a><span class="fu">avg_comparisons</span>(glm<span class="fl">.13</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb166"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb166-1"><a href="#cb166-1"></a><span class="fu">library</span>(marginaleffects)</span>
+<span id="cb166-2"><a href="#cb166-2"></a><span class="fu">avg_comparisons</span>(glm<span class="fl">.13</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -61057,8 +61066,8 @@ Columns: term, group, contrast, estimate, conf.low, conf.high </code></pre>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb167"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb167-1"><a href="#cb167-1"></a><span class="fu">library</span>(emmeans)</span>
-<span id="cb167-2"><a href="#cb167-2"></a><span class="fu">emmeans</span>(glm<span class="fl">.13</span>, <span class="at">specs =</span> pairwise <span class="sc">~</span> action<span class="sc">:</span>intention)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb168"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb168-1"><a href="#cb168-1"></a><span class="fu">library</span>(emmeans)</span>
+<span id="cb168-2"><a href="#cb168-2"></a><span class="fu">emmeans</span>(glm<span class="fl">.13</span>, <span class="at">specs =</span> pairwise <span class="sc">~</span> action<span class="sc">:</span>intention)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>$emmeans
@@ -61095,17 +61104,17 @@ HPD interval probability: 0.95 </code></pre>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb169"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb169-1"><a href="#cb169-1"></a>trolley <span class="sc">%&gt;%</span></span>
-<span id="cb169-2"><a href="#cb169-2"></a>  <span class="fu">data_grid</span>(<span class="at">action =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="at">intention =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="at">contact =</span> .<span class="dv">5</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb169-3"><a href="#cb169-3"></a>  <span class="fu">mutate</span>(<span class="at">x =</span> <span class="fu">interaction</span>(action, intention)) <span class="sc">%&gt;%</span> </span>
-<span id="cb169-4"><a href="#cb169-4"></a>  <span class="fu">mutate</span>(<span class="at">x =</span> <span class="fu">fct_recode</span>(<span class="fu">as.factor</span>(x),</span>
-<span id="cb169-5"><a href="#cb169-5"></a>                      <span class="at">No_A_No_I =</span> <span class="st">"0.0"</span>,</span>
-<span id="cb169-6"><a href="#cb169-6"></a>                      <span class="at">No_A_Y_I =</span> <span class="st">"0.1"</span>,</span>
-<span id="cb169-7"><a href="#cb169-7"></a>                      <span class="at">Y_A_No_I =</span> <span class="st">"1.0"</span>,</span>
-<span id="cb169-8"><a href="#cb169-8"></a>                      <span class="at">Y_A_Y_I =</span> <span class="st">"1.1"</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb169-9"><a href="#cb169-9"></a>  <span class="fu">add_epred_draws</span>(glm<span class="fl">.13</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb169-10"><a href="#cb169-10"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> .epred, <span class="at">y =</span> .category, <span class="at">fill =</span> x)) <span class="sc">+</span></span>
-<span id="cb169-11"><a href="#cb169-11"></a>  <span class="fu">stat_slab</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb170"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb170-1"><a href="#cb170-1"></a>trolley <span class="sc">%&gt;%</span></span>
+<span id="cb170-2"><a href="#cb170-2"></a>  <span class="fu">data_grid</span>(<span class="at">action =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="at">intention =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="at">contact =</span> .<span class="dv">5</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb170-3"><a href="#cb170-3"></a>  <span class="fu">mutate</span>(<span class="at">x =</span> <span class="fu">interaction</span>(action, intention)) <span class="sc">%&gt;%</span> </span>
+<span id="cb170-4"><a href="#cb170-4"></a>  <span class="fu">mutate</span>(<span class="at">x =</span> <span class="fu">fct_recode</span>(<span class="fu">as.factor</span>(x),</span>
+<span id="cb170-5"><a href="#cb170-5"></a>                      <span class="at">No_A_No_I =</span> <span class="st">"0.0"</span>,</span>
+<span id="cb170-6"><a href="#cb170-6"></a>                      <span class="at">No_A_Y_I =</span> <span class="st">"0.1"</span>,</span>
+<span id="cb170-7"><a href="#cb170-7"></a>                      <span class="at">Y_A_No_I =</span> <span class="st">"1.0"</span>,</span>
+<span id="cb170-8"><a href="#cb170-8"></a>                      <span class="at">Y_A_Y_I =</span> <span class="st">"1.1"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb170-9"><a href="#cb170-9"></a>  <span class="fu">add_epred_draws</span>(glm<span class="fl">.13</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb170-10"><a href="#cb170-10"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> .epred, <span class="at">y =</span> .category, <span class="at">fill =</span> x)) <span class="sc">+</span></span>
+<span id="cb170-11"><a href="#cb170-11"></a>  <span class="fu">stat_slab</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 
 </div>
@@ -61115,17 +61124,17 @@ HPD interval probability: 0.95 </code></pre>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb170"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb170-1"><a href="#cb170-1"></a>trolley <span class="sc">%&gt;%</span></span>
-<span id="cb170-2"><a href="#cb170-2"></a>  <span class="fu">data_grid</span>(<span class="at">action =</span> .<span class="dv">5</span>, <span class="at">intention =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="at">contact =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb170-3"><a href="#cb170-3"></a>  <span class="fu">mutate</span>(<span class="at">x =</span> <span class="fu">interaction</span>(contact, intention)) <span class="sc">%&gt;%</span> </span>
-<span id="cb170-4"><a href="#cb170-4"></a>  <span class="fu">mutate</span>(<span class="at">x =</span> <span class="fu">fct_recode</span>(<span class="fu">as.factor</span>(x),</span>
-<span id="cb170-5"><a href="#cb170-5"></a>                      <span class="at">No_C_No_I =</span> <span class="st">"0.0"</span>,</span>
-<span id="cb170-6"><a href="#cb170-6"></a>                      <span class="at">Y_C_No_I =</span> <span class="st">"1.0"</span>,</span>
-<span id="cb170-7"><a href="#cb170-7"></a>                      <span class="at">No_C_Y_I =</span> <span class="st">"0.1"</span>,</span>
-<span id="cb170-8"><a href="#cb170-8"></a>                      <span class="at">Y_C_Y_I =</span> <span class="st">"1.1"</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb170-9"><a href="#cb170-9"></a>  <span class="fu">add_epred_draws</span>(glm<span class="fl">.13</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb170-10"><a href="#cb170-10"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> .epred, <span class="at">y =</span> .category, <span class="at">fill =</span> x)) <span class="sc">+</span></span>
-<span id="cb170-11"><a href="#cb170-11"></a>  <span class="fu">stat_slab</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb171"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb171-1"><a href="#cb171-1"></a>trolley <span class="sc">%&gt;%</span></span>
+<span id="cb171-2"><a href="#cb171-2"></a>  <span class="fu">data_grid</span>(<span class="at">action =</span> .<span class="dv">5</span>, <span class="at">intention =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="at">contact =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb171-3"><a href="#cb171-3"></a>  <span class="fu">mutate</span>(<span class="at">x =</span> <span class="fu">interaction</span>(contact, intention)) <span class="sc">%&gt;%</span> </span>
+<span id="cb171-4"><a href="#cb171-4"></a>  <span class="fu">mutate</span>(<span class="at">x =</span> <span class="fu">fct_recode</span>(<span class="fu">as.factor</span>(x),</span>
+<span id="cb171-5"><a href="#cb171-5"></a>                      <span class="at">No_C_No_I =</span> <span class="st">"0.0"</span>,</span>
+<span id="cb171-6"><a href="#cb171-6"></a>                      <span class="at">Y_C_No_I =</span> <span class="st">"1.0"</span>,</span>
+<span id="cb171-7"><a href="#cb171-7"></a>                      <span class="at">No_C_Y_I =</span> <span class="st">"0.1"</span>,</span>
+<span id="cb171-8"><a href="#cb171-8"></a>                      <span class="at">Y_C_Y_I =</span> <span class="st">"1.1"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb171-9"><a href="#cb171-9"></a>  <span class="fu">add_epred_draws</span>(glm<span class="fl">.13</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb171-10"><a href="#cb171-10"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> .epred, <span class="at">y =</span> .category, <span class="at">fill =</span> x)) <span class="sc">+</span></span>
+<span id="cb171-11"><a href="#cb171-11"></a>  <span class="fu">stat_slab</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 
 </div>
@@ -61136,62 +61145,62 @@ HPD interval probability: 0.95 </code></pre>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb171"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb171-1"><a href="#cb171-1"></a>nd <span class="ot">&lt;-</span> </span>
-<span id="cb171-2"><a href="#cb171-2"></a>  trolley <span class="sc">%&gt;%</span> </span>
-<span id="cb171-3"><a href="#cb171-3"></a>  <span class="fu">distinct</span>(action, contact, intention) <span class="sc">%&gt;%</span> </span>
-<span id="cb171-4"><a href="#cb171-4"></a>  <span class="fu">mutate</span>(<span class="at">combination =</span> <span class="fu">str_c</span>(action, contact, intention, <span class="at">sep =</span> <span class="st">"_"</span>))</span>
-<span id="cb171-5"><a href="#cb171-5"></a></span>
-<span id="cb171-6"><a href="#cb171-6"></a>fit<span class="fl">.13</span> <span class="ot">&lt;-</span></span>
-<span id="cb171-7"><a href="#cb171-7"></a>  <span class="fu">fitted</span>(glm<span class="fl">.13</span>,</span>
-<span id="cb171-8"><a href="#cb171-8"></a>         <span class="at">newdata =</span> nd,</span>
-<span id="cb171-9"><a href="#cb171-9"></a>         <span class="at">summary =</span> F)</span>
-<span id="cb171-10"><a href="#cb171-10"></a></span>
-<span id="cb171-11"><a href="#cb171-11"></a>fit<span class="fl">.13</span> <span class="ot">&lt;-</span></span>
-<span id="cb171-12"><a href="#cb171-12"></a>  <span class="fu">rbind</span>(fit<span class="fl">.13</span>[, , <span class="dv">1</span>],</span>
-<span id="cb171-13"><a href="#cb171-13"></a>        fit<span class="fl">.13</span>[, , <span class="dv">2</span>],</span>
-<span id="cb171-14"><a href="#cb171-14"></a>        fit<span class="fl">.13</span>[, , <span class="dv">3</span>],</span>
-<span id="cb171-15"><a href="#cb171-15"></a>        fit<span class="fl">.13</span>[, , <span class="dv">4</span>],</span>
-<span id="cb171-16"><a href="#cb171-16"></a>        fit<span class="fl">.13</span>[, , <span class="dv">5</span>],</span>
-<span id="cb171-17"><a href="#cb171-17"></a>        fit<span class="fl">.13</span>[, , <span class="dv">6</span>],</span>
-<span id="cb171-18"><a href="#cb171-18"></a>        fit<span class="fl">.13</span>[, , <span class="dv">7</span>]) <span class="sc">%&gt;%</span> </span>
-<span id="cb171-19"><a href="#cb171-19"></a>  <span class="fu">data.frame</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb171-20"><a href="#cb171-20"></a>  <span class="fu">set_names</span>(<span class="fu">pull</span>(nd, combination)) <span class="sc">%&gt;%</span> </span>
-<span id="cb171-21"><a href="#cb171-21"></a>  <span class="fu">mutate</span>(<span class="at">response =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>, <span class="at">each =</span> <span class="fu">n</span>() <span class="sc">/</span> <span class="dv">7</span>),</span>
-<span id="cb171-22"><a href="#cb171-22"></a>         <span class="at">iter     =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4000</span>, <span class="at">times =</span> <span class="dv">7</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb171-23"><a href="#cb171-23"></a>  <span class="fu">pivot_longer</span>(<span class="sc">-</span><span class="fu">c</span>(iter, response),</span>
-<span id="cb171-24"><a href="#cb171-24"></a>               <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">"action"</span>, <span class="st">"contact"</span>, <span class="st">"intention"</span>),</span>
-<span id="cb171-25"><a href="#cb171-25"></a>               <span class="at">names_sep =</span> <span class="st">"_"</span>,</span>
-<span id="cb171-26"><a href="#cb171-26"></a>               <span class="at">values_to =</span> <span class="st">"pk"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb171-27"><a href="#cb171-27"></a>  <span class="fu">mutate</span>(<span class="at">intention =</span> intention <span class="sc">%&gt;%</span> <span class="fu">as.integer</span>())</span>
-<span id="cb171-28"><a href="#cb171-28"></a></span>
-<span id="cb171-29"><a href="#cb171-29"></a>levels <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"action=0, contact=0"</span>, <span class="st">"action=1, contact=0"</span>, <span class="st">"action=0, contact=1"</span>)</span>
-<span id="cb171-30"><a href="#cb171-30"></a></span>
-<span id="cb171-31"><a href="#cb171-31"></a>  fit<span class="fl">.13</span> <span class="sc">%&gt;%</span> </span>
-<span id="cb171-32"><a href="#cb171-32"></a>  <span class="fu">filter</span>(response <span class="sc">&lt;</span> <span class="dv">7</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb171-33"><a href="#cb171-33"></a>  <span class="fu">mutate</span>(<span class="at">facet =</span> <span class="fu">factor</span>(<span class="fu">str_c</span>(<span class="st">"action="</span>, action, <span class="st">", contact="</span>, contact),</span>
-<span id="cb171-34"><a href="#cb171-34"></a>                        <span class="at">levels =</span> levels)) <span class="sc">%&gt;%</span> </span>
-<span id="cb171-35"><a href="#cb171-35"></a>  <span class="fu">group_by</span>(iter, facet, intention) <span class="sc">%&gt;%</span> </span>
-<span id="cb171-36"><a href="#cb171-36"></a>  <span class="fu">arrange</span>(iter, facet, intention, response) <span class="sc">%&gt;%</span> </span>
-<span id="cb171-37"><a href="#cb171-37"></a>  <span class="fu">mutate</span>(<span class="at">probability =</span> <span class="fu">cumsum</span>(pk)) <span class="sc">%&gt;%</span> </span>
-<span id="cb171-38"><a href="#cb171-38"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb171-39"><a href="#cb171-39"></a>  <span class="fu">nest</span>(<span class="at">data =</span> <span class="sc">-</span>iter) <span class="sc">%&gt;%</span> </span>
-<span id="cb171-40"><a href="#cb171-40"></a>  <span class="fu">sample_n</span>(<span class="at">size =</span> <span class="dv">50</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb171-41"><a href="#cb171-41"></a>  <span class="fu">unnest</span>(data) <span class="sc">%&gt;%</span> </span>
-<span id="cb171-42"><a href="#cb171-42"></a></span>
-<span id="cb171-43"><a href="#cb171-43"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> intention, <span class="at">y =</span> probability)) <span class="sc">+</span></span>
-<span id="cb171-44"><a href="#cb171-44"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">group =</span> <span class="fu">interaction</span>(iter, response), <span class="at">color =</span> probability),</span>
-<span id="cb171-45"><a href="#cb171-45"></a>            <span class="at">alpha =</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">10</span>) <span class="sc">+</span></span>
-<span id="cb171-46"><a href="#cb171-46"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> trolley <span class="sc">%&gt;%</span>  </span>
-<span id="cb171-47"><a href="#cb171-47"></a>               <span class="fu">group_by</span>(intention, contact, action) <span class="sc">%&gt;%</span> </span>
-<span id="cb171-48"><a href="#cb171-48"></a>               <span class="fu">count</span>(response) <span class="sc">%&gt;%</span> </span>
-<span id="cb171-49"><a href="#cb171-49"></a>               <span class="fu">mutate</span>(<span class="at">probability =</span> <span class="fu">cumsum</span>(n <span class="sc">/</span> <span class="fu">sum</span>(n)),</span>
-<span id="cb171-50"><a href="#cb171-50"></a>                      <span class="at">facet =</span> <span class="fu">factor</span>(<span class="fu">str_c</span>(<span class="st">"action="</span>, action, <span class="st">", contact="</span>, contact),</span>
-<span id="cb171-51"><a href="#cb171-51"></a>                                     <span class="at">levels =</span> levels)) <span class="sc">%&gt;%</span> </span>
-<span id="cb171-52"><a href="#cb171-52"></a>               <span class="fu">filter</span>(response <span class="sc">&lt;</span> <span class="dv">7</span>),) <span class="sc">+</span></span>
-<span id="cb171-53"><a href="#cb171-53"></a>  <span class="fu">scale_x_continuous</span>(<span class="st">"intention"</span>, <span class="at">breaks =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb171-54"><a href="#cb171-54"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, .<span class="dv">5</span>, <span class="dv">1</span>), <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)) <span class="sc">+</span></span>
-<span id="cb171-55"><a href="#cb171-55"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
-<span id="cb171-56"><a href="#cb171-56"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>facet)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb172"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb172-1"><a href="#cb172-1"></a>nd <span class="ot">&lt;-</span> </span>
+<span id="cb172-2"><a href="#cb172-2"></a>  trolley <span class="sc">%&gt;%</span> </span>
+<span id="cb172-3"><a href="#cb172-3"></a>  <span class="fu">distinct</span>(action, contact, intention) <span class="sc">%&gt;%</span> </span>
+<span id="cb172-4"><a href="#cb172-4"></a>  <span class="fu">mutate</span>(<span class="at">combination =</span> <span class="fu">str_c</span>(action, contact, intention, <span class="at">sep =</span> <span class="st">"_"</span>))</span>
+<span id="cb172-5"><a href="#cb172-5"></a></span>
+<span id="cb172-6"><a href="#cb172-6"></a>fit<span class="fl">.13</span> <span class="ot">&lt;-</span></span>
+<span id="cb172-7"><a href="#cb172-7"></a>  <span class="fu">fitted</span>(glm<span class="fl">.13</span>,</span>
+<span id="cb172-8"><a href="#cb172-8"></a>         <span class="at">newdata =</span> nd,</span>
+<span id="cb172-9"><a href="#cb172-9"></a>         <span class="at">summary =</span> F)</span>
+<span id="cb172-10"><a href="#cb172-10"></a></span>
+<span id="cb172-11"><a href="#cb172-11"></a>fit<span class="fl">.13</span> <span class="ot">&lt;-</span></span>
+<span id="cb172-12"><a href="#cb172-12"></a>  <span class="fu">rbind</span>(fit<span class="fl">.13</span>[, , <span class="dv">1</span>],</span>
+<span id="cb172-13"><a href="#cb172-13"></a>        fit<span class="fl">.13</span>[, , <span class="dv">2</span>],</span>
+<span id="cb172-14"><a href="#cb172-14"></a>        fit<span class="fl">.13</span>[, , <span class="dv">3</span>],</span>
+<span id="cb172-15"><a href="#cb172-15"></a>        fit<span class="fl">.13</span>[, , <span class="dv">4</span>],</span>
+<span id="cb172-16"><a href="#cb172-16"></a>        fit<span class="fl">.13</span>[, , <span class="dv">5</span>],</span>
+<span id="cb172-17"><a href="#cb172-17"></a>        fit<span class="fl">.13</span>[, , <span class="dv">6</span>],</span>
+<span id="cb172-18"><a href="#cb172-18"></a>        fit<span class="fl">.13</span>[, , <span class="dv">7</span>]) <span class="sc">%&gt;%</span> </span>
+<span id="cb172-19"><a href="#cb172-19"></a>  <span class="fu">data.frame</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb172-20"><a href="#cb172-20"></a>  <span class="fu">set_names</span>(<span class="fu">pull</span>(nd, combination)) <span class="sc">%&gt;%</span> </span>
+<span id="cb172-21"><a href="#cb172-21"></a>  <span class="fu">mutate</span>(<span class="at">response =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>, <span class="at">each =</span> <span class="fu">n</span>() <span class="sc">/</span> <span class="dv">7</span>),</span>
+<span id="cb172-22"><a href="#cb172-22"></a>         <span class="at">iter     =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4000</span>, <span class="at">times =</span> <span class="dv">7</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb172-23"><a href="#cb172-23"></a>  <span class="fu">pivot_longer</span>(<span class="sc">-</span><span class="fu">c</span>(iter, response),</span>
+<span id="cb172-24"><a href="#cb172-24"></a>               <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">"action"</span>, <span class="st">"contact"</span>, <span class="st">"intention"</span>),</span>
+<span id="cb172-25"><a href="#cb172-25"></a>               <span class="at">names_sep =</span> <span class="st">"_"</span>,</span>
+<span id="cb172-26"><a href="#cb172-26"></a>               <span class="at">values_to =</span> <span class="st">"pk"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb172-27"><a href="#cb172-27"></a>  <span class="fu">mutate</span>(<span class="at">intention =</span> intention <span class="sc">%&gt;%</span> <span class="fu">as.integer</span>())</span>
+<span id="cb172-28"><a href="#cb172-28"></a></span>
+<span id="cb172-29"><a href="#cb172-29"></a>levels <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"action=0, contact=0"</span>, <span class="st">"action=1, contact=0"</span>, <span class="st">"action=0, contact=1"</span>)</span>
+<span id="cb172-30"><a href="#cb172-30"></a></span>
+<span id="cb172-31"><a href="#cb172-31"></a>  fit<span class="fl">.13</span> <span class="sc">%&gt;%</span> </span>
+<span id="cb172-32"><a href="#cb172-32"></a>  <span class="fu">filter</span>(response <span class="sc">&lt;</span> <span class="dv">7</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb172-33"><a href="#cb172-33"></a>  <span class="fu">mutate</span>(<span class="at">facet =</span> <span class="fu">factor</span>(<span class="fu">str_c</span>(<span class="st">"action="</span>, action, <span class="st">", contact="</span>, contact),</span>
+<span id="cb172-34"><a href="#cb172-34"></a>                        <span class="at">levels =</span> levels)) <span class="sc">%&gt;%</span> </span>
+<span id="cb172-35"><a href="#cb172-35"></a>  <span class="fu">group_by</span>(iter, facet, intention) <span class="sc">%&gt;%</span> </span>
+<span id="cb172-36"><a href="#cb172-36"></a>  <span class="fu">arrange</span>(iter, facet, intention, response) <span class="sc">%&gt;%</span> </span>
+<span id="cb172-37"><a href="#cb172-37"></a>  <span class="fu">mutate</span>(<span class="at">probability =</span> <span class="fu">cumsum</span>(pk)) <span class="sc">%&gt;%</span> </span>
+<span id="cb172-38"><a href="#cb172-38"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb172-39"><a href="#cb172-39"></a>  <span class="fu">nest</span>(<span class="at">data =</span> <span class="sc">-</span>iter) <span class="sc">%&gt;%</span> </span>
+<span id="cb172-40"><a href="#cb172-40"></a>  <span class="fu">sample_n</span>(<span class="at">size =</span> <span class="dv">50</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb172-41"><a href="#cb172-41"></a>  <span class="fu">unnest</span>(data) <span class="sc">%&gt;%</span> </span>
+<span id="cb172-42"><a href="#cb172-42"></a></span>
+<span id="cb172-43"><a href="#cb172-43"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> intention, <span class="at">y =</span> probability)) <span class="sc">+</span></span>
+<span id="cb172-44"><a href="#cb172-44"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">group =</span> <span class="fu">interaction</span>(iter, response), <span class="at">color =</span> probability),</span>
+<span id="cb172-45"><a href="#cb172-45"></a>            <span class="at">alpha =</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">10</span>) <span class="sc">+</span></span>
+<span id="cb172-46"><a href="#cb172-46"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> trolley <span class="sc">%&gt;%</span>  </span>
+<span id="cb172-47"><a href="#cb172-47"></a>               <span class="fu">group_by</span>(intention, contact, action) <span class="sc">%&gt;%</span> </span>
+<span id="cb172-48"><a href="#cb172-48"></a>               <span class="fu">count</span>(response) <span class="sc">%&gt;%</span> </span>
+<span id="cb172-49"><a href="#cb172-49"></a>               <span class="fu">mutate</span>(<span class="at">probability =</span> <span class="fu">cumsum</span>(n <span class="sc">/</span> <span class="fu">sum</span>(n)),</span>
+<span id="cb172-50"><a href="#cb172-50"></a>                      <span class="at">facet =</span> <span class="fu">factor</span>(<span class="fu">str_c</span>(<span class="st">"action="</span>, action, <span class="st">", contact="</span>, contact),</span>
+<span id="cb172-51"><a href="#cb172-51"></a>                                     <span class="at">levels =</span> levels)) <span class="sc">%&gt;%</span> </span>
+<span id="cb172-52"><a href="#cb172-52"></a>               <span class="fu">filter</span>(response <span class="sc">&lt;</span> <span class="dv">7</span>),) <span class="sc">+</span></span>
+<span id="cb172-53"><a href="#cb172-53"></a>  <span class="fu">scale_x_continuous</span>(<span class="st">"intention"</span>, <span class="at">breaks =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb172-54"><a href="#cb172-54"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, .<span class="dv">5</span>, <span class="dv">1</span>), <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb172-55"><a href="#cb172-55"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
+<span id="cb172-56"><a href="#cb172-56"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>facet)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 
 </div>
@@ -61200,22 +61209,22 @@ HPD interval probability: 0.95 </code></pre>
 <h2>Unequal variances</h2>
 <p>The parameter related to latent variances is called disc (short for discrimination).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb172"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb172-1"><a href="#cb172-1"></a>glm<span class="fl">.14</span> <span class="ot">&lt;-</span> </span>
-<span id="cb172-2"><a href="#cb172-2"></a>  <span class="fu">brm</span>(<span class="at">family =</span> cumulative,</span>
-<span id="cb172-3"><a href="#cb172-3"></a>      <span class="fu">bf</span>(response <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> action <span class="sc">+</span> contact <span class="sc">+</span> intention <span class="sc">+</span> intention<span class="sc">:</span>action <span class="sc">+</span> intention<span class="sc">:</span>contact) <span class="sc">+</span></span>
-<span id="cb172-4"><a href="#cb172-4"></a>      <span class="fu">lf</span>(disc <span class="sc">~</span> <span class="dv">0</span> <span class="sc">+</span> action <span class="sc">+</span> contact <span class="sc">+</span> intention <span class="sc">+</span> intention<span class="sc">:</span>action <span class="sc">+</span> intention<span class="sc">:</span>contact, <span class="at">cmc =</span> <span class="cn">FALSE</span>),</span>
-<span id="cb172-5"><a href="#cb172-5"></a>      <span class="at">prior =</span> <span class="fu">c</span>(<span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, <span class="fl">1.5</span>), <span class="at">class =</span> Intercept),</span>
-<span id="cb172-6"><a href="#cb172-6"></a>                <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, <span class="fl">0.5</span>), <span class="at">class =</span> b)),</span>
-<span id="cb172-7"><a href="#cb172-7"></a>      <span class="at">iter =</span> <span class="dv">2000</span>, <span class="at">warmup =</span> <span class="dv">1000</span>, <span class="at">cores =</span> <span class="dv">4</span>, <span class="at">chains =</span> <span class="dv">4</span>,</span>
-<span id="cb172-8"><a href="#cb172-8"></a>      <span class="at">data =</span> trolley,</span>
-<span id="cb172-9"><a href="#cb172-9"></a>      <span class="at">backend =</span> <span class="st">"cmdstanr"</span>,</span>
-<span id="cb172-10"><a href="#cb172-10"></a>      <span class="at">file =</span> <span class="st">"glm.14"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb173"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb173-1"><a href="#cb173-1"></a>glm<span class="fl">.14</span> <span class="ot">&lt;-</span> </span>
+<span id="cb173-2"><a href="#cb173-2"></a>  <span class="fu">brm</span>(<span class="at">family =</span> cumulative,</span>
+<span id="cb173-3"><a href="#cb173-3"></a>      <span class="fu">bf</span>(response <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> action <span class="sc">+</span> contact <span class="sc">+</span> intention <span class="sc">+</span> intention<span class="sc">:</span>action <span class="sc">+</span> intention<span class="sc">:</span>contact) <span class="sc">+</span></span>
+<span id="cb173-4"><a href="#cb173-4"></a>      <span class="fu">lf</span>(disc <span class="sc">~</span> <span class="dv">0</span> <span class="sc">+</span> action <span class="sc">+</span> contact <span class="sc">+</span> intention <span class="sc">+</span> intention<span class="sc">:</span>action <span class="sc">+</span> intention<span class="sc">:</span>contact, <span class="at">cmc =</span> <span class="cn">FALSE</span>),</span>
+<span id="cb173-5"><a href="#cb173-5"></a>      <span class="at">prior =</span> <span class="fu">c</span>(<span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, <span class="fl">1.5</span>), <span class="at">class =</span> Intercept),</span>
+<span id="cb173-6"><a href="#cb173-6"></a>                <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, <span class="fl">0.5</span>), <span class="at">class =</span> b)),</span>
+<span id="cb173-7"><a href="#cb173-7"></a>      <span class="at">iter =</span> <span class="dv">2000</span>, <span class="at">warmup =</span> <span class="dv">1000</span>, <span class="at">cores =</span> <span class="dv">4</span>, <span class="at">chains =</span> <span class="dv">4</span>,</span>
+<span id="cb173-8"><a href="#cb173-8"></a>      <span class="at">data =</span> trolley,</span>
+<span id="cb173-9"><a href="#cb173-9"></a>      <span class="at">backend =</span> <span class="st">"cmdstanr"</span>,</span>
+<span id="cb173-10"><a href="#cb173-10"></a>      <span class="at">file =</span> <span class="st">"glm.14"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section class="slide level2">
 
 <div class="cell">
-<div class="sourceCode cell-code" id="cb173"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb173-1"><a href="#cb173-1"></a><span class="fu">summary</span>(glm<span class="fl">.14</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb174"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb174-1"><a href="#cb174-1"></a><span class="fu">summary</span>(glm<span class="fl">.14</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> Family: cumulative 
   Links: mu = logit; disc = log 
