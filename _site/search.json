@@ -2343,5 +2343,26 @@
     "title": "glm",
     "section": "Why 0 + Intercept?",
     "text": "Why 0 + Intercept?\n\nThe default (1 + …) assumes centered predictors to estimate the standard intercept\n0 + Intercept prevents automatic centering, allowing the intercept to represent the expectation when all predictors are at their original (non-centered) values\nFor most situations, this doesn’t matter, but when we get into more complex models (hello GLM, we should use this!)"
+  },
+  {
+    "objectID": "glm-7.html#offsets",
+    "href": "glm-7.html#offsets",
+    "title": "glm",
+    "section": "offsets",
+    "text": "offsets\nBecause we are counting numbers it assumes that the time period of counting is the same across observations. However, this may not be the case.\nLuckily, the Poisson (and other count distributions) assume that the rate of events is constant in time (or space) we can control for it.\nThese are called offsets, and we tell {brms} that we are going to include such a variable as they are more similar to weights rather than a variable we want to control for"
+  },
+  {
+    "objectID": "glm-7.html#revist-roaches",
+    "href": "glm-7.html#revist-roaches",
+    "title": "glm",
+    "section": "revist roaches",
+    "text": "revist roaches\n\n\nCode\nglm.8c &lt;-\n  brm(family = zero_inflated_poisson,\n      y ~ 0 + Intercept + roach1 + treatment + offset(exposure2),\n      prior = c(prior(normal(2, 1), class = b, coef = \"Intercept\"),\n                prior(normal(0, .5), class = b),\n                prior(exponential(1), class = zi)),\n      iter = 4000, warmup = 2000, cores = 4, chains = 4,\n      sample_prior = T,\n      data = roach, \n      file = \"glm.8c\",\n      backend = \"cmdstanr\")"
+  },
+  {
+    "objectID": "glm-7.html#compare-roach-models",
+    "href": "glm-7.html#compare-roach-models",
+    "title": "glm",
+    "section": "compare roach models",
+    "text": "compare roach models\n\nloo_p &lt;- loo(glm.7o, moment_match = TRUE)\nloo_nb &lt;- loo(glm.8b, moment_match = TRUE)\nloo_zip &lt;- loo(glm.8e, moment_match = TRUE)\nloo_compare(loo_p, loo_nb,loo_zip)\n\n       elpd_diff se_diff\nglm.8b     0.0       0.0\nglm.8e -4543.3    1313.2\nglm.7o -6216.2    1009.5"
   }
 ]

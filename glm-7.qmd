@@ -906,6 +906,64 @@ slopes(glm.7, variables = "treatment", newdata = "mean")
 ```
 
 
+
+## offsets
+
+Because we are counting numbers it assumes that the time period of counting is the same across observations. However, this may not be the case. 
+
+Luckily, the Poisson (and other count distributions) assume that the rate of events is constant in time (or space) we can control for it.
+
+These are called offsets, and we tell {brms} that we are going to include such a variable as they are more similar to weights rather than a variable we want to control for 
+
+
+---------
+
+```{r}
+
+
+glm.7o <-
+  brm(family = poisson,
+      y ~ 0 + Intercept + roach1 + treatment + offset(exposure2),
+      prior = c(prior(normal(2, 3), class = b, coef = "Intercept"),
+                prior(normal(0, 1), class = b)),
+      iter = 4000, warmup = 2000, cores = 4, chains = 4,
+      data = roach, 
+      backend = "cmdstanr",
+      file = "glm.7o")
+
+
+
+```
+
+
+-------
+
+Note the offset is not a coefficient. 
+
+```{r}
+summary(glm.7o)
+```
+
+
+
+--------
+
+```{r}
+#| code-fold: true
+predictions(glm.7o, newdata = datagrid(roach1 = unique, treatment = unique)) %>% 
+  posterior_draws() %>%
+  mutate(treatment = as.factor(treatment)) %>% 
+  ggplot(aes(x = roach1, y = draw, color = treatment)) +
+  stat_lineribbon(.width = .95, alpha = .4) + ylab("roaches")
+```
+
+-----
+
+```{r}
+pp_check(glm.7o)
+```
+
+
 -------
 
 Negative binomial (Gamma Poisson) model
@@ -1063,7 +1121,7 @@ predictions(glm.7, newdata = datagrid(roach1 = c(0,10,100,450), treatment = uniq
 
 ```{r}
 #| code-fold: true
-predictions(glm.8b,by = c("roach1", "treatment")) %>% 
+predictions(glm.8b, newdata = datagrid(roach1 = seq(from = min(roach$roach1), to = max(roach$roach1)), treatment = unique)) %>% 
   posterior_draws() %>%
   mutate(treatment = as.factor(treatment)) %>% 
   ggplot(aes(x = roach1, y = draw, color = treatment)) +
@@ -1096,14 +1154,13 @@ predictions(glm.8b,by = c("roach1", "treatment")) %>%
 
 
 
-
-------------------------------------------------------------------------
-
 ## Zero-inflated models
+
 
 Use when there are different causes for the same observation -- a mixture of DGPs.
 
 Lots of ways to get zero counts: Missed observation or the rate is low -- hard to distinguish.
+
 
 ```{r}
 #| code-fold: true
@@ -1255,6 +1312,162 @@ zips %>%
 ```{r}
 pp_check(glm.10x)
 ```
+
+
+## revist roaches
+
+```{r}
+#| code-fold: true
+
+glm.8c <-
+  brm(family = zero_inflated_poisson,
+      y ~ 0 + Intercept + roach1 + treatment + offset(exposure2),
+      prior = c(prior(normal(2, 1), class = b, coef = "Intercept"),
+                prior(normal(0, .5), class = b),
+                prior(exponential(1), class = zi)),
+      iter = 4000, warmup = 2000, cores = 4, chains = 4,
+      sample_prior = T,
+      data = roach, 
+      file = "glm.8c",
+      backend = "cmdstanr")
+```
+
+
+--------
+
+```{r}
+summary(glm.8c)
+```
+
+------
+
+
+
+```{r}
+predictions(glm.8c,
+            type = "prediction")  %>% 
+  posterior_draws() %>% 
+    sample_draws(50, draw = "drawid") %>% 
+    ggplot(aes(draw, group = drawid)) +
+   geom_line(stat = "density", alpha = .1) +
+  geom_density(aes(y))+ xlim(0,100)
+  theme_classic()
+```
+
+
+--------
+
+```{r}
+#| code-fold: true
+
+glm.8d <-
+  brm(bf(family = zero_inflated_poisson,
+      y ~ 0 + Intercept + roach1 + treatment + offset(exposure2),
+      zi ~ 0 + Intercept + roach1 + treatment +  offset(exposure2)),
+      iter = 4000, warmup = 2000, cores = 4, chains = 4,
+      data = roach, 
+      file = "glm.8d",
+      backend = "cmdstanr")
+```
+
+-------
+
+```{r}
+summary(glm.8d)
+```
+
+----------
+
+
+```{r}
+predictions(glm.8d,
+            type = "prediction")  %>% 
+  posterior_draws() %>% 
+    sample_draws(100, draw = "drawid") %>% 
+    ggplot(aes(draw, group = drawid)) +
+   geom_line(stat = "density", alpha = .1) +
+  geom_density(aes(y))+ xlim(0,100) +
+  theme_classic()
+```
+
+
+--------
+
+```{r}
+#| code-fold: true
+predictions(glm.8d,newdata = datagrid(roach1 = seq(from = min(roach$roach1), to = max(roach$roach1)), treatment = unique)) %>% 
+  posterior_draws() %>%
+  mutate(treatment = as.factor(treatment)) %>% 
+  ggplot(aes(x = roach1, y = draw, color = treatment)) +
+  stat_lineribbon(.width = .95, alpha = .4) + ylab("roaches")
+```
+
+
+
+----------
+
+
+```{r}
+#| code-fold: true
+
+glm.8e <-
+  brm(bf(family = zero_inflated_poisson,
+      y ~ 0 + Intercept + I(log(roach1+1)) + treatment +  offset(exposure2),
+      zi ~ 0 + Intercept + I(log(roach1+1)) + treatment +   offset(exposure2)),
+       prior = c(prior(normal(2, 1), class = b, coef = "Intercept"),
+                prior(normal(0, 1), class = b),
+                prior(normal(0, 1), class = b, dpar = "zi")),
+      iter = 4000, warmup = 2000, cores = 4, chains = 4,thin = 1,
+      data = roach, 
+      # file = "glm.8e",
+      backend = "cmdstanr")
+```
+
+
+```{r}
+summary(glm.8e)
+```
+
+-----------
+
+```{r}
+predictions(glm.8e,
+            type = "prediction")  %>% 
+  posterior_draws() %>% 
+    sample_draws(100, draw = "drawid") %>% 
+    ggplot(aes(draw, group = drawid)) +
+   geom_line(stat = "density", alpha = .1) +
+  geom_density(aes(y))+ xlim(0,100) +
+  theme_classic()
+```
+
+----------
+
+Big difference from before
+
+```{r}
+#| code-fold: true
+predictions(glm.8e,newdata = datagrid(roach1 = seq(from = min(roach$roach1), to = max(roach$roach1)), treatment = unique)) %>% 
+  posterior_draws() %>%
+  mutate(treatment = as.factor(treatment)) %>% 
+  ggplot(aes(x = roach1, y = draw, color = treatment)) +
+  stat_lineribbon(.width = .95, alpha = .4) + ylab("roaches")
+```
+
+
+
+## compare roach models
+
+```{r}
+loo_p <- loo(glm.7o, moment_match = TRUE)
+loo_nb <- loo(glm.8b, moment_match = TRUE)
+loo_zip <- loo(glm.8e, moment_match = TRUE)
+loo_compare(loo_p, loo_nb,loo_zip)
+```
+
+
+
+
 
 ## Hurdle models/zero augmented
 
