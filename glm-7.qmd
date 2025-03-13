@@ -72,61 +72,15 @@ $$p_i = f^{-1}(\alpha + \beta (x_i - \bar x))$$
 
 -   You already know this, maybe not in this term, but we can go back and forth between the link and inverse link via the exponential function.
 
-## Maximum Entropy
 
--   For an outcome variable that is continuous and far from any theoretical maximum or minimum, Gaussian model has maximum entropy. But when the outcome variable is either discrete or bounded, a Gaussian likelihood is not the most powerful choice.
-
--   The distribution that can happen the greatest number of ways is the most plausible distribution. Call this distribution the maximum entropy distribution
-
-------------------------------------------------------------------------
-
-```{r}
-#| code-fold: true
-#|
-library(tidyverse)
-library(brms)
-
-d <-
-  tibble(a = c(0, 0, 10, 0, 0),
-         b = c(0, 1, 8, 1, 0),
-         c = c(0, 2, 6, 2, 0),
-         d = c(1, 2, 4, 2, 1),
-         e = 2) 
-
-d %>% 
-  mutate(bucket = 1:5) %>% 
-  gather(letter, pebbles, - bucket) %>% 
-  
-  ggplot(aes(x = bucket, y = pebbles)) +
-  geom_col(width = 1/5) +
-  geom_text(aes(y = pebbles + 1, label = pebbles)) +
-  geom_text(data = tibble(
-    letter  = letters[1:5],
-    bucket  = 5.5,
-    pebbles = 10,
-    label   = str_c(c(1, 90, 1260, 37800, 113400), 
-                    rep(c(" way", " ways"), times = c(1, 4)))),
-    aes(label = label), hjust = 1) +
-  scale_y_continuous(breaks = c(0, 5, 10))  +
-  facet_wrap(~letter, ncol = 2)
-
-```
-
-------------------------------------------------------------------------
-
--   If all we are willing to assume about a collection of measurements is that they have a finite variance, then the Gaussian distribution represents the most conservative probability distribution to assign to those measurements.
-
--   With different assumptions, provided our assumptions are good ones, the principle of maximum entropy leads to distributions other than the Gaussian
-
--   Assumptions about your DGP should specify your likelihood function. NOT YOUR OBSERVED DISTRIBUTION OF DATA.
-
--   There is a folk understanding about different types of data and the distributions used e.g., counts we use poisson. Usually this folk knowledge aligns with the principle of maximum entropy
 
 ## Exponential Family
 
 ```{r}
 #| code-fold: true
 library(patchwork)
+library(tidyverse)
+library(brms)
 
 E1 <- ggplot(data.frame(x = c(0, 15)), aes(x = x))  +
     stat_function(fun = dexp, args = (mean=0.2), geom = "area", fill = "blue", alpha = 0.25) + ggtitle("Exponential with lambda = 0.2") 
@@ -473,6 +427,14 @@ predictions(glm.4, newdata = datagrid(IQ_c = seq(from = min(mortality$IQ_c), to 
 -   linpred: give me the expectation on the model's scale\
 
 -   predict: give me a new observation (on the response scale)
+
+
+
+----------------------------------------------
+
+$$y_i \sim \operatorname{Binomial} (n, p_i)$$
+
+$$logit(p_i) = \alpha + \beta (x_i - \bar x)$$
 
 ------------------------------------------------------------------------
 
@@ -1040,7 +1002,7 @@ predictions(glm.8b,
     sample_draws(50, draw = "drawid") %>% 
     ggplot(aes(draw, group = drawid)) +
    geom_line(stat = "density", alpha = .1) +
-  geom_density(aes(y))+ xlim(0,100)
+  geom_density(aes(y))+ xlim(0,100) +
   theme_classic()
 ```
 
@@ -1423,6 +1385,8 @@ glm.8e <-
       backend = "cmdstanr")
 ```
 
+
+------------
 
 ```{r}
 summary(glm.8e)
