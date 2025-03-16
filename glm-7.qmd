@@ -72,8 +72,6 @@ $$p_i = f^{-1}(\alpha + \beta (x_i - \bar x))$$
 
 -   You already know this, maybe not in this term, but we can go back and forth between the link and inverse link via the exponential function.
 
-
-
 ## Exponential Family
 
 ```{r}
@@ -428,9 +426,7 @@ predictions(glm.4, newdata = datagrid(IQ_c = seq(from = min(mortality$IQ_c), to 
 
 -   predict: give me a new observation (on the response scale)
 
-
-
-----------------------------------------------
+------------------------------------------------------------------------
 
 $$y_i \sim \operatorname{Binomial} (n, p_i)$$
 
@@ -709,7 +705,7 @@ Often the DGP of our data are complex in that there could be multiple reasons so
 
 $$Y \sim \textrm{NB}(\mu,\phi)$$
 
---------
+------------------------------------------------------------------------
 
 -   The Poisson distribution has just one parameter and presumes the mean/rate is associated with the spread. The negative binomial distribution relaxes this assumption and estimates the shape ($\phi$) of a gamma distribution (also an exponential family distribution) to describe the Poisson rates across cases.
 
@@ -750,14 +746,9 @@ ggplot(data = tibble(x = seq(from = 0, to = 60, by = .1)),
   coord_cartesian(xlim = c(0, 30)) 
 ```
 
-
 ## roach example
 
-y – number of roaches caught.
-roach1 – pretreatment number of roaches.
-treatment – dummy for treatment
-senior – dummy for elderly residents
-exposure2 – number of days 
+y – number of roaches caught. roach1 – pretreatment number of roaches. treatment – dummy for treatment senior – dummy for elderly residents exposure2 – number of days
 
 ```{r}
 #| code-fold: true
@@ -765,10 +756,9 @@ roach <- read_csv("https://github.com/TuringLang/TuringGLM.jl/raw/main/data/roac
 roach
 ```
 
+## Poisson
 
-## Poisson 
-
-$$y_i  \sim \operatorname{Poisson} (\lambda_i)$$  
+$$y_i  \sim \operatorname{Poisson} (\lambda_i)$$\
 $$\log (\lambda_i)  = \beta_0 + \beta_1*X_i $$
 
 ```{r}
@@ -787,28 +777,27 @@ glm.7 <-
 
 ```
 
+## Why 0 + Intercept?
 
-## Why 0 + Intercept? 
+-   The default (1 + ...) assumes centered predictors to estimate the standard intercept
 
-- The default (1 + ...) assumes centered predictors to estimate the standard intercept
+-   0 + Intercept prevents automatic centering, allowing the intercept to represent the expectation when all predictors are at their original (non-centered) values
 
-- 0 + Intercept prevents automatic centering, allowing the intercept to represent the expectation when all predictors are at their original (non-centered) values
+-   For most situations, this doesn't matter, but when we get into more complex models (hello GLM, we should use this!)
 
-- For most situations, this doesn't matter, but when we get into more complex models (hello GLM, we should use this!)
-
-------
+------------------------------------------------------------------------
 
 ```{r}
 summary(glm.7)
 ```
 
---------
+------------------------------------------------------------------------
 
 ```{r}
 predictions(glm.7,by = "treatment")
 ```
 
--------
+------------------------------------------------------------------------
 
 These predictions are on the original scale
 
@@ -816,15 +805,15 @@ These predictions are on the original scale
 predictions(glm.7)
 ```
 
------
+------------------------------------------------------------------------
 
-These predictions are on the log link scale. 
+These predictions are on the log link scale.
 
 ```{r}
 predictions(glm.7, type = "link")
 ```
 
--------
+------------------------------------------------------------------------
 
 ```{r}
 predictions(glm.7, newdata = datagrid(roach1 = 10, treatment = unique))
@@ -842,14 +831,13 @@ exp(3.14)
 predictions(glm.7, newdata = datagrid(roach1 = 10, treatment = unique), type = "link")
 ```
 
--------
+------------------------------------------------------------------------
 
 ```{r}
 pp_check(glm.7)
 ```
 
-
------
+------------------------------------------------------------------------
 
 ```{r}
 #| code-fold: true
@@ -860,25 +848,21 @@ predictions(glm.7,by = c("roach1", "treatment")) %>%
   stat_lineribbon(.width = .95, alpha = .4) + ylab("roaches")
 ```
 
-------
-
+------------------------------------------------------------------------
 
 ```{r}
 slopes(glm.7, variables = "treatment", newdata = "mean")
 ```
 
-
-
 ## offsets
 
-Because we are counting numbers it assumes that the time period of counting is the same across observations. However, this may not be the case. 
+Because we are counting numbers it assumes that the time period of counting is the same across observations. However, this may not be the case.
 
 Luckily, the Poisson (and other count distributions) assume that the rate of events is constant in time (or space) we can control for it.
 
-These are called offsets, and we tell {brms} that we are going to include such a variable as they are more similar to weights rather than a variable we want to control for 
+These are called offsets, and we tell {brms} that we are going to include such a variable as they are more similar to weights rather than a variable we want to control for
 
-
----------
+------------------------------------------------------------------------
 
 ```{r}
 
@@ -897,18 +881,15 @@ glm.7o <-
 
 ```
 
+------------------------------------------------------------------------
 
--------
-
-Note the offset is not a coefficient. 
+Note the offset is not a coefficient.
 
 ```{r}
 summary(glm.7o)
 ```
 
-
-
---------
+------------------------------------------------------------------------
 
 ```{r}
 #| code-fold: true
@@ -919,14 +900,13 @@ predictions(glm.7o, newdata = datagrid(roach1 = unique, treatment = unique)) %>%
   stat_lineribbon(.width = .95, alpha = .4) + ylab("roaches")
 ```
 
------
+------------------------------------------------------------------------
 
 ```{r}
 pp_check(glm.7o)
 ```
 
-
--------
+------------------------------------------------------------------------
 
 Negative binomial (Gamma Poisson) model
 
@@ -948,14 +928,13 @@ glm.8 <-
 
 ```
 
-
---------
+------------------------------------------------------------------------
 
 ```{r}
 summary(glm.8)
 ```
 
---------
+------------------------------------------------------------------------
 
 ```{r}
 predictions(glm.8,
@@ -968,9 +947,7 @@ predictions(glm.8,
   theme_classic()
 ```
 
-
--------------
-
+------------------------------------------------------------------------
 
 ```{r}
 #| code-fold: true
@@ -992,8 +969,7 @@ glm.8b <-
 
 ```
 
-
-------------
+------------------------------------------------------------------------
 
 ```{r}
 predictions(glm.8b,
@@ -1006,28 +982,25 @@ predictions(glm.8b,
   theme_classic()
 ```
 
---------
+------------------------------------------------------------------------
 
 ```{r}
 summary(glm.8b)
 ```
 
----------
-
+------------------------------------------------------------------------
 
 ```{r}
 predictions(glm.8b,by = "treatment")
 ```
 
-
 ```{r}
 predictions(glm.7,by = "treatment")
 ```
 
+------------------------------------------------------------------------
 
--------
-
-Findings across marginal are less  different. Why? 
+Findings across marginal are less different. Why?
 
 ```{r}
 slopes(glm.8b, variables = "treatment", newdata = "mean")
@@ -1037,19 +1010,15 @@ slopes(glm.8b, variables = "treatment", newdata = "mean")
 slopes(glm.7, variables = "treatment", newdata = "mean")
 ```
 
-
-----------
+------------------------------------------------------------------------
 
 *predictions(glm.8b,by = "treatment")* generates predictions by feeding the model with the original data, then collapse to averages. This is called the Average marginal effects (AME)
 
-*slopes(glm.7, variables = "treatment", newdata = "mean")* collapses data to averages, then generate predictions by feeding the model those averages. This is called Marginal effects at the mean (MEM). 
+*slopes(glm.7, variables = "treatment", newdata = "mean")* collapses data to averages, then generate predictions by feeding the model those averages. This is called Marginal effects at the mean (MEM).
 
 Both are okay, in economics/poli sci/epi they tend to use AME whereas in psych and datascience most use MEM (this is what tidymodels and what emmeans use)
 
-
-
-
-------------
+------------------------------------------------------------------------
 
 ```{r}
 predictions(glm.8b)
@@ -1059,27 +1028,23 @@ predictions(glm.8b)
 predictions(glm.7)
 ```
 
---------
+------------------------------------------------------------------------
 
 ```{r}
 describe(roach)
 ```
 
-
-
-------
+------------------------------------------------------------------------
 
 ```{r}
 predictions(glm.8b, newdata = datagrid(roach1 = c(0,10,100,450), treatment = unique))
 ```
 
-
 ```{r}
 predictions(glm.7, newdata = datagrid(roach1 = c(0,10,100,450), treatment = unique))
 ```
 
-
---------
+------------------------------------------------------------------------
 
 ```{r}
 #| code-fold: true
@@ -1090,9 +1055,7 @@ predictions(glm.8b, newdata = datagrid(roach1 = seq(from = min(roach$roach1), to
   stat_lineribbon(.width = .95, alpha = .4) + ylab("roaches")
 ```
 
-
------------
-
+------------------------------------------------------------------------
 
 ```{r}
 #| code-fold: true
@@ -1103,7 +1066,7 @@ predictions(glm.7,by = c("roach1", "treatment")) %>%
   stat_lineribbon(.width = .95, alpha = .4) + ylab("roaches")
 ```
 
----------
+------------------------------------------------------------------------
 
 ```{r}
 #| code-fold: true
@@ -1114,15 +1077,11 @@ predictions(glm.8b,by = c("roach1", "treatment")) %>%
   stat_lineribbon(.width = .95, alpha = .4) + ylab("roaches") +ylim(0,400)
 ```
 
-
-
 ## Zero-inflated models
-
 
 Use when there are different causes for the same observation -- a mixture of DGPs.
 
 Lots of ways to get zero counts: Missed observation or the rate is low -- hard to distinguish.
-
 
 ```{r}
 #| code-fold: true
@@ -1275,7 +1234,6 @@ zips %>%
 pp_check(glm.10x)
 ```
 
-
 ## revist roaches
 
 ```{r}
@@ -1294,16 +1252,13 @@ glm.8c <-
       backend = "cmdstanr")
 ```
 
-
---------
+------------------------------------------------------------------------
 
 ```{r}
 summary(glm.8c)
 ```
 
-------
-
-
+------------------------------------------------------------------------
 
 ```{r}
 predictions(glm.8c,
@@ -1316,8 +1271,7 @@ predictions(glm.8c,
   theme_classic()
 ```
 
-
---------
+------------------------------------------------------------------------
 
 ```{r}
 #| code-fold: true
@@ -1332,14 +1286,13 @@ glm.8d <-
       backend = "cmdstanr")
 ```
 
--------
+------------------------------------------------------------------------
 
 ```{r}
 summary(glm.8d)
 ```
 
-----------
-
+------------------------------------------------------------------------
 
 ```{r}
 predictions(glm.8d,
@@ -1352,8 +1305,7 @@ predictions(glm.8d,
   theme_classic()
 ```
 
-
---------
+------------------------------------------------------------------------
 
 ```{r}
 #| code-fold: true
@@ -1364,10 +1316,7 @@ predictions(glm.8d,newdata = datagrid(roach1 = seq(from = min(roach$roach1), to 
   stat_lineribbon(.width = .95, alpha = .4) + ylab("roaches")
 ```
 
-
-
-----------
-
+------------------------------------------------------------------------
 
 ```{r}
 #| code-fold: true
@@ -1385,14 +1334,13 @@ glm.8e <-
       backend = "cmdstanr")
 ```
 
-
-------------
+------------------------------------------------------------------------
 
 ```{r}
 summary(glm.8e)
 ```
 
------------
+------------------------------------------------------------------------
 
 ```{r}
 predictions(glm.8e,
@@ -1405,7 +1353,7 @@ predictions(glm.8e,
   theme_classic()
 ```
 
-----------
+------------------------------------------------------------------------
 
 Big difference from before
 
@@ -1418,8 +1366,6 @@ predictions(glm.8e,newdata = datagrid(roach1 = seq(from = min(roach$roach1), to 
   stat_lineribbon(.width = .95, alpha = .4) + ylab("roaches")
 ```
 
-
-
 ## compare roach models
 
 ```{r}
@@ -1428,10 +1374,6 @@ loo_nb <- loo(glm.8b, moment_match = TRUE)
 loo_zip <- loo(glm.8e, moment_match = TRUE)
 loo_compare(loo_p, loo_nb,loo_zip)
 ```
-
-
-
-
 
 ## Hurdle models/zero augmented
 
