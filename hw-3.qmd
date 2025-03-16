@@ -2,6 +2,7 @@
 title: "hw-3"
 ---
 
+
 Please email in homework to: Homewor.migdgp1ciaay0jrv@u.box.com Include your code as a quarto(qmd) file and include either a html or PDF file. Please make sure you have your name on it. 
 
 We will continue to use the mortality dataset from the GLM class for questions # 1 - 5: 
