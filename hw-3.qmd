@@ -5,15 +5,12 @@ output: html_document
 
 Please email in homework to: Homewor.migdgp1ciaay0jrv@u.box.com Include your code as a quarto(qmd) file and include either a html or PDF file. Please make sure you have your name on it. 
 
-We will continue to use the mortality dataset from the GLM class for questions # 1 - 5.
+We will continue to use the mortality dataset from the GLM class for questions # 1 - 5: 
 
 "https://raw.githubusercontent.com/josh-jackson/bayes/master/static/Lectures/mortality.csv"
 
-For questions # 6 - 8 please use the KN dataset
-
-```{r}
-
-```
+For questions # 6 - 8 please use the KN dataset: 
+"https://raw.githubusercontent.com/josh-jackson/bayes25/refs/heads/main/KN.csv"
 
 
 1.  Run a logistic regression where premature mortality is predicted by risky behavior. Interpret the coefficients in terms of:
