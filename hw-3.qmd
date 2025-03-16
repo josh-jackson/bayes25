@@ -9,7 +9,7 @@ We will continue to use the mortality dataset from the GLM class for questions #
 
 "https://raw.githubusercontent.com/josh-jackson/bayes/master/static/Lectures/mortality.csv"
 
-For questions # 6 - 8 please use the KN dataset: 
+For questions # 6 please use the KN dataset: 
 "https://raw.githubusercontent.com/josh-jackson/bayes25/refs/heads/main/KN.csv"
 
 
