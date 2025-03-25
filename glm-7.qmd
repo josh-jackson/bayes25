@@ -1141,7 +1141,7 @@ glm.9 <-
       iter = 2000, warmup = 1000, chains = 4, cores = 4,
       data = zips,
       backend = "cmdstanr",
-      file = "glm.7")
+      file = "glm.9")
 ```
 
 ------------------------------------------------------------------------
@@ -1162,7 +1162,7 @@ zip.priors %>%
 
 ------------------------------------------------------------------------
 
-Noe: When there are no predictors for zi, the brms default is to use the identity link. With predictors it will use logit, so you will have to use what you know about logits to correctly interpret. exp(-.2) = .82
+Noe: When there are no predictors for zi, the brms default is to use the identity link. With predictors it will use logit, so you will have to use what you know about logs to correctly interpret. exp(-.02) = .98
 
 ```{r}
 summary(glm.9)
@@ -1174,13 +1174,13 @@ Adding predictors. Do not necessarily need to have the same predictors for each 
 
 ```{r}
 glm.10 <- 
-  brm(bf(y ~ 1 + drink, 
-      zi ~ 1),
+  brm(bf(y ~ 1 + x, 
+      zi ~ 1 + x),
       family = zero_inflated_poisson,
       iter = 2000, warmup = 1000, chains = 4, cores = 4,
       data = zips,
       backend = "cmdstanr",
-      file = "glm.9x")
+      file = "glm.10a")
 ```
 
 ------------------------------------------------------------------------
@@ -1198,41 +1198,6 @@ conditional_effects(glm.10)
 
 ```
 
-------------------------------------------------------------------------
-
-```{r}
-glm.10x <- 
-  brm(bf(y ~ 1 + drink + x, 
-      zi ~ 1),
-      family = zero_inflated_poisson,
-      iter = 2000, warmup = 1000, chains = 4, cores = 4,
-      data = zips,
-      backend = "cmdstanr",
-      file = "glm.9x3")
-```
-
-------------------------------------------------------------------------
-
-```{r}
-summary(glm.10x)
-```
-
-------------------------------------------------------------------------
-
-```{r}
-#| code-fold: true
-zips %>% 
-  data_grid(x = seq_range(x, n = 30), drink = c(0,1)) %>% 
-  add_epred_draws(glm.10x) %>% 
-  ggplot(aes(x = x, y = .epred, fill = factor(drink))) +
-  stat_lineribbon(.width = 0.95) 
-```
-
-------------------------------------------------------------------------
-
-```{r}
-pp_check(glm.10x)
-```
 
 ## revist roaches
 
@@ -1330,7 +1295,7 @@ glm.8e <-
                 prior(normal(0, 1), class = b, dpar = "zi")),
       iter = 4000, warmup = 2000, cores = 4, chains = 4,thin = 1,
       data = roach, 
-      # file = "glm.8e",
+      file = "glm.8d2",
       backend = "cmdstanr")
 ```
 
@@ -1407,7 +1372,7 @@ summary(glm.11)
 
 glm.11x <- 
   brm(family = hurdle_poisson,
-      y ~ 1 + drink + x,
+      y ~ 1 +  x,
       hu ~ 1 , 
       prior = c(prior(normal(-1.5, 1), class = Intercept),
                prior(normal(-1.5, 3), class = b),
@@ -1415,7 +1380,7 @@ glm.11x <-
       iter = 2000, warmup = 1000, chains = 4, cores = 4,
       data = zips,
       backend = "cmdstanr",
-      file = "glm.11x2")
+      file = "glm.11x3")
 
 ```
 
@@ -1430,7 +1395,7 @@ summary(glm.11x)
 ```{r}
 #| code-fold: true
 zips %>% 
-  data_grid(x = seq_range(x, n = 30), drink = 0) %>% 
+  data_grid(x = seq_range(x, n = 30)) %>% 
   add_epred_draws(glm.11x) %>% 
   ggplot(aes(x = x, y = .epred)) +
   stat_lineribbon(.width = 0.95, alpha = .4) 
