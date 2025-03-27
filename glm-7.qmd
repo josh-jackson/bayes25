@@ -1651,11 +1651,31 @@ gather_draws(b_Intercept[cut]) %>%
 
 ## adding predictors
 
+
+$$\log \frac{\operatorname{Pr}(y_i \leq k)}{1 - \operatorname{Pr}(y_i \leq k)} =  \alpha_k - \phi_i $$
+
+
+$$ \text{response}_i  \sim \operatorname{Categorical} (\mathbf p) $$ 
+
+$$  \text{logit}(p_k)      =  \log \frac{\operatorname{Pr}(y_i \leq k)}{1 - \operatorname{Pr}(y_i \leq k)} =\alpha_k - \phi_i $$ 
+
+$$\phi_i = \beta x_i$$
+
+Why is the linear model ϕ subtracted from each intercept? Because if we decrease the log-cumulative-odds of every outcome value k below the maximum, this necessarily shifts probability mass upwards towards higher outcome values. This way, a positive β value indicates that an increase in the predictor variable x results in an increase in the average response. 
+
+
+------------
+
 ![](cumlog.gif)
+
 
 ------------------------------------------------------------------------
 
-$$ \text{response}_i  \sim \operatorname{Categorical} (\mathbf p) $$ $$ \text{logit}(p_k)      = \alpha_k + \phi_i $$ $$  \phi_i = \beta_1 \text{action}_i + \beta_2 \text{contact}_i + \beta_3 \text{intention}_i + \beta_4 (\text{action}_i \times \text{intention}_i) + \beta_5 (\text{contact}_i \times \text{intention}_i) $$ $$\alpha_k               \sim \operatorname{Normal}(0, 1.5) $$ $$\beta_1, ..., \beta_5  \sim \operatorname{Normal}(0, 0.5) $$
+$$ \text{response}_i  \sim \operatorname{Categorical} (\mathbf p) $$ 
+$$ \text{logit}(p_k)      = \alpha_k - \phi_i $$ 
+$$  \phi_i = \beta_1 \text{action}_i + \beta_2 \text{contact}_i + \beta_3 \text{intention}_i + \beta_4 (\text{action}_i \times \text{intention}_i) + \beta_5 (\text{contact}_i \times \text{intention}_i) $$
+$$\alpha_k               \sim \operatorname{Normal}(0, 1.5) $$ 
+$$\beta_1, ..., \beta_5  \sim \operatorname{Normal}(0, 0.5) $$
 
 ------------------------------------------------------------------------
 
@@ -1766,7 +1786,7 @@ trolley %>%
 
 ------------------------------------------------------------------------
 
-Thank as cumulative probability cut points
+Think as cumulative probability cut points
 
 ```{r}
 #| code-fold: true
@@ -1851,11 +1871,62 @@ glm.14 <-
 summary(glm.14)
 ```
 
-## Adjacent category /category specific models
 
-Do you want to assume similar effects of your predictors across the range of your DV? Or does the effect occur only as certain differences between the categories?
+---------
+```{r}
+trolley %>%
+  data_grid(action = .5, intention = c(0,1), contact = c(0,1)) %>%
+  mutate(x = interaction(contact, intention)) %>% 
+  mutate(x = fct_recode(as.factor(x),
+                      No_C_No_I = "0.0",
+                      Y_C_No_I = "1.0",
+                      No_C_Y_I = "0.1",
+                      Y_C_Y_I = "1.1")) %>% 
+  add_epred_draws(glm.14) %>%
+  ggplot(aes(x = .epred, y = .category, fill = x)) +
+  stat_slab()
+```
+
+
+
+## IRT models (2pl)
+
+When we have multiple items we can fit latent (IRT) models
+
+$$y_i \sim \operatorname{Bernoulli} (p_{pi})$$
+
+$$logit(p_{pi}) = \alpha_i\theta_p + \alpha_i\xi_i$$
+
+$$logit(p_{pi}) = \alpha_i(\theta_p + \xi_i)$$
+## Category specific effects
+
+Do you want to assume similar effects of your predictors across the range of your DV? Or does the effect occur only as certain differences between the categories? 
 
 For example, predicting educational attainment. Negative peer influences may have a large effect at graduating HS but little effect compared to whether or not someone goes to graduate school.
+
+```{r, eval = FALSE}
+Y ~ cs(X),
+```
+
+
+
+## Sequential and Adjacent category models
+
+For many ordinal variables, the assumption of a single underlying continuous variable, as in cumulative models, may not be appropriate. 
+
+sequential: years of marriage where the marriage may continue or end by divorce, but the latter can happen only if it did not happen before. For every category k there is a latent continuous variable. 
+
+Adjacent category (partial credit): Sequential models model the decision between Y = k and Y > k, whereas adjacent-category models model the decision
+between Y = k and Y = k + 1. Mathematically useful, lack of ordering of the threshold parameters. 
+
+
+
+
+
+-------------
+
+![](adjacent.png)
+
 
 ## Ordinal predictors
 

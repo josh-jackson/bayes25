@@ -1964,7 +1964,7 @@
     "href": "glm-7.html#adding-predictors",
     "title": "glm",
     "section": "adding predictors",
-    "text": "adding predictors"
+    "text": "adding predictors\n\\[\\log \\frac{\\operatorname{Pr}(y_i \\leq k)}{1 - \\operatorname{Pr}(y_i \\leq k)} =  \\alpha_k - \\phi_i \\]\n\\[ \\text{response}_i  \\sim \\operatorname{Categorical} (\\mathbf p) \\]\n\\[  \\text{logit}(p_k)      =  \\log \\frac{\\operatorname{Pr}(y_i \\leq k)}{1 - \\operatorname{Pr}(y_i \\leq k)} =\\alpha_k - \\phi_i \\]\n\\[\\phi_i = \\beta x_i\\]\nWhy is the linear model ϕ subtracted from each intercept? Because if we decrease the log-cumulative-odds of every outcome value k below the maximum, this necessarily shifts probability mass upwards towards higher outcome values. This way, a positive β value indicates that an increase in the predictor variable x results in an increase in the average response."
   },
   {
     "objectID": "glm-7.html#unequal-variances",
@@ -2378,5 +2378,19 @@
     "title": "glm",
     "section": "",
     "text": "work with distributions other than gaussian/t\nintroduce glm families with link functions"
+  },
+  {
+    "objectID": "glm-7.html#irt-models-2pl",
+    "href": "glm-7.html#irt-models-2pl",
+    "title": "glm",
+    "section": "IRT models (2pl)",
+    "text": "IRT models (2pl)\nWhen we have multiple items we can fit latent (IRT) models\n\\[y_i \\sim \\operatorname{Bernoulli} (p_{pi})\\]\n\\[logit(p_{pi}) = \\alpha_i\\theta_p + \\alpha_i\\xi_i\\]\n\\[logit(p_{pi}) = \\alpha_i(\\theta_p + \\xi_i)\\] ## Category specific effects\nDo you want to assume similar effects of your predictors across the range of your DV? Or does the effect occur only as certain differences between the categories?\nFor example, predicting educational attainment. Negative peer influences may have a large effect at graduating HS but little effect compared to whether or not someone goes to graduate school.\n\nY ~ cs(X),"
+  },
+  {
+    "objectID": "glm-7.html#sequential-and-adjacent-category-models",
+    "href": "glm-7.html#sequential-and-adjacent-category-models",
+    "title": "glm",
+    "section": "Sequential and Adjacent category models",
+    "text": "Sequential and Adjacent category models\nFor many ordinal variables, the assumption of a single underlying continuous variable, as in cumulative models, may not be appropriate.\nsequential: years of marriage where the marriage may continue or end by divorce, but the latter can happen only if it did not happen before. For every category k there is a latent continuous variable.\nAdjacent category (partial credit): Sequential models model the decision between Y = k and Y &gt; k, whereas adjacent-category models model the decision between Y = k and Y = k + 1. Mathematically useful, lack of ordering of the threshold parameters."
   }
 ]

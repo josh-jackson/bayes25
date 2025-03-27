@@ -61152,11 +61152,19 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 </section>
 <section id="adding-predictors" class="slide level2">
 <h2>adding predictors</h2>
+<p><span class="math display">\[\log \frac{\operatorname{Pr}(y_i \leq k)}{1 - \operatorname{Pr}(y_i \leq k)} =  \alpha_k - \phi_i \]</span></p>
+<p><span class="math display">\[ \text{response}_i  \sim \operatorname{Categorical} (\mathbf p) \]</span></p>
+<p><span class="math display">\[  \text{logit}(p_k)      =  \log \frac{\operatorname{Pr}(y_i \leq k)}{1 - \operatorname{Pr}(y_i \leq k)} =\alpha_k - \phi_i \]</span></p>
+<p><span class="math display">\[\phi_i = \beta x_i\]</span></p>
+<p>Why is the linear model ϕ subtracted from each intercept? Because if we decrease the log-cumulative-odds of every outcome value k below the maximum, this necessarily shifts probability mass upwards towards higher outcome values. This way, a positive β value indicates that an increase in the predictor variable x results in an increase in the average response.</p>
+</section>
+<section class="slide level2">
+
 
 <img data-src="cumlog.gif" class="r-stretch"></section>
 <section class="slide level2">
 
-<p><span class="math display">\[ \text{response}_i  \sim \operatorname{Categorical} (\mathbf p) \]</span> <span class="math display">\[ \text{logit}(p_k)      = \alpha_k + \phi_i \]</span> <span class="math display">\[  \phi_i = \beta_1 \text{action}_i + \beta_2 \text{contact}_i + \beta_3 \text{intention}_i + \beta_4 (\text{action}_i \times \text{intention}_i) + \beta_5 (\text{contact}_i \times \text{intention}_i) \]</span> <span class="math display">\[\alpha_k               \sim \operatorname{Normal}(0, 1.5) \]</span> <span class="math display">\[\beta_1, ..., \beta_5  \sim \operatorname{Normal}(0, 0.5) \]</span></p>
+<p><span class="math display">\[ \text{response}_i  \sim \operatorname{Categorical} (\mathbf p) \]</span> <span class="math display">\[ \text{logit}(p_k)      = \alpha_k - \phi_i \]</span> <span class="math display">\[  \phi_i = \beta_1 \text{action}_i + \beta_2 \text{contact}_i + \beta_3 \text{intention}_i + \beta_4 (\text{action}_i \times \text{intention}_i) + \beta_5 (\text{contact}_i \times \text{intention}_i) \]</span> <span class="math display">\[\alpha_k               \sim \operatorname{Normal}(0, 1.5) \]</span> <span class="math display">\[\beta_1, ..., \beta_5  \sim \operatorname{Normal}(0, 0.5) \]</span></p>
 </section>
 <section class="slide level2">
 
@@ -61373,7 +61381,7 @@ HPD interval probability: 0.95 </code></pre>
 <img data-src="glm-7_files/figure-revealjs/unnamed-chunk-128-1.png" width="960" class="r-stretch"></section>
 <section class="slide level2">
 
-<p>Thank as cumulative probability cut points</p>
+<p>Think as cumulative probability cut points</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
@@ -61508,11 +61516,45 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 </div>
 </div>
 </section>
-<section id="adjacent-category-category-specific-models" class="slide level2">
-<h2>Adjacent category /category specific models</h2>
+<section class="slide level2">
+
+<div class="cell">
+<div class="sourceCode cell-code" id="cb197"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb197-1"><a href="#cb197-1"></a>trolley <span class="sc">%&gt;%</span></span>
+<span id="cb197-2"><a href="#cb197-2"></a>  <span class="fu">data_grid</span>(<span class="at">action =</span> .<span class="dv">5</span>, <span class="at">intention =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="at">contact =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb197-3"><a href="#cb197-3"></a>  <span class="fu">mutate</span>(<span class="at">x =</span> <span class="fu">interaction</span>(contact, intention)) <span class="sc">%&gt;%</span> </span>
+<span id="cb197-4"><a href="#cb197-4"></a>  <span class="fu">mutate</span>(<span class="at">x =</span> <span class="fu">fct_recode</span>(<span class="fu">as.factor</span>(x),</span>
+<span id="cb197-5"><a href="#cb197-5"></a>                      <span class="at">No_C_No_I =</span> <span class="st">"0.0"</span>,</span>
+<span id="cb197-6"><a href="#cb197-6"></a>                      <span class="at">Y_C_No_I =</span> <span class="st">"1.0"</span>,</span>
+<span id="cb197-7"><a href="#cb197-7"></a>                      <span class="at">No_C_Y_I =</span> <span class="st">"0.1"</span>,</span>
+<span id="cb197-8"><a href="#cb197-8"></a>                      <span class="at">Y_C_Y_I =</span> <span class="st">"1.1"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb197-9"><a href="#cb197-9"></a>  <span class="fu">add_epred_draws</span>(glm<span class="fl">.14</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb197-10"><a href="#cb197-10"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> .epred, <span class="at">y =</span> .category, <span class="at">fill =</span> x)) <span class="sc">+</span></span>
+<span id="cb197-11"><a href="#cb197-11"></a>  <span class="fu">stat_slab</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="glm-7_files/figure-revealjs/unnamed-chunk-132-1.png" width="960" class="r-stretch"></section>
+<section id="irt-models-2pl" class="slide level2">
+<h2>IRT models (2pl)</h2>
+<p>When we have multiple items we can fit latent (IRT) models</p>
+<p><span class="math display">\[y_i \sim \operatorname{Bernoulli} (p_{pi})\]</span></p>
+<p><span class="math display">\[logit(p_{pi}) = \alpha_i\theta_p + \alpha_i\xi_i\]</span></p>
+<p><span class="math display">\[logit(p_{pi}) = \alpha_i(\theta_p + \xi_i)\]</span> ## Category specific effects</p>
 <p>Do you want to assume similar effects of your predictors across the range of your DV? Or does the effect occur only as certain differences between the categories?</p>
 <p>For example, predicting educational attainment. Negative peer influences may have a large effect at graduating HS but little effect compared to whether or not someone goes to graduate school.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb198"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb198-1"><a href="#cb198-1"></a>Y <span class="sc">~</span> <span class="fu">cs</span>(X),</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </section>
+<section id="sequential-and-adjacent-category-models" class="slide level2">
+<h2>Sequential and Adjacent category models</h2>
+<p>For many ordinal variables, the assumption of a single underlying continuous variable, as in cumulative models, may not be appropriate.</p>
+<p>sequential: years of marriage where the marriage may continue or end by divorce, but the latter can happen only if it did not happen before. For every category k there is a latent continuous variable.</p>
+<p>Adjacent category (partial credit): Sequential models model the decision between Y = k and Y &gt; k, whereas adjacent-category models model the decision between Y = k and Y = k + 1. Mathematically useful, lack of ordering of the threshold parameters.</p>
+</section>
+<section class="slide level2">
+
+
+<img data-src="adjacent.png" class="r-stretch"></section>
 <section id="ordinal-predictors" class="slide level2">
 <h2>Ordinal predictors</h2>
 <p>Say you have an exercise variable: (none, 1 time a month, 1 time a week, multiple times a week, everyday). How do you model? Continuous?</p>
