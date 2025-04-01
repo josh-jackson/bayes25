@@ -1,7 +1,7 @@
 ---
 title: mlm
 format: revealjs
-editor: visual
+slide-number: true
 execute:
   echo: true
 html:
@@ -31,6 +31,8 @@ library(tidyverse)
 library(tidybayes)
 library(ggdist)
 library(brms)
+library(modelr)
+library(marginaleffects)
 sample_n_of <- function(data, size, ...) {
   dots <- quos(...)
   
@@ -146,14 +148,11 @@ $${\beta}_{16} = \gamma_{10} \pm U_{16}$$
 The residual structure, where the random effects are again normally distributed with a mean of zero, but this time one must also consider covariance in addition to variance.
 
 $$\begin{pmatrix} {U}_{0j} \\ {U}_{1j} \end{pmatrix}
-\sim \mathcal{N} \begin{pmatrix} 
-  0,      \tau_{00}^{2} & \tau_{01}\\ 
-  0,  \tau_{01} & \tau_{10}^{2}
-\end{pmatrix}$$
+\sim N \begin{pmatrix} 0,      \tau_{00}^{2} & \tau_{01}\\ 0,  \tau_{01} & \tau_{10}^{2} \end{pmatrix}$$
 
 Note that it is possible to have a different error structure for the random effects
 
-$${e}_{ij} \sim \mathcal{N}(0, \sigma^{2})$$
+$${e}_{ij} \sim N(0, \sigma^{2})$$
 
 ## Multiple level 1 predictors
 
@@ -195,6 +194,8 @@ Level 2: $${\beta}_{0j} = \gamma_{00} + \bar{X_j} +   U_{0j}$$
 
 $${\beta}_{1j} = \gamma_{10} + \bar{X_j} + U_{1j}$$
 
+Could also grand mean center the level 2 means so that the interaction has a meaningful zero point. 
+
 ## MLM as default and make it maximum
 
 If you have data like this you should analyze like this! If you don't, then you are losing information (GEE being a potential exception).
@@ -212,187 +213,9 @@ Anytime you have repeated DVs you should use MLM as opposed to doing aggregation
 5.  Learning from other data through pooling/shrinkage
 6.  Parameters that depend on parameters
 
-## ANOVA and MLMs
 
-We can think of ANOVA models as MLM models with category as a random factor. Group-based deviations are reflected in the random effect of group $U_{0j}$. Our other two parameters are $\varepsilon_{ij}$ and $\gamma_{00}$ reflecting sigma and the mean of the group means, respectfully.
 
-Same for Bayes as for frequentest, nothing new
-
-Level 1 $${Happy}_{ij} = \beta_{0j}  + \varepsilon_{ij}$$
-
-Level 2 $${\beta}_{0j} = \gamma_{00} + U_{0j}$$
-
-------------------------------------------------------------------------
-
--   The unique part for Bayes is the introduction of a prior on the sd/random effect. The prior describes the distribution from which our groups arise and are centered around zero, meaning we need to think about the SD of the random effect.
-
--   Random effects are not often thought of during normal experimental design considerations. At this juncture we won't go into choosing values for the SD of the random effects. We have a few options such as creating "hyper" priors which learn from your data.
-
--   If the SD is low, then deviations are thought to be zero, which will lead to large shrinkage. If high, deviations are not uncommon, and thus this more closely resembles ANOVA (with no shrinkage/learning from other groups)
-
-------------------------------------------------------------------------
-
-```{r}
-#| code-fold: true
-mr.11 <- 
-  brm(family = gaussian,
-      bf(happiness ~  1 + (1|iv)),
-          prior = c(prior(normal(5, 2), class = Intercept),
-                prior(normal(0, 2), class = sd),
-               prior(exponential(1), class = sigma)),
-      iter = 2000, warmup = 1000, chains = 4, cores = 4,
-      data = MR,
-      backend = "cmdstanr",
-      file = "mr.11")
-
-```
-
-## MLM priors
-
-SD represents the range of deviations of group means from the average
-
-```{r}
-#| code-fold: true
-prior.mr11 <- c(prior(normal(5, 2), class = Intercept),
-                prior(normal(0, 2), class = sd),
-                prior(exponential(1), class = sigma))
-prior.mr11 %>% 
-  parse_dist(prior) %>% 
-  ggplot(aes(y=class, dist =.dist, args=.args)) +
-  stat_dist_halfeye()+
-  scale_x_continuous( limits = c(-50, 50)) +
-  labs(title="Priors")+ xlim(-10, 10)
-```
-
-------------------------------------------------------------------------
-
-```{r}
-summary(mr.11)
-```
-
-## ANOVA
-
-```{r}
-summary(lm(happiness ~ iv, data = MR))
-```
-
-------------------------------------------------------------------------
-
-```{r}
-summary(aov(happiness ~ iv, data = MR))
-```
-
-## Population intercept
-
-```{r}
-#| code-fold: true
-library(ggridges)
-MR %>% 
-  group_by(iv) %>% 
-  mutate(group_mean = mean(happiness)) %>% 
-  ungroup() %>% 
-  mutate(iv = fct_reorder(iv, group_mean)) %>% 
-  ggplot(aes(x = happiness, y = iv, fill = factor(group_mean))) +
-  geom_density_ridges(scale = 3/2, size = .2) +
-  theme(legend.position="none")
-```
-
-## SD
-
-```{r}
-get_variables(mr.11)
-```
-
-```{r}
-#| code-fold: true
-mr.11 %>%
-  spread_draws(sd_iv__Intercept) %>% 
-    mean_qi()
-```
-
-------------------------------------------------------------------------
-
-```{r}
-#| code-fold: true
-mr.11 %>%
-  spread_draws(r_iv[group,])
-```
-
-4000 samples \* 3 groups
-
-------------------------------------------------------------------------
-
-```{r}
-#| code-fold: true
-mr.11 %>%
-  spread_draws(r_iv[group,], b_Intercept) %>% 
-  mutate(r_iv = r_iv + b_Intercept) %>% 
-    mean_qi()
-```
-
-```{r}
-#| code-fold: true
-  MR %>%
-  group_by(iv) %>%
-  summarise(mean = mean(happiness), n = n())
-```
-
-Why are they different?!?
-
-------------------------------------------------------------------------
-
-```{r}
-#| code-fold: true
-mr.4 <- 
-  brm(family = gaussian,
-      happiness ~  iv ,
-      prior = c(prior(normal(5, 2), class = b),
-                prior(exponential(1), class = sigma)),
-      iter = 2000, warmup = 1000, chains = 2, cores = 2,
-      data = MR,
-      backend = "cmdstanr",
-      file = "mr.4")
-```
-
-------------------------------------------------------------------------
-
-```{r}
-mr.4 %>% 
- spread_draws(b_Intercept, b_iv2,b_iv3) %>%
-  mutate(group1 = b_Intercept) %>% 
-  mutate(group2 = b_Intercept + b_iv2) %>% 
-  mutate(group3 = b_Intercept + b_iv3) %>% 
-  select(group1:group3) %>% 
-  pivot_longer(cols = group1:group3, names_to = "group") %>% 
-  ggplot(aes(y = group, x = value)) +
-  stat_dotsinterval()
-```
-
-------------------------------------------------------------------------
-
-```{r}
-#| code-fold: true
-mr.11 %>%
-  spread_draws(r_iv[group,], b_Intercept) %>% 
-  mutate(r_iv = r_iv + b_Intercept) %>% 
-  mutate(group = as.factor(group)) %>% 
-    ggplot(aes(y = group, x = r_iv)) +
-  stat_dotsinterval() 
-```
-
-## shrinkage and partial pooling
-
--   We get a greater push towards similar values across the groups.
-
--   We are partially pooling values across groups, shrinking the mean to the group mean. This is because we are learning from other data. Groups learn from other levels/groups if they do not have a lot of data to suggest otherwise.
-
-## Incorporating uncertainty in the random effects
-
--   The SD parameter describes how large the differences between the groups is expected. Could groups differ by a 20, 30? Normally we expressed that through a prior around the regression coefficient. Here it is through a SD parameter.
-
--   The model is taking the potential that they differ and placing that into the model as uncertainty. We said these differences "could happen".
-
-## Handling multiple DVs?
+## 1. Aggregation obscures hypotheses
 
 What if people had more than 1 DV, like we do with time? What do you do with multiple items, multiple trials, multiple \_\_\_\_ ?
 
@@ -578,7 +401,7 @@ We can relate the random effects to other random effects e.g., do people who sho
 
 -   We treat our group variable as coming from a population. All groups are alike (because they are from the same population), but different in their own way. Because of this it is helpful to use information from other groups to help make predictions.
 
--   We do this in standard regression where we make predictions based on values from the whole dataset (not just binned Xs). A similar analogy for MLM is running a regression for each group. We want to pool as this leads to better predictions as we are not overfitting our data!
+-   We do this in standard regression where we make predictions based on values from the whole dataset (not just binned Xs). We want to pool as this leads to better predictions as we are not overfitting our data!
 
 ------------------------------------------------------------------------
 
@@ -642,9 +465,9 @@ In a way, this is similar to Bayesian reasoning where learning is based on how m
 
 ## 6. Parameters that depend on other parameters
 
-$$\text{y}_{ij}  \sim \operatorname{Normal}(\mu_i, \sigma)$$ $$\mu_i  = \beta_{0[j]}$$
+$$\text{y}_{ij}  \sim \operatorname{Normal}(\mu_{ij}, \sigma)$$ $$\mu_{ij}  = \beta_{0[i]}$$
 
-$$\beta_{0[j]} \sim \operatorname{Normal}({\bar \mu},  \sigma_0)$$ $${\bar \mu}  \sim {\operatorname{Normal}(0, 1.5)}$$ $$\sigma_0 \sim {\operatorname{Exponential}(1)}$$ $$\sigma \sim {\operatorname{Exponential}(1)}$$
+$$\beta_{0[i]} \sim \operatorname{Normal}({\bar \mu},  \sigma_0)$$ $${\bar \mu}  \sim {\operatorname{Normal}(0, 1.5)}$$ $$\sigma_0 \sim {\operatorname{Exponential}(1)}$$ $$\sigma \sim {\operatorname{Exponential}(1)}$$
 
 ## Hyperprior
 
@@ -1015,7 +838,10 @@ loo_compare(mlm.1, mlm.2, criterion = "loo")
 
 ------------------------------------------------------------------------
 
-$$\text{y}_{ij}  \sim \operatorname{Normal}(\mu_i, \sigma)$$ $$\mu_i  = \beta_{0[j]}$$ This parenthesis indicates we have varying intercepts that vary over individual j. Each parameter estimated needs a prior. $$\beta_{0[j]} \sim \operatorname{Normal}({\bar \mu},  \sigma_0)$$ $${\bar \mu}  \sim {\operatorname{Normal}(0, 1.5)}$$ $$\sigma_0 \sim {\operatorname{Exponential}(1)}$$ $$\sigma \sim {\operatorname{Exponential}(1)}$$
+$$\text{y}_{ij}  \sim \operatorname{Normal}(\mu_{ij}, \sigma)$$
+$$\mu_{ij}  = \beta_{0[i]}$$ This parenthesis indicates we have varying intercepts that vary over individual i. Each parameter estimated needs a prior. 
+$$\beta_{0[i]} \sim \operatorname{Normal}({\bar \mu},  \sigma_0)$$ 
+$${\bar \mu}  \sim {\operatorname{Normal}(0, 1.5)}$$ $$\sigma_0 \sim {\operatorname{Exponential}(1)}$$ $$\sigma \sim {\operatorname{Exponential}(1)}$$
 
 ## Parameters that depend on parameters
 
@@ -1343,9 +1169,9 @@ posterior_samples(mlm.id) %>%
 
 ## Partial pooling/Shrinkage
 
-$\sigma_0$ (our random effect) can turn on/off/adjust shrinkage.
+$\sigma_0$ (our random effect) can help turn on/off/adjust shrinkage.
 
-Setting SD to zero says everyone is the same. Infinite SD says all groups are unrelated (no pooling). In the middle gives you partial pooling.
+Setting SD to zero says everyone is the same. Infinite SD suggests no pooling (and major differences in pop values). In the middle gives you partial pooling.
 
 We use our prior of $\sigma_0$ plus our data to get an estimate of $\beta_{0[j]}$. This is how we accurately partial pool.
 
@@ -1355,7 +1181,8 @@ $$\text{y}_{ij}  \sim \operatorname{Normal}(\mu_i, \sigma_i)$$
 
 $$\mu_i  = \beta_{0[i]}$$
 
-$$\beta_{0[j]} \sim \operatorname{Normal}({\bar \mu},  \sigma_0)$$ $${\bar \mu}  \sim {\operatorname{Normal}(0, 1.5)}$$
+$$\beta_{0[i]} \sim \operatorname{Normal}({\bar \mu},  \sigma_0)$$ 
+$${\bar \mu}  \sim {\operatorname{Normal}(0, 1.5)}$$
 
 $$\sigma_0 \sim {\operatorname{Normal}(0, 1.5)}$$
 
@@ -1559,19 +1386,14 @@ loo_compare(mlm.id, mlm.1p, mlm.1)
 
 ## level 1 predictors
 
-$$\text{y}_{ij}  \sim \operatorname{Normal}(\mu_i, \sigma)$$ $$\mu_i  = \beta_{0[j]} + \beta_{1[j]}Time_{ij}$$
+$$\text{y}_{ij}  \sim \operatorname{Normal}(\mu_i, \sigma)$$ $$\mu_{ij}  = \beta_{0[i]} + \beta_{1[i]}Time_{ij}$$
 
-$$\beta_{0[j]} \sim \operatorname{Normal}({\bar \mu}, \sigma_0)$$ $${\bar \mu}  \sim {\operatorname{Normal}(0, 1.5)}$$ $$\sigma_0 \sim {\operatorname{Exponential}(1)}$$ $$\beta_{1[j]} \sim {\operatorname{Normal}(0, 1.5)}$$ $$\sigma \sim {\operatorname{Exponential}(1)}$$
+$$\beta_{0[i]} \sim \operatorname{Normal}({\bar \mu}, \sigma_0)$$ $${\bar \mu}  \sim {\operatorname{Normal}(0, 1.5)}$$ $$\sigma_0 \sim {\operatorname{Exponential}(1)}$$ $$\beta_{1[i]} \sim {\operatorname{Normal}(0, 1.5)}$$ $$\sigma \sim {\operatorname{Exponential}(1)}$$
 
 ------------------------------------------------------------------------
 
 Notice how the slope variable was not a hyper prior. What does that mean? That means it is not random. People can still differ, but only based on the equation we set up for it. That is, there are fixed effects based on different gammas, but not Us to represent random variation. To do so we would need a parameter for that, and we dont have it.
 
-------------------------------------------------------------------------
-
-```{r}
-get_prior(CON ~ 1 + time + (1|ID), data = mlm)
-```
 
 ------------------------------------------------------------------------
 
@@ -1626,7 +1448,7 @@ Level 1: $${Y}_{ij} = \beta_{0j}  + \beta_{1j}X_{ij} + \varepsilon_{ij}$$ Level 
 $${\beta}_{1j} = \gamma_{10} + \gamma_{11}G_{j} + U_{1j}$$
 
 $$\begin{pmatrix} {U}_{0j} \\ {U}_{1j} \end{pmatrix}
-\sim \mathcal{N} \begin{pmatrix} 
+\sim N \begin{pmatrix} 
   0,      \tau_{00}^{2} & \tau_{01}\\ 
   0,  \tau_{01} & \tau_{10}^{2}
 \end{pmatrix}$$
@@ -1641,7 +1463,9 @@ $$\begin{pmatrix} {U}_{0j} \\ {U}_{1j} \end{pmatrix}
 
 ## Random slopes
 
-$$y_i \sim \text{Normal}(\mu, \sigma)$$ $$\mu_i = \beta_{0j} + \beta_{1j}X_{ij}$$ $$(\beta_{0j}, \beta_{1j}) \sim \text{MVNormal}  ([\beta_0, \beta_1], \Sigma)$$
+$$y_{ij} \sim \text{Normal}(\mu_{ij}, \sigma)$$ 
+$$\mu_i = \beta_{0i} + \beta_{1i}X_{ij}$$
+$$(\beta_{0i}, \beta_{1i}) \sim \text{MVNormal}  ([\beta_0, \beta_1], \Sigma)$$
 
 $$\Sigma = 
 \left(\begin{array}{cc}
@@ -1932,9 +1756,9 @@ mlm.4 %>%
 ------------------------------------------------------------------------
 
 ```{r}
-mlm.3 <- add_criterion(mlm.1, "loo")
-mlm.4 <- add_criterion(mlm.2, "loo")
-loo_compare(mlm.1, mlm.2, criterion = "loo")
+mlm.3 <- add_criterion(mlm.3, "loo")
+mlm.4 <- add_criterion(mlm.4, "loo")
+loo_compare(mlm.3, mlm.4, criterion = "loo")
 ```
 
 ------------------------------------------------------------------------
@@ -1949,6 +1773,7 @@ esm
 
 ```{r}
 #| code-fold: true
+
 esm$PA <- esm$esm.NQ11.w1
 esm$W.other <- esm$esm.ST04.w1
 esm$ID <- esm$esm.IDnum.w1
@@ -2134,4 +1959,305 @@ mlm.6 %>%
   ggplot(aes( y = reorder(ID, person_t), x = person_t, xmin = .lower, xmax = .upper)) +
   geom_pointinterval(alpha = .1) + xlab("est")  + theme(axis.title.y=element_blank(),
         axis.text.y=element_blank())
+```
+
+
+## MLM plots 
+
+```{r}
+#| code-fold: true
+melsm <- read.csv("~/Library/CloudStorage/Box-Box/Bayesian Statistics/bayes22/static/Lectures/melsm.csv")
+
+melsm <- melsm %>% 
+  mutate(day01 = (day - 2) / max((day - 2)))
+```
+
+
+```{r}
+#| code-fold: true
+melsm %>% 
+distinct(record_id) %>% 
+  count()
+```
+
+
+
+---
+
+Participants filled out daily affective measures and physical activity
+
+```{r}
+#| code-fold: true
+melsm %>% 
+    count(record_id) %>% 
+  ggplot(aes(x = n)) +
+  geom_bar() +
+  scale_x_continuous("number of days", limits = c(0, NA))
+```
+
+
+
+---
+
+Participant level
+
+
+```{r}
+#| code-fold: true
+set.seed(16)
+melsm %>% 
+  ungroup() %>% 
+  nest(data = !record_id) %>% 
+  slice_sample(n = 12) %>% 
+  unnest(data) %>% 
+  ggplot(aes(x = day, y = N_A.lag)) +
+  geom_line(color = "black") +
+  geom_point(color = "black", size = 1/2) +
+  ylab("negative affect (standardized)") +
+  facet_wrap(~record_id)
+```
+
+
+----------------
+
+day01 is coded such that it is a percentage of the 100 total possible days. 
+
+```{r}
+#| code-fold: true
+melsm.1 <-
+  brm(family = gaussian,
+      N_A.std ~ 1 + day01 + (1 + day01 | record_id),
+      prior = c(prior(normal(0, 0.2), class = Intercept),
+                prior(normal(0, 1), class = b),
+                prior(exponential(1), class = sd),
+                prior(exponential(1), class = sigma),
+                prior(lkj(2), class = cor)),
+      iter = 3000, warmup = 1000, chains = 4, cores = 4,
+      data = melsm,
+      backend = "cmdstanr",
+      file = "melsm.1")
+```
+
+
+---
+
+```{r}
+summary(melsm.1)
+```
+
+---
+
+We have to be careful with plotting MLMs
+```{r}
+#| code-fold: true
+melsm %>% 
+  data_grid(day01 = seq_range(day01, n = 20), .model= melsm) 
+```
+
+---
+
+```{r}
+#| code-fold: true
+melsm %>% 
+  data_grid(day01 = seq_range(day01, n = 20), .model= melsm) %>% 
+  add_epred_draws(melsm.1 )
+```
+
+---
+
+If we do not care about random effects, specify re_formula = NA
+```{r}
+#| code-fold: true
+fixed.slope<- melsm %>% 
+  data_grid(day01 = seq_range(day01, n = 20)) %>% 
+  add_epred_draws(melsm.1, re_formula = NA )
+  fixed.slope
+```
+
+---
+
+If we want random effects we need to specify the variable to get ALL levels. 
+```{r}
+
+melsm %>% 
+  data_grid(day01 = seq_range(day01, n = 20), record_id) 
+```
+193 people * 20 = 3860
+
+---
+
+Then we need to state re_forumla = NULL (which is the default)
+```{r}
+#| code-fold: true
+melsm %>% 
+  data_grid(day01 = seq_range(day01, n = 20), record_id) %>% 
+  add_epred_draws(melsm.1, re_formula = NULL )
+```
+
+---
+
+re_formula formula helps us focus on either the average trajectory (gammas) or the group specific (person Us). If NULL (default), include all group-level effects; if NA, include no group-level effects.
+
+160,000 = 20 (different values of X we chose) x 8000 iterations (2k x 4 chains)
+ 
+30,880,000 = 20* 8000 iterations * 193 people in our dataset
+
+---
+
+```{r}
+#| code-fold: true
+ melsm %>% 
+  data_grid(day01 = seq_range(day01, n = 20), record_id) %>% 
+  add_epred_draws(melsm.1, re_formula = NA) %>% 
+  ggplot()+
+  aes(x = day01, y = .epred) +
+  stat_lineribbon(.width = 0.95, alpha = .5)
+```
+
+---
+
+```{r}
+#| code-fold: true
+## https://www.tjmahr.com/sample-n-groups/
+sample_n_of <- function(data, size, ...) {
+  dots <- quos(...)
+  group_ids <- data %>% 
+    group_by(!!! dots) %>% 
+    group_indices()
+  sampled_groups <- sample(unique(group_ids), size)
+  data %>% 
+    filter(group_ids %in% sampled_groups)
+}
+
+melsm %>% 
+  data_grid(day01 = seq_range(day01, n = 20), record_id) %>% 
+    sample_n_of(5,record_id) %>% 
+  add_epred_draws(melsm.1, re_formula = NULL) %>% 
+  ggplot(aes(x = day01)) +
+  stat_lineribbon(aes(y = .epred, group = record_id, alpha = .2))
+
+```
+
+
+---
+
+
+```{r}
+#| code-fold: true
+melsm %>% 
+  data_grid(day01 = seq_range(day01, n = 20), record_id) %>% 
+    sample_n_of(50,record_id) %>% 
+  add_epred_draws(melsm.1, re_formula = NULL) %>% 
+  ggplot(aes(x = day01)) +
+  stat_lineribbon(aes(y = .epred, group = record_id, color = record_id), .width = 0, show.legend = F, alpha = .4)
+
+```
+
+
+---
+
+```{r}
+#| code-fold: true
+melsm %>% 
+  data_grid(day01 = seq_range(day01, n = 20), record_id) %>% 
+    sample_n_of(50,record_id) %>% 
+  add_epred_draws(melsm.1, re_formula = NULL) %>% 
+  ggplot(aes(x = day01)) +
+  stat_lineribbon(aes(y = .epred, group = record_id, color = record_id), .width = 0, show.legend = F, alpha = .4) + 
+  stat_lineribbon(data = fixed.slope, aes(x = day01, y = .epred), show.legend = F, alpha = .5)
+```
+
+----------
+
+```{r}
+#| code-fold: true
+library(marginaleffects)
+predictions(melsm.1, newdata = datagrid(record_id = unique,day01 = 0:1)) %>% 
+    get_draws() %>% 
+  ggplot(aes(x = day01)) +
+  stat_lineribbon(aes(y = draw, group = record_id, color = record_id), .width = 0, show.legend = F, alpha = .4) 
+
+```
+
+-----------
+
+
+```{r}
+#| code-fold: true
+fixed <- predictions(melsm.1, newdata = datagrid(record_id = NA, day01 = 0:1), re.form = NA) %>%  get_draws() 
+  
+
+predictions(melsm.1, newdata = datagrid(record_id = unique,day01 = 0:1)) %>% 
+    get_draws() %>% 
+  ggplot(aes(x = day01)) +
+  stat_lineribbon(aes(y = draw, group = record_id, color = record_id), .width = 0, show.legend = F, alpha = .4) + stat_lineribbon(data = fixed, aes(y = draw), .width = 0, show.legend = F, color = "Green", alpha = .8) 
+
+```
+
+
+
+
+
+---
+
+What about interactions? 
+
+```{r}
+#| code-fold: true
+melsm.1i <-
+  brm(family = gaussian,
+      N_A.std ~ 1 + day01+ P_A.std*steps.pm + (1 + day01 | record_id),
+      prior = c(prior(normal(0, 0.2), class = Intercept),
+                prior(normal(0, 1), class = b),
+                prior(exponential(1), class = sd),
+                prior(exponential(1), class = sigma),
+                prior(lkj(2), class = cor)),
+      iter = 3000, warmup = 1000, chains = 4, cores = 4,
+      data = melsm,
+      backend = "cmdstanr",
+      file = "melsm.1i")
+```
+
+---
+
+```{r}
+summary(melsm.1i)
+```
+
+
+---
+
+```{r}
+library(psych)
+describe(melsm$steps.pm)
+```
+
+
+```{r}
+#| code-fold: true
+ melsm %>% 
+  data_grid(steps.pm = seq_range(steps.pm, n = 5), P_A.std = c(-1,0,1), day01 = .5, .model = melsm)
+```
+5 * 3 = 15 rows
+
+---
+
+```{r}
+#| code-fold: true
+ melsm %>% 
+  data_grid(steps.pm = seq_range(steps.pm, n = 5), P_A.std = c(-1,0,1), day01 = .5, .model = melsm) %>% 
+  add_epred_draws(melsm.1i, re_formula = NA) 
+```
+12 * 8000 samples = 120,000 rows
+
+
+---
+
+```{r}
+#| code-fold: true
+ melsm %>% 
+  data_grid(steps.pm = seq_range(steps.pm, n = 5), P_A.std = c(-1,0,1), day01 = .5, .model = melsm) %>% 
+  add_epred_draws(melsm.1i, re_formula = NA) %>% 
+  ggplot( aes(x = steps.pm, y = N_A.std)) +
+  stat_lineribbon(aes(y = .epred, group = P_A.std, color = as.factor(P_A.std)),  .width = 0, show.legend = T) 
 ```

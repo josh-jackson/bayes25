@@ -935,7 +935,7 @@
     "href": "lectures.html",
     "title": "Lectures",
     "section": "",
-    "text": "Background and introduction\nRegression part 1\nRegression part 2\nMultiple Regression\nMCMC\ninformation\nglm"
+    "text": "Background and introduction\nRegression part 1\nRegression part 2\nMultiple Regression\nMCMC\ninformation\nglm\nmlm"
   },
   {
     "objectID": "bayes-1.html#model-we-want-to-fit",
@@ -2034,7 +2034,7 @@
     "href": "mlm-8.html#error-structure",
     "title": "mlm",
     "section": "Error structure",
-    "text": "Error structure\nThe residual structure, where the random effects are again normally distributed with a mean of zero, but this time one must also consider covariance in addition to variance.\n\\[\\begin{pmatrix} {U}_{0j} \\\\ {U}_{1j} \\end{pmatrix}\n\\sim \\mathcal{N} \\begin{pmatrix}\n  0,      \\tau_{00}^{2} & \\tau_{01}\\\\\n  0,  \\tau_{01} & \\tau_{10}^{2}\n\\end{pmatrix}\\]\nNote that it is possible to have a different error structure for the random effects\n\\[{e}_{ij} \\sim \\mathcal{N}(0, \\sigma^{2})\\]"
+    "text": "Error structure\nThe residual structure, where the random effects are again normally distributed with a mean of zero, but this time one must also consider covariance in addition to variance.\n\\[\\begin{pmatrix} {U}_{0j} \\\\ {U}_{1j} \\end{pmatrix}\n\\sim N \\begin{pmatrix} 0,      \\tau_{00}^{2} & \\tau_{01}\\\\ 0,  \\tau_{01} & \\tau_{10}^{2} \\end{pmatrix}\\]\nNote that it is possible to have a different error structure for the random effects\n\\[{e}_{ij} \\sim N(0, \\sigma^{2})\\]"
   },
   {
     "objectID": "mlm-8.html#multiple-level-1-predictors",
@@ -2146,7 +2146,7 @@
     "href": "mlm-8.html#aggregation-obscures-hypotheses",
     "title": "mlm",
     "section": "1. Aggregation obscures hypotheses",
-    "text": "1. Aggregation obscures hypotheses\n\nBetween person H1: Do students who study more get better grades?\nWithin person H2: When a student studies, do they get better grades?\nH1 and H2 are independent from one another! Aggregation collapses the two. When you have nested data with many DVs it is important to not aggregate.\n#compositeskill"
+    "text": "1. Aggregation obscures hypotheses\nWhat if people had more than 1 DV, like we do with time? What do you do with multiple items, multiple trials, multiple ____ ?\nTwo options: 1. Collapse and average across."
   },
   {
     "objectID": "mlm-8.html#regressions-within-regressions",
@@ -2181,7 +2181,7 @@
     "href": "mlm-8.html#shrinkagepartial-pooling",
     "title": "mlm",
     "section": "5. Shrinkage/partial pooling",
-    "text": "5. Shrinkage/partial pooling\n\nWe treat our group variable as coming from a population. All groups are alike (because they are from the same population), but different in their own way. Because of this it is helpful to use information from other groups to help make predictions.\nWe do this in standard regression where we make predictions based on values from the whole dataset (not just binned Xs). A similar analogy for MLM is running a regression for each group. We want to pool as this leads to better predictions as we are not overfitting our data!"
+    "text": "5. Shrinkage/partial pooling\n\nWe treat our group variable as coming from a population. All groups are alike (because they are from the same population), but different in their own way. Because of this it is helpful to use information from other groups to help make predictions.\nWe do this in standard regression where we make predictions based on values from the whole dataset (not just binned Xs). We want to pool as this leads to better predictions as we are not overfitting our data!"
   },
   {
     "objectID": "mlm-8.html#complete-partial-and-no-pooling",
@@ -2216,7 +2216,7 @@
     "href": "mlm-8.html#parameters-that-depend-on-other-parameters",
     "title": "mlm",
     "section": "6. Parameters that depend on other parameters",
-    "text": "6. Parameters that depend on other parameters\n\\[\\text{y}_{ij}  \\sim \\operatorname{Normal}(\\mu_i, \\sigma)\\] \\[\\mu_i  = \\beta_{0[j]}\\]\n\\[\\beta_{0[j]} \\sim \\operatorname{Normal}({\\bar \\mu},  \\sigma_0)\\] \\[{\\bar \\mu}  \\sim {\\operatorname{Normal}(0, 1.5)}\\] \\[\\sigma_0 \\sim {\\operatorname{Exponential}(1)}\\] \\[\\sigma \\sim {\\operatorname{Exponential}(1)}\\]"
+    "text": "6. Parameters that depend on other parameters\n\\[\\text{y}_{ij}  \\sim \\operatorname{Normal}(\\mu_{ij}, \\sigma)\\] \\[\\mu_{ij}  = \\beta_{0[i]}\\]\n\\[\\beta_{0[i]} \\sim \\operatorname{Normal}({\\bar \\mu},  \\sigma_0)\\] \\[{\\bar \\mu}  \\sim {\\operatorname{Normal}(0, 1.5)}\\] \\[\\sigma_0 \\sim {\\operatorname{Exponential}(1)}\\] \\[\\sigma \\sim {\\operatorname{Exponential}(1)}\\]"
   },
   {
     "objectID": "mlm-8.html#hyperprior",
@@ -2244,14 +2244,14 @@
     "href": "mlm-8.html#partial-poolingshrinkage",
     "title": "mlm",
     "section": "Partial pooling/Shrinkage",
-    "text": "Partial pooling/Shrinkage\n\\(\\sigma_0\\) (our random effect) can turn on/off/adjust shrinkage.\nSetting SD to zero says everyone is the same. Infinite SD says all groups are unrelated (no pooling). In the middle gives you partial pooling.\nWe use our prior of \\(\\sigma_0\\) plus our data to get an estimate of \\(\\beta_{0[j]}\\). This is how we accurately partial pool."
+    "text": "Partial pooling/Shrinkage\n\\(\\sigma_0\\) (our random effect) can help turn on/off/adjust shrinkage.\nSetting SD to zero says everyone is the same. Infinite SD suggests no pooling (and major differences in pop values). In the middle gives you partial pooling.\nWe use our prior of \\(\\sigma_0\\) plus our data to get an estimate of \\(\\beta_{0[j]}\\). This is how we accurately partial pool."
   },
   {
     "objectID": "mlm-8.html#partial-poolingshrinkage-1",
     "href": "mlm-8.html#partial-poolingshrinkage-1",
     "title": "mlm",
     "section": "Partial pooling/Shrinkage",
-    "text": "Partial pooling/Shrinkage\n\\[\\text{y}_{ij}  \\sim \\operatorname{Normal}(\\mu_i, \\sigma_i)\\]\n\\[\\mu_i  = \\beta_{0[i]}\\]\n\\[\\beta_{0[j]} \\sim \\operatorname{Normal}({\\bar \\mu},  \\sigma_0)\\] \\[{\\bar \\mu}  \\sim {\\operatorname{Normal}(0, 1.5)}\\]\n\\[\\sigma_0 \\sim {\\operatorname{Normal}(0, 1.5)}\\]\n\\[\\sigma \\sim {\\operatorname{Exponential}(1)}\\]"
+    "text": "Partial pooling/Shrinkage\n\\[\\text{y}_{ij}  \\sim \\operatorname{Normal}(\\mu_i, \\sigma_i)\\]\n\\[\\mu_i  = \\beta_{0[i]}\\]\n\\[\\beta_{0[i]} \\sim \\operatorname{Normal}({\\bar \\mu},  \\sigma_0)\\] \\[{\\bar \\mu}  \\sim {\\operatorname{Normal}(0, 1.5)}\\]\n\\[\\sigma_0 \\sim {\\operatorname{Normal}(0, 1.5)}\\]\n\\[\\sigma \\sim {\\operatorname{Exponential}(1)}\\]"
   },
   {
     "objectID": "mlm-8.html#working-with-mlm-posterior",
@@ -2265,7 +2265,7 @@
     "href": "mlm-8.html#level-1-predictors-1",
     "title": "mlm",
     "section": "level 1 predictors",
-    "text": "level 1 predictors\n\\[\\text{y}_{ij}  \\sim \\operatorname{Normal}(\\mu_i, \\sigma)\\] \\[\\mu_i  = \\beta_{0[j]} + \\beta_{1[j]}Time_{ij}\\]\n\\[\\beta_{0[j]} \\sim \\operatorname{Normal}({\\bar \\mu}, \\sigma_0)\\] \\[{\\bar \\mu}  \\sim {\\operatorname{Normal}(0, 1.5)}\\] \\[\\sigma_0 \\sim {\\operatorname{Exponential}(1)}\\] \\[\\beta_{1[j]} \\sim {\\operatorname{Normal}(0, 1.5)}\\] \\[\\sigma \\sim {\\operatorname{Exponential}(1)}\\]"
+    "text": "level 1 predictors\n\\[\\text{y}_{ij}  \\sim \\operatorname{Normal}(\\mu_i, \\sigma)\\] \\[\\mu_{ij}  = \\beta_{0[i]} + \\beta_{1[i]}Time_{ij}\\]\n\\[\\beta_{0[i]} \\sim \\operatorname{Normal}({\\bar \\mu}, \\sigma_0)\\] \\[{\\bar \\mu}  \\sim {\\operatorname{Normal}(0, 1.5)}\\] \\[\\sigma_0 \\sim {\\operatorname{Exponential}(1)}\\] \\[\\beta_{1[i]} \\sim {\\operatorname{Normal}(0, 1.5)}\\] \\[\\sigma \\sim {\\operatorname{Exponential}(1)}\\]"
   },
   {
     "objectID": "mlm-8.html#whats-in-our-posterior",
@@ -2286,7 +2286,7 @@
     "href": "mlm-8.html#random-slopes",
     "title": "mlm",
     "section": "Random slopes",
-    "text": "Random slopes\nLevel 1: \\[{Y}_{ij} = \\beta_{0j}  + \\beta_{1j}X_{ij} + \\varepsilon_{ij}\\] Level 2: \\[{\\beta}_{0j} = \\gamma_{00} + \\gamma_{01}G_{j} +   U_{0j}\\]\n\\[{\\beta}_{1j} = \\gamma_{10} + \\gamma_{11}G_{j} + U_{1j}\\]\n\\[\\begin{pmatrix} {U}_{0j} \\\\ {U}_{1j} \\end{pmatrix}\n\\sim \\mathcal{N} \\begin{pmatrix}\n  0,      \\tau_{00}^{2} & \\tau_{01}\\\\\n  0,  \\tau_{01} & \\tau_{10}^{2}\n\\end{pmatrix}\\]"
+    "text": "Random slopes\nLevel 1: \\[{Y}_{ij} = \\beta_{0j}  + \\beta_{1j}X_{ij} + \\varepsilon_{ij}\\] Level 2: \\[{\\beta}_{0j} = \\gamma_{00} + \\gamma_{01}G_{j} +   U_{0j}\\]\n\\[{\\beta}_{1j} = \\gamma_{10} + \\gamma_{11}G_{j} + U_{1j}\\]\n\\[\\begin{pmatrix} {U}_{0j} \\\\ {U}_{1j} \\end{pmatrix}\n\\sim N \\begin{pmatrix}\n  0,      \\tau_{00}^{2} & \\tau_{01}\\\\\n  0,  \\tau_{01} & \\tau_{10}^{2}\n\\end{pmatrix}\\]"
   },
   {
     "objectID": "mlm-8.html#correlated-features",
@@ -2300,7 +2300,7 @@
     "href": "mlm-8.html#random-slopes-1",
     "title": "mlm",
     "section": "Random slopes",
-    "text": "Random slopes\n\\[y_i \\sim \\text{Normal}(\\mu, \\sigma)\\] \\[\\mu_i = \\beta_{0j} + \\beta_{1j}X_{ij}\\] \\[(\\beta_{0j}, \\beta_{1j}) \\sim \\text{MVNormal}  ([\\beta_0, \\beta_1], \\Sigma)\\]\n\\[\\Sigma =\n\\left(\\begin{array}{cc}\n\\sigma_{\\beta_0}&0\\\\\n0&\\sigma_{\\beta_1}\n\\end{array}\\right)R\n\\left(\\begin{array}{cc}\n\\sigma_{\\beta_0}&0\\\\\n0&\\sigma_{\\beta_1}\n\\end{array}\\right)\\] \\[\\beta_0 \\sim \\text{Normal}(0, 1)\\]\n\\[\\beta_1 \\sim \\text{Normal}(0, 1)\\] \\[\\sigma_{\\beta_0} \\sim \\text{Exponential}(1)\\] \\[\\sigma_{\\beta_1} \\sim \\text{Exponential}(1)\\] \\[\\sigma \\sim \\text{Exponential}(1)\\] \\[R \\sim \\text{LKJcorr(2)}\\]"
+    "text": "Random slopes\n\\[y_{ij} \\sim \\text{Normal}(\\mu_{ij}, \\sigma)\\] \\[\\mu_i = \\beta_{0i} + \\beta_{1i}X_{ij}\\] \\[(\\beta_{0i}, \\beta_{1i}) \\sim \\text{MVNormal}  ([\\beta_0, \\beta_1], \\Sigma)\\]\n\\[\\Sigma =\n\\left(\\begin{array}{cc}\n\\sigma_{\\beta_0}&0\\\\\n0&\\sigma_{\\beta_1}\n\\end{array}\\right)R\n\\left(\\begin{array}{cc}\n\\sigma_{\\beta_0}&0\\\\\n0&\\sigma_{\\beta_1}\n\\end{array}\\right)\\] \\[\\beta_0 \\sim \\text{Normal}(0, 1)\\]\n\\[\\beta_1 \\sim \\text{Normal}(0, 1)\\] \\[\\sigma_{\\beta_0} \\sim \\text{Exponential}(1)\\] \\[\\sigma_{\\beta_1} \\sim \\text{Exponential}(1)\\] \\[\\sigma \\sim \\text{Exponential}(1)\\] \\[R \\sim \\text{LKJcorr(2)}\\]"
   },
   {
     "objectID": "mlm-8.html#lkj-1-parameter-correlation-prior",
@@ -2392,5 +2392,19 @@
     "title": "glm",
     "section": "Sequential and Adjacent category models",
     "text": "Sequential and Adjacent category models\nFor many ordinal variables, the assumption of a single underlying continuous variable, as in cumulative models, may not be appropriate.\nsequential: years of marriage where the marriage may continue or end by divorce, but the latter can happen only if it did not happen before. For every category k there is a latent continuous variable.\nAdjacent category (partial credit): Sequential models model the decision between Y = k and Y &gt; k, whereas adjacent-category models model the decision between Y = k and Y = k + 1. Mathematically useful, lack of ordering of the threshold parameters."
+  },
+  {
+    "objectID": "mlm-8.html#aggregation-obscures-hypotheses-1",
+    "href": "mlm-8.html#aggregation-obscures-hypotheses-1",
+    "title": "mlm",
+    "section": "1. Aggregation obscures hypotheses",
+    "text": "1. Aggregation obscures hypotheses\n\nBetween person H1: Do students who study more get better grades?\nWithin person H2: When a student studies, do they get better grades?\nH1 and H2 are independent from one another! Aggregation collapses the two. When you have nested data with many DVs it is important to not aggregate.\n#compositeskill"
+  },
+  {
+    "objectID": "mlm-8.html#mlm-plots",
+    "href": "mlm-8.html#mlm-plots",
+    "title": "mlm",
+    "section": "MLM plots",
+    "text": "MLM plots\n\n\nCode\nmelsm &lt;- read.csv(\"~/Library/CloudStorage/Box-Box/Bayesian Statistics/bayes22/static/Lectures/melsm.csv\")\n\nmelsm &lt;- melsm %&gt;% \n  mutate(day01 = (day - 2) / max((day - 2)))\n\n\n\n\nCode\nmelsm %&gt;% \ndistinct(record_id) %&gt;% \n  count()\n\n\n    n\n1 193"
   }
 ]
