@@ -2013,7 +2013,7 @@
     "href": "mlm-8.html#empty-model",
     "title": "mlm",
     "section": "Empty model",
-    "text": "Empty model\nLevel 1 \\[{Y}_{ij} = \\beta_{0j}  + \\varepsilon_{ij}\\]\nLevel 2 \\[{\\beta}_{0j} = \\gamma_{00} + U_{0j}\\]\n\\[{U}_{0j} \\sim\\mathcal{N}(0, \\tau_{00}^{2})\\] \\[{e}_{ij} \\sim\\mathcal{N}(0, \\sigma^{2})\\]"
+    "text": "Empty model\nLevel 1 \\[{Y}_{ij} = \\beta_{0j}  + \\varepsilon_{ij}\\]\nLevel 2 \\[{\\beta}_{0j} = \\gamma_{00} + U_{0j}\\]\n\\[{U}_{0j} \\sim N(0, \\tau_{00}^{2})\\] \\[{e}_{ij} \\sim N(0, \\sigma^{2})\\]"
   },
   {
     "objectID": "mlm-8.html#random-and-fixed-effects",
@@ -2027,35 +2027,35 @@
     "href": "mlm-8.html#level-1-predictors",
     "title": "mlm",
     "section": "Level 1 predictors",
-    "text": "Level 1 predictors\nLevel 1 is where you have data that repeats within your grouping or clustering data. Is your cluster classrooms? Then students are level 1. Is your cluster people? Then observations are level 1.\n\\[{Y}_{ij} = \\beta_{0j}  + \\beta_{1j}X_{ij} + \\varepsilon_{ij}\\] Notice on the subscript of X that these predictors vary across group (j) and within the group (i) So if your grouping (j) is people, then i refers to different observations."
+    "text": "Level 1 predictors\nLevel 1 is where you have data that repeats within your grouping or clustering data. Is your cluster classrooms? Then students are level 1. Is your cluster people? Then observations are level 1.\n\\[{Y}_{ij} = \\beta_{0j}  + \\beta_{1j}X_{ij} + \\varepsilon_{ij}\\] Notice on the subscript of X that these predictors vary across group (i) and within the group (i) So if your grouping (i) is people, then j refers to different observations."
   },
   {
     "objectID": "mlm-8.html#error-structure",
     "href": "mlm-8.html#error-structure",
     "title": "mlm",
     "section": "Error structure",
-    "text": "Error structure\nThe residual structure, where the random effects are again normally distributed with a mean of zero, but this time one must also consider covariance in addition to variance.\n\\[\\begin{pmatrix} {U}_{0j} \\\\ {U}_{1j} \\end{pmatrix}\n\\sim N \\begin{pmatrix} 0,      \\tau_{00}^{2} & \\tau_{01}\\\\ 0,  \\tau_{01} & \\tau_{10}^{2} \\end{pmatrix}\\]\nNote that it is possible to have a different error structure for the random effects\n\\[{e}_{ij} \\sim N(0, \\sigma^{2})\\]"
+    "text": "Error structure\nThe residual structure, where the random effects are again normally distributed with a mean of zero, but this time one must also consider covariance in addition to variance.\n\\[\\begin{pmatrix} {U}_{0i} \\\\ {U}_{1i} \\end{pmatrix}\n\\sim N \\begin{pmatrix} 0,      \\tau_{00}^{2} & \\tau_{01}\\\\ 0,  \\tau_{01} & \\tau_{10}^{2} \\end{pmatrix}\\]\nNote that it is possible to have a different error structure for the random effects\n\\[{e}_{ij} \\sim N(0, \\sigma^{2})\\]"
   },
   {
     "objectID": "mlm-8.html#multiple-level-1-predictors",
     "href": "mlm-8.html#multiple-level-1-predictors",
     "title": "mlm",
     "section": "Multiple level 1 predictors",
-    "text": "Multiple level 1 predictors\nLevel 1:\n\\[{Y}_{ijk} = \\beta_{0j}  + \\beta_{1j}X_{ij} + \\beta_{2j}Z_{ik} + \\varepsilon_{ijk}\\] Level 2:\n\\[{\\beta}_{0j} = \\gamma_{00} + U_{0j}\\]\n\\[{\\beta}_{1j} = \\gamma_{10} + U_{1j}\\] \\[{\\beta}_{2k} = \\gamma_{20} + U_{2k}\\]"
+    "text": "Multiple level 1 predictors\nLevel 1:\n\\[{Y}_{ij} = \\beta_{0i}  + \\beta_{1i}X_{ij} + \\beta_{2i}Z_{ij} + \\varepsilon_{ij}\\] Level 2:\n\\[{\\beta}_{0i} = \\gamma_{00} + U_{0i}\\]\n\\[{\\beta}_{1i} = \\gamma_{10} + U_{1i}\\] \\[{\\beta}_{2i} = \\gamma_{20} + U_{2i}\\]"
   },
   {
     "objectID": "mlm-8.html#level-2-predictors",
     "href": "mlm-8.html#level-2-predictors",
     "title": "mlm",
     "section": "Level 2 predictors",
-    "text": "Level 2 predictors\nLevel 1: \\[{Y}_{ij} = \\beta_{0j}  + \\beta_{1j}X_{ij} + \\varepsilon_{ij}\\] Level 2: \\[{\\beta}_{0j} = \\gamma_{00} + \\gamma_{01}G_{j} +   U_{0j}\\]\n\\[{\\beta}_{1j} = \\gamma_{10} + U_{1j}\\]\nCombined \\[{Y}_{ij} = \\gamma_{00} + \\gamma_{01}G_{j}+  \\gamma_{10} (X_{ij}) + U_{0j} + U_{1j}(X_{ij}) + \\varepsilon_{ij}\\] \\[{Y}_{ij} = [\\gamma_{00} + \\gamma_{01}G_{j}+ U_{0j}]  + [(\\gamma_{10}  + U_{1j})(X_{ij})] + \\varepsilon_{ij}\\]"
+    "text": "Level 2 predictors\nLevel 1: \\[{Y}_{ij} = \\beta_{0i}  + \\beta_{1i}X_{ij} + \\varepsilon_{ij}\\] Level 2: \\[{\\beta}_{0i} = \\gamma_{00} + \\gamma_{01}G_{i} +   U_{0i}\\]\n\\[{\\beta}_{1i} = \\gamma_{10} + U_{1i}\\]"
   },
   {
     "objectID": "mlm-8.html#cross-level-interactions",
     "href": "mlm-8.html#cross-level-interactions",
     "title": "mlm",
     "section": "Cross level interactions",
-    "text": "Cross level interactions\nlevel 1: \\[{Y}_{ij} = \\beta_{0j}  + \\beta_{1j}X_{ij} + \\varepsilon_{ij}\\] Level 2: \\[{\\beta}_{0j} = \\gamma_{00} + \\gamma_{01}G_{j} +   U_{0j}\\]\n\\[{\\beta}_{1j} = \\gamma_{10} + \\gamma_{11}G_{j} + U_{1j}\\]\n\\[{Y}_{ij} = \\gamma_{00} + \\gamma_{01}G_{j}+  \\gamma_{10} (X_{ij}) + \\gamma_{11}(G_{j}*X{ij}) +  U_{0j} + U_{1j}(X{ij}) + \\varepsilon_{ij}\\]\n\\[{Y}_{ij} = [\\gamma_{00} + U_{0j} +\\gamma_{01}G_{j}] + [(\\gamma_{10}  + \\gamma_{11}G_{j}+  U_{1j})(X{ij})] + \\varepsilon_{ij}\\]"
+    "text": "Cross level interactions\nlevel 1: \\[{Y}_{ij} = \\beta_{0i}  + \\beta_{1i}X_{ij} + \\varepsilon_{ij}\\] Level 2: \\[{\\beta}_{0i} = \\gamma_{00} + \\gamma_{01}G_{i} +   U_{0i}\\]\n\\[{\\beta}_{1i} = \\gamma_{10} + \\gamma_{11}G_{j} + U_{1j}\\]\n\\[{Y}_{ij} = \\gamma_{00} + \\gamma_{01}G_{i}+  \\gamma_{10} (X_{ij}) + \\gamma_{11}(G_{i}*X{ij}) +  U_{0i} + U_{1i}(X{ij}) + \\varepsilon_{ij}\\] ———-\n\\[{Y}_{ij} = [\\gamma_{00} + U_{0i} +\\gamma_{01}G_{i}] + [(\\gamma_{10}  + \\gamma_{11}G_{i}+  U_{1i})(X{ij})] + \\varepsilon_{ij}\\]"
   },
   {
     "objectID": "mlm-8.html#centering",

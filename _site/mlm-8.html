@@ -427,7 +427,7 @@
 <h2>Empty model</h2>
 <p>Level 1 <span class="math display">\[{Y}_{ij} = \beta_{0j}  + \varepsilon_{ij}\]</span></p>
 <p>Level 2 <span class="math display">\[{\beta}_{0j} = \gamma_{00} + U_{0j}\]</span></p>
-<p><span class="math display">\[{U}_{0j} \sim\mathcal{N}(0, \tau_{00}^{2})\]</span> <span class="math display">\[{e}_{ij} \sim\mathcal{N}(0, \sigma^{2})\]</span></p>
+<p><span class="math display">\[{U}_{0j} \sim N(0, \tau_{00}^{2})\]</span> <span class="math display">\[{e}_{ij} \sim N(0, \sigma^{2})\]</span></p>
 </section>
 <section class="slide level2">
 
@@ -458,29 +458,29 @@
 <section id="level-1-predictors" class="slide level2">
 <h2>Level 1 predictors</h2>
 <p>Level 1 is where you have data that repeats within your grouping or clustering data. Is your cluster classrooms? Then students are level 1. Is your cluster people? Then observations are level 1.</p>
-<p><span class="math display">\[{Y}_{ij} = \beta_{0j}  + \beta_{1j}X_{ij} + \varepsilon_{ij}\]</span> Notice on the subscript of X that these predictors vary across group (j) and within the group (i) So if your grouping (j) is people, then i refers to different observations.</p>
+<p><span class="math display">\[{Y}_{ij} = \beta_{0j}  + \beta_{1j}X_{ij} + \varepsilon_{ij}\]</span> Notice on the subscript of X that these predictors vary across group (i) and within the group (i) So if your grouping (i) is people, then j refers to different observations.</p>
 </section>
 <section class="slide level2">
 
 <p>Level 2 takes the parameters at level 1 and decomposes them into a fixed component ( <span class="math inline">\(\gamma\)</span> ) that reflects the average and, if desired, the individual deviations around that fixed effect (U).</p>
-<p>level 1 <span class="math display">\[{Y}_{ij} = \beta_{0j}  + \beta_{1j}X_{ij} + \varepsilon_{ij}\]</span></p>
-<p>level 2 <span class="math display">\[{\beta}_{0j} = \gamma_{00} + U_{0j}\]</span><br>
-<span class="math display">\[{\beta}_{1j} = \gamma_{10}\]</span></p>
+<p>level 1 <span class="math display">\[{Y}_{ij} = \beta_{0i}  + \beta_{1i}X_{ij} + \varepsilon_{ij}\]</span></p>
+<p>level 2 <span class="math display">\[{\beta}_{0i} = \gamma_{00} + U_{0i}\]</span><br>
+<span class="math display">\[{\beta}_{1i} = \gamma_{10}\]</span></p>
 </section>
 <section class="slide level2">
 
 <p>Level 1:</p>
-<p><span class="math display">\[{Y}_{ij} = \beta_{0j}  + \beta_{1j}X_{ij} + \varepsilon_{ij}\]</span> Level 2:<br>
-<span class="math display">\[{\beta}_{0j} = \gamma_{00} + U_{0j}\]</span></p>
-<p><span class="math display">\[{\beta}_{1j} = \gamma_{10} + U_{1j}\]</span></p>
-<p>Combined <span class="math display">\[{Y}_{ij} = \gamma_{00} + \gamma_{10}(X_{ij})+ U_{0j} + U_{1j}(X_{ij}) + \varepsilon_{ij}\]</span></p>
+<p><span class="math display">\[{Y}_{ij} = \beta_{0i}  + \beta_{1i}X_{ij} + \varepsilon_{ij}\]</span> Level 2:<br>
+<span class="math display">\[{\beta}_{0i} = \gamma_{00} + U_{0i}\]</span></p>
+<p><span class="math display">\[{\beta}_{1i} = \gamma_{10} + U_{1i}\]</span></p>
+<p>Combined <span class="math display">\[{Y}_{ij} = \gamma_{00} + \gamma_{10}(X_{ij})+ U_{0i} + U_{1i}(X_{ij}) + \varepsilon_{ij}\]</span></p>
 <p>Can think of a persons score divided up into a fixed component as well as the random component.</p>
 <p><span class="math display">\[{\beta}_{16} = \gamma_{10} \pm U_{16}\]</span></p>
 </section>
 <section id="error-structure" class="slide level2">
 <h2>Error structure</h2>
 <p>The residual structure, where the random effects are again normally distributed with a mean of zero, but this time one must also consider covariance in addition to variance.</p>
-<p><span class="math display">\[\begin{pmatrix} {U}_{0j} \\ {U}_{1j} \end{pmatrix}
+<p><span class="math display">\[\begin{pmatrix} {U}_{0i} \\ {U}_{1i} \end{pmatrix}
 \sim N \begin{pmatrix} 0,      \tau_{00}^{2} &amp; \tau_{01}\\ 0,  \tau_{01} &amp; \tau_{10}^{2} \end{pmatrix}\]</span></p>
 <p>Note that it is possible to have a different error structure for the random effects</p>
 <p><span class="math display">\[{e}_{ij} \sim N(0, \sigma^{2})\]</span></p>
@@ -488,22 +488,25 @@
 <section id="multiple-level-1-predictors" class="slide level2">
 <h2>Multiple level 1 predictors</h2>
 <p>Level 1:</p>
-<p><span class="math display">\[{Y}_{ijk} = \beta_{0j}  + \beta_{1j}X_{ij} + \beta_{2j}Z_{ik} + \varepsilon_{ijk}\]</span> Level 2:<br>
-<span class="math display">\[{\beta}_{0j} = \gamma_{00} + U_{0j}\]</span></p>
-<p><span class="math display">\[{\beta}_{1j} = \gamma_{10} + U_{1j}\]</span> <span class="math display">\[{\beta}_{2k} = \gamma_{20} + U_{2k}\]</span></p>
+<p><span class="math display">\[{Y}_{ij} = \beta_{0i}  + \beta_{1i}X_{ij} + \beta_{2i}Z_{ij} + \varepsilon_{ij}\]</span> Level 2:<br>
+<span class="math display">\[{\beta}_{0i} = \gamma_{00} + U_{0i}\]</span></p>
+<p><span class="math display">\[{\beta}_{1i} = \gamma_{10} + U_{1i}\]</span> <span class="math display">\[{\beta}_{2i} = \gamma_{20} + U_{2i}\]</span></p>
 </section>
 <section id="level-2-predictors" class="slide level2">
 <h2>Level 2 predictors</h2>
-<p>Level 1: <span class="math display">\[{Y}_{ij} = \beta_{0j}  + \beta_{1j}X_{ij} + \varepsilon_{ij}\]</span> Level 2: <span class="math display">\[{\beta}_{0j} = \gamma_{00} + \gamma_{01}G_{j} +   U_{0j}\]</span><br>
-<span class="math display">\[{\beta}_{1j} = \gamma_{10} + U_{1j}\]</span></p>
-<p>Combined <span class="math display">\[{Y}_{ij} = \gamma_{00} + \gamma_{01}G_{j}+  \gamma_{10} (X_{ij}) + U_{0j} + U_{1j}(X_{ij}) + \varepsilon_{ij}\]</span> <span class="math display">\[{Y}_{ij} = [\gamma_{00} + \gamma_{01}G_{j}+ U_{0j}]  + [(\gamma_{10}  + U_{1j})(X_{ij})] + \varepsilon_{ij}\]</span></p>
+<p>Level 1: <span class="math display">\[{Y}_{ij} = \beta_{0i}  + \beta_{1i}X_{ij} + \varepsilon_{ij}\]</span> Level 2: <span class="math display">\[{\beta}_{0i} = \gamma_{00} + \gamma_{01}G_{i} +   U_{0i}\]</span><br>
+<span class="math display">\[{\beta}_{1i} = \gamma_{10} + U_{1i}\]</span></p>
+</section>
+<section class="slide level2">
+
+<p>Combined <span class="math display">\[{Y}_{ij} = \gamma_{00} + \gamma_{01}G_{i}+  \gamma_{10} (X_{ij}) + U_{0i} + U_{1i}(X_{ij}) + \varepsilon_{ij}\]</span> <span class="math display">\[{Y}_{ij} = [\gamma_{00} + \gamma_{01}G_{i}+ U_{0i}]  + [(\gamma_{10}  + U_{1i})(X_{ij})] + \varepsilon_{ij}\]</span></p>
 </section>
 <section id="cross-level-interactions" class="slide level2">
 <h2>Cross level interactions</h2>
-<p>level 1: <span class="math display">\[{Y}_{ij} = \beta_{0j}  + \beta_{1j}X_{ij} + \varepsilon_{ij}\]</span> Level 2: <span class="math display">\[{\beta}_{0j} = \gamma_{00} + \gamma_{01}G_{j} +   U_{0j}\]</span><br>
-<span class="math display">\[{\beta}_{1j} = \gamma_{10} + \gamma_{11}G_{j} + U_{1j}\]</span><br>
-<span class="math display">\[{Y}_{ij} = \gamma_{00} + \gamma_{01}G_{j}+  \gamma_{10} (X_{ij}) + \gamma_{11}(G_{j}*X{ij}) +  U_{0j} + U_{1j}(X{ij}) + \varepsilon_{ij}\]</span></p>
-<p><span class="math display">\[{Y}_{ij} = [\gamma_{00} + U_{0j} +\gamma_{01}G_{j}] + [(\gamma_{10}  + \gamma_{11}G_{j}+  U_{1j})(X{ij})] + \varepsilon_{ij}\]</span></p>
+<p>level 1: <span class="math display">\[{Y}_{ij} = \beta_{0i}  + \beta_{1i}X_{ij} + \varepsilon_{ij}\]</span> Level 2: <span class="math display">\[{\beta}_{0i} = \gamma_{00} + \gamma_{01}G_{i} +   U_{0i}\]</span><br>
+<span class="math display">\[{\beta}_{1i} = \gamma_{10} + \gamma_{11}G_{j} + U_{1j}\]</span><br>
+<span class="math display">\[{Y}_{ij} = \gamma_{00} + \gamma_{01}G_{i}+  \gamma_{10} (X_{ij}) + \gamma_{11}(G_{i}*X{ij}) +  U_{0i} + U_{1i}(X{ij}) + \varepsilon_{ij}\]</span> ———-</p>
+<p><span class="math display">\[{Y}_{ij} = [\gamma_{00} + U_{0i} +\gamma_{01}G_{i}] + [(\gamma_{10}  + \gamma_{11}G_{i}+  U_{1i})(X{ij})] + \varepsilon_{ij}\]</span></p>
 </section>
 <section id="centering" class="slide level2">
 <h2>Centering</h2>
