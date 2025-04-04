@@ -77,12 +77,12 @@ ggplot(aes(x = week, y = CON, group = ID, fill = ID)) + geom_point(aes(color = f
 
 ## Empty model
 
-Level 1 $${Y}_{ij} = \beta_{0j}  + \varepsilon_{ij}$$
+Level 1 $${Y}_{ij} = \beta_{0i}  + \varepsilon_{ij}$$
 
-Level 2 $${\beta}_{0j} = \gamma_{00} + U_{0j}$$
+Level 2 $${\beta}_{0i} = \gamma_{00} + U_{0j}$$
 
-$${U}_{0j} \sim N(0, \tau_{00}^{2})$$ 
-$${e}_{ij} \sim N(0, \sigma^{2})$$
+$${U}_{0i} \sim N(0, \tau_{00}^{2})$$ 
+$${e}_{ii} \sim N(0, \sigma^{2})$$
 
 ------------------------------------------------------------------------
 
@@ -94,7 +94,7 @@ mlm %>%
 ggplot(aes(x = week, y = CON, group = ID)) + geom_point(aes(color = factor(ID))) + stat_smooth(aes(color = factor(ID)), method = "lm", formula=y~1, se = FALSE) + xlab("X") + ylab("Y") + theme(legend.position = "none")
 ```
 
-$${Y}_{ij} = \gamma_{00} + U_{0j}  + \varepsilon_{ij}$$
+$${Y}_{ij} = \gamma_{00} + U_{0i}  + \varepsilon_{ij}$$
 
 Akin to ANOVA if we treat $U_{0j}$ as between subjects variance & $\varepsilon_{ij}$ as within subjects variance.
 
@@ -102,13 +102,13 @@ Akin to ANOVA if we treat $U_{0j}$ as between subjects variance & $\varepsilon_{
 
 ::::: columns
 ::: {.column width="40%"}
-Level 1: $${Y}_{ij} = \beta_{0j}  + \varepsilon_{ij}$$
+Level 1: $${Y}_{ij} = \beta_{0i}  + \varepsilon_{ij}$$
 
-Level 2: $${\beta}_{0j} = \gamma_{00} + U_{0j}$$ Combined: $${Y}_{ij} = \gamma_{00} + U_{0j}  + \varepsilon_{ij}$$
+Level 2: $${\beta}_{0i} = \gamma_{00} + U_{0i}$$ Combined: $${Y}_{ij} = \gamma_{00} + U_{0i}  + \varepsilon_{ij}$$
 :::
 
 ::: {.column width="60%"}
-$U_{0j}$ is considered a random effect, as it is varies across our grouping
+$U_{0i}$ is considered a random effect, as it is varies across our grouping
 
 $\gamma_{00}$ is considered a fixed effect, as it is what is fixed (average) across our grouping
 :::
@@ -118,7 +118,7 @@ $\gamma_{00}$ is considered a fixed effect, as it is what is fixed (average) acr
 
 Level 1 is where you have data that repeats within your grouping or clustering data. Is your cluster classrooms? Then students are level 1. Is your cluster people? Then observations are level 1.
 
-$${Y}_{ij} = \beta_{0j}  + \beta_{1j}X_{ij} + \varepsilon_{ij}$$ Notice on the subscript of X that these predictors vary across group (i) and within the group (i) So if your grouping (i) is people, then j refers to different observations.
+$${Y}_{ij} = \beta_{0i}  + \beta_{1i}X_{ij} + \varepsilon_{ij}$$ Notice on the subscript of X that these predictors vary across group (i) and within the group (i) So if your grouping (i) is people, then j refers to different observations.
 
 ------------------------------------------------------------------------
 
@@ -193,11 +193,11 @@ Fortunately it is easy to separate this
 
 ------------------------------------------------------------------------
 
-Level 1: $${Y}_{ij} = \beta_{0j}  + \beta_{1j}(X_{ij}- \bar{X_j}) + \varepsilon_{ij}$$
+Level 1: $${Y}_{ij} = \beta_{0i}  + \beta_{1i}(X_{ij}- \bar{X_i}) + \varepsilon_{ij}$$
 
-Level 2: $${\beta}_{0j} = \gamma_{00} + \bar{X_j} +   U_{0j}$$
+Level 2: $${\beta}_{0i} = \gamma_{00} + \bar{X_i} +   U_{0i}$$
 
-$${\beta}_{1j} = \gamma_{10} + \bar{X_j} + U_{1j}$$
+$${\beta}_{1i} = \gamma_{10} + \bar{X_i} + U_{1i}$$
 
 Could also grand mean center the level 2 means so that the interaction has a meaningful zero point. 
 

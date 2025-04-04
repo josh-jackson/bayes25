@@ -425,9 +425,9 @@
 <img data-src="mlm-8_files/figure-revealjs/unnamed-chunk-3-1.png" width="960" class="r-stretch"></section>
 <section id="empty-model" class="slide level2">
 <h2>Empty model</h2>
-<p>Level 1 <span class="math display">\[{Y}_{ij} = \beta_{0j}  + \varepsilon_{ij}\]</span></p>
-<p>Level 2 <span class="math display">\[{\beta}_{0j} = \gamma_{00} + U_{0j}\]</span></p>
-<p><span class="math display">\[{U}_{0j} \sim N(0, \tau_{00}^{2})\]</span> <span class="math display">\[{e}_{ij} \sim N(0, \sigma^{2})\]</span></p>
+<p>Level 1 <span class="math display">\[{Y}_{ij} = \beta_{0i}  + \varepsilon_{ij}\]</span></p>
+<p>Level 2 <span class="math display">\[{\beta}_{0i} = \gamma_{00} + U_{0j}\]</span></p>
+<p><span class="math display">\[{U}_{0i} \sim N(0, \tau_{00}^{2})\]</span> <span class="math display">\[{e}_{ii} \sim N(0, \sigma^{2})\]</span></p>
 </section>
 <section class="slide level2">
 
@@ -440,17 +440,17 @@
 </details>
 
 </div>
-<img data-src="mlm-8_files/figure-revealjs/unnamed-chunk-4-1.png" width="960" class="r-stretch"><p><span class="math display">\[{Y}_{ij} = \gamma_{00} + U_{0j}  + \varepsilon_{ij}\]</span></p>
+<img data-src="mlm-8_files/figure-revealjs/unnamed-chunk-4-1.png" width="960" class="r-stretch"><p><span class="math display">\[{Y}_{ij} = \gamma_{00} + U_{0i}  + \varepsilon_{ij}\]</span></p>
 <p>Akin to ANOVA if we treat <span class="math inline">\(U_{0j}\)</span> as between subjects variance &amp; <span class="math inline">\(\varepsilon_{ij}\)</span> as within subjects variance.</p>
 </section>
 <section id="random-and-fixed-effects" class="slide level2">
 <h2>Random and fixed effects</h2>
 <div class="columns">
 <div class="column" style="width:40%;">
-<p>Level 1: <span class="math display">\[{Y}_{ij} = \beta_{0j}  + \varepsilon_{ij}\]</span></p>
-<p>Level 2: <span class="math display">\[{\beta}_{0j} = \gamma_{00} + U_{0j}\]</span> Combined: <span class="math display">\[{Y}_{ij} = \gamma_{00} + U_{0j}  + \varepsilon_{ij}\]</span></p>
+<p>Level 1: <span class="math display">\[{Y}_{ij} = \beta_{0i}  + \varepsilon_{ij}\]</span></p>
+<p>Level 2: <span class="math display">\[{\beta}_{0i} = \gamma_{00} + U_{0i}\]</span> Combined: <span class="math display">\[{Y}_{ij} = \gamma_{00} + U_{0i}  + \varepsilon_{ij}\]</span></p>
 </div><div class="column" style="width:60%;">
-<p><span class="math inline">\(U_{0j}\)</span> is considered a random effect, as it is varies across our grouping</p>
+<p><span class="math inline">\(U_{0i}\)</span> is considered a random effect, as it is varies across our grouping</p>
 <p><span class="math inline">\(\gamma_{00}\)</span> is considered a fixed effect, as it is what is fixed (average) across our grouping</p>
 </div>
 </div>
@@ -458,7 +458,7 @@
 <section id="level-1-predictors" class="slide level2">
 <h2>Level 1 predictors</h2>
 <p>Level 1 is where you have data that repeats within your grouping or clustering data. Is your cluster classrooms? Then students are level 1. Is your cluster people? Then observations are level 1.</p>
-<p><span class="math display">\[{Y}_{ij} = \beta_{0j}  + \beta_{1j}X_{ij} + \varepsilon_{ij}\]</span> Notice on the subscript of X that these predictors vary across group (i) and within the group (i) So if your grouping (i) is people, then j refers to different observations.</p>
+<p><span class="math display">\[{Y}_{ij} = \beta_{0i}  + \beta_{1i}X_{ij} + \varepsilon_{ij}\]</span> Notice on the subscript of X that these predictors vary across group (i) and within the group (i) So if your grouping (i) is people, then j refers to different observations.</p>
 </section>
 <section class="slide level2">
 
@@ -516,9 +516,9 @@
 </section>
 <section class="slide level2">
 
-<p>Level 1: <span class="math display">\[{Y}_{ij} = \beta_{0j}  + \beta_{1j}(X_{ij}- \bar{X_j}) + \varepsilon_{ij}\]</span></p>
-<p>Level 2: <span class="math display">\[{\beta}_{0j} = \gamma_{00} + \bar{X_j} +   U_{0j}\]</span></p>
-<p><span class="math display">\[{\beta}_{1j} = \gamma_{10} + \bar{X_j} + U_{1j}\]</span></p>
+<p>Level 1: <span class="math display">\[{Y}_{ij} = \beta_{0i}  + \beta_{1i}(X_{ij}- \bar{X_i}) + \varepsilon_{ij}\]</span></p>
+<p>Level 2: <span class="math display">\[{\beta}_{0i} = \gamma_{00} + \bar{X_i} +   U_{0i}\]</span></p>
+<p><span class="math display">\[{\beta}_{1i} = \gamma_{10} + \bar{X_i} + U_{1i}\]</span></p>
 <p>Could also grand mean center the level 2 means so that the interaction has a meaningful zero point.</p>
 </section>
 <section id="mlm-as-default-and-make-it-maximum" class="slide level2">

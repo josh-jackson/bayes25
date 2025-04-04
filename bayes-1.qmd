@@ -229,7 +229,7 @@ ggplot(aes(y = value, x=p)) +
 
 ## Bayes is just counting
 
-::::: columns
+::: columns
 ::: {.column width="30%"}
 
 -   What p is consistent with our data? The most consistent are more likely, but the less consistent are possible
