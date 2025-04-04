@@ -10,3 +10,4 @@ title: "Lectures"
 6.  [information](info-6.qmd)
 7.  [glm](glm-7.qmd)
 8.  [mlm](mlm-8.qmd)
+9.  [advanced mlm](adv-9.qmd)

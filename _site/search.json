@@ -9,16 +9,16 @@
   {
     "objectID": "bayes-1.html",
     "href": "bayes-1.html",
-    "title": "Untitled",
+    "title": "Intro",
     "section": "",
-    "text": "Take what you know (regression) and do it Bayesian (and more!)\nKnow the advantages of Bayesian data analysis\nRethink your approach to statistical modeling and inference"
+    "text": "Take what you know (regression) and do it Bayesian (and more!)\nKnow the advantages of Bayesian data analysis\nRethink your approach to statistical modeling and inference\nBe very comfortable with model equations"
   },
   {
     "objectID": "bayes-1.html#goals-for-the-semester",
     "href": "bayes-1.html#goals-for-the-semester",
     "title": "Intro",
-    "section": "Goals for the semester",
-    "text": "Goals for the semester\n\nTake what you know (regression) and do it Bayesian (and more!)\nKnow the advantages of Bayesian data analysis\nRethink your approach to statistical modeling and inference\nBe very comfortable with model equations"
+    "section": "",
+    "text": "Take what you know (regression) and do it Bayesian (and more!)\nKnow the advantages of Bayesian data analysis\nRethink your approach to statistical modeling and inference\nBe very comfortable with model equations"
   },
   {
     "objectID": "bayes-1.html#glm",
@@ -67,21 +67,21 @@
     "href": "bayes-1.html#first-bayes-example",
     "title": "Intro",
     "section": "First bayes example",
-    "text": "First bayes example\n\n\nCode\nlibrary(tidyverse)\ngalton.data &lt;- psychTools::galton"
+    "text": "First bayes example\n\n\nCode\nlibrary(tidyverse)\n\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.4     ✔ readr     2.1.5\n✔ forcats   1.0.0     ✔ stringr   1.5.1\n✔ ggplot2   3.5.1     ✔ tibble    3.2.1\n✔ lubridate 1.9.4     ✔ tidyr     1.3.1\n✔ purrr     1.0.2     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\n\nCode\ngalton.data &lt;- psychTools::galton"
   },
   {
     "objectID": "bayes-1.html#regression-with-brms",
     "href": "bayes-1.html#regression-with-brms",
     "title": "Intro",
     "section": "regression with brms",
-    "text": "regression with brms\n\n\nCode\nlibrary(brms)\nlibrary(\"rstan\")\nfit.1.bayesian &lt;- brm(child ~ parent, data = galton.data,\n                      backend = \"cmdstanr\",\n                      file = \"fit.1.b\")\n\n\n\nsummary(fit.1.bayesian)\n\n Family: gaussian \n  Links: mu = identity; sigma = identity \nFormula: child ~ parent \n   Data: galton.data (Number of observations: 928) \n  Draws: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;\n         total post-warmup draws = 4000\n\nRegression Coefficients:\n          Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS\nIntercept    23.92      2.81    18.41    29.40 1.00     3946     3038\nparent        0.65      0.04     0.57     0.73 1.00     3953     3059\n\nFurther Distributional Parameters:\n      Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS\nsigma     2.24      0.05     2.14     2.35 1.00     4585     2945\n\nDraws were sampled using sample(hmc). For each parameter, Bulk_ESS\nand Tail_ESS are effective sample size measures, and Rhat is the potential\nscale reduction factor on split chains (at convergence, Rhat = 1)."
+    "text": "regression with brms\n\n\nCode\nlibrary(brms)\n\n\nLoading required package: Rcpp\n\n\nLoading 'brms' package (version 2.22.0). Useful instructions\ncan be found by typing help('brms'). A more detailed introduction\nto the package is available through vignette('brms_overview').\n\n\n\nAttaching package: 'brms'\n\n\nThe following object is masked from 'package:stats':\n\n    ar\n\n\nCode\nlibrary(\"rstan\")\n\n\nLoading required package: StanHeaders\n\n\n\nrstan version 2.36.0.9000 (Stan version 2.35.0)\n\n\nFor execution on a local, multicore CPU with excess RAM we recommend calling\noptions(mc.cores = parallel::detectCores()).\nTo avoid recompilation of unchanged Stan programs, we recommend calling\nrstan_options(auto_write = TRUE)\nFor within-chain threading using `reduce_sum()` or `map_rect()` Stan functions,\nchange `threads_per_chain` option:\nrstan_options(threads_per_chain = 1)\n\n\n\nAttaching package: 'rstan'\n\n\nThe following object is masked from 'package:tidyr':\n\n    extract\n\n\nCode\nfit.1.bayesian &lt;- brm(child ~ parent, data = galton.data,\n                      backend = \"cmdstanr\",\n                      file = \"fit.1.b\")\n\n\n\nsummary(fit.1.bayesian)\n\n Family: gaussian \n  Links: mu = identity; sigma = identity \nFormula: child ~ parent \n   Data: galton.data (Number of observations: 928) \n  Draws: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;\n         total post-warmup draws = 4000\n\nRegression Coefficients:\n          Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS\nIntercept    23.92      2.81    18.41    29.40 1.00     3946     3038\nparent        0.65      0.04     0.57     0.73 1.00     3953     3059\n\nFurther Distributional Parameters:\n      Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS\nsigma     2.24      0.05     2.14     2.35 1.00     4585     2945\n\nDraws were sampled using sample(hmc). For each parameter, Bulk_ESS\nand Tail_ESS are effective sample size measures, and Rhat is the potential\nscale reduction factor on split chains (at convergence, Rhat = 1)."
   },
   {
     "objectID": "bayes-1.html#what-do-these-estimates-mean",
     "href": "bayes-1.html#what-do-these-estimates-mean",
     "title": "Intro",
     "section": "what do these estimates mean?",
-    "text": "what do these estimates mean?\n\n\nCode\nlibrary(tidybayes)\nfit.1.bayesian %&gt;% \nspread_draws(b_Intercept, b_parent) %&gt;% \nggplot(aes(x = b_parent)) +\n  stat_halfeye()"
+    "text": "what do these estimates mean?\n\n\nCode\nlibrary(tidybayes)\n\n\n\nAttaching package: 'tidybayes'\n\n\nThe following objects are masked from 'package:brms':\n\n    dstudent_t, pstudent_t, qstudent_t, rstudent_t\n\n\nCode\nfit.1.bayesian %&gt;% \nspread_draws(b_Intercept, b_parent) %&gt;% \nggplot(aes(x = b_parent)) +\n  stat_halfeye()"
   },
   {
     "objectID": "bayes-1.html#posterior-distribution-ie-results",
@@ -116,7 +116,7 @@
     "href": "bayes-1.html#what-do-you-mean-by-likely",
     "title": "Intro",
     "section": "What do you mean by likely?",
-    "text": "What do you mean by likely?\n\n\n\nThree parameters in a binomial distribution (# successes, # of trials, probability of success).\nOften you would fix #trials and probability of success to see what # successes are most/least likely.\n\n\n\n\nCode\ndata.frame(heads = 0:10, prob = dbinom(x = 0:10, size = 10, prob = .2)) %&gt;% \n  ggplot(aes(x = factor(heads), y = prob)) +\n  geom_col(fill = \"#562457\") +\n  geom_text(aes(label = round(prob, 2), y = prob + .01),\n            position = position_dodge(.9),\n            size = 5, \n            vjust = 0) +\n  labs(title = \"Binomial Distribution of Coin Flips\",\n       subtitle = \"n = 10, p = .2\",\n       x = \"Number of Successes (Heads)\",\n       y = \"Density\") +\n  theme_classic(base_size = 16)"
+    "text": "What do you mean by likely?\n\n\n\nThree parameters in a binomial distribution (# successes, # of trials, probability of success).\nOften you would fix #trials and probability of success to see what # successes are most/least likely.\n\n\n\n\nCode\ndata.frame(heads = 0:10, prob = dbinom(x = 0:10, size = 10, prob = .2)) %&gt;% \n  ggplot(aes(x = factor(heads), y = prob)) +\n  geom_col(fill = \"#562457\") +\n  geom_text(aes(label = round(prob, 2), y = prob + .01),\n            position = position_dodge(.9),\n            size = 5, \n            vjust = 0) +\n  labs(title = \"Binomial Distribution of Coin Flips\",\n       subtitle = \"n = 10, p = .2\",\n       x = \"Number of Successes (Heads)\",\n       y = \"Density\") +\n  theme_classic(base_size = 16)\n\n\n\n\n\n\n\n\n\nNote how this is in the form of: p(data | hypothesis)\n“What is the probability of having x successes given a fixed probability of success?”\nGood at rejecting some preconceived state of the world (is this coin fair), but not good at estimating p (what is the probability of heads for this coin?)"
   },
   {
     "objectID": "bayes-1.html#but-we-often-dont-know-what-p-is",
@@ -130,7 +130,7 @@
     "href": "bayes-1.html#maximum-likelihood",
     "title": "Intro",
     "section": "Maximum Likelihood",
-    "text": "Maximum Likelihood\nML results that we often use for MLM and SEMs are similar. But instead of focusing on the entire distribution, they give us a distribution that is centered on the most likely ie “maximum”.\nWe can fix the distribution around the mean estimate, and then try out different versions of SD to for the typically assumed normal distribution, maximizing or finding the most likely value.\nUltimately, what we end up with (in Bayes land) is very closely related to this ML estimate (often identical). Conceptually, though, the process is different."
+    "text": "Maximum Likelihood\nML results that we often use for MLM and SEMs are similar. But instead of focusing on the entire distribution, they give us a distribution that is centered on the most likely ie “maximum”.\nWe can fix the distribution around the mean estimate, and then try out different versions of SD to for the typically assumed normal distribution, maximizing or finding the most likely value.\nUltimately, what we end up with (in Bayes land) is very closely related to this ML estimate (often identical). Conceptually, though, the process is different.\n\n\nThe Bayesian (MCMC) algorithm tries out a bunch of parameter values. The ones that are more likely will appear more often.\nWhat do I mean “appear” more often? The algorithm lands on that just as our coin flipping example finds .2 to be most likely, but doesn’t rule out other possibilities.\n\n\n\nCode\nfit.1.bayesian %&gt;% \nspread_draws(b_Intercept, b_parent) %&gt;% \nggplot(aes(x = b_parent)) +\n  stat_dotsinterval()\n\n\n\n\n\n\nOur posterior is literally made up of educated parameter guesses by the algorithm. Which estimates are more likely given the data?\n\ntidy_draws(fit.1.bayesian)\n\n# A tibble: 4,000 × 15\n   .chain .iteration .draw b_Intercept b_parent sigma Intercept lprior   lp__\n    &lt;int&gt;      &lt;int&gt; &lt;int&gt;       &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;\n 1      1          1     1        29.7    0.561  2.21      68.1  -3.84 -2069.\n 2      1          2     2        22.6    0.666  2.19      68.1  -3.83 -2068.\n 3      1          3     3        23.6    0.650  2.20      68.1  -3.84 -2067.\n 4      1          4     4        18.9    0.720  2.24      68.1  -3.85 -2068.\n 5      1          5     5        25.9    0.619  2.23      68.2  -3.84 -2067.\n 6      1          6     6        22.6    0.666  2.34      68.0  -3.88 -2069.\n 7      1          7     7        28.3    0.583  2.23      68.2  -3.84 -2068.\n 8      1          8     8        21.2    0.688  2.23      68.2  -3.85 -2069.\n 9      1          9     9        26.6    0.605  2.19      67.9  -3.84 -2069.\n10      1         10    10        23.8    0.649  2.28      68.1  -3.86 -2067.\n# ℹ 3,990 more rows\n# ℹ 6 more variables: accept_stat__ &lt;dbl&gt;, treedepth__ &lt;dbl&gt;, stepsize__ &lt;dbl&gt;,\n#   divergent__ &lt;dbl&gt;, n_leapfrog__ &lt;dbl&gt;, energy__ &lt;dbl&gt;"
   },
   {
     "objectID": "bayes-1.html#bayesian-analysis-is-just-counting",
@@ -144,7 +144,7 @@
     "href": "bayes-1.html#be-comfortable-integrating-prior-knowledge",
     "title": "Intro",
     "section": "3. Be comfortable integrating prior knowledge",
-    "text": "3. Be comfortable integrating prior knowledge\n\nPriors insert knowledge you have outside of your data into your model\nThis can seem “subjective” as opposed to the more “objective” way of letting the data speak.\n\n\n\nWe will mostly not “tip the scales” towards an outcome we want.\nMost of the time the prior knowledge constrains plausible or implausible range of values e.g. we know an effect size of a million is very unlikely.\nOften priors don’t matter…"
+    "text": "3. Be comfortable integrating prior knowledge\n\nPriors insert knowledge you have outside of your data into your model\nThis can seem “subjective” as opposed to the more “objective” way of letting the data speak.\n\n\n\nWe will mostly not “tip the scales” towards an outcome we want.\nMost of the time the prior knowledge constrains plausible or implausible range of values e.g. we know an effect size of a million is very unlikely.\nOften priors don’t matter…\n\n\n\n\\[ child_i \\sim Normal( \\mu_i , \\sigma )\\ \\]\n\\[\\mu_i = \\beta_0 + \\beta_1  parent_i \\]\n\nWe need to put priors on each parameter we want to estimate, here \\(b_{0}\\) & \\(b_{1}\\) (and e).\n\\(b_{0}\\) is the intercept and reflects average child height when parent height is centered.\nWe know, roughly, what average height of adults are so we can create a distribution, say ~N(66 (5.5 ft), 5). That means we are pretty sure (95%) the average height is between ~4’8 and 6`4\n\n\n\n\nCode\np.0 &lt;-\n  tibble(x = seq(from = 40, to = 100, by = .1)) %&gt;% \n  \n  ggplot(aes(x = x, y = dnorm(x, mean = 66, sd = 5))) +\n  geom_line() +\n  scale_x_continuous(breaks = seq(from = 40, to = 100, by = 10)) +\n  labs(title = \"mu ~ dnorm(66, 5)\",\n       y = \"density\")\n\np.0\n\n\n\n\n\n\n\nWe could argue that the \\(b_{1}\\) parameter (which indexes the strength of association between parent and child height) is positive. But we don’t want to stack the deck.\nLet’s center it around zero, saying that the most plausible estimate is no association, but that we are willing to entertain some strong effects in either direction.\nIn sum: we tend not to make guesses on the average parameter estimate, but instead constraints on the range of possible values. Constraints tell us how “surprised” we’d be if we get some estimate\n\n\n\n\nCode\nN10 &lt;- ggplot(data.frame(x = c(-35, 35)), aes(x)) +\n  stat_function(fun = dnorm, n = 100, args = list(0, 10))+\n  labs(title = \"B ~ Normal(0, 10)\")\n\nN5 &lt;- ggplot(data.frame(x = c(-35, 35)), aes(x)) +\n  stat_function(fun = dnorm, n = 100, args = list(0, 5)) +\n  labs(title = \"B ~ Normal(0, 5)\")\n\nN1 &lt;- ggplot(data.frame(x = c(-35, 35)), aes(x)) +\n  stat_function(fun = dnorm, n = 100, args = list(0, 1)) +\n  labs(title = \" B ~ Normal(0, 1)\")\n\nN2 &lt;- ggplot(data.frame(x = c(-35, 35)), aes(x)) +\n  stat_function(fun = dnorm, n = 100, args = list(0, 2)) +\n  labs(title = \"B ~ Normal(0, 2)\")\n\nlibrary(patchwork)\n\n(N10 | N5 )/\n  (N1 | N2 )"
   },
   {
     "objectID": "bayes-1.html#okay-so-what-does-this-mean",
@@ -935,7 +935,7 @@
     "href": "lectures.html",
     "title": "Lectures",
     "section": "",
-    "text": "Background and introduction\nRegression part 1\nRegression part 2\nMultiple Regression\nMCMC\ninformation\nglm\nmlm"
+    "text": "Background and introduction\nRegression part 1\nRegression part 2\nMultiple Regression\nMCMC\ninformation\nglm\nmlm\nadvanced mlm"
   },
   {
     "objectID": "bayes-1.html#model-we-want-to-fit",
@@ -1005,7 +1005,7 @@
     "href": "bayes-1.html#most-often-we-dont-know-what-p-is-1",
     "title": "Intro",
     "section": "Most often we don’t know what p is",
-    "text": "Most often we don’t know what p is\n\n\n\nWe can look at what p is consistent with (or not) based on our data (2 successes in 10 trials) (Rather than assume some specific p).\n\n\n\n\nCode\np &lt;- seq(0.01, 0.99, by = 0.01)\nloglike &lt;- dbinom(2, size = 10, prob = p)\nas.tibble(loglike) %&gt;% \n  mutate(p = row_number()/100) %&gt;% \nggplot(aes(y = value, x=p)) + \n     geom_line() + ylab(\"likelihood\")"
+    "text": "Most often we don’t know what p is\n\n\n\nWe can look at what p is consistent with (or not) based on our data (2 successes in 10 trials) (Rather than assume some specific p).\n\n\n\n\nCode\np &lt;- seq(0.01, 0.99, by = 0.01)\nloglike &lt;- dbinom(2, size = 10, prob = p)\nas.tibble(loglike) %&gt;% \n  mutate(p = row_number()/100) %&gt;% \nggplot(aes(y = value, x=p)) + \n     geom_line() + ylab(\"likelihood\")\n\n\nWarning: `as.tibble()` was deprecated in tibble 2.0.0.\nℹ Please use `as_tibble()` instead.\nℹ The signature and semantics have changed, see `?as_tibble`.\n\n\n\n\n\n\n\n\n\n“Probability attaches to possible results; likelihood attaches to hypotheses”\nThe first graph assumed p = .2. Probabilities are about a fixed distribution. p( data | distribution ) or p(heads | p = .2).\nLikelihood is about hypotheses with fixed data. L(\\(\\theta\\)|data) = P(data|\\(\\theta\\)) across many theta/hypotheses. We entertained many hypotheses (p), which is why we looped it."
   },
   {
     "objectID": "regression-2.html#prior-predictive-3",
@@ -2784,5 +2784,19 @@
     "title": "adv-mlm",
     "section": "Pros and Cons of IRT",
     "text": "Pros and Cons of IRT\nPro: CAT, item and people are interpreted on the same probability metric, some scores can be measured with more precision than others (rather than one reliability assessment), creation of item banks, investigation of differential item functioning (DIF)\nCon: complex, CTT and IRT assessments correlate &gt;.96,"
+  },
+  {
+    "objectID": "gams-10.html",
+    "href": "gams-10.html",
+    "title": "Untitled",
+    "section": "",
+    "text": "We often want to fit flexible (non-linear) curves. What are options?\npolynomial, but they make bad predictions at the ends\nLocalized regression such as lowess, but those are non-parameteric\nPiecewise fit segments to different parts of the data, with breakpoints (knots) at pre-determined places. But what if you don’t know pre-defined. What if you want segments to touch?\n“Continuous piecewise” = splines.\n\n\n\nlibrary(MultiKink) \nlibrary(ggplot2)  \ndata(\"triceps\")\n tri.age.plot &lt;- ggplot(triceps, aes(x=age, y=triceps)) +\n                 geom_point(alpha=0.55, color=\"black\") + \n                 theme_minimal() \n tri.age.plot\n\n\n\n\n\nBasis function\n\\[y = \\beta_0 + \\beta_1 x +  \\beta_2 (x-k_1)_{+}  + \\beta_3 (x-k_2)_{+} + ... + \\beta_6 (x-k_p)_{+} + \\varepsilon\\]4\n\\[(x-k)_{+} =  \\begin{cases}\n                  0, & \\text{ if  } x &lt; k \\\\\n                  x-k, & \\text{ if  } x \\geq k\\\\\n                 \\end{cases}\\]\nregression model is written as a linear combination of these basis functions\n\nGAMs offer a middle ground: they can be fit to complex, nonlinear relationships and make good predictions in these cases, but we are still able to do inferential statistics and understand and explain the underlying structure of our models"
+  },
+  {
+    "objectID": "gams-10.html#gams",
+    "href": "gams-10.html#gams",
+    "title": "Untitled",
+    "section": "",
+    "text": "We often want to fit flexible (non-linear) curves. What are options?\npolynomial, but they make bad predictions at the ends\nLocalized regression such as lowess, but those are non-parameteric\nPiecewise fit segments to different parts of the data, with breakpoints (knots) at pre-determined places. But what if you don’t know pre-defined. What if you want segments to touch?\n“Continuous piecewise” = splines.\n\n\n\nlibrary(MultiKink) \nlibrary(ggplot2)  \ndata(\"triceps\")\n tri.age.plot &lt;- ggplot(triceps, aes(x=age, y=triceps)) +\n                 geom_point(alpha=0.55, color=\"black\") + \n                 theme_minimal() \n tri.age.plot\n\n\n\n\n\nBasis function\n\\[y = \\beta_0 + \\beta_1 x +  \\beta_2 (x-k_1)_{+}  + \\beta_3 (x-k_2)_{+} + ... + \\beta_6 (x-k_p)_{+} + \\varepsilon\\]4\n\\[(x-k)_{+} =  \\begin{cases}\n                  0, & \\text{ if  } x &lt; k \\\\\n                  x-k, & \\text{ if  } x \\geq k\\\\\n                 \\end{cases}\\]\nregression model is written as a linear combination of these basis functions\n\nGAMs offer a middle ground: they can be fit to complex, nonlinear relationships and make good predictions in these cases, but we are still able to do inferential statistics and understand and explain the underlying structure of our models"
   }
 ]
