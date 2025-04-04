@@ -10,7 +10,7 @@
 <link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.3.450">
 
-  <title>Bayesian Statistics Spring 2025 - adv-mlm</title>
+  <title>Bayesian Statistics Spring 2025 - advanced mlm</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -389,7 +389,7 @@
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">adv-mlm</h1>
+  <h1 class="title">advanced mlm</h1>
 
 <div class="quarto-title-authors">
 </div>
@@ -457,8 +457,8 @@
 <div class="cell-output cell-output-stdout">
 <pre><code>
  W.other    ID Estimate 2.5 % 97.5 %
-       0 ralph     3.14  2.17   4.13
-       1 ralph     3.45  2.63   4.35
+       0 ralph     3.15  2.15   4.11
+       1 ralph     3.46  2.60   4.34
 
 Type:  response 
 Columns: rowid, estimate, conf.low, conf.high, W.other, ID, PA </code></pre>
@@ -859,17 +859,17 @@ Columns: rowid, rowidcf, estimate, conf.low, conf.high, age_group, decade_marrie
 <pre><code># A tibble: 11 × 7
    age_group kept_name_predict .lower .upper .width .point .interval
    &lt;chr&gt;                 &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;    
- 1 25                    0.174 0.0931  0.275   0.95 mean   qi       
- 2 30                    0.182 0.114   0.265   0.95 mean   qi       
- 3 35                    0.217 0.151   0.297   0.95 mean   qi       
- 4 40                    0.245 0.170   0.326   0.95 mean   qi       
- 5 45                    0.279 0.202   0.366   0.95 mean   qi       
- 6 50                    0.301 0.218   0.395   0.95 mean   qi       
- 7 55                    0.322 0.229   0.432   0.95 mean   qi       
- 8 60                    0.437 0.326   0.557   0.95 mean   qi       
- 9 65                    0.560 0.418   0.709   0.95 mean   qi       
-10 70                    0.516 0.297   0.745   0.95 mean   qi       
-11 75                    0.226 0.0475  0.502   0.95 mean   qi       </code></pre>
+ 1 25                    0.175 0.0937  0.279   0.95 mean   qi       
+ 2 30                    0.180 0.115   0.261   0.95 mean   qi       
+ 3 35                    0.218 0.149   0.305   0.95 mean   qi       
+ 4 40                    0.244 0.172   0.326   0.95 mean   qi       
+ 5 45                    0.278 0.202   0.364   0.95 mean   qi       
+ 6 50                    0.301 0.216   0.397   0.95 mean   qi       
+ 7 55                    0.322 0.231   0.427   0.95 mean   qi       
+ 8 60                    0.436 0.324   0.554   0.95 mean   qi       
+ 9 65                    0.559 0.413   0.703   0.95 mean   qi       
+10 70                    0.515 0.291   0.742   0.95 mean   qi       
+11 75                    0.226 0.0484  0.502   0.95 mean   qi       </code></pre>
 </div>
 </div>
 </section>
@@ -6588,112 +6588,12 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <span id="cb204-7"><a href="#cb204-7"></a>      <span class="at">data =</span> spank, </span>
 <span id="cb204-8"><a href="#cb204-8"></a>      <span class="at">backend =</span> <span class="st">"cmdstanr"</span>, </span>
 <span id="cb204-9"><a href="#cb204-9"></a>      <span class="at">file =</span> <span class="st">"meta.3"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running MCMC with 4 parallel chains...
-
-Chain 1 Iteration:    1 / 2000 [  0%]  (Warmup) 
-Chain 2 Iteration:    1 / 2000 [  0%]  (Warmup) 
-Chain 3 Iteration:    1 / 2000 [  0%]  (Warmup) 
-Chain 4 Iteration:    1 / 2000 [  0%]  (Warmup) 
-Chain 1 Iteration:  100 / 2000 [  5%]  (Warmup) 
-Chain 2 Iteration:  100 / 2000 [  5%]  (Warmup) 
-Chain 1 Iteration:  200 / 2000 [ 10%]  (Warmup) 
-Chain 3 Iteration:  100 / 2000 [  5%]  (Warmup) 
-Chain 1 Iteration:  300 / 2000 [ 15%]  (Warmup) 
-Chain 2 Iteration:  200 / 2000 [ 10%]  (Warmup) 
-Chain 3 Iteration:  200 / 2000 [ 10%]  (Warmup) 
-Chain 4 Iteration:  100 / 2000 [  5%]  (Warmup) 
-Chain 1 Iteration:  400 / 2000 [ 20%]  (Warmup) 
-Chain 1 Iteration:  500 / 2000 [ 25%]  (Warmup) 
-Chain 2 Iteration:  300 / 2000 [ 15%]  (Warmup) 
-Chain 2 Iteration:  400 / 2000 [ 20%]  (Warmup) 
-Chain 3 Iteration:  300 / 2000 [ 15%]  (Warmup) 
-Chain 4 Iteration:  200 / 2000 [ 10%]  (Warmup) 
-Chain 1 Iteration:  600 / 2000 [ 30%]  (Warmup) 
-Chain 2 Iteration:  500 / 2000 [ 25%]  (Warmup) 
-Chain 3 Iteration:  400 / 2000 [ 20%]  (Warmup) 
-Chain 4 Iteration:  300 / 2000 [ 15%]  (Warmup) 
-Chain 1 Iteration:  700 / 2000 [ 35%]  (Warmup) 
-Chain 2 Iteration:  600 / 2000 [ 30%]  (Warmup) 
-Chain 3 Iteration:  500 / 2000 [ 25%]  (Warmup) 
-Chain 4 Iteration:  400 / 2000 [ 20%]  (Warmup) 
-Chain 1 Iteration:  800 / 2000 [ 40%]  (Warmup) 
-Chain 2 Iteration:  700 / 2000 [ 35%]  (Warmup) 
-Chain 3 Iteration:  600 / 2000 [ 30%]  (Warmup) 
-Chain 4 Iteration:  500 / 2000 [ 25%]  (Warmup) 
-Chain 1 Iteration:  900 / 2000 [ 45%]  (Warmup) 
-Chain 2 Iteration:  800 / 2000 [ 40%]  (Warmup) 
-Chain 3 Iteration:  700 / 2000 [ 35%]  (Warmup) 
-Chain 3 Iteration:  800 / 2000 [ 40%]  (Warmup) 
-Chain 4 Iteration:  600 / 2000 [ 30%]  (Warmup) 
-Chain 1 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
-Chain 1 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
-Chain 2 Iteration:  900 / 2000 [ 45%]  (Warmup) 
-Chain 3 Iteration:  900 / 2000 [ 45%]  (Warmup) 
-Chain 4 Iteration:  700 / 2000 [ 35%]  (Warmup) 
-Chain 4 Iteration:  800 / 2000 [ 40%]  (Warmup) 
-Chain 1 Iteration: 1100 / 2000 [ 55%]  (Sampling) 
-Chain 2 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
-Chain 2 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
-Chain 3 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
-Chain 3 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
-Chain 4 Iteration:  900 / 2000 [ 45%]  (Warmup) 
-Chain 1 Iteration: 1200 / 2000 [ 60%]  (Sampling) 
-Chain 2 Iteration: 1100 / 2000 [ 55%]  (Sampling) 
-Chain 3 Iteration: 1100 / 2000 [ 55%]  (Sampling) 
-Chain 4 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
-Chain 4 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
-Chain 1 Iteration: 1300 / 2000 [ 65%]  (Sampling) 
-Chain 3 Iteration: 1200 / 2000 [ 60%]  (Sampling) 
-Chain 3 Iteration: 1300 / 2000 [ 65%]  (Sampling) 
-Chain 4 Iteration: 1100 / 2000 [ 55%]  (Sampling) 
-Chain 4 Iteration: 1200 / 2000 [ 60%]  (Sampling) 
-Chain 2 Iteration: 1200 / 2000 [ 60%]  (Sampling) 
-Chain 3 Iteration: 1400 / 2000 [ 70%]  (Sampling) 
-Chain 4 Iteration: 1300 / 2000 [ 65%]  (Sampling) 
-Chain 1 Iteration: 1400 / 2000 [ 70%]  (Sampling) 
-Chain 2 Iteration: 1300 / 2000 [ 65%]  (Sampling) 
-Chain 3 Iteration: 1500 / 2000 [ 75%]  (Sampling) 
-Chain 4 Iteration: 1400 / 2000 [ 70%]  (Sampling) 
-Chain 1 Iteration: 1500 / 2000 [ 75%]  (Sampling) 
-Chain 2 Iteration: 1400 / 2000 [ 70%]  (Sampling) 
-Chain 3 Iteration: 1600 / 2000 [ 80%]  (Sampling) 
-Chain 4 Iteration: 1500 / 2000 [ 75%]  (Sampling) 
-Chain 1 Iteration: 1600 / 2000 [ 80%]  (Sampling) 
-Chain 2 Iteration: 1500 / 2000 [ 75%]  (Sampling) 
-Chain 3 Iteration: 1700 / 2000 [ 85%]  (Sampling) 
-Chain 3 Iteration: 1800 / 2000 [ 90%]  (Sampling) 
-Chain 4 Iteration: 1600 / 2000 [ 80%]  (Sampling) 
-Chain 4 Iteration: 1700 / 2000 [ 85%]  (Sampling) 
-Chain 1 Iteration: 1700 / 2000 [ 85%]  (Sampling) 
-Chain 2 Iteration: 1600 / 2000 [ 80%]  (Sampling) 
-Chain 3 Iteration: 1900 / 2000 [ 95%]  (Sampling) 
-Chain 4 Iteration: 1800 / 2000 [ 90%]  (Sampling) 
-Chain 2 Iteration: 1700 / 2000 [ 85%]  (Sampling) 
-Chain 3 Iteration: 2000 / 2000 [100%]  (Sampling) 
-Chain 4 Iteration: 1900 / 2000 [ 95%]  (Sampling) 
-Chain 3 finished in 2.3 seconds.
-Chain 1 Iteration: 1800 / 2000 [ 90%]  (Sampling) 
-Chain 4 Iteration: 2000 / 2000 [100%]  (Sampling) 
-Chain 4 finished in 2.3 seconds.
-Chain 1 Iteration: 1900 / 2000 [ 95%]  (Sampling) 
-Chain 2 Iteration: 1800 / 2000 [ 90%]  (Sampling) 
-Chain 1 Iteration: 2000 / 2000 [100%]  (Sampling) 
-Chain 2 Iteration: 1900 / 2000 [ 95%]  (Sampling) 
-Chain 1 finished in 2.8 seconds.
-Chain 2 Iteration: 2000 / 2000 [100%]  (Sampling) 
-Chain 2 finished in 2.8 seconds.
-
-All 4 chains finished successfully.
-Mean chain execution time: 2.5 seconds.
-Total execution time: 3.0 seconds.</code></pre>
-</div>
 </div>
 </section>
 <section class="slide level2">
 
 <div class="cell">
-<div class="sourceCode cell-code" id="cb206"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb206-1"><a href="#cb206-1"></a><span class="fu">summary</span>(meta<span class="fl">.3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb205"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb205-1"><a href="#cb205-1"></a><span class="fu">summary</span>(meta<span class="fl">.3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> Family: gaussian 
   Links: mu = identity; sigma = identity 
@@ -6734,13 +6634,13 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb208"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb208-1"><a href="#cb208-1"></a>meta<span class="fl">.3</span> <span class="sc">%&gt;%</span></span>
-<span id="cb208-2"><a href="#cb208-2"></a>  <span class="fu">spread_draws</span>(b_Intercept, r_outcome[outcome,]) <span class="sc">%&gt;%</span></span>
-<span id="cb208-3"><a href="#cb208-3"></a>  <span class="fu">mutate</span>(<span class="at">mu =</span> b_Intercept <span class="sc">+</span> r_outcome) <span class="sc">%&gt;%</span></span>
-<span id="cb208-4"><a href="#cb208-4"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> mu, <span class="at">y =</span> <span class="fu">reorder</span>(outcome, mu))) <span class="sc">+</span></span>
-<span id="cb208-5"><a href="#cb208-5"></a>  <span class="fu">stat_halfeye</span>(<span class="at">.width =</span> .<span class="dv">95</span>, <span class="at">size =</span> <span class="dv">2</span><span class="sc">/</span><span class="dv">3</span>) <span class="sc">+</span></span>
-<span id="cb208-6"><a href="#cb208-6"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="fu">expression</span>(<span class="fu">italic</span>(<span class="st">"Cohen's d"</span>)),</span>
-<span id="cb208-7"><a href="#cb208-7"></a>       <span class="at">y =</span> <span class="cn">NULL</span>) <span class="sc">+</span> <span class="fu">xlim</span>(<span class="sc">-</span>.<span class="dv">1</span>, .<span class="dv">8</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb207"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb207-1"><a href="#cb207-1"></a>meta<span class="fl">.3</span> <span class="sc">%&gt;%</span></span>
+<span id="cb207-2"><a href="#cb207-2"></a>  <span class="fu">spread_draws</span>(b_Intercept, r_outcome[outcome,]) <span class="sc">%&gt;%</span></span>
+<span id="cb207-3"><a href="#cb207-3"></a>  <span class="fu">mutate</span>(<span class="at">mu =</span> b_Intercept <span class="sc">+</span> r_outcome) <span class="sc">%&gt;%</span></span>
+<span id="cb207-4"><a href="#cb207-4"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> mu, <span class="at">y =</span> <span class="fu">reorder</span>(outcome, mu))) <span class="sc">+</span></span>
+<span id="cb207-5"><a href="#cb207-5"></a>  <span class="fu">stat_halfeye</span>(<span class="at">.width =</span> .<span class="dv">95</span>, <span class="at">size =</span> <span class="dv">2</span><span class="sc">/</span><span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb207-6"><a href="#cb207-6"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="fu">expression</span>(<span class="fu">italic</span>(<span class="st">"Cohen's d"</span>)),</span>
+<span id="cb207-7"><a href="#cb207-7"></a>       <span class="at">y =</span> <span class="cn">NULL</span>) <span class="sc">+</span> <span class="fu">xlim</span>(<span class="sc">-</span>.<span class="dv">1</span>, .<span class="dv">8</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 
 </div>
@@ -6750,25 +6650,25 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb209"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb209-1"><a href="#cb209-1"></a>ind <span class="ot">&lt;-</span> meta<span class="fl">.3</span> <span class="sc">%&gt;%</span></span>
-<span id="cb209-2"><a href="#cb209-2"></a>  <span class="fu">spread_draws</span>(b_Intercept, r_outcome[outcome,]) <span class="sc">%&gt;%</span></span>
-<span id="cb209-3"><a href="#cb209-3"></a>  <span class="fu">mutate</span>(<span class="at">mu =</span> b_Intercept <span class="sc">+</span> r_outcome)</span>
-<span id="cb209-4"><a href="#cb209-4"></a></span>
-<span id="cb209-5"><a href="#cb209-5"></a>out_all_sum <span class="ot">&lt;-</span> ind <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(outcome) <span class="sc">%&gt;%</span> </span>
-<span id="cb209-6"><a href="#cb209-6"></a>      <span class="fu">mean_qi</span>(mu)</span>
-<span id="cb209-7"><a href="#cb209-7"></a></span>
-<span id="cb209-8"><a href="#cb209-8"></a></span>
-<span id="cb209-9"><a href="#cb209-9"></a>meta<span class="fl">.3</span> <span class="sc">%&gt;%</span></span>
-<span id="cb209-10"><a href="#cb209-10"></a>  <span class="fu">spread_draws</span>(b_Intercept, r_outcome[outcome,]) <span class="sc">%&gt;%</span></span>
-<span id="cb209-11"><a href="#cb209-11"></a>  <span class="fu">mutate</span>(<span class="at">mu =</span> b_Intercept <span class="sc">+</span> r_outcome) <span class="sc">%&gt;%</span></span>
-<span id="cb209-12"><a href="#cb209-12"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> mu, <span class="at">y =</span> <span class="fu">reorder</span>(outcome, mu))) <span class="sc">+</span></span>
-<span id="cb209-13"><a href="#cb209-13"></a>  <span class="fu">stat_halfeye</span>(<span class="at">.width =</span> .<span class="dv">95</span>, <span class="at">size =</span> <span class="dv">2</span><span class="sc">/</span><span class="dv">3</span>) <span class="sc">+</span></span>
-<span id="cb209-14"><a href="#cb209-14"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="fu">expression</span>(<span class="fu">italic</span>(<span class="st">"Cohen's d"</span>)),</span>
-<span id="cb209-15"><a href="#cb209-15"></a>       <span class="at">y =</span> <span class="cn">NULL</span>) <span class="sc">+</span> <span class="fu">xlim</span>(<span class="sc">-</span>.<span class="dv">1</span>, .<span class="dv">9</span>)<span class="sc">+</span></span>
-<span id="cb209-16"><a href="#cb209-16"></a>    <span class="fu">geom_text</span>(</span>
-<span id="cb209-17"><a href="#cb209-17"></a>    <span class="at">data =</span> <span class="fu">mutate_if</span>(out_all_sum, is.numeric, round, <span class="dv">2</span>),</span>
-<span id="cb209-18"><a href="#cb209-18"></a>    <span class="fu">aes</span>(<span class="at">label =</span> glue<span class="sc">::</span><span class="fu">glue</span>(<span class="st">"{mu} [{.lower}, {.upper}]"</span>), <span class="at">x =</span> <span class="cn">Inf</span>),</span>
-<span id="cb209-19"><a href="#cb209-19"></a>    <span class="at">hjust =</span> <span class="st">"inward"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb208"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb208-1"><a href="#cb208-1"></a>ind <span class="ot">&lt;-</span> meta<span class="fl">.3</span> <span class="sc">%&gt;%</span></span>
+<span id="cb208-2"><a href="#cb208-2"></a>  <span class="fu">spread_draws</span>(b_Intercept, r_outcome[outcome,]) <span class="sc">%&gt;%</span></span>
+<span id="cb208-3"><a href="#cb208-3"></a>  <span class="fu">mutate</span>(<span class="at">mu =</span> b_Intercept <span class="sc">+</span> r_outcome)</span>
+<span id="cb208-4"><a href="#cb208-4"></a></span>
+<span id="cb208-5"><a href="#cb208-5"></a>out_all_sum <span class="ot">&lt;-</span> ind <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(outcome) <span class="sc">%&gt;%</span> </span>
+<span id="cb208-6"><a href="#cb208-6"></a>      <span class="fu">mean_qi</span>(mu)</span>
+<span id="cb208-7"><a href="#cb208-7"></a></span>
+<span id="cb208-8"><a href="#cb208-8"></a></span>
+<span id="cb208-9"><a href="#cb208-9"></a>meta<span class="fl">.3</span> <span class="sc">%&gt;%</span></span>
+<span id="cb208-10"><a href="#cb208-10"></a>  <span class="fu">spread_draws</span>(b_Intercept, r_outcome[outcome,]) <span class="sc">%&gt;%</span></span>
+<span id="cb208-11"><a href="#cb208-11"></a>  <span class="fu">mutate</span>(<span class="at">mu =</span> b_Intercept <span class="sc">+</span> r_outcome) <span class="sc">%&gt;%</span></span>
+<span id="cb208-12"><a href="#cb208-12"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> mu, <span class="at">y =</span> <span class="fu">reorder</span>(outcome, mu))) <span class="sc">+</span></span>
+<span id="cb208-13"><a href="#cb208-13"></a>  <span class="fu">stat_halfeye</span>(<span class="at">.width =</span> .<span class="dv">95</span>, <span class="at">size =</span> <span class="dv">2</span><span class="sc">/</span><span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb208-14"><a href="#cb208-14"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="fu">expression</span>(<span class="fu">italic</span>(<span class="st">"Cohen's d"</span>)),</span>
+<span id="cb208-15"><a href="#cb208-15"></a>       <span class="at">y =</span> <span class="cn">NULL</span>) <span class="sc">+</span> <span class="fu">xlim</span>(<span class="sc">-</span>.<span class="dv">1</span>, .<span class="dv">9</span>)<span class="sc">+</span></span>
+<span id="cb208-16"><a href="#cb208-16"></a>    <span class="fu">geom_text</span>(</span>
+<span id="cb208-17"><a href="#cb208-17"></a>    <span class="at">data =</span> <span class="fu">mutate_if</span>(out_all_sum, is.numeric, round, <span class="dv">2</span>),</span>
+<span id="cb208-18"><a href="#cb208-18"></a>    <span class="fu">aes</span>(<span class="at">label =</span> glue<span class="sc">::</span><span class="fu">glue</span>(<span class="st">"{mu} [{.lower}, {.upper}]"</span>), <span class="at">x =</span> <span class="cn">Inf</span>),</span>
+<span id="cb208-19"><a href="#cb208-19"></a>    <span class="at">hjust =</span> <span class="st">"inward"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 
 </div>
@@ -6779,122 +6679,22 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb210"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb210-1"><a href="#cb210-1"></a>meta<span class="fl">.4</span> <span class="ot">&lt;-</span> </span>
-<span id="cb210-2"><a href="#cb210-2"></a>  <span class="fu">brm</span>(<span class="at">family =</span> gaussian,</span>
-<span id="cb210-3"><a href="#cb210-3"></a>      d <span class="sc">|</span> <span class="fu">se</span>(se) <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> between <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> study) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> outcome) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> id),</span>
-<span id="cb210-4"><a href="#cb210-4"></a>      <span class="at">prior =</span> <span class="fu">c</span>(<span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">class =</span> Intercept),</span>
-<span id="cb210-5"><a href="#cb210-5"></a>                <span class="fu">prior</span>(<span class="fu">cauchy</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">class =</span> sd)),</span>
-<span id="cb210-6"><a href="#cb210-6"></a>      <span class="at">iter =</span> <span class="dv">2000</span>, <span class="at">warmup =</span> <span class="dv">1000</span>, <span class="at">cores =</span> <span class="dv">4</span>, <span class="at">chains =</span> <span class="dv">4</span>,</span>
-<span id="cb210-7"><a href="#cb210-7"></a>      <span class="at">data =</span> spank, </span>
-<span id="cb210-8"><a href="#cb210-8"></a>      <span class="at">backend =</span> <span class="st">"cmdstanr"</span>, </span>
-<span id="cb210-9"><a href="#cb210-9"></a>      <span class="at">file =</span> <span class="st">"meta.4"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb209"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb209-1"><a href="#cb209-1"></a>meta<span class="fl">.4</span> <span class="ot">&lt;-</span> </span>
+<span id="cb209-2"><a href="#cb209-2"></a>  <span class="fu">brm</span>(<span class="at">family =</span> gaussian,</span>
+<span id="cb209-3"><a href="#cb209-3"></a>      d <span class="sc">|</span> <span class="fu">se</span>(se) <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> between <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> study) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> outcome) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> id),</span>
+<span id="cb209-4"><a href="#cb209-4"></a>      <span class="at">prior =</span> <span class="fu">c</span>(<span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">class =</span> Intercept),</span>
+<span id="cb209-5"><a href="#cb209-5"></a>                <span class="fu">prior</span>(<span class="fu">cauchy</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">class =</span> sd)),</span>
+<span id="cb209-6"><a href="#cb209-6"></a>      <span class="at">iter =</span> <span class="dv">2000</span>, <span class="at">warmup =</span> <span class="dv">1000</span>, <span class="at">cores =</span> <span class="dv">4</span>, <span class="at">chains =</span> <span class="dv">4</span>,</span>
+<span id="cb209-7"><a href="#cb209-7"></a>      <span class="at">data =</span> spank, </span>
+<span id="cb209-8"><a href="#cb209-8"></a>      <span class="at">backend =</span> <span class="st">"cmdstanr"</span>, </span>
+<span id="cb209-9"><a href="#cb209-9"></a>      <span class="at">file =</span> <span class="st">"meta.4"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running MCMC with 4 parallel chains...
-
-Chain 1 Iteration:    1 / 2000 [  0%]  (Warmup) 
-Chain 2 Iteration:    1 / 2000 [  0%]  (Warmup) 
-Chain 3 Iteration:    1 / 2000 [  0%]  (Warmup) 
-Chain 4 Iteration:    1 / 2000 [  0%]  (Warmup) 
-Chain 1 Iteration:  100 / 2000 [  5%]  (Warmup) 
-Chain 1 Iteration:  200 / 2000 [ 10%]  (Warmup) 
-Chain 2 Iteration:  100 / 2000 [  5%]  (Warmup) 
-Chain 3 Iteration:  100 / 2000 [  5%]  (Warmup) 
-Chain 1 Iteration:  300 / 2000 [ 15%]  (Warmup) 
-Chain 2 Iteration:  200 / 2000 [ 10%]  (Warmup) 
-Chain 4 Iteration:  100 / 2000 [  5%]  (Warmup) 
-Chain 1 Iteration:  400 / 2000 [ 20%]  (Warmup) 
-Chain 2 Iteration:  300 / 2000 [ 15%]  (Warmup) 
-Chain 3 Iteration:  200 / 2000 [ 10%]  (Warmup) 
-Chain 1 Iteration:  500 / 2000 [ 25%]  (Warmup) 
-Chain 2 Iteration:  400 / 2000 [ 20%]  (Warmup) 
-Chain 3 Iteration:  300 / 2000 [ 15%]  (Warmup) 
-Chain 3 Iteration:  400 / 2000 [ 20%]  (Warmup) 
-Chain 4 Iteration:  200 / 2000 [ 10%]  (Warmup) 
-Chain 1 Iteration:  600 / 2000 [ 30%]  (Warmup) 
-Chain 2 Iteration:  500 / 2000 [ 25%]  (Warmup) 
-Chain 4 Iteration:  300 / 2000 [ 15%]  (Warmup) 
-Chain 1 Iteration:  700 / 2000 [ 35%]  (Warmup) 
-Chain 1 Iteration:  800 / 2000 [ 40%]  (Warmup) 
-Chain 2 Iteration:  600 / 2000 [ 30%]  (Warmup) 
-Chain 2 Iteration:  700 / 2000 [ 35%]  (Warmup) 
-Chain 3 Iteration:  500 / 2000 [ 25%]  (Warmup) 
-Chain 3 Iteration:  600 / 2000 [ 30%]  (Warmup) 
-Chain 4 Iteration:  400 / 2000 [ 20%]  (Warmup) 
-Chain 1 Iteration:  900 / 2000 [ 45%]  (Warmup) 
-Chain 2 Iteration:  800 / 2000 [ 40%]  (Warmup) 
-Chain 2 Iteration:  900 / 2000 [ 45%]  (Warmup) 
-Chain 3 Iteration:  700 / 2000 [ 35%]  (Warmup) 
-Chain 4 Iteration:  500 / 2000 [ 25%]  (Warmup) 
-Chain 1 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
-Chain 1 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
-Chain 2 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
-Chain 2 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
-Chain 3 Iteration:  800 / 2000 [ 40%]  (Warmup) 
-Chain 4 Iteration:  600 / 2000 [ 30%]  (Warmup) 
-Chain 2 Iteration: 1100 / 2000 [ 55%]  (Sampling) 
-Chain 3 Iteration:  900 / 2000 [ 45%]  (Warmup) 
-Chain 4 Iteration:  700 / 2000 [ 35%]  (Warmup) 
-Chain 1 Iteration: 1100 / 2000 [ 55%]  (Sampling) 
-Chain 2 Iteration: 1200 / 2000 [ 60%]  (Sampling) 
-Chain 3 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
-Chain 3 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
-Chain 4 Iteration:  800 / 2000 [ 40%]  (Warmup) 
-Chain 4 Iteration:  900 / 2000 [ 45%]  (Warmup) 
-Chain 1 Iteration: 1200 / 2000 [ 60%]  (Sampling) 
-Chain 2 Iteration: 1300 / 2000 [ 65%]  (Sampling) 
-Chain 3 Iteration: 1100 / 2000 [ 55%]  (Sampling) 
-Chain 4 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
-Chain 4 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
-Chain 2 Iteration: 1400 / 2000 [ 70%]  (Sampling) 
-Chain 3 Iteration: 1200 / 2000 [ 60%]  (Sampling) 
-Chain 4 Iteration: 1100 / 2000 [ 55%]  (Sampling) 
-Chain 1 Iteration: 1300 / 2000 [ 65%]  (Sampling) 
-Chain 2 Iteration: 1500 / 2000 [ 75%]  (Sampling) 
-Chain 4 Iteration: 1200 / 2000 [ 60%]  (Sampling) 
-Chain 2 Iteration: 1600 / 2000 [ 80%]  (Sampling) 
-Chain 3 Iteration: 1300 / 2000 [ 65%]  (Sampling) 
-Chain 4 Iteration: 1300 / 2000 [ 65%]  (Sampling) 
-Chain 1 Iteration: 1400 / 2000 [ 70%]  (Sampling) 
-Chain 2 Iteration: 1700 / 2000 [ 85%]  (Sampling) 
-Chain 3 Iteration: 1400 / 2000 [ 70%]  (Sampling) 
-Chain 4 Iteration: 1400 / 2000 [ 70%]  (Sampling) 
-Chain 1 Iteration: 1500 / 2000 [ 75%]  (Sampling) 
-Chain 2 Iteration: 1800 / 2000 [ 90%]  (Sampling) 
-Chain 2 Iteration: 1900 / 2000 [ 95%]  (Sampling) 
-Chain 3 Iteration: 1500 / 2000 [ 75%]  (Sampling) 
-Chain 4 Iteration: 1500 / 2000 [ 75%]  (Sampling) 
-Chain 2 Iteration: 2000 / 2000 [100%]  (Sampling) 
-Chain 3 Iteration: 1600 / 2000 [ 80%]  (Sampling) 
-Chain 4 Iteration: 1600 / 2000 [ 80%]  (Sampling) 
-Chain 2 finished in 2.5 seconds.
-Chain 1 Iteration: 1600 / 2000 [ 80%]  (Sampling) 
-Chain 3 Iteration: 1700 / 2000 [ 85%]  (Sampling) 
-Chain 4 Iteration: 1700 / 2000 [ 85%]  (Sampling) 
-Chain 4 Iteration: 1800 / 2000 [ 90%]  (Sampling) 
-Chain 4 Iteration: 1900 / 2000 [ 95%]  (Sampling) 
-Chain 1 Iteration: 1700 / 2000 [ 85%]  (Sampling) 
-Chain 3 Iteration: 1800 / 2000 [ 90%]  (Sampling) 
-Chain 4 Iteration: 2000 / 2000 [100%]  (Sampling) 
-Chain 4 finished in 2.6 seconds.
-Chain 1 Iteration: 1800 / 2000 [ 90%]  (Sampling) 
-Chain 3 Iteration: 1900 / 2000 [ 95%]  (Sampling) 
-Chain 3 Iteration: 2000 / 2000 [100%]  (Sampling) 
-Chain 3 finished in 2.9 seconds.
-Chain 1 Iteration: 1900 / 2000 [ 95%]  (Sampling) 
-Chain 1 Iteration: 2000 / 2000 [100%]  (Sampling) 
-Chain 1 finished in 3.3 seconds.
-
-All 4 chains finished successfully.
-Mean chain execution time: 2.8 seconds.
-Total execution time: 3.5 seconds.</code></pre>
-</div>
 </div>
 </section>
 <section class="slide level2">
 
 <div class="cell">
-<div class="sourceCode cell-code" id="cb212"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb212-1"><a href="#cb212-1"></a><span class="fu">summary</span>(meta<span class="fl">.4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb210"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb210-1"><a href="#cb210-1"></a><span class="fu">summary</span>(meta<span class="fl">.4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> Family: gaussian 
   Links: mu = identity; sigma = identity 
@@ -6969,10 +6769,10 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <h2>IRT in brms</h2>
 <p>316 participants on 24 items of a questionnaire on verbal aggression. r2 is our DV and is measured Yes/No.&nbsp;</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb214"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb214-1"><a href="#cb214-1"></a><span class="fu">library</span>(lme4)</span>
-<span id="cb214-2"><a href="#cb214-2"></a><span class="fu">data</span>(<span class="st">"VerbAgg"</span>, <span class="at">package =</span> <span class="st">"lme4"</span>)</span>
-<span id="cb214-3"><a href="#cb214-3"></a>IRT <span class="ot">&lt;-</span> VerbAgg</span>
-<span id="cb214-4"><a href="#cb214-4"></a>IRT</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb212"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb212-1"><a href="#cb212-1"></a><span class="fu">library</span>(lme4)</span>
+<span id="cb212-2"><a href="#cb212-2"></a><span class="fu">data</span>(<span class="st">"VerbAgg"</span>, <span class="at">package =</span> <span class="st">"lme4"</span>)</span>
+<span id="cb212-3"><a href="#cb212-3"></a>IRT <span class="ot">&lt;-</span> VerbAgg</span>
+<span id="cb212-4"><a href="#cb212-4"></a>IRT</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     Anger Gender        item    resp  id btype  situ mode r2
 1       20      M S1WantCurse      no   1 curse other want  N
@@ -14565,122 +14365,22 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <section class="slide level2">
 
 <div class="cell">
-<div class="sourceCode cell-code" id="cb216"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb216-1"><a href="#cb216-1"></a>irt<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">brm</span>(</span>
-<span id="cb216-2"><a href="#cb216-2"></a>  <span class="at">family =</span> <span class="fu">brmsfamily</span>(<span class="st">"bernoulli"</span>, <span class="st">"logit"</span>),</span>
-<span id="cb216-3"><a href="#cb216-3"></a>  r2 <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> item) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> id),</span>
-<span id="cb216-4"><a href="#cb216-4"></a>  <span class="at">prior =</span> <span class="fu">c</span>(<span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, <span class="dv">3</span>), <span class="at">class =</span> Intercept),</span>
-<span id="cb216-5"><a href="#cb216-5"></a>            <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, <span class="dv">3</span>), <span class="at">class =</span> <span class="st">"sd"</span>, <span class="at">group =</span> <span class="st">"item"</span>),</span>
-<span id="cb216-6"><a href="#cb216-6"></a>            <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, <span class="dv">3</span>), <span class="at">class =</span> <span class="st">"sd"</span>, <span class="at">group =</span> <span class="st">"id"</span>)),</span>
-<span id="cb216-7"><a href="#cb216-7"></a>    <span class="at">iter =</span> <span class="dv">2000</span>, <span class="at">warmup =</span> <span class="dv">1000</span>, <span class="at">cores =</span> <span class="dv">4</span>, <span class="at">chains =</span> <span class="dv">4</span>,</span>
-<span id="cb216-8"><a href="#cb216-8"></a>      <span class="at">data =</span> IRT, </span>
-<span id="cb216-9"><a href="#cb216-9"></a>      <span class="at">backend =</span> <span class="st">"cmdstanr"</span>, </span>
-<span id="cb216-10"><a href="#cb216-10"></a>      <span class="at">file =</span> <span class="st">"irt.1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running MCMC with 4 parallel chains...
-
-Chain 1 Iteration:    1 / 2000 [  0%]  (Warmup) 
-Chain 2 Iteration:    1 / 2000 [  0%]  (Warmup) 
-Chain 3 Iteration:    1 / 2000 [  0%]  (Warmup) 
-Chain 4 Iteration:    1 / 2000 [  0%]  (Warmup) 
-Chain 1 Iteration:  100 / 2000 [  5%]  (Warmup) 
-Chain 4 Iteration:  100 / 2000 [  5%]  (Warmup) 
-Chain 3 Iteration:  100 / 2000 [  5%]  (Warmup) 
-Chain 2 Iteration:  100 / 2000 [  5%]  (Warmup) 
-Chain 1 Iteration:  200 / 2000 [ 10%]  (Warmup) 
-Chain 2 Iteration:  200 / 2000 [ 10%]  (Warmup) 
-Chain 3 Iteration:  200 / 2000 [ 10%]  (Warmup) 
-Chain 4 Iteration:  200 / 2000 [ 10%]  (Warmup) 
-Chain 1 Iteration:  300 / 2000 [ 15%]  (Warmup) 
-Chain 1 Iteration:  400 / 2000 [ 20%]  (Warmup) 
-Chain 2 Iteration:  300 / 2000 [ 15%]  (Warmup) 
-Chain 4 Iteration:  300 / 2000 [ 15%]  (Warmup) 
-Chain 3 Iteration:  300 / 2000 [ 15%]  (Warmup) 
-Chain 4 Iteration:  400 / 2000 [ 20%]  (Warmup) 
-Chain 1 Iteration:  500 / 2000 [ 25%]  (Warmup) 
-Chain 2 Iteration:  400 / 2000 [ 20%]  (Warmup) 
-Chain 3 Iteration:  400 / 2000 [ 20%]  (Warmup) 
-Chain 4 Iteration:  500 / 2000 [ 25%]  (Warmup) 
-Chain 1 Iteration:  600 / 2000 [ 30%]  (Warmup) 
-Chain 2 Iteration:  500 / 2000 [ 25%]  (Warmup) 
-Chain 4 Iteration:  600 / 2000 [ 30%]  (Warmup) 
-Chain 1 Iteration:  700 / 2000 [ 35%]  (Warmup) 
-Chain 3 Iteration:  500 / 2000 [ 25%]  (Warmup) 
-Chain 2 Iteration:  600 / 2000 [ 30%]  (Warmup) 
-Chain 4 Iteration:  700 / 2000 [ 35%]  (Warmup) 
-Chain 1 Iteration:  800 / 2000 [ 40%]  (Warmup) 
-Chain 3 Iteration:  600 / 2000 [ 30%]  (Warmup) 
-Chain 2 Iteration:  700 / 2000 [ 35%]  (Warmup) 
-Chain 4 Iteration:  800 / 2000 [ 40%]  (Warmup) 
-Chain 1 Iteration:  900 / 2000 [ 45%]  (Warmup) 
-Chain 3 Iteration:  700 / 2000 [ 35%]  (Warmup) 
-Chain 2 Iteration:  800 / 2000 [ 40%]  (Warmup) 
-Chain 4 Iteration:  900 / 2000 [ 45%]  (Warmup) 
-Chain 1 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
-Chain 1 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
-Chain 3 Iteration:  800 / 2000 [ 40%]  (Warmup) 
-Chain 2 Iteration:  900 / 2000 [ 45%]  (Warmup) 
-Chain 4 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
-Chain 4 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
-Chain 3 Iteration:  900 / 2000 [ 45%]  (Warmup) 
-Chain 2 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
-Chain 2 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
-Chain 1 Iteration: 1100 / 2000 [ 55%]  (Sampling) 
-Chain 2 Iteration: 1100 / 2000 [ 55%]  (Sampling) 
-Chain 3 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
-Chain 3 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
-Chain 4 Iteration: 1100 / 2000 [ 55%]  (Sampling) 
-Chain 3 Iteration: 1100 / 2000 [ 55%]  (Sampling) 
-Chain 2 Iteration: 1200 / 2000 [ 60%]  (Sampling) 
-Chain 1 Iteration: 1200 / 2000 [ 60%]  (Sampling) 
-Chain 4 Iteration: 1200 / 2000 [ 60%]  (Sampling) 
-Chain 3 Iteration: 1200 / 2000 [ 60%]  (Sampling) 
-Chain 2 Iteration: 1300 / 2000 [ 65%]  (Sampling) 
-Chain 3 Iteration: 1300 / 2000 [ 65%]  (Sampling) 
-Chain 1 Iteration: 1300 / 2000 [ 65%]  (Sampling) 
-Chain 2 Iteration: 1400 / 2000 [ 70%]  (Sampling) 
-Chain 4 Iteration: 1300 / 2000 [ 65%]  (Sampling) 
-Chain 3 Iteration: 1400 / 2000 [ 70%]  (Sampling) 
-Chain 2 Iteration: 1500 / 2000 [ 75%]  (Sampling) 
-Chain 3 Iteration: 1500 / 2000 [ 75%]  (Sampling) 
-Chain 1 Iteration: 1400 / 2000 [ 70%]  (Sampling) 
-Chain 2 Iteration: 1600 / 2000 [ 80%]  (Sampling) 
-Chain 4 Iteration: 1400 / 2000 [ 70%]  (Sampling) 
-Chain 3 Iteration: 1600 / 2000 [ 80%]  (Sampling) 
-Chain 2 Iteration: 1700 / 2000 [ 85%]  (Sampling) 
-Chain 3 Iteration: 1700 / 2000 [ 85%]  (Sampling) 
-Chain 1 Iteration: 1500 / 2000 [ 75%]  (Sampling) 
-Chain 4 Iteration: 1500 / 2000 [ 75%]  (Sampling) 
-Chain 2 Iteration: 1800 / 2000 [ 90%]  (Sampling) 
-Chain 3 Iteration: 1800 / 2000 [ 90%]  (Sampling) 
-Chain 2 Iteration: 1900 / 2000 [ 95%]  (Sampling) 
-Chain 1 Iteration: 1600 / 2000 [ 80%]  (Sampling) 
-Chain 3 Iteration: 1900 / 2000 [ 95%]  (Sampling) 
-Chain 4 Iteration: 1600 / 2000 [ 80%]  (Sampling) 
-Chain 2 Iteration: 2000 / 2000 [100%]  (Sampling) 
-Chain 2 finished in 27.0 seconds.
-Chain 3 Iteration: 2000 / 2000 [100%]  (Sampling) 
-Chain 3 finished in 27.1 seconds.
-Chain 4 Iteration: 1700 / 2000 [ 85%]  (Sampling) 
-Chain 1 Iteration: 1700 / 2000 [ 85%]  (Sampling) 
-Chain 4 Iteration: 1800 / 2000 [ 90%]  (Sampling) 
-Chain 1 Iteration: 1800 / 2000 [ 90%]  (Sampling) 
-Chain 4 Iteration: 1900 / 2000 [ 95%]  (Sampling) 
-Chain 1 Iteration: 1900 / 2000 [ 95%]  (Sampling) 
-Chain 4 Iteration: 2000 / 2000 [100%]  (Sampling) 
-Chain 4 finished in 33.8 seconds.
-Chain 1 Iteration: 2000 / 2000 [100%]  (Sampling) 
-Chain 1 finished in 34.5 seconds.
-
-All 4 chains finished successfully.
-Mean chain execution time: 30.6 seconds.
-Total execution time: 34.6 seconds.</code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb214"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb214-1"><a href="#cb214-1"></a>irt<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">brm</span>(</span>
+<span id="cb214-2"><a href="#cb214-2"></a>  <span class="at">family =</span> <span class="fu">brmsfamily</span>(<span class="st">"bernoulli"</span>, <span class="st">"logit"</span>),</span>
+<span id="cb214-3"><a href="#cb214-3"></a>  r2 <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> item) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> id),</span>
+<span id="cb214-4"><a href="#cb214-4"></a>  <span class="at">prior =</span> <span class="fu">c</span>(<span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, <span class="dv">3</span>), <span class="at">class =</span> Intercept),</span>
+<span id="cb214-5"><a href="#cb214-5"></a>            <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, <span class="dv">3</span>), <span class="at">class =</span> <span class="st">"sd"</span>, <span class="at">group =</span> <span class="st">"item"</span>),</span>
+<span id="cb214-6"><a href="#cb214-6"></a>            <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, <span class="dv">3</span>), <span class="at">class =</span> <span class="st">"sd"</span>, <span class="at">group =</span> <span class="st">"id"</span>)),</span>
+<span id="cb214-7"><a href="#cb214-7"></a>    <span class="at">iter =</span> <span class="dv">2000</span>, <span class="at">warmup =</span> <span class="dv">1000</span>, <span class="at">cores =</span> <span class="dv">4</span>, <span class="at">chains =</span> <span class="dv">4</span>,</span>
+<span id="cb214-8"><a href="#cb214-8"></a>      <span class="at">data =</span> IRT, </span>
+<span id="cb214-9"><a href="#cb214-9"></a>      <span class="at">backend =</span> <span class="st">"cmdstanr"</span>, </span>
+<span id="cb214-10"><a href="#cb214-10"></a>      <span class="at">file =</span> <span class="st">"irt.1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section class="slide level2">
 
 <div class="cell">
-<div class="sourceCode cell-code" id="cb218"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb218-1"><a href="#cb218-1"></a><span class="fu">summary</span>(irt<span class="fl">.1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb215"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb215-1"><a href="#cb215-1"></a><span class="fu">summary</span>(irt<span class="fl">.1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> Family: bernoulli 
   Links: mu = logit 
@@ -14711,7 +14411,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <section class="slide level2">
 
 <div class="cell">
-<div class="sourceCode cell-code" id="cb220"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb220-1"><a href="#cb220-1"></a><span class="fu">get_variables</span>(irt<span class="fl">.1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb217"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb217-1"><a href="#cb217-1"></a><span class="fu">get_variables</span>(irt<span class="fl">.1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  [1] "b_Intercept"                   "sd_id__Intercept"             
   [3] "sd_item__Intercept"            "Intercept"                    
@@ -14903,18 +14603,18 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb222"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb222-1"><a href="#cb222-1"></a>irt<span class="fl">.1</span> <span class="sc">%&gt;%</span> </span>
-<span id="cb222-2"><a href="#cb222-2"></a>  <span class="fu">spread_draws</span>(b_Intercept, r_item[item,]) <span class="sc">%&gt;%</span> </span>
-<span id="cb222-3"><a href="#cb222-3"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb222-4"><a href="#cb222-4"></a>  tidyr<span class="sc">::</span><span class="fu">expand</span>(<span class="fu">nesting</span>(.draw, b_Intercept, item, r_item), <span class="at">theta =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="sc">-</span><span class="dv">6</span>, <span class="at">to =</span> <span class="dv">6</span>, <span class="at">length.out =</span> <span class="dv">100</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb222-5"><a href="#cb222-5"></a>  <span class="fu">mutate</span>(<span class="at">p =</span> <span class="fu">inv_logit_scaled</span>(b_Intercept <span class="sc">+</span> r_item <span class="sc">+</span> theta)) <span class="sc">%&gt;%</span> </span>
-<span id="cb222-6"><a href="#cb222-6"></a>  <span class="fu">group_by</span>(theta, item) <span class="sc">%&gt;%</span> </span>
-<span id="cb222-7"><a href="#cb222-7"></a>  <span class="fu">summarise</span>(<span class="at">p =</span> <span class="fu">mean</span>(p)) <span class="sc">%&gt;%</span> </span>
-<span id="cb222-8"><a href="#cb222-8"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> theta, <span class="at">y =</span> p, <span class="at">color =</span> item)) <span class="sc">+</span></span>
-<span id="cb222-9"><a href="#cb222-9"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb222-10"><a href="#cb222-10"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"ICCs"</span>,</span>
-<span id="cb222-11"><a href="#cb222-11"></a>       <span class="at">x =</span> <span class="fu">expression</span>(theta<span class="sc">~</span>(<span class="st">'ability on the logit scale'</span>)),</span>
-<span id="cb222-12"><a href="#cb222-12"></a>       <span class="at">y =</span> <span class="fu">expression</span>(<span class="fu">italic</span>(p)(y<span class="sc">==</span><span class="dv">1</span>))) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb219"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb219-1"><a href="#cb219-1"></a>irt<span class="fl">.1</span> <span class="sc">%&gt;%</span> </span>
+<span id="cb219-2"><a href="#cb219-2"></a>  <span class="fu">spread_draws</span>(b_Intercept, r_item[item,]) <span class="sc">%&gt;%</span> </span>
+<span id="cb219-3"><a href="#cb219-3"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb219-4"><a href="#cb219-4"></a>  tidyr<span class="sc">::</span><span class="fu">expand</span>(<span class="fu">nesting</span>(.draw, b_Intercept, item, r_item), <span class="at">theta =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="sc">-</span><span class="dv">6</span>, <span class="at">to =</span> <span class="dv">6</span>, <span class="at">length.out =</span> <span class="dv">100</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb219-5"><a href="#cb219-5"></a>  <span class="fu">mutate</span>(<span class="at">p =</span> <span class="fu">inv_logit_scaled</span>(b_Intercept <span class="sc">+</span> r_item <span class="sc">+</span> theta)) <span class="sc">%&gt;%</span> </span>
+<span id="cb219-6"><a href="#cb219-6"></a>  <span class="fu">group_by</span>(theta, item) <span class="sc">%&gt;%</span> </span>
+<span id="cb219-7"><a href="#cb219-7"></a>  <span class="fu">summarise</span>(<span class="at">p =</span> <span class="fu">mean</span>(p)) <span class="sc">%&gt;%</span> </span>
+<span id="cb219-8"><a href="#cb219-8"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> theta, <span class="at">y =</span> p, <span class="at">color =</span> item)) <span class="sc">+</span></span>
+<span id="cb219-9"><a href="#cb219-9"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb219-10"><a href="#cb219-10"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"ICCs"</span>,</span>
+<span id="cb219-11"><a href="#cb219-11"></a>       <span class="at">x =</span> <span class="fu">expression</span>(theta<span class="sc">~</span>(<span class="st">'ability on the logit scale'</span>)),</span>
+<span id="cb219-12"><a href="#cb219-12"></a>       <span class="at">y =</span> <span class="fu">expression</span>(<span class="fu">italic</span>(p)(y<span class="sc">==</span><span class="dv">1</span>))) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 
 </div>
@@ -14929,19 +14629,19 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb223"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb223-1"><a href="#cb223-1"></a>irt<span class="fl">.1</span> <span class="sc">%&gt;%</span> </span>
-<span id="cb223-2"><a href="#cb223-2"></a>  <span class="fu">spread_draws</span>(b_Intercept, r_item[item,]) <span class="sc">%&gt;%</span> </span>
-<span id="cb223-3"><a href="#cb223-3"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb223-4"><a href="#cb223-4"></a>  tidyr<span class="sc">::</span><span class="fu">expand</span>(<span class="fu">nesting</span>(.draw, b_Intercept, item, r_item), <span class="at">theta =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="sc">-</span><span class="dv">6</span>, <span class="at">to =</span> <span class="dv">6</span>, <span class="at">length.out =</span> <span class="dv">100</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb223-5"><a href="#cb223-5"></a>  <span class="fu">mutate</span>(<span class="at">p =</span> <span class="fu">inv_logit_scaled</span>(b_Intercept <span class="sc">+</span> r_item <span class="sc">+</span> theta)) <span class="sc">%&gt;%</span> </span>
-<span id="cb223-6"><a href="#cb223-6"></a><span class="fu">mutate</span>(<span class="at">i =</span> p <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> p)) <span class="sc">%&gt;%</span> </span>
-<span id="cb223-7"><a href="#cb223-7"></a>  <span class="fu">group_by</span>(theta, item) <span class="sc">%&gt;%</span> </span>
-<span id="cb223-8"><a href="#cb223-8"></a>  <span class="fu">summarise</span>(<span class="at">i =</span> <span class="fu">mean</span>(i)) <span class="sc">%&gt;%</span></span>
-<span id="cb223-9"><a href="#cb223-9"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> theta, <span class="at">y =</span> i, <span class="at">color =</span> item)) <span class="sc">+</span></span>
-<span id="cb223-10"><a href="#cb223-10"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb223-11"><a href="#cb223-11"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"IICs"</span>,</span>
-<span id="cb223-12"><a href="#cb223-12"></a>       <span class="at">x =</span> <span class="fu">expression</span>(theta<span class="sc">~</span>(<span class="st">'ability on the logit scale'</span>)),</span>
-<span id="cb223-13"><a href="#cb223-13"></a>       <span class="at">y =</span> <span class="st">"information"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb220"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb220-1"><a href="#cb220-1"></a>irt<span class="fl">.1</span> <span class="sc">%&gt;%</span> </span>
+<span id="cb220-2"><a href="#cb220-2"></a>  <span class="fu">spread_draws</span>(b_Intercept, r_item[item,]) <span class="sc">%&gt;%</span> </span>
+<span id="cb220-3"><a href="#cb220-3"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb220-4"><a href="#cb220-4"></a>  tidyr<span class="sc">::</span><span class="fu">expand</span>(<span class="fu">nesting</span>(.draw, b_Intercept, item, r_item), <span class="at">theta =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="sc">-</span><span class="dv">6</span>, <span class="at">to =</span> <span class="dv">6</span>, <span class="at">length.out =</span> <span class="dv">100</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb220-5"><a href="#cb220-5"></a>  <span class="fu">mutate</span>(<span class="at">p =</span> <span class="fu">inv_logit_scaled</span>(b_Intercept <span class="sc">+</span> r_item <span class="sc">+</span> theta)) <span class="sc">%&gt;%</span> </span>
+<span id="cb220-6"><a href="#cb220-6"></a><span class="fu">mutate</span>(<span class="at">i =</span> p <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> p)) <span class="sc">%&gt;%</span> </span>
+<span id="cb220-7"><a href="#cb220-7"></a>  <span class="fu">group_by</span>(theta, item) <span class="sc">%&gt;%</span> </span>
+<span id="cb220-8"><a href="#cb220-8"></a>  <span class="fu">summarise</span>(<span class="at">i =</span> <span class="fu">mean</span>(i)) <span class="sc">%&gt;%</span></span>
+<span id="cb220-9"><a href="#cb220-9"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> theta, <span class="at">y =</span> i, <span class="at">color =</span> item)) <span class="sc">+</span></span>
+<span id="cb220-10"><a href="#cb220-10"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb220-11"><a href="#cb220-11"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"IICs"</span>,</span>
+<span id="cb220-12"><a href="#cb220-12"></a>       <span class="at">x =</span> <span class="fu">expression</span>(theta<span class="sc">~</span>(<span class="st">'ability on the logit scale'</span>)),</span>
+<span id="cb220-13"><a href="#cb220-13"></a>       <span class="at">y =</span> <span class="st">"information"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 
 </div>
@@ -14952,21 +14652,21 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb224"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb224-1"><a href="#cb224-1"></a>irt<span class="fl">.1</span> <span class="sc">%&gt;%</span> </span>
-<span id="cb224-2"><a href="#cb224-2"></a>  <span class="fu">spread_draws</span>(b_Intercept, r_item[item,]) <span class="sc">%&gt;%</span> </span>
-<span id="cb224-3"><a href="#cb224-3"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb224-4"><a href="#cb224-4"></a>  tidyr<span class="sc">::</span><span class="fu">expand</span>(<span class="fu">nesting</span>(.draw, b_Intercept, item, r_item), <span class="at">theta =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="sc">-</span><span class="dv">6</span>, <span class="at">to =</span> <span class="dv">6</span>, <span class="at">length.out =</span> <span class="dv">100</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb224-5"><a href="#cb224-5"></a>  <span class="fu">mutate</span>(<span class="at">p =</span> <span class="fu">inv_logit_scaled</span>(b_Intercept <span class="sc">+</span> r_item <span class="sc">+</span> theta)) <span class="sc">%&gt;%</span> </span>
-<span id="cb224-6"><a href="#cb224-6"></a><span class="fu">mutate</span>(<span class="at">i =</span> p <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> p)) <span class="sc">%&gt;%</span> </span>
-<span id="cb224-7"><a href="#cb224-7"></a>  <span class="fu">group_by</span>(theta, .draw) <span class="sc">%&gt;%</span> </span>
-<span id="cb224-8"><a href="#cb224-8"></a>  <span class="fu">summarise</span>(<span class="at">sum_i =</span> <span class="fu">sum</span>(i)) <span class="sc">%&gt;%</span> </span>
-<span id="cb224-9"><a href="#cb224-9"></a>  <span class="fu">group_by</span>(theta) <span class="sc">%&gt;%</span> </span>
-<span id="cb224-10"><a href="#cb224-10"></a>  <span class="fu">summarise</span>(<span class="at">i =</span> <span class="fu">median</span>(sum_i)) <span class="sc">%&gt;%</span></span>
-<span id="cb224-11"><a href="#cb224-11"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> theta, <span class="at">y =</span> i)) <span class="sc">+</span></span>
-<span id="cb224-12"><a href="#cb224-12"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb224-13"><a href="#cb224-13"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"The test information curve"</span>,</span>
-<span id="cb224-14"><a href="#cb224-14"></a>       <span class="at">x =</span> <span class="fu">expression</span>(theta<span class="sc">~</span>(<span class="st">'ability on the logit scale'</span>)),</span>
-<span id="cb224-15"><a href="#cb224-15"></a>       <span class="at">y =</span> <span class="st">"information"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb221"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb221-1"><a href="#cb221-1"></a>irt<span class="fl">.1</span> <span class="sc">%&gt;%</span> </span>
+<span id="cb221-2"><a href="#cb221-2"></a>  <span class="fu">spread_draws</span>(b_Intercept, r_item[item,]) <span class="sc">%&gt;%</span> </span>
+<span id="cb221-3"><a href="#cb221-3"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb221-4"><a href="#cb221-4"></a>  tidyr<span class="sc">::</span><span class="fu">expand</span>(<span class="fu">nesting</span>(.draw, b_Intercept, item, r_item), <span class="at">theta =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="sc">-</span><span class="dv">6</span>, <span class="at">to =</span> <span class="dv">6</span>, <span class="at">length.out =</span> <span class="dv">100</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb221-5"><a href="#cb221-5"></a>  <span class="fu">mutate</span>(<span class="at">p =</span> <span class="fu">inv_logit_scaled</span>(b_Intercept <span class="sc">+</span> r_item <span class="sc">+</span> theta)) <span class="sc">%&gt;%</span> </span>
+<span id="cb221-6"><a href="#cb221-6"></a><span class="fu">mutate</span>(<span class="at">i =</span> p <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> p)) <span class="sc">%&gt;%</span> </span>
+<span id="cb221-7"><a href="#cb221-7"></a>  <span class="fu">group_by</span>(theta, .draw) <span class="sc">%&gt;%</span> </span>
+<span id="cb221-8"><a href="#cb221-8"></a>  <span class="fu">summarise</span>(<span class="at">sum_i =</span> <span class="fu">sum</span>(i)) <span class="sc">%&gt;%</span> </span>
+<span id="cb221-9"><a href="#cb221-9"></a>  <span class="fu">group_by</span>(theta) <span class="sc">%&gt;%</span> </span>
+<span id="cb221-10"><a href="#cb221-10"></a>  <span class="fu">summarise</span>(<span class="at">i =</span> <span class="fu">median</span>(sum_i)) <span class="sc">%&gt;%</span></span>
+<span id="cb221-11"><a href="#cb221-11"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> theta, <span class="at">y =</span> i)) <span class="sc">+</span></span>
+<span id="cb221-12"><a href="#cb221-12"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb221-13"><a href="#cb221-13"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"The test information curve"</span>,</span>
+<span id="cb221-14"><a href="#cb221-14"></a>       <span class="at">x =</span> <span class="fu">expression</span>(theta<span class="sc">~</span>(<span class="st">'ability on the logit scale'</span>)),</span>
+<span id="cb221-15"><a href="#cb221-15"></a>       <span class="at">y =</span> <span class="st">"information"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 
 </div>
@@ -15001,128 +14701,28 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <h2>Non-linear syntax</h2>
 <p>delta was our initial modeling of difficulty. We are now also modeling how difficulty varies across discrimination, so these two terms must interact. Difficulty depends on the item and the person, whereas discrimination is only item specific.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb225"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb225-1"><a href="#cb225-1"></a>irt<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">brm</span>(</span>
-<span id="cb225-2"><a href="#cb225-2"></a>  <span class="at">family =</span> <span class="fu">brmsfamily</span>(<span class="st">"bernoulli"</span>, <span class="st">"logit"</span>),</span>
-<span id="cb225-3"><a href="#cb225-3"></a>  <span class="fu">bf</span>(r2 <span class="sc">~</span> <span class="fu">exp</span>(logalpha) <span class="sc">*</span> delta, <span class="co"># discrimination fixed &gt;0</span></span>
-<span id="cb225-4"><a href="#cb225-4"></a>    delta <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span>i<span class="sc">|</span> item) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> id),</span>
-<span id="cb225-5"><a href="#cb225-5"></a>    logalpha <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span>i<span class="sc">|</span> item),</span>
-<span id="cb225-6"><a href="#cb225-6"></a>    <span class="at">nl =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb225-7"><a href="#cb225-7"></a>  <span class="at">prior =</span> <span class="fu">c</span>(<span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, <span class="fl">1.5</span>), <span class="at">class =</span> b, <span class="at">nlpar =</span> delta),</span>
-<span id="cb225-8"><a href="#cb225-8"></a>            <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">class =</span> b, <span class="at">nlpar =</span> logalpha),</span>
-<span id="cb225-9"><a href="#cb225-9"></a>            <span class="fu">prior</span>(<span class="fu">student_t</span>(<span class="dv">10</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="at">class =</span> sd, <span class="at">nlpar =</span> delta),</span>
-<span id="cb225-10"><a href="#cb225-10"></a>            <span class="fu">prior</span>(<span class="fu">student_t</span>(<span class="dv">10</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="at">class =</span> sd, <span class="at">nlpar =</span> logalpha),</span>
-<span id="cb225-11"><a href="#cb225-11"></a>            <span class="fu">prior</span>(<span class="fu">lkj</span>(<span class="dv">2</span>), <span class="at">class =</span> cor)),</span>
-<span id="cb225-12"><a href="#cb225-12"></a>    <span class="at">iter =</span> <span class="dv">2000</span>, <span class="at">warmup =</span> <span class="dv">1000</span>, <span class="at">cores =</span> <span class="dv">4</span>, <span class="at">chains =</span> <span class="dv">4</span>,</span>
-<span id="cb225-13"><a href="#cb225-13"></a>    <span class="at">data =</span> IRT, </span>
-<span id="cb225-14"><a href="#cb225-14"></a>    <span class="at">backend =</span> <span class="st">"cmdstanr"</span>, </span>
-<span id="cb225-15"><a href="#cb225-15"></a>    <span class="at">file =</span> <span class="st">"irt.2"</span>,</span>
-<span id="cb225-16"><a href="#cb225-16"></a>  <span class="at">control =</span> <span class="fu">list</span>(<span class="at">adapt_delta =</span> .<span class="dv">99</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running MCMC with 4 parallel chains...
-
-Chain 1 Iteration:    1 / 2000 [  0%]  (Warmup) 
-Chain 2 Iteration:    1 / 2000 [  0%]  (Warmup) 
-Chain 3 Iteration:    1 / 2000 [  0%]  (Warmup) 
-Chain 4 Iteration:    1 / 2000 [  0%]  (Warmup) 
-Chain 4 Iteration:  100 / 2000 [  5%]  (Warmup) 
-Chain 1 Iteration:  100 / 2000 [  5%]  (Warmup) 
-Chain 3 Iteration:  100 / 2000 [  5%]  (Warmup) 
-Chain 2 Iteration:  100 / 2000 [  5%]  (Warmup) 
-Chain 1 Iteration:  200 / 2000 [ 10%]  (Warmup) 
-Chain 4 Iteration:  200 / 2000 [ 10%]  (Warmup) 
-Chain 3 Iteration:  200 / 2000 [ 10%]  (Warmup) 
-Chain 1 Iteration:  300 / 2000 [ 15%]  (Warmup) 
-Chain 2 Iteration:  200 / 2000 [ 10%]  (Warmup) 
-Chain 3 Iteration:  300 / 2000 [ 15%]  (Warmup) 
-Chain 4 Iteration:  300 / 2000 [ 15%]  (Warmup) 
-Chain 1 Iteration:  400 / 2000 [ 20%]  (Warmup) 
-Chain 3 Iteration:  400 / 2000 [ 20%]  (Warmup) 
-Chain 4 Iteration:  400 / 2000 [ 20%]  (Warmup) 
-Chain 2 Iteration:  300 / 2000 [ 15%]  (Warmup) 
-Chain 1 Iteration:  500 / 2000 [ 25%]  (Warmup) 
-Chain 2 Iteration:  400 / 2000 [ 20%]  (Warmup) 
-Chain 3 Iteration:  500 / 2000 [ 25%]  (Warmup) 
-Chain 4 Iteration:  500 / 2000 [ 25%]  (Warmup) 
-Chain 1 Iteration:  600 / 2000 [ 30%]  (Warmup) 
-Chain 4 Iteration:  600 / 2000 [ 30%]  (Warmup) 
-Chain 3 Iteration:  600 / 2000 [ 30%]  (Warmup) 
-Chain 2 Iteration:  500 / 2000 [ 25%]  (Warmup) 
-Chain 1 Iteration:  700 / 2000 [ 35%]  (Warmup) 
-Chain 4 Iteration:  700 / 2000 [ 35%]  (Warmup) 
-Chain 3 Iteration:  700 / 2000 [ 35%]  (Warmup) 
-Chain 2 Iteration:  600 / 2000 [ 30%]  (Warmup) 
-Chain 1 Iteration:  800 / 2000 [ 40%]  (Warmup) 
-Chain 4 Iteration:  800 / 2000 [ 40%]  (Warmup) 
-Chain 3 Iteration:  800 / 2000 [ 40%]  (Warmup) 
-Chain 2 Iteration:  700 / 2000 [ 35%]  (Warmup) 
-Chain 1 Iteration:  900 / 2000 [ 45%]  (Warmup) 
-Chain 4 Iteration:  900 / 2000 [ 45%]  (Warmup) 
-Chain 3 Iteration:  900 / 2000 [ 45%]  (Warmup) 
-Chain 2 Iteration:  800 / 2000 [ 40%]  (Warmup) 
-Chain 1 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
-Chain 1 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
-Chain 4 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
-Chain 4 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
-Chain 3 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
-Chain 3 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
-Chain 2 Iteration:  900 / 2000 [ 45%]  (Warmup) 
-Chain 1 Iteration: 1100 / 2000 [ 55%]  (Sampling) 
-Chain 4 Iteration: 1100 / 2000 [ 55%]  (Sampling) 
-Chain 3 Iteration: 1100 / 2000 [ 55%]  (Sampling) 
-Chain 1 Iteration: 1200 / 2000 [ 60%]  (Sampling) 
-Chain 4 Iteration: 1200 / 2000 [ 60%]  (Sampling) 
-Chain 3 Iteration: 1200 / 2000 [ 60%]  (Sampling) 
-Chain 2 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
-Chain 2 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
-Chain 1 Iteration: 1300 / 2000 [ 65%]  (Sampling) 
-Chain 4 Iteration: 1300 / 2000 [ 65%]  (Sampling) 
-Chain 3 Iteration: 1300 / 2000 [ 65%]  (Sampling) 
-Chain 1 Iteration: 1400 / 2000 [ 70%]  (Sampling) 
-Chain 4 Iteration: 1400 / 2000 [ 70%]  (Sampling) 
-Chain 2 Iteration: 1100 / 2000 [ 55%]  (Sampling) 
-Chain 3 Iteration: 1400 / 2000 [ 70%]  (Sampling) 
-Chain 1 Iteration: 1500 / 2000 [ 75%]  (Sampling) 
-Chain 4 Iteration: 1500 / 2000 [ 75%]  (Sampling) 
-Chain 3 Iteration: 1500 / 2000 [ 75%]  (Sampling) 
-Chain 1 Iteration: 1600 / 2000 [ 80%]  (Sampling) 
-Chain 4 Iteration: 1600 / 2000 [ 80%]  (Sampling) 
-Chain 2 Iteration: 1200 / 2000 [ 60%]  (Sampling) 
-Chain 3 Iteration: 1600 / 2000 [ 80%]  (Sampling) 
-Chain 1 Iteration: 1700 / 2000 [ 85%]  (Sampling) 
-Chain 4 Iteration: 1700 / 2000 [ 85%]  (Sampling) 
-Chain 3 Iteration: 1700 / 2000 [ 85%]  (Sampling) 
-Chain 1 Iteration: 1800 / 2000 [ 90%]  (Sampling) 
-Chain 4 Iteration: 1800 / 2000 [ 90%]  (Sampling) 
-Chain 2 Iteration: 1300 / 2000 [ 65%]  (Sampling) 
-Chain 3 Iteration: 1800 / 2000 [ 90%]  (Sampling) 
-Chain 1 Iteration: 1900 / 2000 [ 95%]  (Sampling) 
-Chain 4 Iteration: 1900 / 2000 [ 95%]  (Sampling) 
-Chain 3 Iteration: 1900 / 2000 [ 95%]  (Sampling) 
-Chain 1 Iteration: 2000 / 2000 [100%]  (Sampling) 
-Chain 1 finished in 365.8 seconds.
-Chain 4 Iteration: 2000 / 2000 [100%]  (Sampling) 
-Chain 4 finished in 366.9 seconds.
-Chain 2 Iteration: 1400 / 2000 [ 70%]  (Sampling) 
-Chain 3 Iteration: 2000 / 2000 [100%]  (Sampling) 
-Chain 3 finished in 373.5 seconds.
-Chain 2 Iteration: 1500 / 2000 [ 75%]  (Sampling) 
-Chain 2 Iteration: 1600 / 2000 [ 80%]  (Sampling) 
-Chain 2 Iteration: 1700 / 2000 [ 85%]  (Sampling) 
-Chain 2 Iteration: 1800 / 2000 [ 90%]  (Sampling) 
-Chain 2 Iteration: 1900 / 2000 [ 95%]  (Sampling) 
-Chain 2 Iteration: 2000 / 2000 [100%]  (Sampling) 
-Chain 2 finished in 559.7 seconds.
-
-All 4 chains finished successfully.
-Mean chain execution time: 416.5 seconds.
-Total execution time: 560.0 seconds.</code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb222"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb222-1"><a href="#cb222-1"></a>irt<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">brm</span>(</span>
+<span id="cb222-2"><a href="#cb222-2"></a>  <span class="at">family =</span> <span class="fu">brmsfamily</span>(<span class="st">"bernoulli"</span>, <span class="st">"logit"</span>),</span>
+<span id="cb222-3"><a href="#cb222-3"></a>  <span class="fu">bf</span>(r2 <span class="sc">~</span> <span class="fu">exp</span>(logalpha) <span class="sc">*</span> delta, <span class="co"># discrimination fixed &gt;0</span></span>
+<span id="cb222-4"><a href="#cb222-4"></a>    delta <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span>i<span class="sc">|</span> item) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> id),</span>
+<span id="cb222-5"><a href="#cb222-5"></a>    logalpha <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span>i<span class="sc">|</span> item),</span>
+<span id="cb222-6"><a href="#cb222-6"></a>    <span class="at">nl =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb222-7"><a href="#cb222-7"></a>  <span class="at">prior =</span> <span class="fu">c</span>(<span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, <span class="fl">1.5</span>), <span class="at">class =</span> b, <span class="at">nlpar =</span> delta),</span>
+<span id="cb222-8"><a href="#cb222-8"></a>            <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">class =</span> b, <span class="at">nlpar =</span> logalpha),</span>
+<span id="cb222-9"><a href="#cb222-9"></a>            <span class="fu">prior</span>(<span class="fu">student_t</span>(<span class="dv">10</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="at">class =</span> sd, <span class="at">nlpar =</span> delta),</span>
+<span id="cb222-10"><a href="#cb222-10"></a>            <span class="fu">prior</span>(<span class="fu">student_t</span>(<span class="dv">10</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="at">class =</span> sd, <span class="at">nlpar =</span> logalpha),</span>
+<span id="cb222-11"><a href="#cb222-11"></a>            <span class="fu">prior</span>(<span class="fu">lkj</span>(<span class="dv">2</span>), <span class="at">class =</span> cor)),</span>
+<span id="cb222-12"><a href="#cb222-12"></a>    <span class="at">iter =</span> <span class="dv">2000</span>, <span class="at">warmup =</span> <span class="dv">1000</span>, <span class="at">cores =</span> <span class="dv">4</span>, <span class="at">chains =</span> <span class="dv">4</span>,</span>
+<span id="cb222-13"><a href="#cb222-13"></a>    <span class="at">data =</span> IRT, </span>
+<span id="cb222-14"><a href="#cb222-14"></a>    <span class="at">backend =</span> <span class="st">"cmdstanr"</span>, </span>
+<span id="cb222-15"><a href="#cb222-15"></a>    <span class="at">file =</span> <span class="st">"irt.2"</span>,</span>
+<span id="cb222-16"><a href="#cb222-16"></a>  <span class="at">control =</span> <span class="fu">list</span>(<span class="at">adapt_delta =</span> .<span class="dv">99</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section class="slide level2">
 
 <div class="cell">
-<div class="sourceCode cell-code" id="cb227"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb227-1"><a href="#cb227-1"></a><span class="fu">summary</span>(irt<span class="fl">.2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb223"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb223-1"><a href="#cb223-1"></a><span class="fu">summary</span>(irt<span class="fl">.2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> Family: bernoulli 
   Links: mu = logit 
@@ -15163,7 +14763,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 
 <p>Random effect estimates for each id__delta item__delta and item__alpha</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb229"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb229-1"><a href="#cb229-1"></a><span class="fu">get_variables</span>(irt<span class="fl">.2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb225"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb225-1"><a href="#cb225-1"></a><span class="fu">get_variables</span>(irt<span class="fl">.2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  [1] "b_delta_Intercept"                            
   [2] "b_logalpha_Intercept"                         
@@ -15551,12 +15151,12 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb231"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb231-1"><a href="#cb231-1"></a>irt2.dat <span class="ot">&lt;-</span> irt<span class="fl">.2</span> <span class="sc">%&gt;%</span> </span>
-<span id="cb231-2"><a href="#cb231-2"></a>  <span class="fu">spread_draws</span>(b_delta_Intercept, b_logalpha_Intercept, r_item__logalpha[item,],r_item__delta[item,]) <span class="sc">%&gt;%</span> </span>
-<span id="cb231-3"><a href="#cb231-3"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb231-4"><a href="#cb231-4"></a>  tidyr<span class="sc">::</span><span class="fu">expand</span>(<span class="fu">nesting</span>(.draw, b_delta_Intercept, b_logalpha_Intercept, item, r_item__logalpha,r_item__delta), <span class="at">theta =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="sc">-</span><span class="dv">6</span>, <span class="at">to =</span> <span class="dv">6</span>, <span class="at">length.out =</span> <span class="dv">100</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb231-5"><a href="#cb231-5"></a>  <span class="fu">mutate</span>(<span class="at">p =</span> <span class="fu">inv_logit_scaled</span>(<span class="fu">exp</span>(b_logalpha_Intercept <span class="sc">+</span> r_item__logalpha) <span class="sc">*</span> (b_delta_Intercept <span class="sc">+</span> theta <span class="sc">+</span> r_item__delta)))</span>
-<span id="cb231-6"><a href="#cb231-6"></a>irt2.dat</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb227"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb227-1"><a href="#cb227-1"></a>irt2.dat <span class="ot">&lt;-</span> irt<span class="fl">.2</span> <span class="sc">%&gt;%</span> </span>
+<span id="cb227-2"><a href="#cb227-2"></a>  <span class="fu">spread_draws</span>(b_delta_Intercept, b_logalpha_Intercept, r_item__logalpha[item,],r_item__delta[item,]) <span class="sc">%&gt;%</span> </span>
+<span id="cb227-3"><a href="#cb227-3"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb227-4"><a href="#cb227-4"></a>  tidyr<span class="sc">::</span><span class="fu">expand</span>(<span class="fu">nesting</span>(.draw, b_delta_Intercept, b_logalpha_Intercept, item, r_item__logalpha,r_item__delta), <span class="at">theta =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="sc">-</span><span class="dv">6</span>, <span class="at">to =</span> <span class="dv">6</span>, <span class="at">length.out =</span> <span class="dv">100</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb227-5"><a href="#cb227-5"></a>  <span class="fu">mutate</span>(<span class="at">p =</span> <span class="fu">inv_logit_scaled</span>(<span class="fu">exp</span>(b_logalpha_Intercept <span class="sc">+</span> r_item__logalpha) <span class="sc">*</span> (b_delta_Intercept <span class="sc">+</span> theta <span class="sc">+</span> r_item__delta)))</span>
+<span id="cb227-6"><a href="#cb227-6"></a>irt2.dat</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 9,600,000 × 8
@@ -15582,18 +15182,18 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb233"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb233-1"><a href="#cb233-1"></a>irt<span class="fl">.2</span> <span class="sc">%&gt;%</span> </span>
-<span id="cb233-2"><a href="#cb233-2"></a>  <span class="fu">spread_draws</span>(b_delta_Intercept, b_logalpha_Intercept, r_item__logalpha[item,],r_item__delta[item,]) <span class="sc">%&gt;%</span> </span>
-<span id="cb233-3"><a href="#cb233-3"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb233-4"><a href="#cb233-4"></a>  tidyr<span class="sc">::</span><span class="fu">expand</span>(<span class="fu">nesting</span>(.draw, b_delta_Intercept, b_logalpha_Intercept, item, r_item__logalpha,r_item__delta), <span class="at">theta =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="sc">-</span><span class="dv">6</span>, <span class="at">to =</span> <span class="dv">6</span>, <span class="at">length.out =</span> <span class="dv">100</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb233-5"><a href="#cb233-5"></a>  <span class="fu">mutate</span>(<span class="at">p =</span> <span class="fu">inv_logit_scaled</span>(<span class="fu">exp</span>(b_logalpha_Intercept <span class="sc">+</span> r_item__logalpha) <span class="sc">*</span> (b_delta_Intercept <span class="sc">+</span> theta <span class="sc">+</span> r_item__delta))) <span class="sc">%&gt;%</span> </span>
-<span id="cb233-6"><a href="#cb233-6"></a>  <span class="fu">group_by</span>(theta, item) <span class="sc">%&gt;%</span> </span>
-<span id="cb233-7"><a href="#cb233-7"></a>  <span class="fu">summarise</span>(<span class="at">p =</span> <span class="fu">mean</span>(p)) <span class="sc">%&gt;%</span> </span>
-<span id="cb233-8"><a href="#cb233-8"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> theta, <span class="at">y =</span> p, <span class="at">color =</span> item)) <span class="sc">+</span></span>
-<span id="cb233-9"><a href="#cb233-9"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb233-10"><a href="#cb233-10"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"ICCs"</span>,</span>
-<span id="cb233-11"><a href="#cb233-11"></a>       <span class="at">x =</span> <span class="fu">expression</span>(theta<span class="sc">~</span>(<span class="st">'ability on the logit scale'</span>)),</span>
-<span id="cb233-12"><a href="#cb233-12"></a>       <span class="at">y =</span> <span class="fu">expression</span>(<span class="fu">italic</span>(p)(y<span class="sc">==</span><span class="dv">1</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb229"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb229-1"><a href="#cb229-1"></a>irt<span class="fl">.2</span> <span class="sc">%&gt;%</span> </span>
+<span id="cb229-2"><a href="#cb229-2"></a>  <span class="fu">spread_draws</span>(b_delta_Intercept, b_logalpha_Intercept, r_item__logalpha[item,],r_item__delta[item,]) <span class="sc">%&gt;%</span> </span>
+<span id="cb229-3"><a href="#cb229-3"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb229-4"><a href="#cb229-4"></a>  tidyr<span class="sc">::</span><span class="fu">expand</span>(<span class="fu">nesting</span>(.draw, b_delta_Intercept, b_logalpha_Intercept, item, r_item__logalpha,r_item__delta), <span class="at">theta =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="sc">-</span><span class="dv">6</span>, <span class="at">to =</span> <span class="dv">6</span>, <span class="at">length.out =</span> <span class="dv">100</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb229-5"><a href="#cb229-5"></a>  <span class="fu">mutate</span>(<span class="at">p =</span> <span class="fu">inv_logit_scaled</span>(<span class="fu">exp</span>(b_logalpha_Intercept <span class="sc">+</span> r_item__logalpha) <span class="sc">*</span> (b_delta_Intercept <span class="sc">+</span> theta <span class="sc">+</span> r_item__delta))) <span class="sc">%&gt;%</span> </span>
+<span id="cb229-6"><a href="#cb229-6"></a>  <span class="fu">group_by</span>(theta, item) <span class="sc">%&gt;%</span> </span>
+<span id="cb229-7"><a href="#cb229-7"></a>  <span class="fu">summarise</span>(<span class="at">p =</span> <span class="fu">mean</span>(p)) <span class="sc">%&gt;%</span> </span>
+<span id="cb229-8"><a href="#cb229-8"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> theta, <span class="at">y =</span> p, <span class="at">color =</span> item)) <span class="sc">+</span></span>
+<span id="cb229-9"><a href="#cb229-9"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb229-10"><a href="#cb229-10"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"ICCs"</span>,</span>
+<span id="cb229-11"><a href="#cb229-11"></a>       <span class="at">x =</span> <span class="fu">expression</span>(theta<span class="sc">~</span>(<span class="st">'ability on the logit scale'</span>)),</span>
+<span id="cb229-12"><a href="#cb229-12"></a>       <span class="at">y =</span> <span class="fu">expression</span>(<span class="fu">italic</span>(p)(y<span class="sc">==</span><span class="dv">1</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 
 </div>
@@ -15603,19 +15203,19 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb234"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb234-1"><a href="#cb234-1"></a>irt<span class="fl">.2</span> <span class="sc">%&gt;%</span> </span>
-<span id="cb234-2"><a href="#cb234-2"></a>  <span class="fu">spread_draws</span>(b_delta_Intercept, b_logalpha_Intercept, r_item__logalpha[item,],r_item__delta[item,]) <span class="sc">%&gt;%</span> </span>
-<span id="cb234-3"><a href="#cb234-3"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb234-4"><a href="#cb234-4"></a>  tidyr<span class="sc">::</span><span class="fu">expand</span>(<span class="fu">nesting</span>(.draw, b_delta_Intercept, b_logalpha_Intercept, item, r_item__logalpha,r_item__delta), <span class="at">theta =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="sc">-</span><span class="dv">6</span>, <span class="at">to =</span> <span class="dv">6</span>, <span class="at">length.out =</span> <span class="dv">100</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb234-5"><a href="#cb234-5"></a>  <span class="fu">mutate</span>(<span class="at">p =</span> <span class="fu">inv_logit_scaled</span>(<span class="fu">exp</span>(b_logalpha_Intercept <span class="sc">+</span> r_item__logalpha) <span class="sc">*</span> (b_delta_Intercept <span class="sc">+</span> theta <span class="sc">+</span> r_item__delta))) <span class="sc">%&gt;%</span> </span>
-<span id="cb234-6"><a href="#cb234-6"></a>  <span class="fu">mutate</span>(<span class="at">i =</span> p <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> p)) <span class="sc">%&gt;%</span> </span>
-<span id="cb234-7"><a href="#cb234-7"></a>  <span class="fu">group_by</span>(theta, item) <span class="sc">%&gt;%</span> </span>
-<span id="cb234-8"><a href="#cb234-8"></a>  <span class="fu">summarise</span>(<span class="at">i =</span> <span class="fu">mean</span>(i)) <span class="sc">%&gt;%</span></span>
-<span id="cb234-9"><a href="#cb234-9"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> theta, <span class="at">y =</span> i, <span class="at">color =</span> item)) <span class="sc">+</span></span>
-<span id="cb234-10"><a href="#cb234-10"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb234-11"><a href="#cb234-11"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"IICs"</span>,</span>
-<span id="cb234-12"><a href="#cb234-12"></a>       <span class="at">x =</span> <span class="fu">expression</span>(theta<span class="sc">~</span>(<span class="st">'ability on the logit scale'</span>)),</span>
-<span id="cb234-13"><a href="#cb234-13"></a>       <span class="at">y =</span> <span class="st">"information"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb230"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb230-1"><a href="#cb230-1"></a>irt<span class="fl">.2</span> <span class="sc">%&gt;%</span> </span>
+<span id="cb230-2"><a href="#cb230-2"></a>  <span class="fu">spread_draws</span>(b_delta_Intercept, b_logalpha_Intercept, r_item__logalpha[item,],r_item__delta[item,]) <span class="sc">%&gt;%</span> </span>
+<span id="cb230-3"><a href="#cb230-3"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb230-4"><a href="#cb230-4"></a>  tidyr<span class="sc">::</span><span class="fu">expand</span>(<span class="fu">nesting</span>(.draw, b_delta_Intercept, b_logalpha_Intercept, item, r_item__logalpha,r_item__delta), <span class="at">theta =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="sc">-</span><span class="dv">6</span>, <span class="at">to =</span> <span class="dv">6</span>, <span class="at">length.out =</span> <span class="dv">100</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb230-5"><a href="#cb230-5"></a>  <span class="fu">mutate</span>(<span class="at">p =</span> <span class="fu">inv_logit_scaled</span>(<span class="fu">exp</span>(b_logalpha_Intercept <span class="sc">+</span> r_item__logalpha) <span class="sc">*</span> (b_delta_Intercept <span class="sc">+</span> theta <span class="sc">+</span> r_item__delta))) <span class="sc">%&gt;%</span> </span>
+<span id="cb230-6"><a href="#cb230-6"></a>  <span class="fu">mutate</span>(<span class="at">i =</span> p <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> p)) <span class="sc">%&gt;%</span> </span>
+<span id="cb230-7"><a href="#cb230-7"></a>  <span class="fu">group_by</span>(theta, item) <span class="sc">%&gt;%</span> </span>
+<span id="cb230-8"><a href="#cb230-8"></a>  <span class="fu">summarise</span>(<span class="at">i =</span> <span class="fu">mean</span>(i)) <span class="sc">%&gt;%</span></span>
+<span id="cb230-9"><a href="#cb230-9"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> theta, <span class="at">y =</span> i, <span class="at">color =</span> item)) <span class="sc">+</span></span>
+<span id="cb230-10"><a href="#cb230-10"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb230-11"><a href="#cb230-11"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"IICs"</span>,</span>
+<span id="cb230-12"><a href="#cb230-12"></a>       <span class="at">x =</span> <span class="fu">expression</span>(theta<span class="sc">~</span>(<span class="st">'ability on the logit scale'</span>)),</span>
+<span id="cb230-13"><a href="#cb230-13"></a>       <span class="at">y =</span> <span class="st">"information"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 
 </div>
@@ -15625,21 +15225,21 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb235"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb235-1"><a href="#cb235-1"></a>irt<span class="fl">.2</span> <span class="sc">%&gt;%</span> </span>
-<span id="cb235-2"><a href="#cb235-2"></a>  <span class="fu">spread_draws</span>(b_delta_Intercept, b_logalpha_Intercept, r_item__logalpha[item,],r_item__delta[item,]) <span class="sc">%&gt;%</span> </span>
-<span id="cb235-3"><a href="#cb235-3"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb235-4"><a href="#cb235-4"></a>  tidyr<span class="sc">::</span><span class="fu">expand</span>(<span class="fu">nesting</span>(.draw, b_delta_Intercept, b_logalpha_Intercept, item, r_item__logalpha,r_item__delta), <span class="at">theta =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="sc">-</span><span class="dv">6</span>, <span class="at">to =</span> <span class="dv">6</span>, <span class="at">length.out =</span> <span class="dv">100</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb235-5"><a href="#cb235-5"></a>  <span class="fu">mutate</span>(<span class="at">p =</span> <span class="fu">inv_logit_scaled</span>(<span class="fu">exp</span>(b_logalpha_Intercept <span class="sc">+</span> r_item__logalpha) <span class="sc">*</span> (b_delta_Intercept <span class="sc">+</span> theta <span class="sc">+</span> r_item__delta))) <span class="sc">%&gt;%</span> </span>
-<span id="cb235-6"><a href="#cb235-6"></a><span class="fu">mutate</span>(<span class="at">i =</span> p <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> p)) <span class="sc">%&gt;%</span> </span>
-<span id="cb235-7"><a href="#cb235-7"></a>  <span class="fu">group_by</span>(theta, .draw) <span class="sc">%&gt;%</span> </span>
-<span id="cb235-8"><a href="#cb235-8"></a>  <span class="fu">summarise</span>(<span class="at">sum_i =</span> <span class="fu">sum</span>(i)) <span class="sc">%&gt;%</span> </span>
-<span id="cb235-9"><a href="#cb235-9"></a>  <span class="fu">group_by</span>(theta) <span class="sc">%&gt;%</span> </span>
-<span id="cb235-10"><a href="#cb235-10"></a>  <span class="fu">summarise</span>(<span class="at">i =</span> <span class="fu">mean</span>(sum_i)) <span class="sc">%&gt;%</span></span>
-<span id="cb235-11"><a href="#cb235-11"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> theta, <span class="at">y =</span> i)) <span class="sc">+</span></span>
-<span id="cb235-12"><a href="#cb235-12"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb235-13"><a href="#cb235-13"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"The test information curve"</span>,</span>
-<span id="cb235-14"><a href="#cb235-14"></a>       <span class="at">x =</span> <span class="fu">expression</span>(theta<span class="sc">~</span>(<span class="st">'ability on the logit scale'</span>)),</span>
-<span id="cb235-15"><a href="#cb235-15"></a>       <span class="at">y =</span> <span class="st">"information"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb231"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb231-1"><a href="#cb231-1"></a>irt<span class="fl">.2</span> <span class="sc">%&gt;%</span> </span>
+<span id="cb231-2"><a href="#cb231-2"></a>  <span class="fu">spread_draws</span>(b_delta_Intercept, b_logalpha_Intercept, r_item__logalpha[item,],r_item__delta[item,]) <span class="sc">%&gt;%</span> </span>
+<span id="cb231-3"><a href="#cb231-3"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb231-4"><a href="#cb231-4"></a>  tidyr<span class="sc">::</span><span class="fu">expand</span>(<span class="fu">nesting</span>(.draw, b_delta_Intercept, b_logalpha_Intercept, item, r_item__logalpha,r_item__delta), <span class="at">theta =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="sc">-</span><span class="dv">6</span>, <span class="at">to =</span> <span class="dv">6</span>, <span class="at">length.out =</span> <span class="dv">100</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb231-5"><a href="#cb231-5"></a>  <span class="fu">mutate</span>(<span class="at">p =</span> <span class="fu">inv_logit_scaled</span>(<span class="fu">exp</span>(b_logalpha_Intercept <span class="sc">+</span> r_item__logalpha) <span class="sc">*</span> (b_delta_Intercept <span class="sc">+</span> theta <span class="sc">+</span> r_item__delta))) <span class="sc">%&gt;%</span> </span>
+<span id="cb231-6"><a href="#cb231-6"></a><span class="fu">mutate</span>(<span class="at">i =</span> p <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> p)) <span class="sc">%&gt;%</span> </span>
+<span id="cb231-7"><a href="#cb231-7"></a>  <span class="fu">group_by</span>(theta, .draw) <span class="sc">%&gt;%</span> </span>
+<span id="cb231-8"><a href="#cb231-8"></a>  <span class="fu">summarise</span>(<span class="at">sum_i =</span> <span class="fu">sum</span>(i)) <span class="sc">%&gt;%</span> </span>
+<span id="cb231-9"><a href="#cb231-9"></a>  <span class="fu">group_by</span>(theta) <span class="sc">%&gt;%</span> </span>
+<span id="cb231-10"><a href="#cb231-10"></a>  <span class="fu">summarise</span>(<span class="at">i =</span> <span class="fu">mean</span>(sum_i)) <span class="sc">%&gt;%</span></span>
+<span id="cb231-11"><a href="#cb231-11"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> theta, <span class="at">y =</span> i)) <span class="sc">+</span></span>
+<span id="cb231-12"><a href="#cb231-12"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb231-13"><a href="#cb231-13"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"The test information curve"</span>,</span>
+<span id="cb231-14"><a href="#cb231-14"></a>       <span class="at">x =</span> <span class="fu">expression</span>(theta<span class="sc">~</span>(<span class="st">'ability on the logit scale'</span>)),</span>
+<span id="cb231-15"><a href="#cb231-15"></a>       <span class="at">y =</span> <span class="st">"information"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 
 </div>
@@ -15663,122 +15263,22 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 
 <p>No, Perhaps, Yes.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb236"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb236-1"><a href="#cb236-1"></a>irt<span class="fl">.3</span> <span class="ot">&lt;-</span> <span class="fu">brm</span>(</span>
-<span id="cb236-2"><a href="#cb236-2"></a>  <span class="at">family =</span> <span class="fu">brmsfamily</span>(<span class="st">"cumulative"</span>, <span class="st">"logit"</span>),</span>
-<span id="cb236-3"><a href="#cb236-3"></a>  <span class="fu">bf</span>(resp <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> item) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> id)),</span>
-<span id="cb236-4"><a href="#cb236-4"></a>  <span class="at">prior =</span> <span class="fu">c</span>(<span class="fu">prior</span>(<span class="st">"normal(0, 3)"</span>, <span class="at">class =</span> <span class="st">"sd"</span>, <span class="at">group =</span> <span class="st">"id"</span>),</span>
-<span id="cb236-5"><a href="#cb236-5"></a>            <span class="fu">prior</span>(<span class="st">"normal(0, 3)"</span>, <span class="at">class =</span> <span class="st">"sd"</span>, <span class="at">group =</span> <span class="st">"item"</span>)),</span>
-<span id="cb236-6"><a href="#cb236-6"></a>    <span class="at">iter =</span> <span class="dv">2000</span>, <span class="at">warmup =</span> <span class="dv">1000</span>, <span class="at">cores =</span> <span class="dv">4</span>, <span class="at">chains =</span> <span class="dv">4</span>,</span>
-<span id="cb236-7"><a href="#cb236-7"></a>    <span class="at">data =</span> IRT, </span>
-<span id="cb236-8"><a href="#cb236-8"></a>    <span class="at">backend =</span> <span class="st">"cmdstanr"</span>, </span>
-<span id="cb236-9"><a href="#cb236-9"></a>    <span class="at">file =</span> <span class="st">"irt.3"</span>,</span>
-<span id="cb236-10"><a href="#cb236-10"></a>  <span class="at">control =</span> <span class="fu">list</span>(<span class="at">adapt_delta =</span> .<span class="dv">99</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running MCMC with 4 parallel chains...
-
-Chain 1 Iteration:    1 / 2000 [  0%]  (Warmup) 
-Chain 2 Iteration:    1 / 2000 [  0%]  (Warmup) 
-Chain 3 Iteration:    1 / 2000 [  0%]  (Warmup) 
-Chain 4 Iteration:    1 / 2000 [  0%]  (Warmup) 
-Chain 1 Iteration:  100 / 2000 [  5%]  (Warmup) 
-Chain 4 Iteration:  100 / 2000 [  5%]  (Warmup) 
-Chain 3 Iteration:  100 / 2000 [  5%]  (Warmup) 
-Chain 2 Iteration:  100 / 2000 [  5%]  (Warmup) 
-Chain 1 Iteration:  200 / 2000 [ 10%]  (Warmup) 
-Chain 4 Iteration:  200 / 2000 [ 10%]  (Warmup) 
-Chain 2 Iteration:  200 / 2000 [ 10%]  (Warmup) 
-Chain 3 Iteration:  200 / 2000 [ 10%]  (Warmup) 
-Chain 4 Iteration:  300 / 2000 [ 15%]  (Warmup) 
-Chain 2 Iteration:  300 / 2000 [ 15%]  (Warmup) 
-Chain 4 Iteration:  400 / 2000 [ 20%]  (Warmup) 
-Chain 1 Iteration:  300 / 2000 [ 15%]  (Warmup) 
-Chain 3 Iteration:  300 / 2000 [ 15%]  (Warmup) 
-Chain 2 Iteration:  400 / 2000 [ 20%]  (Warmup) 
-Chain 4 Iteration:  500 / 2000 [ 25%]  (Warmup) 
-Chain 1 Iteration:  400 / 2000 [ 20%]  (Warmup) 
-Chain 3 Iteration:  400 / 2000 [ 20%]  (Warmup) 
-Chain 4 Iteration:  600 / 2000 [ 30%]  (Warmup) 
-Chain 4 Iteration:  700 / 2000 [ 35%]  (Warmup) 
-Chain 2 Iteration:  500 / 2000 [ 25%]  (Warmup) 
-Chain 3 Iteration:  500 / 2000 [ 25%]  (Warmup) 
-Chain 1 Iteration:  500 / 2000 [ 25%]  (Warmup) 
-Chain 2 Iteration:  600 / 2000 [ 30%]  (Warmup) 
-Chain 4 Iteration:  800 / 2000 [ 40%]  (Warmup) 
-Chain 3 Iteration:  600 / 2000 [ 30%]  (Warmup) 
-Chain 4 Iteration:  900 / 2000 [ 45%]  (Warmup) 
-Chain 1 Iteration:  600 / 2000 [ 30%]  (Warmup) 
-Chain 2 Iteration:  700 / 2000 [ 35%]  (Warmup) 
-Chain 1 Iteration:  700 / 2000 [ 35%]  (Warmup) 
-Chain 3 Iteration:  700 / 2000 [ 35%]  (Warmup) 
-Chain 2 Iteration:  800 / 2000 [ 40%]  (Warmup) 
-Chain 1 Iteration:  800 / 2000 [ 40%]  (Warmup) 
-Chain 2 Iteration:  900 / 2000 [ 45%]  (Warmup) 
-Chain 3 Iteration:  800 / 2000 [ 40%]  (Warmup) 
-Chain 4 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
-Chain 4 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
-Chain 1 Iteration:  900 / 2000 [ 45%]  (Warmup) 
-Chain 2 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
-Chain 2 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
-Chain 3 Iteration:  900 / 2000 [ 45%]  (Warmup) 
-Chain 1 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
-Chain 1 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
-Chain 2 Iteration: 1100 / 2000 [ 55%]  (Sampling) 
-Chain 4 Iteration: 1100 / 2000 [ 55%]  (Sampling) 
-Chain 3 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
-Chain 3 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
-Chain 1 Iteration: 1100 / 2000 [ 55%]  (Sampling) 
-Chain 2 Iteration: 1200 / 2000 [ 60%]  (Sampling) 
-Chain 3 Iteration: 1100 / 2000 [ 55%]  (Sampling) 
-Chain 1 Iteration: 1200 / 2000 [ 60%]  (Sampling) 
-Chain 4 Iteration: 1200 / 2000 [ 60%]  (Sampling) 
-Chain 3 Iteration: 1200 / 2000 [ 60%]  (Sampling) 
-Chain 2 Iteration: 1300 / 2000 [ 65%]  (Sampling) 
-Chain 1 Iteration: 1300 / 2000 [ 65%]  (Sampling) 
-Chain 3 Iteration: 1300 / 2000 [ 65%]  (Sampling) 
-Chain 2 Iteration: 1400 / 2000 [ 70%]  (Sampling) 
-Chain 1 Iteration: 1400 / 2000 [ 70%]  (Sampling) 
-Chain 3 Iteration: 1400 / 2000 [ 70%]  (Sampling) 
-Chain 4 Iteration: 1300 / 2000 [ 65%]  (Sampling) 
-Chain 2 Iteration: 1500 / 2000 [ 75%]  (Sampling) 
-Chain 1 Iteration: 1500 / 2000 [ 75%]  (Sampling) 
-Chain 3 Iteration: 1500 / 2000 [ 75%]  (Sampling) 
-Chain 2 Iteration: 1600 / 2000 [ 80%]  (Sampling) 
-Chain 4 Iteration: 1400 / 2000 [ 70%]  (Sampling) 
-Chain 3 Iteration: 1600 / 2000 [ 80%]  (Sampling) 
-Chain 1 Iteration: 1600 / 2000 [ 80%]  (Sampling) 
-Chain 2 Iteration: 1700 / 2000 [ 85%]  (Sampling) 
-Chain 3 Iteration: 1700 / 2000 [ 85%]  (Sampling) 
-Chain 1 Iteration: 1700 / 2000 [ 85%]  (Sampling) 
-Chain 2 Iteration: 1800 / 2000 [ 90%]  (Sampling) 
-Chain 4 Iteration: 1500 / 2000 [ 75%]  (Sampling) 
-Chain 3 Iteration: 1800 / 2000 [ 90%]  (Sampling) 
-Chain 1 Iteration: 1800 / 2000 [ 90%]  (Sampling) 
-Chain 2 Iteration: 1900 / 2000 [ 95%]  (Sampling) 
-Chain 3 Iteration: 1900 / 2000 [ 95%]  (Sampling) 
-Chain 1 Iteration: 1900 / 2000 [ 95%]  (Sampling) 
-Chain 2 Iteration: 2000 / 2000 [100%]  (Sampling) 
-Chain 2 finished in 1057.1 seconds.
-Chain 4 Iteration: 1600 / 2000 [ 80%]  (Sampling) 
-Chain 3 Iteration: 2000 / 2000 [100%]  (Sampling) 
-Chain 3 finished in 1094.7 seconds.
-Chain 1 Iteration: 2000 / 2000 [100%]  (Sampling) 
-Chain 1 finished in 1101.8 seconds.
-Chain 4 Iteration: 1700 / 2000 [ 85%]  (Sampling) 
-Chain 4 Iteration: 1800 / 2000 [ 90%]  (Sampling) 
-Chain 4 Iteration: 1900 / 2000 [ 95%]  (Sampling) 
-Chain 4 Iteration: 2000 / 2000 [100%]  (Sampling) 
-Chain 4 finished in 1431.6 seconds.
-
-All 4 chains finished successfully.
-Mean chain execution time: 1171.3 seconds.
-Total execution time: 1431.9 seconds.</code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb232"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb232-1"><a href="#cb232-1"></a>irt<span class="fl">.3</span> <span class="ot">&lt;-</span> <span class="fu">brm</span>(</span>
+<span id="cb232-2"><a href="#cb232-2"></a>  <span class="at">family =</span> <span class="fu">brmsfamily</span>(<span class="st">"cumulative"</span>, <span class="st">"logit"</span>),</span>
+<span id="cb232-3"><a href="#cb232-3"></a>  <span class="fu">bf</span>(resp <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> item) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> id)),</span>
+<span id="cb232-4"><a href="#cb232-4"></a>  <span class="at">prior =</span> <span class="fu">c</span>(<span class="fu">prior</span>(<span class="st">"normal(0, 3)"</span>, <span class="at">class =</span> <span class="st">"sd"</span>, <span class="at">group =</span> <span class="st">"id"</span>),</span>
+<span id="cb232-5"><a href="#cb232-5"></a>            <span class="fu">prior</span>(<span class="st">"normal(0, 3)"</span>, <span class="at">class =</span> <span class="st">"sd"</span>, <span class="at">group =</span> <span class="st">"item"</span>)),</span>
+<span id="cb232-6"><a href="#cb232-6"></a>    <span class="at">iter =</span> <span class="dv">2000</span>, <span class="at">warmup =</span> <span class="dv">1000</span>, <span class="at">cores =</span> <span class="dv">4</span>, <span class="at">chains =</span> <span class="dv">4</span>,</span>
+<span id="cb232-7"><a href="#cb232-7"></a>    <span class="at">data =</span> IRT, </span>
+<span id="cb232-8"><a href="#cb232-8"></a>    <span class="at">backend =</span> <span class="st">"cmdstanr"</span>, </span>
+<span id="cb232-9"><a href="#cb232-9"></a>    <span class="at">file =</span> <span class="st">"irt.3"</span>,</span>
+<span id="cb232-10"><a href="#cb232-10"></a>  <span class="at">control =</span> <span class="fu">list</span>(<span class="at">adapt_delta =</span> .<span class="dv">99</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section class="slide level2">
 
 <div class="cell">
-<div class="sourceCode cell-code" id="cb238"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb238-1"><a href="#cb238-1"></a><span class="fu">summary</span>(irt<span class="fl">.3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb233"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb233-1"><a href="#cb233-1"></a><span class="fu">summary</span>(irt<span class="fl">.3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> Family: cumulative 
   Links: mu = logit; disc = identity 
@@ -15814,7 +15314,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <section class="slide level2">
 
 <div class="cell">
-<div class="sourceCode cell-code" id="cb240"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb240-1"><a href="#cb240-1"></a><span class="fu">get_variables</span>(irt<span class="fl">.3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb235"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb235-1"><a href="#cb235-1"></a><span class="fu">get_variables</span>(irt<span class="fl">.3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  [1] "b_Intercept[1]"                "b_Intercept[2]"               
   [3] "sd_id__Intercept"              "sd_item__Intercept"           
@@ -16000,122 +15500,22 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <section class="slide level2">
 
 <div class="cell">
-<div class="sourceCode cell-code" id="cb242"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb242-1"><a href="#cb242-1"></a>irt<span class="fl">.3</span>a <span class="ot">&lt;-</span> <span class="fu">brm</span>(</span>
-<span id="cb242-2"><a href="#cb242-2"></a>  <span class="at">family =</span> <span class="fu">brmsfamily</span>(<span class="st">"cumulative"</span>, <span class="st">"logit"</span>),</span>
-<span id="cb242-3"><a href="#cb242-3"></a>  <span class="fu">bf</span>(resp <span class="sc">|</span> <span class="fu">thres</span>(<span class="at">gr =</span> item) <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> item) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> id)),</span>
-<span id="cb242-4"><a href="#cb242-4"></a>  <span class="at">prior =</span> <span class="fu">c</span>(<span class="fu">prior</span>(<span class="st">"normal(0, 3)"</span>, <span class="at">class =</span> <span class="st">"sd"</span>, <span class="at">group =</span> <span class="st">"id"</span>),</span>
-<span id="cb242-5"><a href="#cb242-5"></a>            <span class="fu">prior</span>(<span class="st">"normal(0, 3)"</span>, <span class="at">class =</span> <span class="st">"sd"</span>, <span class="at">group =</span> <span class="st">"item"</span>)),</span>
-<span id="cb242-6"><a href="#cb242-6"></a>    <span class="at">iter =</span> <span class="dv">2000</span>, <span class="at">warmup =</span> <span class="dv">1000</span>, <span class="at">cores =</span> <span class="dv">4</span>, <span class="at">chains =</span> <span class="dv">4</span>,</span>
-<span id="cb242-7"><a href="#cb242-7"></a>    <span class="at">data =</span> IRT, </span>
-<span id="cb242-8"><a href="#cb242-8"></a>    <span class="at">backend =</span> <span class="st">"cmdstanr"</span>, </span>
-<span id="cb242-9"><a href="#cb242-9"></a>    <span class="at">file =</span> <span class="st">"irt.3a"</span>,</span>
-<span id="cb242-10"><a href="#cb242-10"></a>  <span class="at">control =</span> <span class="fu">list</span>(<span class="at">adapt_delta =</span> .<span class="dv">99</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running MCMC with 4 parallel chains...
-
-Chain 1 Iteration:    1 / 2000 [  0%]  (Warmup) 
-Chain 2 Iteration:    1 / 2000 [  0%]  (Warmup) 
-Chain 3 Iteration:    1 / 2000 [  0%]  (Warmup) 
-Chain 4 Iteration:    1 / 2000 [  0%]  (Warmup) 
-Chain 4 Iteration:  100 / 2000 [  5%]  (Warmup) 
-Chain 3 Iteration:  100 / 2000 [  5%]  (Warmup) 
-Chain 2 Iteration:  100 / 2000 [  5%]  (Warmup) 
-Chain 1 Iteration:  100 / 2000 [  5%]  (Warmup) 
-Chain 2 Iteration:  200 / 2000 [ 10%]  (Warmup) 
-Chain 3 Iteration:  200 / 2000 [ 10%]  (Warmup) 
-Chain 2 Iteration:  300 / 2000 [ 15%]  (Warmup) 
-Chain 4 Iteration:  200 / 2000 [ 10%]  (Warmup) 
-Chain 4 Iteration:  300 / 2000 [ 15%]  (Warmup) 
-Chain 1 Iteration:  200 / 2000 [ 10%]  (Warmup) 
-Chain 4 Iteration:  400 / 2000 [ 20%]  (Warmup) 
-Chain 2 Iteration:  400 / 2000 [ 20%]  (Warmup) 
-Chain 3 Iteration:  300 / 2000 [ 15%]  (Warmup) 
-Chain 1 Iteration:  300 / 2000 [ 15%]  (Warmup) 
-Chain 4 Iteration:  500 / 2000 [ 25%]  (Warmup) 
-Chain 1 Iteration:  400 / 2000 [ 20%]  (Warmup) 
-Chain 3 Iteration:  400 / 2000 [ 20%]  (Warmup) 
-Chain 2 Iteration:  500 / 2000 [ 25%]  (Warmup) 
-Chain 1 Iteration:  500 / 2000 [ 25%]  (Warmup) 
-Chain 4 Iteration:  600 / 2000 [ 30%]  (Warmup) 
-Chain 2 Iteration:  600 / 2000 [ 30%]  (Warmup) 
-Chain 3 Iteration:  500 / 2000 [ 25%]  (Warmup) 
-Chain 2 Iteration:  700 / 2000 [ 35%]  (Warmup) 
-Chain 1 Iteration:  600 / 2000 [ 30%]  (Warmup) 
-Chain 3 Iteration:  600 / 2000 [ 30%]  (Warmup) 
-Chain 4 Iteration:  700 / 2000 [ 35%]  (Warmup) 
-Chain 2 Iteration:  800 / 2000 [ 40%]  (Warmup) 
-Chain 1 Iteration:  700 / 2000 [ 35%]  (Warmup) 
-Chain 4 Iteration:  800 / 2000 [ 40%]  (Warmup) 
-Chain 3 Iteration:  700 / 2000 [ 35%]  (Warmup) 
-Chain 4 Iteration:  900 / 2000 [ 45%]  (Warmup) 
-Chain 2 Iteration:  900 / 2000 [ 45%]  (Warmup) 
-Chain 1 Iteration:  800 / 2000 [ 40%]  (Warmup) 
-Chain 3 Iteration:  800 / 2000 [ 40%]  (Warmup) 
-Chain 4 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
-Chain 4 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
-Chain 1 Iteration:  900 / 2000 [ 45%]  (Warmup) 
-Chain 2 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
-Chain 2 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
-Chain 3 Iteration:  900 / 2000 [ 45%]  (Warmup) 
-Chain 4 Iteration: 1100 / 2000 [ 55%]  (Sampling) 
-Chain 1 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
-Chain 1 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
-Chain 3 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
-Chain 3 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
-Chain 2 Iteration: 1100 / 2000 [ 55%]  (Sampling) 
-Chain 1 Iteration: 1100 / 2000 [ 55%]  (Sampling) 
-Chain 4 Iteration: 1200 / 2000 [ 60%]  (Sampling) 
-Chain 1 Iteration: 1200 / 2000 [ 60%]  (Sampling) 
-Chain 3 Iteration: 1100 / 2000 [ 55%]  (Sampling) 
-Chain 2 Iteration: 1200 / 2000 [ 60%]  (Sampling) 
-Chain 1 Iteration: 1300 / 2000 [ 65%]  (Sampling) 
-Chain 4 Iteration: 1300 / 2000 [ 65%]  (Sampling) 
-Chain 1 Iteration: 1400 / 2000 [ 70%]  (Sampling) 
-Chain 3 Iteration: 1200 / 2000 [ 60%]  (Sampling) 
-Chain 2 Iteration: 1300 / 2000 [ 65%]  (Sampling) 
-Chain 1 Iteration: 1500 / 2000 [ 75%]  (Sampling) 
-Chain 4 Iteration: 1400 / 2000 [ 70%]  (Sampling) 
-Chain 1 Iteration: 1600 / 2000 [ 80%]  (Sampling) 
-Chain 3 Iteration: 1300 / 2000 [ 65%]  (Sampling) 
-Chain 2 Iteration: 1400 / 2000 [ 70%]  (Sampling) 
-Chain 1 Iteration: 1700 / 2000 [ 85%]  (Sampling) 
-Chain 4 Iteration: 1500 / 2000 [ 75%]  (Sampling) 
-Chain 1 Iteration: 1800 / 2000 [ 90%]  (Sampling) 
-Chain 3 Iteration: 1400 / 2000 [ 70%]  (Sampling) 
-Chain 2 Iteration: 1500 / 2000 [ 75%]  (Sampling) 
-Chain 1 Iteration: 1900 / 2000 [ 95%]  (Sampling) 
-Chain 4 Iteration: 1600 / 2000 [ 80%]  (Sampling) 
-Chain 1 Iteration: 2000 / 2000 [100%]  (Sampling) 
-Chain 1 finished in 1802.8 seconds.
-Chain 3 Iteration: 1500 / 2000 [ 75%]  (Sampling) 
-Chain 2 Iteration: 1600 / 2000 [ 80%]  (Sampling) 
-Chain 4 Iteration: 1700 / 2000 [ 85%]  (Sampling) 
-Chain 3 Iteration: 1600 / 2000 [ 80%]  (Sampling) 
-Chain 2 Iteration: 1700 / 2000 [ 85%]  (Sampling) 
-Chain 4 Iteration: 1800 / 2000 [ 90%]  (Sampling) 
-Chain 3 Iteration: 1700 / 2000 [ 85%]  (Sampling) 
-Chain 2 Iteration: 1800 / 2000 [ 90%]  (Sampling) 
-Chain 4 Iteration: 1900 / 2000 [ 95%]  (Sampling) 
-Chain 3 Iteration: 1800 / 2000 [ 90%]  (Sampling) 
-Chain 2 Iteration: 1900 / 2000 [ 95%]  (Sampling) 
-Chain 4 Iteration: 2000 / 2000 [100%]  (Sampling) 
-Chain 4 finished in 2231.6 seconds.
-Chain 3 Iteration: 1900 / 2000 [ 95%]  (Sampling) 
-Chain 2 Iteration: 2000 / 2000 [100%]  (Sampling) 
-Chain 2 finished in 2261.3 seconds.
-Chain 3 Iteration: 2000 / 2000 [100%]  (Sampling) 
-Chain 3 finished in 2362.3 seconds.
-
-All 4 chains finished successfully.
-Mean chain execution time: 2164.5 seconds.
-Total execution time: 2362.6 seconds.</code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb237"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb237-1"><a href="#cb237-1"></a>irt<span class="fl">.3</span>a <span class="ot">&lt;-</span> <span class="fu">brm</span>(</span>
+<span id="cb237-2"><a href="#cb237-2"></a>  <span class="at">family =</span> <span class="fu">brmsfamily</span>(<span class="st">"cumulative"</span>, <span class="st">"logit"</span>),</span>
+<span id="cb237-3"><a href="#cb237-3"></a>  <span class="fu">bf</span>(resp <span class="sc">|</span> <span class="fu">thres</span>(<span class="at">gr =</span> item) <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> item) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> id)),</span>
+<span id="cb237-4"><a href="#cb237-4"></a>  <span class="at">prior =</span> <span class="fu">c</span>(<span class="fu">prior</span>(<span class="st">"normal(0, 3)"</span>, <span class="at">class =</span> <span class="st">"sd"</span>, <span class="at">group =</span> <span class="st">"id"</span>),</span>
+<span id="cb237-5"><a href="#cb237-5"></a>            <span class="fu">prior</span>(<span class="st">"normal(0, 3)"</span>, <span class="at">class =</span> <span class="st">"sd"</span>, <span class="at">group =</span> <span class="st">"item"</span>)),</span>
+<span id="cb237-6"><a href="#cb237-6"></a>    <span class="at">iter =</span> <span class="dv">2000</span>, <span class="at">warmup =</span> <span class="dv">1000</span>, <span class="at">cores =</span> <span class="dv">4</span>, <span class="at">chains =</span> <span class="dv">4</span>,</span>
+<span id="cb237-7"><a href="#cb237-7"></a>    <span class="at">data =</span> IRT, </span>
+<span id="cb237-8"><a href="#cb237-8"></a>    <span class="at">backend =</span> <span class="st">"cmdstanr"</span>, </span>
+<span id="cb237-9"><a href="#cb237-9"></a>    <span class="at">file =</span> <span class="st">"irt.3a"</span>,</span>
+<span id="cb237-10"><a href="#cb237-10"></a>  <span class="at">control =</span> <span class="fu">list</span>(<span class="at">adapt_delta =</span> .<span class="dv">99</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section class="slide level2">
 
 <div class="cell">
-<div class="sourceCode cell-code" id="cb244"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb244-1"><a href="#cb244-1"></a><span class="fu">summary</span>(irt<span class="fl">.3</span>a)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb238"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb238-1"><a href="#cb238-1"></a><span class="fu">summary</span>(irt<span class="fl">.3</span>a)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> Family: cumulative 
   Links: mu = logit; disc = identity 
@@ -16246,7 +15646,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <section class="slide level2">
 
 <div class="cell">
-<div class="sourceCode cell-code" id="cb246"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb246-1"><a href="#cb246-1"></a><span class="fu">get_variables</span>(irt<span class="fl">.3</span>a)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb240"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb240-1"><a href="#cb240-1"></a><span class="fu">get_variables</span>(irt<span class="fl">.3</span>a)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  [1] "b_Intercept[S1WantCurse,1]"    "b_Intercept[S1WantCurse,2]"   
   [3] "b_Intercept[S1WantScold,1]"    "b_Intercept[S1WantScold,2]"   
@@ -16480,15 +15880,15 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb248"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb248-1"><a href="#cb248-1"></a>irt<span class="fl">.3</span>a <span class="sc">%&gt;%</span> </span>
-<span id="cb248-2"><a href="#cb248-2"></a><span class="fu">gather_draws</span>(b_Intercept[item,cut]) <span class="sc">%&gt;%</span> </span>
-<span id="cb248-3"><a href="#cb248-3"></a>  <span class="fu">group_by</span>(item, cut) <span class="sc">%&gt;%</span> </span>
-<span id="cb248-4"><a href="#cb248-4"></a>  <span class="fu">summarise</span>(<span class="at">mean =</span> <span class="fu">mean</span>(.value),</span>
-<span id="cb248-5"><a href="#cb248-5"></a>            <span class="at">sd   =</span> <span class="fu">sd</span>(.value),</span>
-<span id="cb248-6"><a href="#cb248-6"></a>            <span class="at">ll   =</span> <span class="fu">quantile</span>(.value, <span class="at">probs =</span> .<span class="dv">025</span>),</span>
-<span id="cb248-7"><a href="#cb248-7"></a>            <span class="at">ul   =</span> <span class="fu">quantile</span>(.value, <span class="at">probs =</span> .<span class="dv">975</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb248-8"><a href="#cb248-8"></a>   <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y =</span> <span class="fu">factor</span>(cut), <span class="at">x =</span> mean, <span class="at">xmin =</span> ll, <span class="at">xmax =</span> ul, <span class="at">group =</span> item, <span class="at">color =</span> item)) <span class="sc">+</span></span>
-<span id="cb248-9"><a href="#cb248-9"></a>  <span class="fu">geom_pointinterval</span>(<span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="at">width =</span> <span class="sc">-</span><span class="fl">0.5</span>)) <span class="sc">+</span><span class="fu">xlab</span>(<span class="st">"theta"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb242"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb242-1"><a href="#cb242-1"></a>irt<span class="fl">.3</span>a <span class="sc">%&gt;%</span> </span>
+<span id="cb242-2"><a href="#cb242-2"></a><span class="fu">gather_draws</span>(b_Intercept[item,cut]) <span class="sc">%&gt;%</span> </span>
+<span id="cb242-3"><a href="#cb242-3"></a>  <span class="fu">group_by</span>(item, cut) <span class="sc">%&gt;%</span> </span>
+<span id="cb242-4"><a href="#cb242-4"></a>  <span class="fu">summarise</span>(<span class="at">mean =</span> <span class="fu">mean</span>(.value),</span>
+<span id="cb242-5"><a href="#cb242-5"></a>            <span class="at">sd   =</span> <span class="fu">sd</span>(.value),</span>
+<span id="cb242-6"><a href="#cb242-6"></a>            <span class="at">ll   =</span> <span class="fu">quantile</span>(.value, <span class="at">probs =</span> .<span class="dv">025</span>),</span>
+<span id="cb242-7"><a href="#cb242-7"></a>            <span class="at">ul   =</span> <span class="fu">quantile</span>(.value, <span class="at">probs =</span> .<span class="dv">975</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb242-8"><a href="#cb242-8"></a>   <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y =</span> <span class="fu">factor</span>(cut), <span class="at">x =</span> mean, <span class="at">xmin =</span> ll, <span class="at">xmax =</span> ul, <span class="at">group =</span> item, <span class="at">color =</span> item)) <span class="sc">+</span></span>
+<span id="cb242-9"><a href="#cb242-9"></a>  <span class="fu">geom_pointinterval</span>(<span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="at">width =</span> <span class="sc">-</span><span class="fl">0.5</span>)) <span class="sc">+</span><span class="fu">xlab</span>(<span class="st">"theta"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 
 </div>
@@ -16496,118 +15896,18 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <section class="slide level2">
 
 <div class="cell">
-<div class="sourceCode cell-code" id="cb249"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb249-1"><a href="#cb249-1"></a>irt<span class="fl">.4</span> <span class="ot">&lt;-</span> <span class="fu">brm</span>(</span>
-<span id="cb249-2"><a href="#cb249-2"></a>  <span class="at">family =</span> <span class="fu">brmsfamily</span>(<span class="st">"cumulative"</span>, <span class="st">"logit"</span>),</span>
-<span id="cb249-3"><a href="#cb249-3"></a>  <span class="fu">bf</span>(resp <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span>i<span class="sc">|</span> item) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> id),</span>
-<span id="cb249-4"><a href="#cb249-4"></a>  disc <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span>i<span class="sc">|</span> item)),</span>
-<span id="cb249-5"><a href="#cb249-5"></a>  <span class="at">prior =</span> <span class="fu">c</span>(<span class="fu">prior</span>(<span class="st">"constant(1)"</span>, <span class="at">class =</span> <span class="st">"sd"</span>, <span class="at">group =</span> <span class="st">"id"</span>), </span>
-<span id="cb249-6"><a href="#cb249-6"></a>            <span class="fu">prior</span>(<span class="st">"normal(0, 3)"</span>, <span class="at">class =</span> <span class="st">"sd"</span>, <span class="at">group =</span> <span class="st">"item"</span>),</span>
-<span id="cb249-7"><a href="#cb249-7"></a>            <span class="fu">prior</span>(<span class="st">"normal(0, 1)"</span>, <span class="at">class =</span> <span class="st">"sd"</span>, <span class="at">group =</span> <span class="st">"item"</span>, <span class="at">dpar =</span> <span class="st">"disc"</span>)),</span>
-<span id="cb249-8"><a href="#cb249-8"></a>    <span class="at">iter =</span> <span class="dv">2000</span>, <span class="at">warmup =</span> <span class="dv">1000</span>, <span class="at">cores =</span> <span class="dv">4</span>, <span class="at">chains =</span> <span class="dv">4</span>,</span>
-<span id="cb249-9"><a href="#cb249-9"></a>    <span class="at">data =</span> IRT, </span>
-<span id="cb249-10"><a href="#cb249-10"></a>    <span class="at">backend =</span> <span class="st">"cmdstanr"</span>, </span>
-<span id="cb249-11"><a href="#cb249-11"></a>    <span class="at">file =</span> <span class="st">"irt.4"</span>,</span>
-<span id="cb249-12"><a href="#cb249-12"></a>  <span class="at">control =</span> <span class="fu">list</span>(<span class="at">adapt_delta =</span> .<span class="dv">99</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running MCMC with 4 parallel chains...
-
-Chain 1 Iteration:    1 / 2000 [  0%]  (Warmup) 
-Chain 2 Iteration:    1 / 2000 [  0%]  (Warmup) 
-Chain 3 Iteration:    1 / 2000 [  0%]  (Warmup) 
-Chain 4 Iteration:    1 / 2000 [  0%]  (Warmup) 
-Chain 3 Iteration:  100 / 2000 [  5%]  (Warmup) 
-Chain 2 Iteration:  100 / 2000 [  5%]  (Warmup) 
-Chain 4 Iteration:  100 / 2000 [  5%]  (Warmup) 
-Chain 1 Iteration:  100 / 2000 [  5%]  (Warmup) 
-Chain 4 Iteration:  200 / 2000 [ 10%]  (Warmup) 
-Chain 1 Iteration:  200 / 2000 [ 10%]  (Warmup) 
-Chain 2 Iteration:  200 / 2000 [ 10%]  (Warmup) 
-Chain 3 Iteration:  200 / 2000 [ 10%]  (Warmup) 
-Chain 4 Iteration:  300 / 2000 [ 15%]  (Warmup) 
-Chain 2 Iteration:  300 / 2000 [ 15%]  (Warmup) 
-Chain 1 Iteration:  300 / 2000 [ 15%]  (Warmup) 
-Chain 4 Iteration:  400 / 2000 [ 20%]  (Warmup) 
-Chain 2 Iteration:  400 / 2000 [ 20%]  (Warmup) 
-Chain 3 Iteration:  300 / 2000 [ 15%]  (Warmup) 
-Chain 1 Iteration:  400 / 2000 [ 20%]  (Warmup) 
-Chain 4 Iteration:  500 / 2000 [ 25%]  (Warmup) 
-Chain 3 Iteration:  400 / 2000 [ 20%]  (Warmup) 
-Chain 2 Iteration:  500 / 2000 [ 25%]  (Warmup) 
-Chain 4 Iteration:  600 / 2000 [ 30%]  (Warmup) 
-Chain 1 Iteration:  500 / 2000 [ 25%]  (Warmup) 
-Chain 3 Iteration:  500 / 2000 [ 25%]  (Warmup) 
-Chain 4 Iteration:  700 / 2000 [ 35%]  (Warmup) 
-Chain 2 Iteration:  600 / 2000 [ 30%]  (Warmup) 
-Chain 1 Iteration:  600 / 2000 [ 30%]  (Warmup) 
-Chain 3 Iteration:  600 / 2000 [ 30%]  (Warmup) 
-Chain 4 Iteration:  800 / 2000 [ 40%]  (Warmup) 
-Chain 2 Iteration:  700 / 2000 [ 35%]  (Warmup) 
-Chain 1 Iteration:  700 / 2000 [ 35%]  (Warmup) 
-Chain 3 Iteration:  700 / 2000 [ 35%]  (Warmup) 
-Chain 4 Iteration:  900 / 2000 [ 45%]  (Warmup) 
-Chain 1 Iteration:  800 / 2000 [ 40%]  (Warmup) 
-Chain 2 Iteration:  800 / 2000 [ 40%]  (Warmup) 
-Chain 3 Iteration:  800 / 2000 [ 40%]  (Warmup) 
-Chain 1 Iteration:  900 / 2000 [ 45%]  (Warmup) 
-Chain 2 Iteration:  900 / 2000 [ 45%]  (Warmup) 
-Chain 3 Iteration:  900 / 2000 [ 45%]  (Warmup) 
-Chain 4 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
-Chain 4 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
-Chain 1 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
-Chain 1 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
-Chain 4 Iteration: 1100 / 2000 [ 55%]  (Sampling) 
-Chain 3 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
-Chain 3 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
-Chain 1 Iteration: 1100 / 2000 [ 55%]  (Sampling) 
-Chain 2 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
-Chain 2 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
-Chain 4 Iteration: 1200 / 2000 [ 60%]  (Sampling) 
-Chain 3 Iteration: 1100 / 2000 [ 55%]  (Sampling) 
-Chain 1 Iteration: 1200 / 2000 [ 60%]  (Sampling) 
-Chain 4 Iteration: 1300 / 2000 [ 65%]  (Sampling) 
-Chain 3 Iteration: 1200 / 2000 [ 60%]  (Sampling) 
-Chain 1 Iteration: 1300 / 2000 [ 65%]  (Sampling) 
-Chain 2 Iteration: 1100 / 2000 [ 55%]  (Sampling) 
-Chain 4 Iteration: 1400 / 2000 [ 70%]  (Sampling) 
-Chain 3 Iteration: 1300 / 2000 [ 65%]  (Sampling) 
-Chain 1 Iteration: 1400 / 2000 [ 70%]  (Sampling) 
-Chain 4 Iteration: 1500 / 2000 [ 75%]  (Sampling) 
-Chain 3 Iteration: 1400 / 2000 [ 70%]  (Sampling) 
-Chain 1 Iteration: 1500 / 2000 [ 75%]  (Sampling) 
-Chain 2 Iteration: 1200 / 2000 [ 60%]  (Sampling) 
-Chain 4 Iteration: 1600 / 2000 [ 80%]  (Sampling) 
-Chain 3 Iteration: 1500 / 2000 [ 75%]  (Sampling) 
-Chain 1 Iteration: 1600 / 2000 [ 80%]  (Sampling) 
-Chain 4 Iteration: 1700 / 2000 [ 85%]  (Sampling) 
-Chain 3 Iteration: 1600 / 2000 [ 80%]  (Sampling) 
-Chain 1 Iteration: 1700 / 2000 [ 85%]  (Sampling) 
-Chain 2 Iteration: 1300 / 2000 [ 65%]  (Sampling) 
-Chain 4 Iteration: 1800 / 2000 [ 90%]  (Sampling) 
-Chain 3 Iteration: 1700 / 2000 [ 85%]  (Sampling) 
-Chain 1 Iteration: 1800 / 2000 [ 90%]  (Sampling) 
-Chain 4 Iteration: 1900 / 2000 [ 95%]  (Sampling) 
-Chain 3 Iteration: 1800 / 2000 [ 90%]  (Sampling) 
-Chain 1 Iteration: 1900 / 2000 [ 95%]  (Sampling) 
-Chain 2 Iteration: 1400 / 2000 [ 70%]  (Sampling) 
-Chain 4 Iteration: 2000 / 2000 [100%]  (Sampling) 
-Chain 4 finished in 275.9 seconds.
-Chain 3 Iteration: 1900 / 2000 [ 95%]  (Sampling) 
-Chain 1 Iteration: 2000 / 2000 [100%]  (Sampling) 
-Chain 1 finished in 281.9 seconds.
-Chain 3 Iteration: 2000 / 2000 [100%]  (Sampling) 
-Chain 3 finished in 293.1 seconds.
-Chain 2 Iteration: 1500 / 2000 [ 75%]  (Sampling) 
-Chain 2 Iteration: 1600 / 2000 [ 80%]  (Sampling) 
-Chain 2 Iteration: 1700 / 2000 [ 85%]  (Sampling) 
-Chain 2 Iteration: 1800 / 2000 [ 90%]  (Sampling) 
-Chain 2 Iteration: 1900 / 2000 [ 95%]  (Sampling) 
-Chain 2 Iteration: 2000 / 2000 [100%]  (Sampling) 
-Chain 2 finished in 421.7 seconds.
-
-All 4 chains finished successfully.
-Mean chain execution time: 318.2 seconds.
-Total execution time: 421.9 seconds.</code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb243"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb243-1"><a href="#cb243-1"></a>irt<span class="fl">.4</span> <span class="ot">&lt;-</span> <span class="fu">brm</span>(</span>
+<span id="cb243-2"><a href="#cb243-2"></a>  <span class="at">family =</span> <span class="fu">brmsfamily</span>(<span class="st">"cumulative"</span>, <span class="st">"logit"</span>),</span>
+<span id="cb243-3"><a href="#cb243-3"></a>  <span class="fu">bf</span>(resp <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span>i<span class="sc">|</span> item) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> id),</span>
+<span id="cb243-4"><a href="#cb243-4"></a>  disc <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span>i<span class="sc">|</span> item)),</span>
+<span id="cb243-5"><a href="#cb243-5"></a>  <span class="at">prior =</span> <span class="fu">c</span>(<span class="fu">prior</span>(<span class="st">"constant(1)"</span>, <span class="at">class =</span> <span class="st">"sd"</span>, <span class="at">group =</span> <span class="st">"id"</span>), </span>
+<span id="cb243-6"><a href="#cb243-6"></a>            <span class="fu">prior</span>(<span class="st">"normal(0, 3)"</span>, <span class="at">class =</span> <span class="st">"sd"</span>, <span class="at">group =</span> <span class="st">"item"</span>),</span>
+<span id="cb243-7"><a href="#cb243-7"></a>            <span class="fu">prior</span>(<span class="st">"normal(0, 1)"</span>, <span class="at">class =</span> <span class="st">"sd"</span>, <span class="at">group =</span> <span class="st">"item"</span>, <span class="at">dpar =</span> <span class="st">"disc"</span>)),</span>
+<span id="cb243-8"><a href="#cb243-8"></a>    <span class="at">iter =</span> <span class="dv">2000</span>, <span class="at">warmup =</span> <span class="dv">1000</span>, <span class="at">cores =</span> <span class="dv">4</span>, <span class="at">chains =</span> <span class="dv">4</span>,</span>
+<span id="cb243-9"><a href="#cb243-9"></a>    <span class="at">data =</span> IRT, </span>
+<span id="cb243-10"><a href="#cb243-10"></a>    <span class="at">backend =</span> <span class="st">"cmdstanr"</span>, </span>
+<span id="cb243-11"><a href="#cb243-11"></a>    <span class="at">file =</span> <span class="st">"irt.4"</span>,</span>
+<span id="cb243-12"><a href="#cb243-12"></a>  <span class="at">control =</span> <span class="fu">list</span>(<span class="at">adapt_delta =</span> .<span class="dv">99</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section class="slide level2">

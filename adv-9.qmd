@@ -1,5 +1,5 @@
 ---
-title: adv-mlm
+title: advanced mlm
 format: revealjs
 slide-number: true
 execute:
