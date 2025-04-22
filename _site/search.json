@@ -2440,7 +2440,7 @@
     "href": "adv-9.html#mr.p-1",
     "title": "advanced mlm",
     "section": "Mr.P",
-    "text": "Mr.P\nMr = Multi-level regression aka MLM P = poststratification, with post for posterior and stratification for stratify.\nYou take your posterior and make predictions based on different strata\nWeighted average of predicted values, where weights are the population shares of each category"
+    "text": "Mr.P\nMr = Multi-level regression aka MLM\nP = poststratification, with post for posterior and stratification for stratify.\nYou take your posterior and make predictions based on different strata\nWeighted average of predicted values, where weights are the population shares of each category"
   },
   {
     "objectID": "adv-9.html#weighting-vs-postratifying",
@@ -2699,7 +2699,7 @@
     "href": "adv-9.html#what-do-these-regression-models-look-like",
     "title": "advanced mlm",
     "section": "What do these regression models look like?",
-    "text": "What do these regression models look like?\nUse different parameters to predict scores: 1. Difficulty 2. Discrimination 3. Guessing\nUse different response options: 1. Logistic 2. Categorical (mulit-nomial) 3. Graded response or partial credit (ordered categorical) 4. Ex-Gaussian and shifted lognormal distribution 5. Wiener drift diffusion model"
+    "text": "What do these regression models look like?\nUse different parameters to predict scores: 1. Difficulty 2. Discrimination 3. Guessing\nUse different response options: 1. Logistic 2. Categorical (mulitnomial) 3. Graded response or partial credit (ordered categorical) 4. Ex-Gaussian and shifted lognormal distribution 5. Wiener drift diffusion model"
   },
   {
     "objectID": "adv-9.html#item-difficulty",
@@ -2769,7 +2769,7 @@
     "href": "adv-9.html#non-linear-syntax",
     "title": "advanced mlm",
     "section": "Non-linear syntax",
-    "text": "Non-linear syntax\ndelta was our initial modeling of difficulty. We are now also modeling how difficulty varies across discrimination, so these two terms must interact. Difficulty depends on the item and the person, whereas discrimination is only item specific.\n\nirt.2 &lt;- brm(\n  family = brmsfamily(\"bernoulli\", \"logit\"),\n  bf(r2 ~ exp(logalpha) * delta, # discrimination fixed &gt;0\n    delta ~ 1 + (1 |i| item) + (1 | id),\n    logalpha ~ 1 + (1 |i| item),\n    nl = TRUE),\n  prior = c(prior(normal(0, 1.5), class = b, nlpar = delta),\n            prior(normal(0, 1), class = b, nlpar = logalpha),\n            prior(student_t(10, 0, 1), class = sd, nlpar = delta),\n            prior(student_t(10, 0, 1), class = sd, nlpar = logalpha),\n            prior(lkj(2), class = cor)),\n    iter = 2000, warmup = 1000, cores = 4, chains = 4,\n    data = IRT, \n    backend = \"cmdstanr\", \n    file = \"irt.2\",\n  control = list(adapt_delta = .99))"
+    "text": "Non-linear syntax\ndelta was our initial modeling of difficulty. We are now also modeling how difficulty varies across discrimination, so these two terms must interact. Difficulty depends on the item and the person, whereas discrimination is only item specific.\n\n\nCode\nirt.2 &lt;- brm(\n  family = brmsfamily(\"bernoulli\", \"logit\"),\n  bf(r2 ~ exp(logalpha) * delta, # discrimination fixed &gt;0\n    delta ~ 1 + (1 |i| item) + (1 | id),\n    logalpha ~ 1 + (1 |i| item),\n    nl = TRUE),\n  prior = c(prior(normal(0, 1.5), class = b, nlpar = delta),\n            prior(normal(0, 1), class = b, nlpar = logalpha),\n            prior(student_t(10, 0, 1), class = sd, nlpar = delta),\n            prior(student_t(10, 0, 1), class = sd, nlpar = logalpha),\n            prior(lkj(2), class = cor)),\n    iter = 2000, warmup = 1000, cores = 4, chains = 4,\n    data = IRT, \n    backend = \"cmdstanr\", \n    file = \"irt.2\",\n  control = list(adapt_delta = .99))"
   },
   {
     "objectID": "adv-9.html#graded-response-model",

@@ -457,8 +457,8 @@
 <div class="cell-output cell-output-stdout">
 <pre><code>
  W.other    ID Estimate 2.5 % 97.5 %
-       0 ralph     3.15  2.15   4.11
-       1 ralph     3.46  2.60   4.34
+       0 ralph     3.14  2.19   4.13
+       1 ralph     3.45  2.61   4.35
 
 Type:  response 
 Columns: rowid, estimate, conf.low, conf.high, W.other, ID, PA </code></pre>
@@ -513,7 +513,8 @@ Columns: rowid, estimate, conf.low, conf.high, W.other, ID, PA </code></pre>
 </section>
 <section id="mr.p-1" class="slide level2">
 <h2>Mr.P</h2>
-<p>Mr = Multi-level regression aka MLM P = poststratification, with post for posterior and stratification for stratify.</p>
+<p>Mr = Multi-level regression aka MLM</p>
+<p>P = poststratification, with post for posterior and stratification for stratify.</p>
 <p>You take your posterior and make predictions based on different strata</p>
 <p>Weighted average of predicted values, where weights are the population shares of each category</p>
 </section>
@@ -859,17 +860,17 @@ Columns: rowid, rowidcf, estimate, conf.low, conf.high, age_group, decade_marrie
 <pre><code># A tibble: 11 × 7
    age_group kept_name_predict .lower .upper .width .point .interval
    &lt;chr&gt;                 &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;    
- 1 25                    0.175 0.0937  0.279   0.95 mean   qi       
- 2 30                    0.180 0.115   0.261   0.95 mean   qi       
- 3 35                    0.218 0.149   0.305   0.95 mean   qi       
- 4 40                    0.244 0.172   0.326   0.95 mean   qi       
- 5 45                    0.278 0.202   0.364   0.95 mean   qi       
- 6 50                    0.301 0.216   0.397   0.95 mean   qi       
- 7 55                    0.322 0.231   0.427   0.95 mean   qi       
- 8 60                    0.436 0.324   0.554   0.95 mean   qi       
- 9 65                    0.559 0.413   0.703   0.95 mean   qi       
-10 70                    0.515 0.291   0.742   0.95 mean   qi       
-11 75                    0.226 0.0484  0.502   0.95 mean   qi       </code></pre>
+ 1 25                    0.176 0.0927  0.282   0.95 mean   qi       
+ 2 30                    0.181 0.114   0.261   0.95 mean   qi       
+ 3 35                    0.218 0.151   0.295   0.95 mean   qi       
+ 4 40                    0.245 0.173   0.328   0.95 mean   qi       
+ 5 45                    0.279 0.201   0.367   0.95 mean   qi       
+ 6 50                    0.301 0.215   0.397   0.95 mean   qi       
+ 7 55                    0.323 0.232   0.428   0.95 mean   qi       
+ 8 60                    0.437 0.326   0.557   0.95 mean   qi       
+ 9 65                    0.560 0.416   0.708   0.95 mean   qi       
+10 70                    0.514 0.295   0.750   0.95 mean   qi       
+11 75                    0.226 0.0457  0.502   0.95 mean   qi       </code></pre>
 </div>
 </div>
 </section>
@@ -1665,6 +1666,9 @@ and Tail_ESS are effective sample size measures, and Rhat is the potential
 scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 </div>
 </div>
+</section>
+<section class="slide level2">
+
 <div class="cell">
 <details>
 <summary>Code</summary>
@@ -6740,7 +6744,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <section id="what-do-these-regression-models-look-like" class="slide level2">
 <h2>What do these regression models look like?</h2>
 <p>Use different parameters to predict scores: 1. Difficulty 2. Discrimination 3. Guessing</p>
-<p>Use different response options: 1. Logistic 2. Categorical (mulit-nomial) 3. Graded response or partial credit (ordered categorical) 4. Ex-Gaussian and shifted lognormal distribution 5. Wiener drift diffusion model</p>
+<p>Use different response options: 1. Logistic 2. Categorical (mulitnomial) 3. Graded response or partial credit (ordered categorical) 4. Ex-Gaussian and shifted lognormal distribution 5. Wiener drift diffusion model</p>
 </section>
 <section id="item-difficulty" class="slide level2">
 <h2>Item difficulty</h2>
@@ -14701,6 +14705,8 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <h2>Non-linear syntax</h2>
 <p>delta was our initial modeling of difficulty. We are now also modeling how difficulty varies across discrimination, so these two terms must interact. Difficulty depends on the item and the person, whereas discrimination is only item specific.</p>
 <div class="cell">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb222"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb222-1"><a href="#cb222-1"></a>irt<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">brm</span>(</span>
 <span id="cb222-2"><a href="#cb222-2"></a>  <span class="at">family =</span> <span class="fu">brmsfamily</span>(<span class="st">"bernoulli"</span>, <span class="st">"logit"</span>),</span>
 <span id="cb222-3"><a href="#cb222-3"></a>  <span class="fu">bf</span>(r2 <span class="sc">~</span> <span class="fu">exp</span>(logalpha) <span class="sc">*</span> delta, <span class="co"># discrimination fixed &gt;0</span></span>
@@ -14717,6 +14723,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <span id="cb222-14"><a href="#cb222-14"></a>    <span class="at">backend =</span> <span class="st">"cmdstanr"</span>, </span>
 <span id="cb222-15"><a href="#cb222-15"></a>    <span class="at">file =</span> <span class="st">"irt.2"</span>,</span>
 <span id="cb222-16"><a href="#cb222-16"></a>  <span class="at">control =</span> <span class="fu">list</span>(<span class="at">adapt_delta =</span> .<span class="dv">99</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 </section>
 <section class="slide level2">
@@ -15253,7 +15260,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <section class="slide level2">
 
 
-<img data-src="cutpoints.png" class="r-stretch"></section>
+<img data-src="grm1.png" class="r-stretch"></section>
 <section class="slide level2">
 
 <p><span class="math display">\[\text{response}_i  \sim \operatorname{cumulative} (\mathbf p) \]</span> <span class="math display">\[\text{logit}(p_k)  = \alpha_k + \phi \]</span> <span class="math display">\[\phi= 0 \]</span> <span class="math display">\[\alpha_k \sim \operatorname{Normal}(0, 1.5)\]</span></p>
@@ -15896,6 +15903,8 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <section class="slide level2">
 
 <div class="cell">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb243"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb243-1"><a href="#cb243-1"></a>irt<span class="fl">.4</span> <span class="ot">&lt;-</span> <span class="fu">brm</span>(</span>
 <span id="cb243-2"><a href="#cb243-2"></a>  <span class="at">family =</span> <span class="fu">brmsfamily</span>(<span class="st">"cumulative"</span>, <span class="st">"logit"</span>),</span>
 <span id="cb243-3"><a href="#cb243-3"></a>  <span class="fu">bf</span>(resp <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span>i<span class="sc">|</span> item) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> id),</span>
@@ -15908,16 +15917,89 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <span id="cb243-10"><a href="#cb243-10"></a>    <span class="at">backend =</span> <span class="st">"cmdstanr"</span>, </span>
 <span id="cb243-11"><a href="#cb243-11"></a>    <span class="at">file =</span> <span class="st">"irt.4"</span>,</span>
 <span id="cb243-12"><a href="#cb243-12"></a>  <span class="at">control =</span> <span class="fu">list</span>(<span class="at">adapt_delta =</span> .<span class="dv">99</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 </section>
 <section class="slide level2">
 
-<p>The thresholds of two items are simply shifted to the left or right relative to each other but otherwise share the same shape</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb244"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb244-1"><a href="#cb244-1"></a><span class="fu">summary</span>(irt<span class="fl">.4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> Family: cumulative 
+  Links: mu = logit; disc = log 
+Formula: resp ~ 1 + (1 | i | item) + (1 | id) 
+         disc ~ 1 + (1 | i | item)
+   Data: IRT (Number of observations: 7584) 
+  Draws: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
+         total post-warmup draws = 4000
+
+Multilevel Hyperparameters:
+~id (Number of levels: 316) 
+              Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+sd(Intercept)     1.00      0.00     1.00     1.00   NA       NA       NA
+
+~item (Number of levels: 24) 
+                              Estimate Est.Error l-95% CI u-95% CI Rhat
+sd(Intercept)                     0.91      0.15     0.66     1.26 1.01
+sd(disc_Intercept)                0.04      0.03     0.00     0.10 1.00
+cor(Intercept,disc_Intercept)    -0.20      0.50    -0.96     0.86 1.00
+                              Bulk_ESS Tail_ESS
+sd(Intercept)                      621     1501
+sd(disc_Intercept)                1310     1612
+cor(Intercept,disc_Intercept)     4540     2669
+
+Regression Coefficients:
+               Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+Intercept[1]       0.12      0.20    -0.29     0.50 1.01      339      595
+Intercept[2]       1.55      0.21     1.14     1.97 1.01      371      591
+disc_Intercept     0.25      0.05     0.16     0.35 1.00     1015     1897
+
+Draws were sampled using sample(hmc). For each parameter, Bulk_ESS
+and Tail_ESS are effective sample size measures, and Rhat is the potential
+scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
+</div>
+</div>
 </section>
 <section id="pros-and-cons-of-irt" class="slide level2">
 <h2>Pros and Cons of IRT</h2>
 <p>Pro: CAT, item and people are interpreted on the same probability metric, some scores can be measured with more precision than others (rather than one reliability assessment), creation of item banks, investigation of differential item functioning (DIF)</p>
 <p>Con: complex, CTT and IRT assessments correlate &gt;.96,</p>
+</section>
+<section class="slide level2">
+
+<ol type="1">
+<li>the drift rate that describes a person’s tendency towards one or the other two alternatives</li>
+<li>the boundary separation that describes how much evidence needs to be accumulated until a decision is made</li>
+<li>the non-decision times that describes the time spent at processing the items and executing a motor response (i.e., everything non-decision related)</li>
+<li>the initial bias that describes persons tendency towards one of the two alternatives independent of the item properties</li>
+</ol>
+</section>
+<section class="slide level2">
+
+
+<img data-src="ddm.png" class="r-stretch"></section>
+<section class="slide level2">
+
+<div class="cell">
+<div class="sourceCode cell-code" id="cb246"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb246-1"><a href="#cb246-1"></a>formula <span class="ot">&lt;-</span> <span class="fu">bf</span>(rt <span class="sc">|</span> <span class="fu">dec</span>(response2) <span class="sc">~</span> <span class="dv">0</span> <span class="sc">+</span> condition<span class="sc">:</span>frequency <span class="sc">+</span> </span>
+<span id="cb246-2"><a href="#cb246-2"></a>                (<span class="dv">0</span> <span class="sc">+</span> condition<span class="sc">:</span>frequency<span class="sc">|</span>p<span class="sc">|</span>id), </span>
+<span id="cb246-3"><a href="#cb246-3"></a>               bs <span class="sc">~</span> <span class="dv">0</span> <span class="sc">+</span> condition <span class="sc">+</span> (<span class="dv">0</span> <span class="sc">+</span> condition<span class="sc">|</span>p<span class="sc">|</span>id), </span>
+<span id="cb246-4"><a href="#cb246-4"></a>               ndt <span class="sc">~</span> <span class="dv">0</span> <span class="sc">+</span> condition <span class="sc">+</span> (<span class="dv">0</span> <span class="sc">+</span> condition<span class="sc">|</span>p<span class="sc">|</span>id),</span>
+<span id="cb246-5"><a href="#cb246-5"></a>               bias <span class="sc">~</span> .<span class="dv">5</span>)</span>
+<span id="cb246-6"><a href="#cb246-6"></a></span>
+<span id="cb246-7"><a href="#cb246-7"></a>fit_wiener <span class="ot">&lt;-</span> <span class="fu">brm</span>(formula, </span>
+<span id="cb246-8"><a href="#cb246-8"></a>                  <span class="at">data =</span> speed_acc,</span>
+<span id="cb246-9"><a href="#cb246-9"></a>                  <span class="at">family =</span> <span class="fu">wiener</span>(<span class="at">link_bs =</span> <span class="st">"identity"</span>, </span>
+<span id="cb246-10"><a href="#cb246-10"></a>                                  <span class="at">link_ndt =</span> <span class="st">"identity"</span>,</span>
+<span id="cb246-11"><a href="#cb246-11"></a>                                  <span class="at">link_bias =</span> <span class="st">"identity"</span>),</span>
+<span id="cb246-12"><a href="#cb246-12"></a>                  <span class="at">prior =</span> prior, <span class="at">inits =</span> initfun,</span>
+<span id="cb246-13"><a href="#cb246-13"></a>                  <span class="at">iter =</span> <span class="dv">1000</span>, <span class="at">warmup =</span> <span class="dv">500</span>, </span>
+<span id="cb246-14"><a href="#cb246-14"></a>                  <span class="at">chains =</span> <span class="dv">4</span>, <span class="at">cores =</span> <span class="dv">4</span>, </span>
+<span id="cb246-15"><a href="#cb246-15"></a>                  <span class="at">control =</span> <span class="fu">list</span>(<span class="at">max_treedepth =</span> <span class="dv">15</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section class="slide level2">
+
 
 <div class="footer footer-default">
 
