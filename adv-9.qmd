@@ -2322,26 +2322,33 @@ summary(meta.4)
 Item response theory is no more than a regression model to predict item responses
 
 Map items onto a latent construct. Unlike standard CTT, we assume: 
-  1) items are not interchangeable. In standard approaches more items, better reliability, as there is a focus on the broad scale rather than specific items.  
-  2) some items are better suited for different levels of the latent construct. E.g. a consideration of hard vs easy items 
+  1) items are not interchangeable. In standard approaches more items, better reliability
+  2) some items are better suited for different levels of the latent construct. E.g. a consideration of hard vs easy items  
+  3) focus on test information over reliability
+  
+## IRT
+
+- Attempts to simultaneously assess parameters of the item along with parameters of the person
+
+- In this way it is similar to an multivariate/SEM model, a distributional model, and a MLM model. 
   
 ## What do these regression models look like?  
 
 Use different parameters to predict scores: 
-1. Difficulty
-2. Discrimination
-3. Guessing 
+1. Difficulty  
+2. Discrimination 
+3. Guessing  
 
-Use different response options: 
-1. Logistic
-2. Categorical (mulitnomial)
-3. Graded response or partial credit (ordered categorical)
-4. Ex-Gaussian and shifted lognormal distribution
-5. Wiener drift diffusion model
+Use different response options:   
+1. Logistic  
+2. Categorical (mulitnomial)  
+3. Graded response or partial credit (ordered categorical)  
+4. Ex-Gaussian and shifted lognormal distribution  
+5. Wiener drift diffusion model  
 
 ## Item difficulty 
 
-Difficultly is one factors that influences performance (think hard math problems). We assume that those who have high levels of the construct (cog ability, neuroticism) are more likely to correctly answer hard problems than those that are low on the construct (theta). 
+Difficultly is one factors that influences performance (think hard math problems). We assume that those who have high levels of the construct (cog ability, neuroticism) are more likely to correctly answer hard problems than those that are low on the construct (theta).  
 
 An item's difficulty is defined as the trait level required for someone to have a probability of 50% correctly answering/endorsing. 
 
@@ -2525,7 +2532,7 @@ The 1pl is equivalent to setting factor loadings to 1 in SEM, where this relaxes
 
 While we are only predicting one parameter, p, we can think of these more complex models as similar to distributional models. That is because they will become non-linear! 
 
-All regression models are linear in that they consist of a set of liner combinations. b1X1 X b2X2 is totally fine as interactions are linear in the parameters (they are just a parameter multiplied by a new variable X1xX2, added to other parameters) even if they are not linear in the curves the predict 
+All regression models are linear in that they consist of a set of liner combinations. b3 X1 * X2 is totally fine as interactions are linear in the parameters (they are just a parameter multiplied by a new variable X1 * X2, added to other parameters) even if they are not linear in the curves 
 
 Nonlinear models are widespread and can be thought of as anything not linear e.g., B1 * B2 or cos(b1 * X). 
 
@@ -2777,7 +2784,7 @@ summary(irt.4)
 
 
 ## Pros and Cons of IRT
-Pro: CAT, item and people are interpreted on the same probability metric, some scores can be measured with more precision than others (rather than one reliability assessment), creation of item banks, investigation of differential item functioning (DIF)
+Pro: CAT, item and people are interpreted on the same probability metric, some scores can be measured with more precision than others (rather than one reliability assessment), creation of item banks, investigation of differential item functioning (DIF), linkage between seperate tests
 
 Con: complex, CTT and IRT assessments correlate >.96, 
 
@@ -2816,4 +2823,230 @@ fit_wiener <- brm(formula,
 ```
 
 
+## GAMS
+
+-Standard  models are simple to understand (lines!), but fail to capture complex associations. There are downsides to polynomial models, as they end up making bad predictions at the ends
+
+- We can do localized regression such as lowess but those are non-parameteric and thus we cannot do standard inferential tests
+
+- GAMs offer a middle ground: they can be fit to complex, nonlinear relationships and make good predictions in these cases, but we are still able to do inferential statistics and understand and explain the underlying structure of our models
+
+----------
+
+## Generalized additive models
+
+Similar to going from general linear model to generalized linear model. One more generalization.
+
+$$y \sim ExpoFam(\mu, etc.)$$ $$E(y) = \mu$$
+
+$$g(\mu) = b_0 + f(x_1) + f(x_2) \;...\;+f(x_p)$$
+
+exponential family distribution, and μ is still related to the model predictors via a link function. The key difference is that the linear predictor now incorporates smooth functions of at least some (possibly all) features, represented as f(x), and this will allow for nonlinear relationships between the features and the target variable y.
+
+## When to use?
+
+-   Take a look at your scatter plots, are they monotononicly linear?
+-   Residuals vs fitted look off? QQ plot looking bent?
+-   Transformations help in general but make edge cases even worse?
+-   Polynomial not cutting it
+-   You want to be as flexible as possible
+
+## Simplified GAM
+
+$$y = f(x) + \epsilon$$
+
+choosing a basis, which in technical terms means choosing a space of functions for which (f) is some element of it.
+
+$$y = f(x) + \epsilon = \sum_{j=1}^{d}F_j(x)\beta_j + \epsilon$$ Each Fj is a basis function that is the transformed x depending on the type of basis considered, and the b are the corresponding regression coefficients.
+
+------------------------------------------------------------------------
+
+Can think of the basis function as a polynomial with d = 2 (but it could be many other things too) 
+
+$$f(x) = b_0 + w_1 B_{i, 1} + w_2 B_{i, 2} + w_3 B_{i, 3} + \dots$$ These basis functions become extra variables used to predict, though each of them are often "hidden" behind the overly bland "basis function"
+
+
+## Cherry blossom data
+
+```{r}
+#| code-fold: true
+#| 
+library(rethinking)
+data(cherry_blossoms)
+d <- cherry_blossoms
+rm(cherry_blossoms)
+detach(package:rethinking, unload = T)
+
+d %>% 
+  ggplot(aes(x = year, y = doy)) +
+  geom_point(color = "#ffb7c5", alpha = 1/2) +
+  theme_bw() +
+    theme(panel.background = element_rect(fill = "#4f455c"),
+        panel.grid = element_blank())
+
+
+```
+
+--------
+
+$$f(x) = w_1 B_{i, 1} + w_2 B_{i, 2} + w_3 B_{i, 3} + \dots$$
+
+- B-splines do not directly transform the predictor by squaring or cubing it.
+
+- Instead they invent a series of entirely new, synthetic predictor variables. Each of these synthetic variables exists only to gradually turn a specific parameter on and off within a specific range of the real predictor variable. 
+
+- Each of the synthetic variables is called a basis function and serve as weights
+
+
+## knots
+
+How wiggly do you want it? 
+
+```{r}
+#| code-fold: true
+d2 <-
+  d %>% 
+  drop_na(doy)
+
+num_knots <- 15
+knot_list <- quantile(d2$year, probs = seq(from = 0, to = 1, length.out = num_knots))
+knot_list
+```
+
 ------
+
+```{r}
+#| code-fold: true
+d %>% 
+  ggplot(aes(x = year, y = doy)) +
+  geom_vline(xintercept = knot_list, color = "white", alpha = 1/2) +
+  geom_point(color = "#ffb7c5", alpha = 1/2) +
+  theme_bw() +
+  theme(panel.background = element_rect(fill = "#4f455c"),
+        panel.grid = element_blank())
+```
+
+## Linear basis
+
+- We will no longer use year as our predictor, instead only focus on the knots. 
+
+- The most simple, is taking the synthetic variable and either turning on or turning off a range across the knots. 
+
+```{r, echo = FALSE}
+library(splines2)
+# redo the `B` splines
+
+knot_list2 <- quantile(d2$year, probs = seq(from = 0, to = 1, length.out = 5))
+
+B3 <- bSpline(d2$year,
+        knots = knot_list2[-c(1, 5)], 
+        # this makes the splines liner rater than cubic
+        degree = 1, 
+        intercept = TRUE)
+
+# define a new `d4` data
+d4 <- 
+  d2 %>% 
+  mutate(B3 = B3)
+
+spline0 <- 
+  brm(data = d4,
+      family = gaussian,
+      formula = doy ~ 1 + B,
+      prior = c(prior(normal(100, 10), class = Intercept),
+                prior(normal(0, 10), class = b),
+                prior(exponential(1), class = sigma)),
+      iter = 2000, warmup = 1000, chains = 4, cores = 4,
+      seed = 4,
+      backend = "cmdstanr",
+      file = "spline0")
+
+b4 <-
+  invoke(data.frame, d4) %>% 
+  pivot_longer(starts_with("B"),
+               names_to = "bias_function",
+               values_to = "bias")
+
+# plot
+  b4 %>% 
+  ggplot(aes(x = year, y = bias, group = bias_function)) +
+  geom_vline(xintercept = knot_list, color = "white", alpha = 1/2) +
+  geom_line(color = "#ffb7c5", alpha = 1/2, linewidth = 1.5) +
+  scale_x_continuous(NULL, breaks = NULL) +
+  ylab("bias value")
+```
+
+
+
+------
+
+For degree 3, four basis combine at each point.
+
+```{r}
+#| code-fold: true
+library(splines)
+
+B <- bs(d2$year, knots = knot_list[-c(1, num_knots)], 
+        degree = 3,  
+        intercept = TRUE)
+        
+B %>% str()
+knot_list[c(1, num_knots)]
+```
+
+
+-------
+
+Basis functions turn on parameters over different ranges of of the x-axis. Parameters influence the shape.  
+```{r}
+#| code-fold: true
+# wrangle a bit
+
+b <-B %>% 
+  data.frame() %>% 
+  set_names(str_c(0, 1:9), 10:17) %>%  
+  bind_cols(dplyr::select(d2,year)) %>% 
+  pivot_longer(-year,
+               names_to = "bias_function",
+               values_to = "bias")
+
+# plot
+b %>% 
+  ggplot(aes(x = year, y = bias, group = bias_function)) +
+  geom_vline(xintercept = knot_list, color = "white", alpha = 1/2) +
+  geom_line(color = "#ffb7c5", alpha = 1/2, linewidth = 1.5) +
+  ylab("bias value") +
+  theme_bw() +
+  theme(panel.background = element_rect(fill = "#4f455c"),
+        panel.grid = element_blank())
+```
+
+
+---------
+
+```{r}
+#| code-fold: true
+#| 
+b %>% 
+  mutate(bias_function = str_c("bias function ", bias_function)) %>% 
+  
+  ggplot(aes(x = year, y = bias)) +
+  geom_vline(xintercept = knot_list, color = "white", alpha = 1/2) +
+  geom_line(color = "#ffb7c5", linewidth = 1.5) +
+  ylab("bias value") +
+  theme_bw() +
+  theme(panel.background = element_rect(fill = "#4f455c"),
+        panel.grid = element_blank(),
+        strip.background = element_rect(fill = scales::alpha("#ffb7c5", .25), color = "transparent"),
+        strip.text = element_text(size = 8, margin = margin(0.1, 0, 0.1, 0, "cm"))) +
+  facet_wrap(~ bias_function, ncol = 1)
+```
+
+
+-------
+
+
+![](spline2.png)
+
+
+

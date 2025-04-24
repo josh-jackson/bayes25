@@ -457,8 +457,8 @@
 <div class="cell-output cell-output-stdout">
 <pre><code>
  W.other    ID Estimate 2.5 % 97.5 %
-       0 ralph     3.14  2.19   4.13
-       1 ralph     3.45  2.61   4.35
+       0 ralph     3.15  2.17   4.12
+       1 ralph     3.45  2.60   4.35
 
 Type:  response 
 Columns: rowid, estimate, conf.low, conf.high, W.other, ID, PA </code></pre>
@@ -860,17 +860,17 @@ Columns: rowid, rowidcf, estimate, conf.low, conf.high, age_group, decade_marrie
 <pre><code># A tibble: 11 × 7
    age_group kept_name_predict .lower .upper .width .point .interval
    &lt;chr&gt;                 &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;    
- 1 25                    0.176 0.0927  0.282   0.95 mean   qi       
- 2 30                    0.181 0.114   0.261   0.95 mean   qi       
- 3 35                    0.218 0.151   0.295   0.95 mean   qi       
- 4 40                    0.245 0.173   0.328   0.95 mean   qi       
- 5 45                    0.279 0.201   0.367   0.95 mean   qi       
- 6 50                    0.301 0.215   0.397   0.95 mean   qi       
- 7 55                    0.323 0.232   0.428   0.95 mean   qi       
- 8 60                    0.437 0.326   0.557   0.95 mean   qi       
- 9 65                    0.560 0.416   0.708   0.95 mean   qi       
-10 70                    0.514 0.295   0.750   0.95 mean   qi       
-11 75                    0.226 0.0457  0.502   0.95 mean   qi       </code></pre>
+ 1 25                    0.173 0.0930  0.276   0.95 mean   qi       
+ 2 30                    0.182 0.115   0.262   0.95 mean   qi       
+ 3 35                    0.218 0.150   0.299   0.95 mean   qi       
+ 4 40                    0.245 0.174   0.325   0.95 mean   qi       
+ 5 45                    0.280 0.202   0.368   0.95 mean   qi       
+ 6 50                    0.301 0.217   0.398   0.95 mean   qi       
+ 7 55                    0.322 0.230   0.429   0.95 mean   qi       
+ 8 60                    0.437 0.329   0.551   0.95 mean   qi       
+ 9 65                    0.560 0.415   0.706   0.95 mean   qi       
+10 70                    0.514 0.291   0.739   0.95 mean   qi       
+11 75                    0.225 0.0468  0.499   0.95 mean   qi       </code></pre>
 </div>
 </div>
 </section>
@@ -6738,13 +6738,26 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <section id="irt" class="slide level2">
 <h2>IRT</h2>
 <p>Item response theory is no more than a regression model to predict item responses</p>
-<p>Map items onto a latent construct. Unlike standard CTT, we assume: 1) items are not interchangeable. In standard approaches more items, better reliability, as there is a focus on the broad scale rather than specific items.<br>
-2) some items are better suited for different levels of the latent construct. E.g. a consideration of hard vs easy items</p>
+<p>Map items onto a latent construct. Unlike standard CTT, we assume: 1) items are not interchangeable. In standard approaches more items, better reliability 2) some items are better suited for different levels of the latent construct. E.g. a consideration of hard vs easy items<br>
+3) focus on test information over reliability</p>
+</section>
+<section id="irt-1" class="slide level2">
+<h2>IRT</h2>
+<ul>
+<li><p>Attempts to simultaneously assess parameters of the item along with parameters of the person</p></li>
+<li><p>In this way it is similar to an multivariate/SEM model, a distributional model, and a MLM model.</p></li>
+</ul>
 </section>
 <section id="what-do-these-regression-models-look-like" class="slide level2">
 <h2>What do these regression models look like?</h2>
-<p>Use different parameters to predict scores: 1. Difficulty 2. Discrimination 3. Guessing</p>
-<p>Use different response options: 1. Logistic 2. Categorical (mulitnomial) 3. Graded response or partial credit (ordered categorical) 4. Ex-Gaussian and shifted lognormal distribution 5. Wiener drift diffusion model</p>
+<p>Use different parameters to predict scores: 1. Difficulty<br>
+2. Discrimination 3. Guessing</p>
+<p>Use different response options:<br>
+1. Logistic<br>
+2. Categorical (mulitnomial)<br>
+3. Graded response or partial credit (ordered categorical)<br>
+4. Ex-Gaussian and shifted lognormal distribution<br>
+5. Wiener drift diffusion model</p>
 </section>
 <section id="item-difficulty" class="slide level2">
 <h2>Item difficulty</h2>
@@ -14693,7 +14706,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <section class="slide level2">
 
 <p>While we are only predicting one parameter, p, we can think of these more complex models as similar to distributional models. That is because they will become non-linear!</p>
-<p>All regression models are linear in that they consist of a set of liner combinations. b1X1 X b2X2 is totally fine as interactions are linear in the parameters (they are just a parameter multiplied by a new variable X1xX2, added to other parameters) even if they are not linear in the curves the predict</p>
+<p>All regression models are linear in that they consist of a set of liner combinations. b3 X1 * X2 is totally fine as interactions are linear in the parameters (they are just a parameter multiplied by a new variable X1 * X2, added to other parameters) even if they are not linear in the curves</p>
 <p>Nonlinear models are widespread and can be thought of as anything not linear e.g., B1 * B2 or cos(b1 * X).</p>
 </section>
 <section class="slide level2">
@@ -15962,7 +15975,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 </section>
 <section id="pros-and-cons-of-irt" class="slide level2">
 <h2>Pros and Cons of IRT</h2>
-<p>Pro: CAT, item and people are interpreted on the same probability metric, some scores can be measured with more precision than others (rather than one reliability assessment), creation of item banks, investigation of differential item functioning (DIF)</p>
+<p>Pro: CAT, item and people are interpreted on the same probability metric, some scores can be measured with more precision than others (rather than one reliability assessment), creation of item banks, investigation of differential item functioning (DIF), linkage between seperate tests</p>
 <p>Con: complex, CTT and IRT assessments correlate &gt;.96,</p>
 </section>
 <section class="slide level2">
@@ -15998,10 +16011,209 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <span id="cb246-15"><a href="#cb246-15"></a>                  <span class="at">control =</span> <span class="fu">list</span>(<span class="at">max_treedepth =</span> <span class="dv">15</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
+<section id="gams" class="slide level2">
+<h2>GAMS</h2>
+<p>-Standard models are simple to understand (lines!), but fail to capture complex associations. There are downsides to polynomial models, as they end up making bad predictions at the ends</p>
+<ul>
+<li><p>We can do localized regression such as lowess but those are non-parameteric and thus we cannot do standard inferential tests</p></li>
+<li><p>GAMs offer a middle ground: they can be fit to complex, nonlinear relationships and make good predictions in these cases, but we are still able to do inferential statistics and understand and explain the underlying structure of our models</p></li>
+</ul>
+</section>
+<section id="generalized-additive-models" class="slide level2">
+<h2>Generalized additive models</h2>
+<p>Similar to going from general linear model to generalized linear model. One more generalization.</p>
+<p><span class="math display">\[y \sim ExpoFam(\mu, etc.)\]</span> <span class="math display">\[E(y) = \mu\]</span></p>
+<p><span class="math display">\[g(\mu) = b_0 + f(x_1) + f(x_2) \;...\;+f(x_p)\]</span></p>
+<p>exponential family distribution, and μ is still related to the model predictors via a link function. The key difference is that the linear predictor now incorporates smooth functions of at least some (possibly all) features, represented as f(x), and this will allow for nonlinear relationships between the features and the target variable y.</p>
+</section>
+<section id="when-to-use" class="slide level2">
+<h2>When to use?</h2>
+<ul>
+<li>Take a look at your scatter plots, are they monotononicly linear?</li>
+<li>Residuals vs fitted look off? QQ plot looking bent?</li>
+<li>Transformations help in general but make edge cases even worse?</li>
+<li>Polynomial not cutting it</li>
+<li>You want to be as flexible as possible</li>
+</ul>
+</section>
+<section id="simplified-gam" class="slide level2">
+<h2>Simplified GAM</h2>
+<p><span class="math display">\[y = f(x) + \epsilon\]</span></p>
+<p>choosing a basis, which in technical terms means choosing a space of functions for which (f) is some element of it.</p>
+<p><span class="math display">\[y = f(x) + \epsilon = \sum_{j=1}^{d}F_j(x)\beta_j + \epsilon\]</span> Each Fj is a basis function that is the transformed x depending on the type of basis considered, and the b are the corresponding regression coefficients.</p>
+</section>
+<section class="slide level2">
+
+<p>Can think of the basis function as a polynomial with d = 2 (but it could be many other things too)</p>
+<p><span class="math display">\[f(x) = b_0 + w_1 B_{i, 1} + w_2 B_{i, 2} + w_3 B_{i, 3} + \dots\]</span> These basis functions become extra variables used to predict, though each of them are often “hidden” behind the overly bland “basis function”</p>
+</section>
+<section id="cherry-blossom-data" class="slide level2">
+<h2>Cherry blossom data</h2>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb247"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb247-1"><a href="#cb247-1"></a><span class="fu">library</span>(rethinking)</span>
+<span id="cb247-2"><a href="#cb247-2"></a><span class="fu">data</span>(cherry_blossoms)</span>
+<span id="cb247-3"><a href="#cb247-3"></a>d <span class="ot">&lt;-</span> cherry_blossoms</span>
+<span id="cb247-4"><a href="#cb247-4"></a><span class="fu">rm</span>(cherry_blossoms)</span>
+<span id="cb247-5"><a href="#cb247-5"></a><span class="fu">detach</span>(package<span class="sc">:</span>rethinking, <span class="at">unload =</span> T)</span>
+<span id="cb247-6"><a href="#cb247-6"></a></span>
+<span id="cb247-7"><a href="#cb247-7"></a>d <span class="sc">%&gt;%</span> </span>
+<span id="cb247-8"><a href="#cb247-8"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> doy)) <span class="sc">+</span></span>
+<span id="cb247-9"><a href="#cb247-9"></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"#ffb7c5"</span>, <span class="at">alpha =</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb247-10"><a href="#cb247-10"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb247-11"><a href="#cb247-11"></a>    <span class="fu">theme</span>(<span class="at">panel.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"#4f455c"</span>),</span>
+<span id="cb247-12"><a href="#cb247-12"></a>        <span class="at">panel.grid =</span> <span class="fu">element_blank</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="adv-9_files/figure-revealjs/unnamed-chunk-167-1.png" width="960" class="r-stretch"></section>
+<section class="slide level2">
+
+<p><span class="math display">\[f(x) = w_1 B_{i, 1} + w_2 B_{i, 2} + w_3 B_{i, 3} + \dots\]</span></p>
+<ul>
+<li><p>B-splines do not directly transform the predictor by squaring or cubing it.</p></li>
+<li><p>Instead they invent a series of entirely new, synthetic predictor variables. Each of these synthetic variables exists only to gradually turn a specific parameter on and off within a specific range of the real predictor variable.</p></li>
+<li><p>Each of the synthetic variables is called a basis function and serve as weights</p></li>
+</ul>
+</section>
+<section id="knots" class="slide level2">
+<h2>knots</h2>
+<p>How wiggly do you want it?</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb248"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb248-1"><a href="#cb248-1"></a>d2 <span class="ot">&lt;-</span></span>
+<span id="cb248-2"><a href="#cb248-2"></a>  d <span class="sc">%&gt;%</span> </span>
+<span id="cb248-3"><a href="#cb248-3"></a>  <span class="fu">drop_na</span>(doy)</span>
+<span id="cb248-4"><a href="#cb248-4"></a></span>
+<span id="cb248-5"><a href="#cb248-5"></a>num_knots <span class="ot">&lt;-</span> <span class="dv">15</span></span>
+<span id="cb248-6"><a href="#cb248-6"></a>knot_list <span class="ot">&lt;-</span> <span class="fu">quantile</span>(d2<span class="sc">$</span>year, <span class="at">probs =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">0</span>, <span class="at">to =</span> <span class="dv">1</span>, <span class="at">length.out =</span> num_knots))</span>
+<span id="cb248-7"><a href="#cb248-7"></a>knot_list</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>       0% 7.142857% 14.28571% 21.42857% 28.57143% 35.71429% 42.85714%       50% 
+      812      1036      1174      1269      1377      1454      1518      1583 
+57.14286% 64.28571% 71.42857% 78.57143% 85.71429% 92.85714%      100% 
+     1650      1714      1774      1833      1893      1956      2015 </code></pre>
+</div>
+</div>
+</section>
+<section class="slide level2">
+
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb250"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb250-1"><a href="#cb250-1"></a>d <span class="sc">%&gt;%</span> </span>
+<span id="cb250-2"><a href="#cb250-2"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> doy)) <span class="sc">+</span></span>
+<span id="cb250-3"><a href="#cb250-3"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> knot_list, <span class="at">color =</span> <span class="st">"white"</span>, <span class="at">alpha =</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb250-4"><a href="#cb250-4"></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"#ffb7c5"</span>, <span class="at">alpha =</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb250-5"><a href="#cb250-5"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb250-6"><a href="#cb250-6"></a>  <span class="fu">theme</span>(<span class="at">panel.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"#4f455c"</span>),</span>
+<span id="cb250-7"><a href="#cb250-7"></a>        <span class="at">panel.grid =</span> <span class="fu">element_blank</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="adv-9_files/figure-revealjs/unnamed-chunk-169-1.png" width="960" class="r-stretch"></section>
+<section id="linear-basis" class="slide level2">
+<h2>Linear basis</h2>
+<ul>
+<li><p>We will no longer use year as our predictor, instead only focus on the knots.</p></li>
+<li><p>The most simple, is taking the synthetic variable and either turning on or turning off a range across the knots.</p></li>
+</ul>
+
+<img data-src="adv-9_files/figure-revealjs/unnamed-chunk-170-1.png" width="960" class="r-stretch"></section>
+<section class="slide level2">
+
+<p>For degree 3, four basis combine at each point.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb251"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb251-1"><a href="#cb251-1"></a><span class="fu">library</span>(splines)</span>
+<span id="cb251-2"><a href="#cb251-2"></a></span>
+<span id="cb251-3"><a href="#cb251-3"></a>B <span class="ot">&lt;-</span> <span class="fu">bs</span>(d2<span class="sc">$</span>year, <span class="at">knots =</span> knot_list[<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>, num_knots)], </span>
+<span id="cb251-4"><a href="#cb251-4"></a>        <span class="at">degree =</span> <span class="dv">3</span>,  </span>
+<span id="cb251-5"><a href="#cb251-5"></a>        <span class="at">intercept =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb251-6"><a href="#cb251-6"></a>        </span>
+<span id="cb251-7"><a href="#cb251-7"></a>B <span class="sc">%&gt;%</span> <span class="fu">str</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code> 'bs' num [1:827, 1:17] 1 0.96 0.767 0.563 0.545 ...
+ - attr(*, "dimnames")=List of 2
+  ..$ : NULL
+  ..$ : chr [1:17] "1" "2" "3" "4" ...
+ - attr(*, "degree")= int 3
+ - attr(*, "knots")= Named num [1:13] 1036 1174 1269 1377 1454 ...
+  ..- attr(*, "names")= chr [1:13] "7.142857%" "14.28571%" "21.42857%" "28.57143%" ...
+ - attr(*, "Boundary.knots")= int [1:2] 812 2015
+ - attr(*, "intercept")= logi TRUE</code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb253"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb253-1"><a href="#cb253-1"></a>knot_list[<span class="fu">c</span>(<span class="dv">1</span>, num_knots)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>  0% 100% 
+ 812 2015 </code></pre>
+</div>
+</div>
+</section>
+<section class="slide level2">
+
+<p>Basis functions turn on parameters over different ranges of of the x-axis. Parameters influence the shape.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb255"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb255-1"><a href="#cb255-1"></a><span class="co"># wrangle a bit</span></span>
+<span id="cb255-2"><a href="#cb255-2"></a></span>
+<span id="cb255-3"><a href="#cb255-3"></a>b <span class="ot">&lt;-</span>B <span class="sc">%&gt;%</span> </span>
+<span id="cb255-4"><a href="#cb255-4"></a>  <span class="fu">data.frame</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb255-5"><a href="#cb255-5"></a>  <span class="fu">set_names</span>(<span class="fu">str_c</span>(<span class="dv">0</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>), <span class="dv">10</span><span class="sc">:</span><span class="dv">17</span>) <span class="sc">%&gt;%</span>  </span>
+<span id="cb255-6"><a href="#cb255-6"></a>  <span class="fu">bind_cols</span>(dplyr<span class="sc">::</span><span class="fu">select</span>(d2,year)) <span class="sc">%&gt;%</span> </span>
+<span id="cb255-7"><a href="#cb255-7"></a>  <span class="fu">pivot_longer</span>(<span class="sc">-</span>year,</span>
+<span id="cb255-8"><a href="#cb255-8"></a>               <span class="at">names_to =</span> <span class="st">"bias_function"</span>,</span>
+<span id="cb255-9"><a href="#cb255-9"></a>               <span class="at">values_to =</span> <span class="st">"bias"</span>)</span>
+<span id="cb255-10"><a href="#cb255-10"></a></span>
+<span id="cb255-11"><a href="#cb255-11"></a><span class="co"># plot</span></span>
+<span id="cb255-12"><a href="#cb255-12"></a>b <span class="sc">%&gt;%</span> </span>
+<span id="cb255-13"><a href="#cb255-13"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> bias, <span class="at">group =</span> bias_function)) <span class="sc">+</span></span>
+<span id="cb255-14"><a href="#cb255-14"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> knot_list, <span class="at">color =</span> <span class="st">"white"</span>, <span class="at">alpha =</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb255-15"><a href="#cb255-15"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">"#ffb7c5"</span>, <span class="at">alpha =</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>, <span class="at">linewidth =</span> <span class="fl">1.5</span>) <span class="sc">+</span></span>
+<span id="cb255-16"><a href="#cb255-16"></a>  <span class="fu">ylab</span>(<span class="st">"bias value"</span>) <span class="sc">+</span></span>
+<span id="cb255-17"><a href="#cb255-17"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb255-18"><a href="#cb255-18"></a>  <span class="fu">theme</span>(<span class="at">panel.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"#4f455c"</span>),</span>
+<span id="cb255-19"><a href="#cb255-19"></a>        <span class="at">panel.grid =</span> <span class="fu">element_blank</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="adv-9_files/figure-revealjs/unnamed-chunk-172-1.png" width="960" class="r-stretch"></section>
+<section class="slide level2">
+
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb256"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb256-1"><a href="#cb256-1"></a>b <span class="sc">%&gt;%</span> </span>
+<span id="cb256-2"><a href="#cb256-2"></a>  <span class="fu">mutate</span>(<span class="at">bias_function =</span> <span class="fu">str_c</span>(<span class="st">"bias function "</span>, bias_function)) <span class="sc">%&gt;%</span> </span>
+<span id="cb256-3"><a href="#cb256-3"></a>  </span>
+<span id="cb256-4"><a href="#cb256-4"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> bias)) <span class="sc">+</span></span>
+<span id="cb256-5"><a href="#cb256-5"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> knot_list, <span class="at">color =</span> <span class="st">"white"</span>, <span class="at">alpha =</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb256-6"><a href="#cb256-6"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">"#ffb7c5"</span>, <span class="at">linewidth =</span> <span class="fl">1.5</span>) <span class="sc">+</span></span>
+<span id="cb256-7"><a href="#cb256-7"></a>  <span class="fu">ylab</span>(<span class="st">"bias value"</span>) <span class="sc">+</span></span>
+<span id="cb256-8"><a href="#cb256-8"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb256-9"><a href="#cb256-9"></a>  <span class="fu">theme</span>(<span class="at">panel.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"#4f455c"</span>),</span>
+<span id="cb256-10"><a href="#cb256-10"></a>        <span class="at">panel.grid =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb256-11"><a href="#cb256-11"></a>        <span class="at">strip.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> scales<span class="sc">::</span><span class="fu">alpha</span>(<span class="st">"#ffb7c5"</span>, .<span class="dv">25</span>), <span class="at">color =</span> <span class="st">"transparent"</span>),</span>
+<span id="cb256-12"><a href="#cb256-12"></a>        <span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">8</span>, <span class="at">margin =</span> <span class="fu">margin</span>(<span class="fl">0.1</span>, <span class="dv">0</span>, <span class="fl">0.1</span>, <span class="dv">0</span>, <span class="st">"cm"</span>))) <span class="sc">+</span></span>
+<span id="cb256-13"><a href="#cb256-13"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> bias_function, <span class="at">ncol =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="adv-9_files/figure-revealjs/unnamed-chunk-173-1.png" width="960" class="r-stretch"></section>
 <section class="slide level2">
 
 
-<div class="footer footer-default">
+
+<img data-src="spline2.png" class="r-stretch"><div class="footer footer-default">
 
 </div>
 </section>

@@ -2692,14 +2692,14 @@
     "href": "adv-9.html#irt",
     "title": "advanced mlm",
     "section": "IRT",
-    "text": "IRT\nItem response theory is no more than a regression model to predict item responses\nMap items onto a latent construct. Unlike standard CTT, we assume: 1) items are not interchangeable. In standard approaches more items, better reliability, as there is a focus on the broad scale rather than specific items.\n2) some items are better suited for different levels of the latent construct. E.g. a consideration of hard vs easy items"
+    "text": "IRT\nItem response theory is no more than a regression model to predict item responses\nMap items onto a latent construct. Unlike standard CTT, we assume: 1) items are not interchangeable. In standard approaches more items, better reliability 2) some items are better suited for different levels of the latent construct. E.g. a consideration of hard vs easy items\n3) focus on test information over reliability"
   },
   {
     "objectID": "adv-9.html#what-do-these-regression-models-look-like",
     "href": "adv-9.html#what-do-these-regression-models-look-like",
     "title": "advanced mlm",
     "section": "What do these regression models look like?",
-    "text": "What do these regression models look like?\nUse different parameters to predict scores: 1. Difficulty 2. Discrimination 3. Guessing\nUse different response options: 1. Logistic 2. Categorical (mulitnomial) 3. Graded response or partial credit (ordered categorical) 4. Ex-Gaussian and shifted lognormal distribution 5. Wiener drift diffusion model"
+    "text": "What do these regression models look like?\nUse different parameters to predict scores: 1. Difficulty\n2. Discrimination 3. Guessing\nUse different response options:\n1. Logistic\n2. Categorical (mulitnomial)\n3. Graded response or partial credit (ordered categorical)\n4. Ex-Gaussian and shifted lognormal distribution\n5. Wiener drift diffusion model"
   },
   {
     "objectID": "adv-9.html#item-difficulty",
@@ -2783,7 +2783,7 @@
     "href": "adv-9.html#pros-and-cons-of-irt",
     "title": "advanced mlm",
     "section": "Pros and Cons of IRT",
-    "text": "Pros and Cons of IRT\nPro: CAT, item and people are interpreted on the same probability metric, some scores can be measured with more precision than others (rather than one reliability assessment), creation of item banks, investigation of differential item functioning (DIF)\nCon: complex, CTT and IRT assessments correlate &gt;.96,"
+    "text": "Pros and Cons of IRT\nPro: CAT, item and people are interpreted on the same probability metric, some scores can be measured with more precision than others (rather than one reliability assessment), creation of item banks, investigation of differential item functioning (DIF), linkage between seperate tests\nCon: complex, CTT and IRT assessments correlate &gt;.96,"
   },
   {
     "objectID": "gams-10.html",
@@ -2798,5 +2798,61 @@
     "title": "Untitled",
     "section": "",
     "text": "We often want to fit flexible (non-linear) curves. What are options?\npolynomial, but they make bad predictions at the ends\nLocalized regression such as lowess, but those are non-parameteric\nPiecewise fit segments to different parts of the data, with breakpoints (knots) at pre-determined places. But what if you don’t know pre-defined. What if you want segments to touch?\n“Continuous piecewise” = splines.\n\n\n\nlibrary(MultiKink) \nlibrary(ggplot2)  \ndata(\"triceps\")\n tri.age.plot &lt;- ggplot(triceps, aes(x=age, y=triceps)) +\n                 geom_point(alpha=0.55, color=\"black\") + \n                 theme_minimal() \n tri.age.plot\n\n\n\n\n\nBasis function\n\\[y = \\beta_0 + \\beta_1 x +  \\beta_2 (x-k_1)_{+}  + \\beta_3 (x-k_2)_{+} + ... + \\beta_6 (x-k_p)_{+} + \\varepsilon\\]4\n\\[(x-k)_{+} =  \\begin{cases}\n                  0, & \\text{ if  } x &lt; k \\\\\n                  x-k, & \\text{ if  } x \\geq k\\\\\n                 \\end{cases}\\]\nregression model is written as a linear combination of these basis functions\n\nGAMs offer a middle ground: they can be fit to complex, nonlinear relationships and make good predictions in these cases, but we are still able to do inferential statistics and understand and explain the underlying structure of our models"
+  },
+  {
+    "objectID": "adv-9.html#irt-1",
+    "href": "adv-9.html#irt-1",
+    "title": "advanced mlm",
+    "section": "IRT",
+    "text": "IRT\n\nAttempts to simultaneously assess parameters of the item along with parameters of the person\nIn this way it is similar to an multivariate/SEM model, a distributional model, and a MLM model."
+  },
+  {
+    "objectID": "adv-9.html#gams",
+    "href": "adv-9.html#gams",
+    "title": "advanced mlm",
+    "section": "GAMS",
+    "text": "GAMS\n-Standard models are simple to understand (lines!), but fail to capture complex associations. There are downsides to polynomial models, as they end up making bad predictions at the ends\n\nWe can do localized regression such as lowess but those are non-parameteric and thus we cannot do standard inferential tests\nGAMs offer a middle ground: they can be fit to complex, nonlinear relationships and make good predictions in these cases, but we are still able to do inferential statistics and understand and explain the underlying structure of our models"
+  },
+  {
+    "objectID": "adv-9.html#generalized-additive-models",
+    "href": "adv-9.html#generalized-additive-models",
+    "title": "advanced mlm",
+    "section": "Generalized additive models",
+    "text": "Generalized additive models\nSimilar to going from general linear model to generalized linear model. One more generalization.\n\\[y \\sim ExpoFam(\\mu, etc.)\\] \\[E(y) = \\mu\\]\n\\[g(\\mu) = b_0 + f(x_1) + f(x_2) \\;...\\;+f(x_p)\\]\nexponential family distribution, and μ is still related to the model predictors via a link function. The key difference is that the linear predictor now incorporates smooth functions of at least some (possibly all) features, represented as f(x), and this will allow for nonlinear relationships between the features and the target variable y."
+  },
+  {
+    "objectID": "adv-9.html#when-to-use",
+    "href": "adv-9.html#when-to-use",
+    "title": "advanced mlm",
+    "section": "When to use?",
+    "text": "When to use?\n\nTake a look at your scatter plots, are they monotononicly linear?\nResiduals vs fitted look off? QQ plot looking bent?\nTransformations help in general but make edge cases even worse?\nPolynomial not cutting it\nYou want to be as flexible as possible"
+  },
+  {
+    "objectID": "adv-9.html#simplified-gam",
+    "href": "adv-9.html#simplified-gam",
+    "title": "advanced mlm",
+    "section": "Simplified GAM",
+    "text": "Simplified GAM\n\\[y = f(x) + \\epsilon\\]\nchoosing a basis, which in technical terms means choosing a space of functions for which (f) is some element of it.\n\\[y = f(x) + \\epsilon = \\sum_{j=1}^{d}F_j(x)\\beta_j + \\epsilon\\] Each Fj is a basis function that is the transformed x depending on the type of basis considered, and the b are the corresponding regression coefficients."
+  },
+  {
+    "objectID": "adv-9.html#cherry-blossom-data",
+    "href": "adv-9.html#cherry-blossom-data",
+    "title": "advanced mlm",
+    "section": "Cherry blossom data",
+    "text": "Cherry blossom data\n\n\nCode\nlibrary(rethinking)\ndata(cherry_blossoms)\nd &lt;- cherry_blossoms\nrm(cherry_blossoms)\ndetach(package:rethinking, unload = T)\n\nd %&gt;% \n  ggplot(aes(x = year, y = doy)) +\n  geom_point(color = \"#ffb7c5\", alpha = 1/2) +\n  theme_bw() +\n    theme(panel.background = element_rect(fill = \"#4f455c\"),\n        panel.grid = element_blank())"
+  },
+  {
+    "objectID": "adv-9.html#knots",
+    "href": "adv-9.html#knots",
+    "title": "advanced mlm",
+    "section": "knots",
+    "text": "knots\nHow wiggly do you want it?\n\n\nCode\nd2 &lt;-\n  d %&gt;% \n  drop_na(doy)\n\nnum_knots &lt;- 15\nknot_list &lt;- quantile(d2$year, probs = seq(from = 0, to = 1, length.out = num_knots))\nknot_list\n\n\n       0% 7.142857% 14.28571% 21.42857% 28.57143% 35.71429% 42.85714%       50% \n      812      1036      1174      1269      1377      1454      1518      1583 \n57.14286% 64.28571% 71.42857% 78.57143% 85.71429% 92.85714%      100% \n     1650      1714      1774      1833      1893      1956      2015"
+  },
+  {
+    "objectID": "adv-9.html#linear-basis",
+    "href": "adv-9.html#linear-basis",
+    "title": "advanced mlm",
+    "section": "Linear basis",
+    "text": "Linear basis\n\nWe will no longer use year as our predictor, instead only focus on the knots.\nThe most simple, is taking the synthetic variable and either turning on or turning off a range across the knots."
   }
 ]
